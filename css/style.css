@@ -633,6 +633,7 @@ button {
 
 .logos__label {
   flex-shrink: 0;
+  max-width: 24ch;          /* el salto lo da el ancho, no un <br> */
   padding-right: var(--gap);
   border-right: 1px solid var(--c-borde);
   font-size: var(--fs-xs);
@@ -703,7 +704,7 @@ button {
   .logos__inner { flex-direction: column; align-items: flex-start; }
   .logos__label { padding-right: 0; border-right: 0; border-bottom: 1px solid var(--c-borde);
                   padding-bottom: var(--sp-4); width: 100%; }
-  .logos__label br { display: none; }
+  .logos__label { max-width: none; }
   .logos__lista { width: 100%; grid-auto-flow: row;
                   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
 }
@@ -721,4 +722,170 @@ button {
   /* En móvil el eje de meses se satura: se muestran alternos */
   .chart__meses li:nth-child(even) { display: none; }
   .chart__meses { grid-template-columns: repeat(6, 1fr); }
+}
+
+
+/* ==========================================================================
+   SECCION 3 — PROBLEMA
+   Fuente: Wireframe 2 "problem-section" + copy aprobado (Body Option 2)
+
+   Decision de diseno: el wireframe solo tiene un parrafo suelto. Se anaden
+   tres senales porque el brief (§2.3 "Pain points by persona") lista dolores
+   muy concretos, y el propio brief advierte que el riesgo de este enfoque es
+   "la ejecucion generica". Tres tarjetas nombran el problema con textura
+   suficiente para que el visitante se reconozca.
+   ========================================================================== */
+
+.problema {
+  --padding-top: var(--section-y);
+  --padding-bottom: var(--section-y);
+
+  padding-block: var(--padding-top) var(--padding-bottom);
+  background: var(--c-blanco);
+}
+
+.problema__inner {
+  --padding-x: clamp(1.25rem, 0.5rem + 3vw, 4rem);
+
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-inline: var(--padding-x);
+}
+
+/* Bloque de texto: ancho contenido para que la linea sea legible */
+.problema__texto {
+  max-width: 780px;
+  margin-bottom: clamp(var(--sp-7), 4vw, var(--sp-8));
+}
+
+.problema__titulo {
+  margin-block: var(--sp-4) var(--sp-5);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  text-wrap: balance;
+}
+
+.problema__lead {
+  font-size: var(--fs-body-lg);
+  color: var(--c-texto-cuerpo);
+}
+
+/* --- Las tres senales --- */
+
+.senales {
+  --gap: clamp(var(--sp-5), 2.5vw, var(--sp-7));
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.senal {
+  --padding: clamp(var(--sp-5), 2vw, var(--sp-6));
+
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding);
+  background: var(--c-fondo);
+  border: 1px solid var(--c-borde-suave);
+  border-radius: var(--radio-md);
+  transition: border-color var(--trans-media),
+              box-shadow var(--trans-media),
+              transform var(--trans-media);
+}
+
+/* El titulo reserva dos lineas para que las tres tarjetas alineen su texto,
+   aunque un titulo ocupe una linea y otro dos. */
+.senal__titulo { min-height: calc(var(--fs-h3) * 2 * 1.2); }
+
+.senal:hover {
+  border-color: var(--c-borde);
+  box-shadow: var(--sombra-md);
+  transform: translateY(-2px);
+}
+
+.senal__icono {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--sp-5);
+  color: var(--c-verde);
+  background: var(--c-verde-claro);
+  border-radius: var(--radio-sm);
+}
+
+.senal__titulo {
+  margin-bottom: var(--sp-3);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-tight);
+}
+
+.senal__texto {
+  font-size: var(--fs-body);
+  color: var(--c-texto-cuerpo);
+}
+
+/* --- Cierre: "Rede closes that gap" --- */
+
+.respuesta {
+  --padding: clamp(var(--sp-6), 3vw, var(--sp-7));
+  --gap: var(--sp-5);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--gap);
+  margin-top: clamp(var(--sp-7), 4vw, var(--sp-8));
+  padding: var(--padding);
+  background: var(--c-texto);
+  border-radius: var(--radio-lg);
+}
+
+.respuesta__texto {
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.2;
+  letter-spacing: var(--ls-tight);
+  color: var(--c-blanco);
+}
+
+/* Enlace con flecha. Mismo gesto que los botones del hero: la flecha avanza. */
+.enlace-flecha {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  color: var(--c-blanco);
+  padding-bottom: 3px;
+  border-bottom: 2px solid rgba(255, 255, 255, .35);
+  transition: border-color var(--trans-media);
+  white-space: nowrap;
+}
+
+.enlace-flecha:hover { border-bottom-color: var(--c-blanco); }
+.enlace-flecha svg { transition: transform var(--trans-media); }
+.enlace-flecha:hover svg { transform: translateX(4px); }
+
+/* --- Responsive --- */
+
+@media (max-width: 900px) {
+  .senales { grid-template-columns: minmax(0, 1fr); }
+  .senal__titulo { min-height: 0; }
+  .senal { display: grid; grid-template-columns: auto 1fr; column-gap: var(--sp-5); }
+  .senal__icono { grid-row: span 2; margin-bottom: 0; }
+  .senal__titulo { align-self: center; }
+}
+
+@media (max-width: 640px) {
+  .senal { grid-template-columns: minmax(0, 1fr); }
+  .senal__icono { grid-row: auto; margin-bottom: var(--sp-4); }
+
+  .respuesta { flex-direction: column; align-items: flex-start; }
+  .enlace-flecha { align-self: stretch; }
 }
