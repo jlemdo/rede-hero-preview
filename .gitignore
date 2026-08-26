@@ -1,0 +1,18 @@
+# Material del cliente — NUNCA subir
+*.docx
+*.pdf
+NOTAS-PROYECTO.md
+IDENTIDAD-DE-MARCA.md
+HERO-REFERENCIA.md
+PROCESO/
+Wireframe*.html
+
+# Sistema
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp

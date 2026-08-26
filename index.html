@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rede Energy Solutions — Building Energy Efficiency</title>
+<meta name="description" content="Rede combines utility data, energy engineering and ongoing support to help multi-site organizations reduce costs and improve performance across every building.">
+
+<!-- Maqueta de trabajo interna. No debe indexarse. -->
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ==========================================================================
+     HEADER
+     Elementor: Theme Builder → Header. Widgets: theme-site-logo, nav-menu, button
+     ========================================================================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+
+    <!-- Elementor: widget theme-site-logo -->
+    <a href="#" class="header__logo" aria-label="Rede Energy Solutions — home">
+      <img src="assets/Rede-logo.svg" alt="Rede — Building Energy Efficiency" width="360" height="108">
+    </a>
+
+    <!-- Elementor: widget nav-menu -->
+    <nav class="nav" aria-label="Main">
+      <ul class="nav__list">
+        <li class="nav__item nav__item--has-drop">
+          <button class="nav__link nav__toggle" aria-expanded="false" aria-controls="drop-solutions">
+            Solutions
+            <svg class="nav__caret" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+              <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="nav__drop" id="drop-solutions" hidden>
+            <li><a href="#"><span>Energy Gap Analysis</span><small>Affordable one-time diagnostic</small></a></li>
+            <li><a href="#"><span>RUN</span><small>Utility management platform</small></a></li>
+            <li><a href="#"><span>Recommissioning</span><small>Project-based service</small></a></li>
+            <li><a href="#"><span>Energy Management</span><small>Full-service program</small></a></li>
+          </ul>
+        </li>
+        <li class="nav__item"><a class="nav__link" href="#">About</a></li>
+        <li class="nav__item"><a class="nav__link" href="#">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <a href="#" class="header__login">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M4.5 20c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6" stroke="currentColor"
+                stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        Client Login
+      </a>
+
+      <!-- Elementor: widget button -->
+      <a href="#" class="btn btn--primary">
+        Book a Call
+        <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+          <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Menú móvil -->
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <nav aria-label="Mobile">
+      <a href="#">Solutions</a>
+      <div class="mobile-menu__sub">
+        <a href="#">Energy Gap Analysis</a>
+        <a href="#">RUN</a>
+        <a href="#">Recommissioning</a>
+        <a href="#">Energy Management</a>
+      </div>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#">Client Login</a>
+    </nav>
+    <a href="#" class="btn btn--primary btn--block">Book a Call</a>
+  </div>
+</header>
+
+
+<!-- ==========================================================================
+     HERO
+     Elementor: container > container (texto) + container (media)
+     ========================================================================== -->
+<section class="hero">
+  <div class="hero__inner">
+
+    <!-- Columna izquierda -->
+    <div class="hero__content">
+      <p class="eyebrow">Energy management for multi-site organizations</p>
+
+      <h1 class="hero__title">
+        Cut energy costs without adding
+        more to <span class="acento">your team</span>.
+      </h1>
+
+      <p class="hero__lead">
+        Rede combines utility data, energy engineering and ongoing support to help
+        multi-site organizations reduce costs and improve performance across every building.
+      </p>
+
+      <div class="hero__actions">
+        <a href="#" class="btn btn--primary btn--lg">
+          Explore solutions
+          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+            <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                  stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="#" class="btn btn--outline btn--lg">
+          Book a call
+          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+            <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                  stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Columna derecha: foto + tarjeta -->
+    <div class="hero__media">
+
+      <!-- PLACEHOLDER: foto de edificio institucional. Pendiente del cliente. -->
+      <div class="ph ph--foto" role="img"
+           aria-label="Placeholder: institutional building exterior">
+        <div class="ph__icono" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="ph__label">Building exterior</p>
+      </div>
+
+      <!-- Tarjeta flotante. Elementor: container con posición absoluta -->
+      <div class="tarjeta">
+        <div class="tarjeta__head">
+          <h2 class="tarjeta__titulo">Portfolio overview</h2>
+          <div class="select">
+            All buildings
+            <svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+              <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="metricas">
+          <div class="metrica">
+            <p class="metrica__label">Total annual cost savings</p>
+            <p class="metrica__valor" data-contador="480" data-prefijo="$" data-sufijo="K">$480K</p>
+            <p class="metrica__delta">
+              <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+                <path d="M5 9L1 3h8L5 9z" fill="currentColor"/>
+              </svg>
+              <strong>14%</strong> lower vs baseline
+            </p>
+          </div>
+          <div class="metrica">
+            <p class="metrica__label">Total energy savings</p>
+            <p class="metrica__valor" data-contador="2.7" data-sufijo="M" data-decimales="1">2.7M
+              <span class="metrica__unidad">kWh</span></p>
+            <p class="metrica__delta">
+              <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+                <path d="M5 9L1 3h8L5 9z" fill="currentColor"/>
+              </svg>
+              <strong>11%</strong> lower vs baseline
+            </p>
+          </div>
+        </div>
+
+        <div class="grafico">
+          <div class="grafico__head">
+            <p class="grafico__titulo">Monthly cost trend</p>
+            <div class="leyenda">
+              <span class="leyenda__item"><i class="linea linea--verde"></i>With Rede</span>
+              <span class="leyenda__item"><i class="linea linea--gris"></i>Without Rede</span>
+            </div>
+          </div>
+
+          <!-- Gráfico SVG. Se dibuja solo al entrar en pantalla (js/main.js) -->
+          <svg class="chart" viewBox="0 0 520 150" preserveAspectRatio="none"
+               role="img" aria-label="Monthly cost trend: with Rede consistently below baseline">
+            <!-- rejilla -->
+            <g class="chart__grid">
+              <line x1="0" y1="12"  x2="520" y2="12"/>
+              <line x1="0" y1="59"  x2="520" y2="59"/>
+              <line x1="0" y1="106" x2="520" y2="106"/>
+            </g>
+            <!-- sin Rede -->
+            <path class="chart__linea chart__linea--base"
+                  d="M8,38 L54,32 L100,45 L146,40 L192,48 L238,36 L284,30 L330,26 L376,34 L422,24 L468,28 L512,33"/>
+            <!-- con Rede: área + línea -->
+            <path class="chart__area"
+                  d="M8,86 L54,79 L100,92 L146,90 L192,99 L238,93 L284,91 L330,88 L376,95 L422,89 L468,92 L512,97 L512,150 L8,150 Z"/>
+            <path class="chart__linea chart__linea--rede"
+                  d="M8,86 L54,79 L100,92 L146,90 L192,99 L238,93 L284,91 L330,88 L376,95 L422,89 L468,92 L512,97"/>
+          </svg>
+
+          <ul class="chart__meses" aria-hidden="true">
+            <li>Jan</li><li>Feb</li><li>Mar</li><li>Apr</li><li>May</li><li>Jun</li>
+            <li>Jul</li><li>Aug</li><li>Sep</li><li>Oct</li><li>Nov</li><li>Dec</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==========================================================================
+     BARRA DE LOGOS
+     Elementor: container + widgets image. PLACEHOLDERS — permisos pendientes.
+     ========================================================================== -->
+<section class="logos">
+  <div class="logos__inner">
+    <p class="logos__label">Trusted by leading<br>organizations across Canada</p>
+    <ul class="logos__lista">
+      <li class="ph ph--logo"><span>Calgary Board<br>of Education</span></li>
+      <li class="ph ph--logo"><span>Edmonton<br>Catholic Schools</span></li>
+      <li class="ph ph--logo"><span>North Vancouver<br>School District</span></li>
+      <li class="ph ph--logo"><span>Fort McMurray<br>School District</span></li>
+      <li class="ph ph--logo"><span>Elk Island<br>Public Schools</span></li>
+    </ul>
+  </div>
+</section>
+
+<script src="js/main.js"></script>
+</body>
+</html>
