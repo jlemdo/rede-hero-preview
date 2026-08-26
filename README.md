@@ -1,9 +1,33 @@
 # HTML — Maqueta del hero
 
-Reproducción en HTML/CSS/JS del mockup de Erick
-(`../Imagen que creo Erick como hero para tomar en cuenta como diseno/`).
+**En línea:** https://jlemdo.github.io/rede-hero-preview/
 
-Abrir `index.html` en el navegador. No necesita servidor.
+**Repositorio:** https://github.com/jlemdo/rede-hero-preview
+
+> ⚠ Es una maqueta de trabajo. Lleva `noindex` y `robots.txt` para que no aparezca
+> en buscadores. La URL es pública: compartirla solo con quien deba verla.
+
+---
+
+## Cómo publicar un cambio
+
+Editar los archivos y después, desde esta carpeta:
+
+```bash
+git add -A
+git commit -m "describir el cambio"
+git push
+```
+
+El sitio se actualiza solo en **1 o 2 minutos**.
+
+Si no ves el cambio, es la caché del navegador: recargar con **Ctrl + Shift + R**.
+
+---
+
+Reproducción en HTML/CSS/JS del mockup de diseño para el rediseño de getrede.ca.
+
+También se puede abrir `index.html` en local, sin servidor.
 
 ---
 
