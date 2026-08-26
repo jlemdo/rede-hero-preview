@@ -392,47 +392,125 @@
         </button>
       </form>
 
-      <!-- Resultado. Cifras de ejemplo, marcadas. -->
-      <div class="resultado">
-        <div class="resultado__head">
-          <p class="resultado__label">Your estimated opportunity</p>
-          <span class="pastilla">Sample figures</span>
+      <!-- Tarjeta de dos caras. Gira en 3D al pulsar el CTA del anverso.
+           Cifras de ejemplo, marcadas con pastilla. -->
+      <div class="flip" id="flip">
+        <div class="flip__inner">
+
+          <!-- ANVERSO: el resultado -->
+          <div class="flip__cara flip__cara--frente">
+            <div class="resultado">
+              <div class="resultado__head">
+                <p class="resultado__label">Your estimated opportunity</p>
+                <span class="pastilla">Sample figures</span>
+              </div>
+
+              <p class="resultado__cifra">
+                <span data-num="240000" data-pre="$">$240,000</span> to
+                <span data-num="360000" data-pre="$">$360,000</span>
+              </p>
+              <p class="resultado__nota">recoverable each year, based on a conservative range</p>
+
+              <dl class="desglose">
+                <div class="desglose__fila">
+                  <dt>Annual energy spend</dt>
+                  <dd><span data-num="2400000" data-pre="$">$2,400,000</span></dd>
+                </div>
+                <div class="desglose__fila">
+                  <dt>Conservative savings range</dt>
+                  <dd>10 to 15 per cent</dd>
+                </div>
+                <div class="desglose__fila">
+                  <dt>Sites</dt>
+                  <dd><span data-num="22">22</span></dd>
+                </div>
+                <div class="desglose__fila">
+                  <dt>Total area</dt>
+                  <dd><span data-num="1850000">1,850,000</span> sq ft</dd>
+                </div>
+              </dl>
+
+              <button class="btn btn--primary btn--block resultado__cta" type="button"
+                      data-flip="abrir" aria-controls="flip" aria-expanded="false">
+                Show me where these savings are
+                <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+                  <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                        stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+
+              <p class="resultado__legal">
+                An estimate based on results from comparable facilities. Actual savings
+                depend on your building systems, current operations and utility rates.
+              </p>
+            </div>
+          </div>
+
+          <!-- REVERSO: donde suelen estar esos ahorros -->
+          <div class="flip__cara flip__cara--dorso">
+            <div class="resultado resultado--dorso">
+              <div class="resultado__head">
+                <p class="resultado__label">Where the savings usually sit</p>
+                <button class="volver" type="button" data-flip="cerrar" aria-label="Back to your estimate">
+                  <svg width="16" height="12" viewBox="0 0 18 12" aria-hidden="true">
+                    <path d="M6.5 1L1.5 6L6.5 11M2 6h15" fill="none" stroke="currentColor"
+                          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Back
+                </button>
+              </div>
+
+              <p class="dorso__intro">
+                In most portfolios the same three things account for the bulk of it.
+              </p>
+
+              <ul class="fuentes">
+                <li class="fuente">
+                  <span class="fuente__peso">40<i>%</i></span>
+                  <div>
+                    <h3 class="fuente__titulo">Systems running when nobody is there</h3>
+                    <p class="fuente__texto">
+                      Schedules drift, setpoints get changed and never changed back.
+                    </p>
+                  </div>
+                </li>
+                <li class="fuente">
+                  <span class="fuente__peso">35<i>%</i></span>
+                  <div>
+                    <h3 class="fuente__titulo">A handful of buildings pulling the average down</h3>
+                    <p class="fuente__texto">
+                      Benchmarking tends to show that a few sites carry most of the waste.
+                    </p>
+                  </div>
+                </li>
+                <li class="fuente">
+                  <span class="fuente__peso">25<i>%</i></span>
+                  <div>
+                    <h3 class="fuente__titulo">Billing and rate structures nobody has reviewed</h3>
+                    <p class="fuente__texto">
+                      Wrong rate class, demand charges, meters billed under the wrong account.
+                    </p>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="dorso__cierre">
+                <p class="dorso__dato">
+                  <strong>$2.94M</strong> in avoidable annual cost found for one Western
+                  Canadian school district.
+                </p>
+                <a href="#" class="btn btn--primary btn--block">
+                  Start with an Energy Gap Analysis
+                  <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+                    <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
         </div>
-
-        <p class="resultado__cifra">$240,000 to $360,000</p>
-        <p class="resultado__nota">recoverable each year, based on a conservative range</p>
-
-        <dl class="desglose">
-          <div class="desglose__fila">
-            <dt>Annual energy spend</dt>
-            <dd>$2,400,000</dd>
-          </div>
-          <div class="desglose__fila">
-            <dt>Conservative savings range</dt>
-            <dd>10 to 15 per cent</dd>
-          </div>
-          <div class="desglose__fila">
-            <dt>Sites</dt>
-            <dd>22</dd>
-          </div>
-          <div class="desglose__fila">
-            <dt>Total area</dt>
-            <dd>1,850,000 sq ft</dd>
-          </div>
-        </dl>
-
-        <a href="#" class="btn btn--primary btn--block resultado__cta">
-          Show me where these savings are
-          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
-            <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
-                  stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-
-        <p class="resultado__legal">
-          An estimate based on results from comparable facilities. Actual savings depend
-          on your building systems, current operations and utility rates.
-        </p>
       </div>
     </div>
   </div>

@@ -164,3 +164,99 @@
   // Si hay movimiento reducido o no hay soporte, el HTML ya trae el valor final.
 
 })();
+
+
+/* ==========================================================================
+   CALCULADORA — solo interaccion visual
+
+   NO calcula. La logica real ira en un plugin de WordPress (ver DECISIONES D-02).
+   Aqui solo pasan dos cosas:
+     1. "Calculate my opportunity" anima los numeros del panel hasta su valor
+     2. "Show me where these savings are" gira la tarjeta y muestra el reverso
+   ========================================================================== */
+
+(function () {
+  'use strict';
+
+  var seccion = document.querySelector('.calc');
+  if (!seccion) { return; }
+
+  var reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- Formatear al estilo canadiense: 2,400,000 --- */
+  function formatear(n, decimales) {
+    return n.toLocaleString('en-CA', {
+      minimumFractionDigits: decimales || 0,
+      maximumFractionDigits: decimales || 0
+    });
+  }
+
+  /* --- Contar de 0 al valor final --- */
+  function contar(el) {
+    var destino = parseFloat(el.dataset.num);
+    var pre = el.dataset.pre || '';
+    if (isNaN(destino)) { return; }
+
+    if (reducido) {
+      el.textContent = pre + formatear(destino);
+      return;
+    }
+
+    var duracion = 1100;
+    var inicio = null;
+
+    function paso(ahora) {
+      if (inicio === null) { inicio = ahora; }
+      var avance = Math.min((ahora - inicio) / duracion, 1);
+      var suave = avance === 1 ? 1 : 1 - Math.pow(2, -10 * avance);
+      el.textContent = pre + formatear(Math.round(destino * suave));
+      if (avance < 1) { requestAnimationFrame(paso); }
+    }
+
+    requestAnimationFrame(paso);
+  }
+
+  /* --- Giro de la tarjeta --- */
+  var flip = document.getElementById('flip');
+  var btnAbrir  = flip ? flip.querySelector('[data-flip="abrir"]')  : null;
+  var btnCerrar = flip ? flip.querySelector('[data-flip="cerrar"]') : null;
+
+  function abrir() {
+    if (!flip) { return; }
+    flip.classList.add('girada');
+    if (btnAbrir) { btnAbrir.setAttribute('aria-expanded', 'true'); }
+    // Llevar el foco al reverso para que el teclado siga el hilo
+    window.setTimeout(function () { if (btnCerrar) { btnCerrar.focus(); } }, 380);
+  }
+
+  function cerrar() {
+    if (!flip) { return; }
+    flip.classList.remove('girada');
+    if (btnAbrir) { btnAbrir.setAttribute('aria-expanded', 'false'); }
+    window.setTimeout(function () { if (btnAbrir) { btnAbrir.focus(); } }, 380);
+  }
+
+  if (btnAbrir)  { btnAbrir.addEventListener('click', abrir); }
+  if (btnCerrar) { btnCerrar.addEventListener('click', cerrar); }
+
+  /* --- Boton "Calculate my opportunity" --- */
+  var btnCalcular = seccion.querySelector('.calc__btn');
+
+  if (btnCalcular) {
+    btnCalcular.addEventListener('click', function () {
+      // Si la tarjeta esta girada, volver al frente antes de recalcular
+      if (flip && flip.classList.contains('girada')) { cerrar(); }
+
+      seccion.querySelectorAll('[data-num]').forEach(function (el) {
+        el.textContent = el.dataset.pre || '';   // reiniciar
+        contar(el);
+      });
+    });
+  }
+
+  // Escape vuelve al frente
+  if (flip) { flip.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && flip.classList.contains('girada')) { cerrar(); }
+  }); }
+
+})();
