@@ -320,7 +320,7 @@
     <!-- Cierre: la respuesta de Rede. Es el giro de la seccion. -->
     <div class="respuesta">
       <p class="respuesta__texto">Rede closes that gap.</p>
-      <a href="#" class="enlace-flecha">
+      <a href="#calculator" class="enlace-flecha">
         See the opportunity
         <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
           <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
@@ -329,6 +329,112 @@
       </a>
     </div>
 
+  </div>
+</section>
+
+<!-- ==========================================================================
+     SECCION 4 — SAVINGS CALCULATOR
+     Fuente: Wireframe 2, "calc-section". Estructura del Home: lista de Erick (D-01)
+
+     ⚠ SOLO VISUAL. No calcula. La logica ira en un plugin de WordPress (D-02).
+     Las cifras del panel son de ejemplo y estan marcadas como tales.
+
+     Elementor: container > heading + text-editor + form (3 campos) + button
+     ========================================================================== -->
+<section class="calc" id="calculator">
+  <div class="calc__inner">
+
+    <div class="calc__intro">
+      <p class="eyebrow">Savings calculator</p>
+      <h2 class="calc__titulo">How much are your buildings really costing you?</h2>
+      <p class="calc__lead">
+        Enter three numbers and we will show you a conservative estimate of what you
+        could recover across your portfolio.
+      </p>
+    </div>
+
+    <div class="calc__panel">
+
+      <!-- Entradas -->
+      <form class="calc__form" onsubmit="return false">
+        <div class="campo">
+          <label class="campo__label" for="c-spend">Annual energy spend</label>
+          <div class="campo__wrap">
+            <span class="campo__prefijo">$</span>
+            <input class="campo__input" id="c-spend" type="text" inputmode="numeric"
+                   placeholder="2,400,000" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label class="campo__label" for="c-sites">Number of sites</label>
+          <div class="campo__wrap">
+            <input class="campo__input" id="c-sites" type="text" inputmode="numeric"
+                   placeholder="22" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label class="campo__label" for="c-area">Total facilities area</label>
+          <div class="campo__wrap">
+            <input class="campo__input" id="c-area" type="text" inputmode="numeric"
+                   placeholder="1,850,000" autocomplete="off">
+            <span class="campo__sufijo">sq ft</span>
+          </div>
+        </div>
+
+        <button class="btn btn--primary btn--lg calc__btn" type="button">
+          Calculate my opportunity
+          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+            <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                  stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </form>
+
+      <!-- Resultado. Cifras de ejemplo, marcadas. -->
+      <div class="resultado">
+        <div class="resultado__head">
+          <p class="resultado__label">Your estimated opportunity</p>
+          <span class="pastilla">Sample figures</span>
+        </div>
+
+        <p class="resultado__cifra">$240,000 to $360,000</p>
+        <p class="resultado__nota">recoverable each year, based on a conservative range</p>
+
+        <dl class="desglose">
+          <div class="desglose__fila">
+            <dt>Annual energy spend</dt>
+            <dd>$2,400,000</dd>
+          </div>
+          <div class="desglose__fila">
+            <dt>Conservative savings range</dt>
+            <dd>10 to 15 per cent</dd>
+          </div>
+          <div class="desglose__fila">
+            <dt>Sites</dt>
+            <dd>22</dd>
+          </div>
+          <div class="desglose__fila">
+            <dt>Total area</dt>
+            <dd>1,850,000 sq ft</dd>
+          </div>
+        </dl>
+
+        <a href="#" class="btn btn--primary btn--block resultado__cta">
+          Show me where these savings are
+          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+            <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                  stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <p class="resultado__legal">
+          An estimate based on results from comparable facilities. Actual savings depend
+          on your building systems, current operations and utility rates.
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
