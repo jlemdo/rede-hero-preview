@@ -221,20 +221,36 @@
   var btnAbrir  = flip ? flip.querySelector('[data-flip="abrir"]')  : null;
   var btnCerrar = flip ? flip.querySelector('[data-flip="cerrar"]') : null;
 
+  var caraFrente = flip ? flip.querySelector('.flip__cara--frente') : null;
+  var caraDorso  = flip ? flip.querySelector('.flip__cara--dorso')  : null;
+
+  /* La cara que no se ve se marca como inerte: no recibe foco ni lectores de
+     pantalla. Se usa 'inert' y no 'visibility: hidden' porque esa propiedad
+     conmuta de golpe y producia un parpadeo a mitad del giro. */
+  function marcarInerte(girada) {
+    if (caraDorso)  { caraDorso.inert  = !girada; }
+    if (caraFrente) { caraFrente.inert =  girada; }
+  }
+
   function abrir() {
     if (!flip) { return; }
     flip.classList.add('girada');
     if (btnAbrir) { btnAbrir.setAttribute('aria-expanded', 'true'); }
-    // Llevar el foco al reverso para que el teclado siga el hilo
-    window.setTimeout(function () { if (btnCerrar) { btnCerrar.focus(); } }, 380);
+    marcarInerte(true);
+    // El foco viaja al reverso cuando el giro ya paso la mitad
+    window.setTimeout(function () { if (btnCerrar) { btnCerrar.focus(); } }, 330);
   }
 
   function cerrar() {
     if (!flip) { return; }
     flip.classList.remove('girada');
     if (btnAbrir) { btnAbrir.setAttribute('aria-expanded', 'false'); }
-    window.setTimeout(function () { if (btnAbrir) { btnAbrir.focus(); } }, 380);
+    marcarInerte(false);
+    window.setTimeout(function () { if (btnAbrir) { btnAbrir.focus(); } }, 330);
   }
+
+  // Estado inicial: el reverso arranca inerte
+  marcarInerte(false);
 
   if (btnAbrir)  { btnAbrir.addEventListener('click', abrir); }
   if (btnCerrar) { btnCerrar.addEventListener('click', cerrar); }

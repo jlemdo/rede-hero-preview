@@ -947,6 +947,7 @@ button {
 
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;   /* la tarjeta llena su columna: el eje de giro queda centrado */
   gap: var(--gap);
   padding: var(--padding);
   background: var(--c-texto);
@@ -1122,46 +1123,73 @@ html { scroll-behavior: smooth; }
 /* ==========================================================================
    TARJETA DE DOS CARAS (calculadora)
 
-   El anverso muestra el resultado. Al pulsar el CTA la tarjeta gira sobre su
-   eje vertical y aparece el reverso, con el detalle de donde estan esos ahorros.
+   El anverso muestra el resultado. Al pulsar el CTA la tarjeta gira y aparece
+   el reverso con el detalle de donde estan esos ahorros.
 
-   Implementacion: perspective en el contenedor, rotateY en el inner,
-   backface-visibility para ocultar la cara que queda detras.
+   Nota de implementacion: un rotateY completo de 180 grados obliga a la cara a
+   pasar por su canto, y en ese punto el escorzo deja ver el fondo del panel.
+   Se ve como un parpadeo. Aqui el giro es corto (12 grados a cada lado) y las
+   caras se cruzan con un fundido. El gesto se sigue leyendo como "darle la
+   vuelta a la tarjeta", pero sin el destello.
    ========================================================================== */
 
 .flip {
-  perspective: 1800px;
-  min-height: 100%;
-}
-
-.flip__inner {
   position: relative;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 700ms cubic-bezier(.4, .04, .2, 1);
+  perspective: 2000px;
+  isolation: isolate;
 }
 
-.flip.girada .flip__inner { transform: rotateY(180deg); }
-
+/* El frente define la altura del contenedor. El dorso se superpone en absoluto,
+   asi las dos caras ocupan exactamente el mismo hueco y no hay salto. */
 .flip__cara {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  border-radius: var(--radio-md);
+  transition:
+    opacity 300ms ease,
+    transform 620ms cubic-bezier(.33, 0, .2, 1);
+  will-change: transform, opacity;
 }
 
-/* El frente manda en la altura. El dorso se superpone en absoluto. */
 .flip__cara--frente { position: relative; }
 
 .flip__cara--dorso {
   position: absolute;
   inset: 0;
-  transform: rotateY(180deg);
 }
 
-/* Mientras una cara esta oculta no debe ser enfocable con el teclado */
-.flip:not(.girada) .flip__cara--dorso,
-.flip.girada .flip__cara--frente { visibility: hidden; }
+/* --- Estado en reposo: se ve el frente --- */
+
+.flip__cara--frente { opacity: 1; transform: rotateY(0deg) scale(1); }
+
+.flip__cara--dorso {
+  opacity: 0;
+  transform: rotateY(12deg) scale(.96);
+  pointer-events: none;
+}
+
+/* --- Estado girado: se ve el dorso --- */
+
+.flip.girada .flip__cara--frente {
+  opacity: 0;
+  transform: rotateY(-12deg) scale(.96);
+  pointer-events: none;
+}
+
+.flip.girada .flip__cara--dorso {
+  opacity: 1;
+  transform: rotateY(0deg) scale(1);
+  pointer-events: auto;
+}
+
+/* La cara que entra aparece un poco despues, para que no se solapen los textos */
+.flip.girada .flip__cara--dorso  { transition-delay: 140ms, 0ms; }
+.flip:not(.girada) .flip__cara--frente { transition-delay: 140ms, 0ms; }
 
 .flip__cara .resultado { height: 100%; }
+
+/* Sin movimiento si el usuario lo pidio: cambio directo, sin giro */
+@media (prefers-reduced-motion: reduce) {
+  .flip__cara { transition: opacity 150ms ease; transform: none !important; }
+}
 
 /* --- Contenido del reverso --- */
 
@@ -1184,15 +1212,15 @@ html { scroll-behavior: smooth; }
 .volver:hover svg { transform: translateX(-3px); }
 
 .dorso__intro {
-  margin-bottom: var(--sp-5);
+  margin-bottom: var(--sp-4);
   font-size: var(--fs-body);
   color: var(--c-texto-cuerpo);
 }
 
 .fuentes {
   display: grid;
-  gap: var(--sp-4);
-  margin-bottom: var(--sp-5);
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
 }
 
 .fuente {
@@ -1200,7 +1228,7 @@ html { scroll-behavior: smooth; }
   grid-template-columns: auto 1fr;
   align-items: start;
   gap: var(--sp-4);
-  padding-bottom: var(--sp-4);
+  padding-bottom: var(--sp-3);
   border-bottom: 1px solid var(--c-borde-suave);
 }
 
