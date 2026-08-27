@@ -1156,6 +1156,7 @@ html { scroll-behavior: smooth; }
   inset: 0;
 }
 
+
 /* --- Estado en reposo: se ve el frente --- */
 
 .flip__cara--frente { opacity: 1; transform: rotateY(0deg) scale(1); }
@@ -1226,7 +1227,7 @@ html { scroll-behavior: smooth; }
 .fuente {
   display: grid;
   grid-template-columns: auto 1fr;
-  align-items: start;
+  align-items: center;
   gap: var(--sp-4);
   padding-bottom: var(--sp-3);
   border-bottom: 1px solid var(--c-borde-suave);
@@ -1237,8 +1238,8 @@ html { scroll-behavior: smooth; }
 .fuente__peso {
   display: grid;
   place-items: center;
-  min-width: 52px;
-  padding: var(--sp-2);
+  min-width: 46px;
+  padding: var(--sp-2) var(--sp-1);
   font-size: var(--fs-body-lg);
   font-weight: var(--fw-extrabold);
   line-height: 1;
@@ -1255,8 +1256,7 @@ html { scroll-behavior: smooth; }
 }
 
 .fuente__titulo {
-  margin-bottom: var(--sp-1);
-  font-size: var(--fs-body);
+  font-size: var(--fs-small);
   font-weight: var(--fw-bold);
   line-height: 1.3;
 }
@@ -1295,4 +1295,154 @@ html { scroll-behavior: smooth; }
 
 @media (max-width: 900px) {
   .flip { min-height: 0; }
+}
+
+
+/* ==========================================================================
+   SWITCH DE REGION (calculadora)
+
+   British Columbia y Resto de Canada aplican logicas distintas: las tarifas
+   y los programas de incentivos cambian por provincia. BC tiene BC Hydro
+   Continuous Optimization, que el brief menciona expresamente.
+   ========================================================================== */
+
+.region {
+  margin: 0 0 var(--sp-2);
+  padding: 0;
+  border: 0;
+}
+
+.region__opciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+  padding: 4px;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: var(--radio-sm);
+}
+
+.region__btn {
+  padding: var(--sp-3) var(--sp-2);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  color: rgba(255, 255, 255, .65);
+  background: transparent;
+  border-radius: calc(var(--radio-sm) - 2px);
+  transition: color var(--trans-rapida), background-color var(--trans-media);
+}
+
+.region__btn:hover { color: var(--c-blanco); }
+
+.region__btn.is-activa {
+  color: var(--c-blanco);
+  background: var(--c-verde);
+}
+
+.region__nota {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .55);
+}
+
+.region__nota[hidden] { display: none; }
+
+
+/* ==========================================================================
+   FORMULARIO DE CAPTURA (reverso de la tarjeta)
+   Se conecta a HubSpot. Solo tres campos: nombre, organizacion y correo.
+   ========================================================================== */
+
+.captura__titulo {
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-body-lg);
+  font-weight: var(--fw-bold);
+  line-height: 1.25;
+  color: var(--c-texto);
+}
+
+.captura__texto {
+  margin-bottom: var(--sp-4);
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: var(--c-texto-suave);
+}
+
+.captura {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+/* Variante clara de los campos: el reverso tiene fondo blanco */
+.campo--claro .campo__wrap {
+  background: var(--c-fondo);
+  border-color: var(--c-borde);
+}
+
+.campo--claro .campo__wrap:focus-within {
+  background: var(--c-blanco);
+  border-color: var(--c-verde);
+}
+
+.campo--claro .campo__label { color: var(--c-texto-suave); }
+
+.campo--claro .campo__input {
+  padding-block: var(--sp-3);
+  font-size: var(--fs-body);
+  color: var(--c-texto);
+}
+
+.campo--claro .campo__input::placeholder { color: var(--c-texto-suave); }
+
+.captura__legal {
+  margin-top: var(--sp-1);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--c-texto-suave);
+}
+
+/* Mensaje de envio correcto */
+.captura--enviada {
+  display: grid;
+  place-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-6) var(--sp-4);
+  text-align: center;
+}
+
+.captura--enviada .tic {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  color: var(--c-verde);
+  background: var(--c-verde-claro);
+  border-radius: var(--radio-pill);
+}
+
+
+/* --- Los dos pasos del reverso ---
+   El listado y el formulario se turnan: nunca estan visibles a la vez, para
+   que la tarjeta no crezca ni haga scroll. */
+
+.paso {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  animation: entrarPaso 320ms ease;
+}
+
+.paso[hidden] { display: none; }
+
+.paso--fuentes .dorso__dato { margin-top: auto; }
+
+@keyframes entrarPaso {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paso { animation: none; }
 }

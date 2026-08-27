@@ -276,3 +276,136 @@
   }); }
 
 })();
+
+
+/* ==========================================================================
+   SWITCH DE REGION + CAPTURA A HUBSPOT
+
+   Region: British Columbia y Resto de Canada. Cada una aplica su propia
+   logica de calculo. Aqui solo se cambia el estado visual y se guarda la
+   eleccion; el calculo real llegara con el plugin de WordPress.
+
+   Formulario: no envia a ningun sitio todavia. Al conectar HubSpot se
+   sustituye por su embed o se apunta la accion a su endpoint.
+   ========================================================================== */
+
+(function () {
+  'use strict';
+
+  var calc = document.querySelector('.calc');
+  if (!calc) { return; }
+
+  /* --- Switch de region --- */
+
+  var botones = calc.querySelectorAll('.region__btn');
+  var notas   = calc.querySelectorAll('[data-region-nota]');
+  var campoRegion = calc.querySelector('[data-region-campo]');
+
+  function elegirRegion(region) {
+    botones.forEach(function (b) {
+      var activa = b.dataset.region === region;
+      b.classList.toggle('is-activa', activa);
+      b.setAttribute('aria-selected', String(activa));
+    });
+
+    notas.forEach(function (n) {
+      n.hidden = n.dataset.regionNota !== region;
+    });
+
+    // Viaja a HubSpot junto con el contacto
+    if (campoRegion) { campoRegion.value = region; }
+  }
+
+  botones.forEach(function (b) {
+    b.addEventListener('click', function () {
+      elegirRegion(b.dataset.region);
+    });
+  });
+
+  /* --- Captura a HubSpot --- */
+
+  var form = calc.querySelector('[data-hubspot]');
+  if (!form) { return; }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Validacion nativa del navegador
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+
+    // Arrastrar los numeros de la calculadora al envio
+    var pares = [
+      ['annual_spend', '#c-spend'],
+      ['sites',        '#c-sites'],
+      ['area',         '#c-area']
+    ];
+
+    pares.forEach(function (par) {
+      var oculto = form.querySelector('[name="' + par[0] + '"]');
+      var origen = calc.querySelector(par[1]);
+      if (oculto && origen) { oculto.value = origen.value; }
+    });
+
+    // TODO: aqui va el envio a HubSpot. Por ahora solo se confirma en pantalla.
+    var datos = {};
+    new FormData(form).forEach(function (v, k) { datos[k] = v; });
+    if (window.console) { console.log('[Rede] Pendiente de enviar a HubSpot:', datos); }
+
+    confirmar();
+  });
+
+  function confirmar() {
+    var caja = document.createElement('div');
+    caja.className = 'captura--enviada';
+    caja.setAttribute('role', 'status');
+    caja.innerHTML =
+      '<span class="tic" aria-hidden="true">' +
+        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none">' +
+          '<path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" ' +
+          'stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+      '</span>' +
+      '<p class="captura__titulo">Thanks. We will be in touch.</p>' +
+      '<p class="captura__texto">Someone from the team will get back to you within ' +
+      'one business day.</p>';
+
+    form.replaceWith(caja);
+  }
+
+})();
+
+
+/* --- Cambio entre los dos pasos del reverso -------------------------------
+   Paso 1: donde suelen estar los ahorros.
+   Paso 2: el formulario de captura.
+   Se turnan para que la tarjeta mantenga su altura.                        */
+
+(function () {
+  'use strict';
+
+  var dorso = document.querySelector('.flip__cara--dorso');
+  if (!dorso) { return; }
+
+  var pasoFuentes = dorso.querySelector('.paso--fuentes');
+  var pasoForm    = dorso.querySelector('.paso--form');
+  var btnIr       = dorso.querySelector('[data-paso="form"]');
+  var volver      = dorso.querySelector('[data-flip="cerrar"]');
+
+  if (!pasoFuentes || !pasoForm || !btnIr) { return; }
+
+  btnIr.addEventListener('click', function () {
+    pasoFuentes.hidden = true;
+    pasoForm.hidden = false;
+    var primero = pasoForm.querySelector('input:not([type="hidden"])');
+    if (primero) { primero.focus(); }
+  });
+
+  // Al cerrar la tarjeta, el reverso vuelve a su primer paso
+  if (volver) {
+    volver.addEventListener('click', function () {
+      window.setTimeout(function () {
+        pasoFuentes.hidden = false;
+        pasoForm.hidden = true;
+      }, 500);
+    });
+  }
+})();
