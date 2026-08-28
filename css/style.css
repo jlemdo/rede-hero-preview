@@ -132,6 +132,7 @@ button {
   min-height: var(--header-alto);
   margin-inline: auto;
   padding-inline: var(--padding-x);
+  overflow-x: clip;   /* el burger no debe empujar fuera del viewport */
 }
 
 .header__logo { flex-shrink: 0; }
@@ -226,8 +227,12 @@ button {
 .burger {
   display: none;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
-  padding: var(--sp-2);
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
   margin-left: auto;
 }
 .burger span {
@@ -712,6 +717,11 @@ button {
 @media (max-width: 640px) {
   .header__actions .btn { --btn-px: var(--sp-4); font-size: var(--fs-small); }
 
+  /* Area tactil minima de 44px: es lo que ocupa un dedo */
+  .enlace-flecha,
+  .volver { min-height: 44px; }
+  .enlace-flecha { padding-block: var(--sp-2); }
+
   .hero__actions { flex-direction: column; align-items: stretch; }
   .hero__actions .btn { width: 100%; }
 
@@ -960,7 +970,17 @@ button {
   display: flex;
   flex-direction: column;
   gap: var(--sp-5);
+  height: 100%;
 }
+
+/* Alineacion en el eje Y (peticion de Erick).
+   Ambas columnas terminan en boton + nota. Las notas tienen distinto alto
+   (una linea frente a dos), asi que se les fija el mismo minimo para que los
+   botones caigan exactamente a la misma altura. */
+.calc__btn { margin-top: auto; }
+
+.calc__nota,
+.resultado__legal { min-height: calc(var(--fs-xs) * 1.55 * 2); }
 
 .campo { display: grid; gap: var(--sp-2); }
 
@@ -1009,7 +1029,6 @@ button {
   flex-shrink: 0;
 }
 
-.calc__btn { margin-top: var(--sp-2); }
 
 /* --- Panel de resultado --- */
 
@@ -1018,6 +1037,7 @@ button {
 
   display: flex;
   flex-direction: column;
+  height: 100%;
   padding: var(--padding);
   background: var(--c-blanco);
   border-radius: var(--radio-md);
@@ -1096,6 +1116,7 @@ button {
 }
 
 .resultado__cta { margin-top: auto; }
+.desglose { margin-block: var(--sp-5); }
 
 .resultado__legal {
   margin-top: var(--sp-4);
@@ -1108,6 +1129,18 @@ button {
 
 @media (max-width: 900px) {
   .calc__panel { grid-template-columns: minmax(0, 1fr); }
+
+  /* La tarjeta deja de estirarse cuando las columnas se apilan */
+  .flip,
+  .flip__cara--frente { height: auto; }
+  .flip__cara .resultado { height: auto; }
+
+  /* El legal recupera su alto natural: ya no hay nada con que alinear */
+  .calc__nota,
+  .resultado__legal { min-height: 0; }
+
+  /* Sin altura que rellenar, el CTA sigue el flujo normal */
+  .resultado__cta { margin-top: var(--sp-4); }
 }
 
 
@@ -1135,6 +1168,9 @@ html { scroll-behavior: smooth; }
 
 .flip {
   position: relative;
+  display: flex;
+  min-width: 0;          /* sin esto el contenido desborda en movil */
+  height: 100%;
   perspective: 2000px;
   isolation: isolate;
 }
@@ -1149,7 +1185,13 @@ html { scroll-behavior: smooth; }
   will-change: transform, opacity;
 }
 
-.flip__cara--frente { position: relative; }
+.flip__cara--frente {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+}
 
 .flip__cara--dorso {
   position: absolute;
@@ -1185,7 +1227,7 @@ html { scroll-behavior: smooth; }
 .flip.girada .flip__cara--dorso  { transition-delay: 140ms, 0ms; }
 .flip:not(.girada) .flip__cara--frente { transition-delay: 140ms, 0ms; }
 
-.flip__cara .resultado { height: 100%; }
+.flip__cara .resultado { width: 100%; height: 100%; }
 
 /* Sin movimiento si el usuario lo pidio: cambio directo, sin giro */
 @media (prefers-reduced-motion: reduce) {
@@ -1445,4 +1487,19 @@ html { scroll-behavior: smooth; }
 
 @media (prefers-reduced-motion: reduce) {
   .paso { animation: none; }
+}
+
+/* Nota bajo el boton del formulario. Refleja la nota legal de la tarjeta,
+   para que ambas columnas tengan la misma estructura y los botones alineen. */
+.calc__nota {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-xs);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, .5);
+}
+
+
+/* El wrapper heredado de la version anterior del giro no debe desbordar */
+.flip__inner {
+  display: contents;
 }
