@@ -167,12 +167,14 @@
 
 
 /* ==========================================================================
-   CALCULADORA — solo interaccion visual
+   OPPORTUNITY CHECK
 
-   NO calcula. La logica real ira en un plugin de WordPress (ver DECISIONES D-02).
-   Aqui solo pasan dos cosas:
-     1. "Calculate my opportunity" anima los numeros del panel hasta su valor
-     2. "Show me where these savings are" gira la tarjeta y muestra el reverso
+   Benchmarks historicos de BC Hydro Continuous Optimization por tipo de
+   edificio. Vienen del wireframe del cliente, no son inventados.
+
+   La recomendacion final depende del alcance:
+     una sola instalacion -> Site Investigation
+     varias               -> Energy Gap Analysis
    ========================================================================== */
 
 (function () {
@@ -181,180 +183,233 @@
   var seccion = document.querySelector('.calc');
   if (!seccion) { return; }
 
-  var reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* --- Benchmarks C-Op ---------------------------------------------------- */
 
-  /* --- Formatear al estilo canadiense: 2,400,000 --- */
-  function formatear(n, decimales) {
-    return n.toLocaleString('en-CA', {
-      minimumFractionDigits: decimales || 0,
-      maximumFractionDigits: decimales || 0
+  var BENCHMARKS = {
+    extendedCare: { label: 'Extended care',                     costPerFt2: 2.24, savingsPct: 6.7, implementCostFt2: 0.35, payback: 2.4 },
+    foodRetail:   { label: 'Food retail',                       costPerFt2: 4.13, savingsPct: 4.5, implementCostFt2: 0.02, payback: 0.1 },
+    hospital:     { label: 'Hospital',                          costPerFt2: 2.98, savingsPct: 4.8, implementCostFt2: 0.23, payback: 1.6 },
+    largeOffice:  { label: 'Large office',                      costPerFt2: 2.49, savingsPct: 4.2, implementCostFt2: 0.21, payback: 1.9 },
+    mediumOffice: { label: 'Medium office',                     costPerFt2: 2.13, savingsPct: 7.0, implementCostFt2: 0.27, payback: 1.8 },
+    murb:         { label: 'Multi-unit residential building',   costPerFt2: 0.72, savingsPct: 7.4, implementCostFt2: 0.06, payback: 1.2 },
+    nursingHome:  { label: 'Nursing home',                      costPerFt2: 1.92, savingsPct: 4.8, implementCostFt2: 0.23, payback: 2.5 },
+    recreation:   { label: 'Recreation',                        costPerFt2: 3.10, savingsPct: 5.7, implementCostFt2: 0.32, payback: 1.8 },
+    shoppingMall: { label: 'Shopping mall',                     costPerFt2: 1.95, savingsPct: 2.0, implementCostFt2: 0.07, payback: 1.9 },
+    university:   { label: 'University or college',             costPerFt2: 2.03, savingsPct: 7.9, implementCostFt2: 0.28, payback: 1.8 },
+    hotel:        { label: 'Hotel',                             costPerFt2: 2.20, savingsPct: 5.2, implementCostFt2: 0.23, payback: 2.0 },
+    school:       { label: 'School',                            costPerFt2: 1.00, savingsPct: 9.5, implementCostFt2: 0.17, payback: 1.8 },
+    other:        { label: 'Other',                             costPerFt2: 2.18, savingsPct: 5.7, implementCostFt2: 0.21, payback: 1.7 }
+  };
+
+  var estado = { paso: 1, scope: '' };
+  var TOTAL = 4;
+
+  var $ = function (sel) { return seccion.querySelector(sel); };
+
+  /* --- Rellenar el selector de tipo de edificio --------------------------- */
+
+  var selTipo = $('#c-type');
+  Object.keys(BENCHMARKS).forEach(function (clave) {
+    var op = document.createElement('option');
+    op.value = clave;
+    op.textContent = BENCHMARKS[clave].label;
+    selTipo.appendChild(op);
+  });
+  selTipo.value = 'school';   // el sector principal de Rede
+
+  /* --- Navegacion entre pasos -------------------------------------------- */
+
+  var barra    = $('#barra');
+  var contador = $('#paso-n');
+  var btnAtras = $('#btn-atras');
+  var btnSig   = $('#btn-siguiente');
+  var btnTexto = $('#btn-texto');
+
+  function pintarPaso() {
+    seccion.querySelectorAll('.paso-calc').forEach(function (p) {
+      p.classList.toggle('is-activo', Number(p.dataset.paso) === estado.paso);
     });
+
+    barra.style.width = (estado.paso / TOTAL * 100) + '%';
+    contador.textContent = estado.paso;
+    barra.parentElement.setAttribute('aria-valuenow', estado.paso);
+
+    btnAtras.hidden = estado.paso === 1;
+    btnTexto.textContent = estado.paso === TOTAL ? 'Show benchmark result' : 'Next';
   }
 
-  /* --- Contar de 0 al valor final --- */
-  function contar(el) {
-    var destino = parseFloat(el.dataset.num);
-    var pre = el.dataset.pre || '';
-    if (isNaN(destino)) { return; }
+  function siguiente() {
+    // El paso 1 necesita una eleccion; si no la hay, se asume portafolio
+    if (estado.paso === 1 && !estado.scope) { elegirScope('multi'); }
 
-    if (reducido) {
-      el.textContent = pre + formatear(destino);
-      return;
+    if (estado.paso < TOTAL) {
+      estado.paso += 1;
+      pintarPaso();
+    } else {
+      calcular();
     }
-
-    var duracion = 1100;
-    var inicio = null;
-
-    function paso(ahora) {
-      if (inicio === null) { inicio = ahora; }
-      var avance = Math.min((ahora - inicio) / duracion, 1);
-      var suave = avance === 1 ? 1 : 1 - Math.pow(2, -10 * avance);
-      el.textContent = pre + formatear(Math.round(destino * suave));
-      if (avance < 1) { requestAnimationFrame(paso); }
-    }
-
-    requestAnimationFrame(paso);
   }
 
-  /* --- Giro de la tarjeta --- */
+  function atras() {
+    if (estado.paso > 1) {
+      estado.paso -= 1;
+      pintarPaso();
+    }
+  }
+
+  btnSig.addEventListener('click', siguiente);
+  btnAtras.addEventListener('click', atras);
+
+  /* --- Paso 1: uno o varios edificios ------------------------------------- */
+
+  function elegirScope(valor) {
+    estado.scope = valor;
+    seccion.querySelectorAll('.opcion').forEach(function (o) {
+      o.classList.toggle('is-elegida', o.dataset.scope === valor);
+    });
+    if (valor === 'single') { $('#c-sites').value = '1'; }
+  }
+
+  seccion.querySelectorAll('.opcion').forEach(function (o) {
+    o.addEventListener('click', function () {
+      elegirScope(o.dataset.scope);
+      window.setTimeout(siguiente, 220);   // avanza solo tras elegir
+    });
+  });
+
+  /* --- Utilidades --------------------------------------------------------- */
+
+  function numero(valor) {
+    var n = Number(String(valor || '').replace(/[^0-9.]/g, ''));
+    return isFinite(n) ? n : 0;
+  }
+
+  function dinero(n) {
+    if (!isFinite(n) || n <= 0) { return '$0'; }
+    return '$' + Math.round(n).toLocaleString('en-CA');
+  }
+
+  /* --- El calculo --------------------------------------------------------- */
+
+  function calcular() {
+    var clave = selTipo.value || 'other';
+    var b = BENCHMARKS[clave] || BENCHMARKS.other;
+
+    var area   = numero($('#c-area').value);
+    var gasto  = numero($('#c-spend').value);
+    var sitios = numero($('#c-sites').value) || (estado.scope === 'single' ? 1 : 2);
+
+    // Si no indica gasto, se estima con el coste por pie cuadrado del benchmark
+    var gastoFinal = gasto || (area ? area * b.costPerFt2 : 0);
+    var oportunidad = gastoFinal * (b.savingsPct / 100);
+
+    $('#cifra').textContent = dinero(oportunidad);
+    $('#etiqueta-tipo').textContent = b.label;
+    $('#d-tipo').textContent = b.label;
+    $('#d-pct').textContent = b.savingsPct.toFixed(1) + ' per cent';
+    $('#d-payback').textContent = b.payback + ' years';
+
+    $('#cifra-nota').textContent = gasto
+      ? 'in annual opportunity, based on your entered utility spend'
+      : 'in annual opportunity, estimated from historical cost per square foot';
+
+    // La recomendacion depende del alcance
+    var unaSola = estado.scope === 'single' || sitios <= 1;
+
+    if (unaSola) {
+      $('#rec-titulo').textContent = 'Recommended next step: Site Investigation';
+      $('#rec-texto').textContent =
+        'Because this is one building, the clearest next step is a focused review ' +
+        'of utility evidence, benchmark context, and building operation.';
+      $('#rec-boton').textContent = 'See Site Investigation';
+      $('#dorso-titulo').textContent = 'Site Investigation';
+    } else {
+      $('#rec-titulo').textContent = 'Recommended next step: Energy Gap Analysis';
+      $('#rec-texto').textContent =
+        'Because this is a portfolio, start with an Energy Gap Analysis. It compares ' +
+        'buildings, identifies outliers, and shows which sites deserve attention first.';
+      $('#rec-boton').textContent = 'See the EGA path';
+      $('#dorso-titulo').textContent = 'Energy Gap Analysis';
+    }
+
+    // Guardar el contexto para HubSpot
+    var form = seccion.querySelector('[data-hubspot]');
+    if (form) {
+      var datos = {
+        scope: estado.scope || 'multi',
+        sector: $('#c-sector').value,
+        province: $('#c-province').value,
+        building_type: clave,
+        area: area || '',
+        annual_spend: gastoFinal ? Math.round(gastoFinal) : '',
+        sites: sitios,
+        benchmark_opportunity: oportunidad ? Math.round(oportunidad) : ''
+      };
+      Object.keys(datos).forEach(function (k) {
+        var campo = form.querySelector('[name="' + k + '"]');
+        if (campo) { campo.value = datos[k]; }
+      });
+    }
+
+    $('#espera').hidden = true;
+    $('#salida').hidden = false;
+  }
+
+  /* --- Giro de la tarjeta ------------------------------------------------- */
+
   var flip = document.getElementById('flip');
-  var btnAbrir  = flip ? flip.querySelector('[data-flip="abrir"]')  : null;
-  var btnCerrar = flip ? flip.querySelector('[data-flip="cerrar"]') : null;
+  if (!flip) { return; }
 
-  var caraFrente = flip ? flip.querySelector('.flip__cara--frente') : null;
-  var caraDorso  = flip ? flip.querySelector('.flip__cara--dorso')  : null;
+  var caraFrente = flip.querySelector('.flip__cara--frente');
+  var caraDorso  = flip.querySelector('.flip__cara--dorso');
+  var btnAbrir   = flip.querySelector('[data-flip="abrir"]');
+  var btnCerrar  = flip.querySelector('[data-flip="cerrar"]');
 
-  /* La cara que no se ve se marca como inerte: no recibe foco ni lectores de
-     pantalla. Se usa 'inert' y no 'visibility: hidden' porque esa propiedad
-     conmuta de golpe y producia un parpadeo a mitad del giro. */
+  /* La cara oculta se marca inerte: fuera del recorrido de teclado y de los
+     lectores de pantalla. Se usa inert y no visibility, porque esa propiedad
+     conmuta de golpe y produce un parpadeo a mitad del giro. */
   function marcarInerte(girada) {
     if (caraDorso)  { caraDorso.inert  = !girada; }
     if (caraFrente) { caraFrente.inert =  girada; }
   }
 
   function abrir() {
-    if (!flip) { return; }
     flip.classList.add('girada');
     if (btnAbrir) { btnAbrir.setAttribute('aria-expanded', 'true'); }
     marcarInerte(true);
-    // El foco viaja al reverso cuando el giro ya paso la mitad
     window.setTimeout(function () { if (btnCerrar) { btnCerrar.focus(); } }, 330);
   }
 
   function cerrar() {
-    if (!flip) { return; }
     flip.classList.remove('girada');
     if (btnAbrir) { btnAbrir.setAttribute('aria-expanded', 'false'); }
     marcarInerte(false);
     window.setTimeout(function () { if (btnAbrir) { btnAbrir.focus(); } }, 330);
   }
 
-  // Estado inicial: el reverso arranca inerte
-  marcarInerte(false);
-
   if (btnAbrir)  { btnAbrir.addEventListener('click', abrir); }
   if (btnCerrar) { btnCerrar.addEventListener('click', cerrar); }
 
-  /* --- Boton "Calculate my opportunity" --- */
-  var btnCalcular = seccion.querySelector('.calc__btn');
-
-  if (btnCalcular) {
-    btnCalcular.addEventListener('click', function () {
-      // Si la tarjeta esta girada, volver al frente antes de recalcular
-      if (flip && flip.classList.contains('girada')) { cerrar(); }
-
-      seccion.querySelectorAll('[data-num]').forEach(function (el) {
-        el.textContent = el.dataset.pre || '';   // reiniciar
-        contar(el);
-      });
-    });
-  }
-
-  // Escape vuelve al frente
-  if (flip) { flip.addEventListener('keydown', function (e) {
+  flip.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && flip.classList.contains('girada')) { cerrar(); }
-  }); }
-
-})();
-
-
-/* ==========================================================================
-   SWITCH DE REGION + CAPTURA A HUBSPOT
-
-   Region: British Columbia y Resto de Canada. Cada una aplica su propia
-   logica de calculo. Aqui solo se cambia el estado visual y se guarda la
-   eleccion; el calculo real llegara con el plugin de WordPress.
-
-   Formulario: no envia a ningun sitio todavia. Al conectar HubSpot se
-   sustituye por su embed o se apunta la accion a su endpoint.
-   ========================================================================== */
-
-(function () {
-  'use strict';
-
-  var calc = document.querySelector('.calc');
-  if (!calc) { return; }
-
-  /* --- Switch de region --- */
-
-  var botones = calc.querySelectorAll('.region__btn');
-  var notas   = calc.querySelectorAll('[data-region-nota]');
-  var campoRegion = calc.querySelector('[data-region-campo]');
-
-  function elegirRegion(region) {
-    botones.forEach(function (b) {
-      var activa = b.dataset.region === region;
-      b.classList.toggle('is-activa', activa);
-      b.setAttribute('aria-selected', String(activa));
-    });
-
-    notas.forEach(function (n) {
-      n.hidden = n.dataset.regionNota !== region;
-    });
-
-    // Viaja a HubSpot junto con el contacto
-    if (campoRegion) { campoRegion.value = region; }
-  }
-
-  botones.forEach(function (b) {
-    b.addEventListener('click', function () {
-      elegirRegion(b.dataset.region);
-    });
   });
 
-  /* --- Captura a HubSpot --- */
+  marcarInerte(false);
 
-  var form = calc.querySelector('[data-hubspot]');
+  /* --- Envio a HubSpot ---------------------------------------------------- */
+
+  var form = seccion.querySelector('[data-hubspot]');
   if (!form) { return; }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-
-    // Validacion nativa del navegador
     if (!form.checkValidity()) { form.reportValidity(); return; }
 
-    // Arrastrar los numeros de la calculadora al envio
-    var pares = [
-      ['annual_spend', '#c-spend'],
-      ['sites',        '#c-sites'],
-      ['area',         '#c-area']
-    ];
-
-    pares.forEach(function (par) {
-      var oculto = form.querySelector('[name="' + par[0] + '"]');
-      var origen = calc.querySelector(par[1]);
-      if (oculto && origen) { oculto.value = origen.value; }
-    });
-
-    // TODO: aqui va el envio a HubSpot. Por ahora solo se confirma en pantalla.
+    // TODO: conectar con HubSpot. Por ahora solo se confirma en pantalla.
     var datos = {};
     new FormData(form).forEach(function (v, k) { datos[k] = v; });
     if (window.console) { console.log('[Rede] Pendiente de enviar a HubSpot:', datos); }
 
-    confirmar();
-  });
-
-  function confirmar() {
     var caja = document.createElement('div');
     caja.className = 'captura--enviada';
     caja.setAttribute('role', 'status');
@@ -369,43 +424,8 @@
       'one business day.</p>';
 
     form.replaceWith(caja);
-  }
-
-})();
-
-
-/* --- Cambio entre los dos pasos del reverso -------------------------------
-   Paso 1: donde suelen estar los ahorros.
-   Paso 2: el formulario de captura.
-   Se turnan para que la tarjeta mantenga su altura.                        */
-
-(function () {
-  'use strict';
-
-  var dorso = document.querySelector('.flip__cara--dorso');
-  if (!dorso) { return; }
-
-  var pasoFuentes = dorso.querySelector('.paso--fuentes');
-  var pasoForm    = dorso.querySelector('.paso--form');
-  var btnIr       = dorso.querySelector('[data-paso="form"]');
-  var volver      = dorso.querySelector('[data-flip="cerrar"]');
-
-  if (!pasoFuentes || !pasoForm || !btnIr) { return; }
-
-  btnIr.addEventListener('click', function () {
-    pasoFuentes.hidden = true;
-    pasoForm.hidden = false;
-    var primero = pasoForm.querySelector('input:not([type="hidden"])');
-    if (primero) { primero.focus(); }
   });
 
-  // Al cerrar la tarjeta, el reverso vuelve a su primer paso
-  if (volver) {
-    volver.addEventListener('click', function () {
-      window.setTimeout(function () {
-        pasoFuentes.hidden = false;
-        pasoForm.hidden = true;
-      }, 500);
-    });
-  }
+  pintarPaso();
+
 })();

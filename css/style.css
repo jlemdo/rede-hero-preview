@@ -980,7 +980,47 @@ button {
 .calc__btn { margin-top: auto; }
 
 .calc__nota,
-.resultado__legal { min-height: calc(var(--fs-xs) * 1.55 * 2); }
+.resultado__legal {
+  min-height: calc(var(--fs-xs) * 1.55 * 3);
+  margin-top: var(--sp-4);
+}
+
+/* Alineacion determinista en el eje Y.
+   Ambas columnas miden lo mismo, asi que se ancla cada bloque final a la
+   misma distancia del fondo. Asi los botones caen siempre a la misma altura,
+   sin depender del alto del contenido que llevan encima. */
+.calc__btn,
+.resultado__cta {
+  --btn-py: var(--sp-4);
+  min-height: 64px;
+}
+
+.pasos,
+.flip__cara--frente .resultado { position: relative; }
+
+.pasos__nav,
+.salida .resultado__cta {
+  position: absolute;
+  left: var(--padding, 0);
+  right: var(--padding, 0);
+  bottom: var(--pie, 76px);   /* alto de la nota + su margen */
+  margin-top: 0;
+}
+
+.pasos__nav { left: 0; right: 0; }
+
+.calc__nota,
+.resultado__legal {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  margin-top: 0;
+}
+
+.pasos { padding-bottom: 140px; }
+.flip__cara--frente .resultado { padding-bottom: calc(var(--padding) + 140px); }
+.calc__nota, .resultado__legal { min-height: 0; }
+.resultado__legal { left: var(--padding); right: var(--padding); bottom: var(--padding); }
 
 .campo { display: grid; gap: var(--sp-2); }
 
@@ -1502,4 +1542,220 @@ html { scroll-behavior: smooth; }
 /* El wrapper heredado de la version anterior del giro no debe desbordar */
 .flip__inner {
   display: contents;
+}
+
+
+/* ==========================================================================
+   OPPORTUNITY CHECK — los cuatro pasos
+   Todo ocurre dentro de la misma tarjeta: la altura no cambia entre pasos.
+   ========================================================================== */
+
+.pasos {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pasos__cabecera { margin-bottom: var(--sp-5); }
+
+.pasos__contador {
+  margin-bottom: var(--sp-3);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .55);
+}
+
+.barra {
+  height: 3px;
+  background: rgba(255, 255, 255, .14);
+  border-radius: var(--radio-pill);
+  overflow: hidden;
+}
+
+.barra__fill {
+  display: block;
+  width: 25%;
+  height: 100%;
+  background: var(--c-verde-marca);
+  border-radius: inherit;
+  transition: width 420ms cubic-bezier(.33, 0, .2, 1);
+}
+
+/* Los pasos comparten sitio: solo uno visible, la altura la fija el mas alto */
+.paso-calc { display: none; }
+.paso-calc.is-activo {
+  display: block;
+  animation: entrarPaso 300ms ease;
+}
+
+.paso-calc__titulo {
+  margin-bottom: var(--sp-3);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-bold);
+  line-height: 1.25;
+  color: var(--c-blanco);
+}
+
+.paso-calc__ayuda {
+  margin-bottom: var(--sp-5);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .62);
+}
+
+.paso-calc__nota {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .45);
+}
+
+.paso-calc .campo + .campo { margin-top: var(--sp-4); }
+
+/* --- Las dos opciones del paso 1 --- */
+
+.opciones {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.opcion {
+  display: grid;
+  gap: var(--sp-1);
+  padding: var(--sp-4) var(--sp-5);
+  text-align: left;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: var(--radio-sm);
+  transition: border-color var(--trans-media), background-color var(--trans-media);
+}
+
+.opcion:hover {
+  background: rgba(255, 255, 255, .09);
+  border-color: rgba(255, 255, 255, .3);
+}
+
+.opcion.is-elegida {
+  background: rgba(2, 139, 0, .18);
+  border-color: var(--c-verde-marca);
+}
+
+.opcion__titulo {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  color: var(--c-blanco);
+}
+
+.opcion__texto {
+  font-size: var(--fs-small);
+  color: rgba(255, 255, 255, .58);
+}
+
+/* --- Navegacion entre pasos --- */
+
+.pasos__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: auto;   /* sin padding: lo que separa es el margin del boton */
+}
+
+.pasos__nav .calc__btn { flex: 1; margin-top: 0; }
+
+.btn--fantasma {
+  --btn-px: var(--sp-4);
+  color: rgba(255, 255, 255, .7);
+  background: transparent;
+  border-color: rgba(255, 255, 255, .2);
+}
+.btn--fantasma:hover {
+  color: var(--c-blanco);
+  border-color: rgba(255, 255, 255, .45);
+}
+.btn--fantasma[hidden] { display: none; }
+
+/* Los select heredan el estilo de los campos */
+select.campo__input {
+  appearance: none;
+  cursor: pointer;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(255,255,255,.5) 50%),
+    linear-gradient(135deg, rgba(255,255,255,.5) 50%, transparent 50%);
+  background-position: right 2px center, right 7px center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: var(--sp-5);
+}
+select.campo__input option { color: var(--c-texto); background: var(--c-blanco); }
+
+.campo--claro select.campo__input {
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--c-texto-suave) 50%),
+    linear-gradient(135deg, var(--c-texto-suave) 50%, transparent 50%);
+}
+
+/* --- Estado de espera, antes de calcular --- */
+
+.espera {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--sp-3);
+  flex: 1;
+  padding: var(--sp-6) var(--sp-4);
+  text-align: center;
+}
+
+.espera__icono {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  color: var(--c-verde);
+  background: var(--c-verde-claro);
+  border-radius: var(--radio-pill);
+}
+
+.espera__titulo {
+  font-size: var(--fs-body-lg);
+  font-weight: var(--fw-bold);
+  color: var(--c-texto);
+}
+
+.espera__texto {
+  max-width: 30ch;
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  color: var(--c-texto-suave);
+}
+
+.salida { display: flex; flex-direction: column; flex: 1; }
+.salida[hidden] { display: none; }
+
+/* --- Bloque de recomendacion --- */
+
+.recomienda {
+  margin-bottom: var(--sp-4);
+  padding: var(--sp-4);
+  background: var(--c-verde-claro);
+  border-radius: var(--radio-sm);
+}
+
+.recomienda__titulo {
+  margin-bottom: var(--sp-1);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  color: var(--c-verde);
+}
+
+.recomienda__texto {
+  font-size: var(--fs-xs);
+  line-height: 1.55;
+  color: var(--c-texto-cuerpo);
+}
+
+@media (max-width: 900px) {
+  .pasos__nav { padding-top: var(--sp-5); }
 }
