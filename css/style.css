@@ -28,7 +28,8 @@ body {
 
 h1, h2, h3 { margin: 0; line-height: var(--lh-heading); color: var(--c-texto); }
 p  { margin: 0; }
-ul { margin: 0; padding: 0; list-style: none; }
+ul,
+ol { margin: 0; padding: 0; list-style: none; }
 img, svg { display: block; max-width: 100%; }
 a  { color: inherit; text-decoration: none; }
 
@@ -3388,4 +3389,315 @@ body { -webkit-font-smoothing: antialiased; }
 @media (max-width: 640px) {
   .serv-hero__acciones { flex-direction: column; }
   .serv-hero__acciones .btn { width: 100%; }
+}
+
+
+/* ==========================================================================
+   PAGINA RUN
+   ========================================================================== */
+
+/* --- La plataforma --- */
+
+.plataforma {
+  --padding-top: var(--section-y);
+  --padding-bottom: var(--section-y);
+
+  padding-block: var(--padding-top) var(--padding-bottom);
+  background: var(--c-blanco);
+}
+
+.plataforma__inner {
+  --padding-x: clamp(1.25rem, 0.5rem + 3vw, 4rem);
+  --gap: clamp(var(--sp-6), 4vw, var(--sp-8));
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: var(--gap);
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-inline: var(--padding-x);
+}
+
+.plataforma__titulo {
+  margin-block: var(--sp-4) var(--sp-5);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  text-wrap: balance;
+}
+
+.plataforma__lead {
+  font-size: var(--fs-body-lg);
+  color: var(--c-texto-cuerpo);
+}
+
+.plataforma__lead + .plataforma__lead { margin-top: var(--sp-4); }
+
+/* El brief insiste en que aqui hace falta video */
+.ph--video {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radio-lg);
+  border: 1px dashed #C4C4C4;
+}
+
+.ph__play {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  color: var(--c-blanco);
+  background: rgba(0, 0, 0, .28);
+  border-radius: var(--radio-pill);
+}
+
+/* --- Las seis funciones --- */
+
+.funciones {
+  --padding-top: var(--section-y);
+  --padding-bottom: var(--section-y);
+
+  padding-block: var(--padding-top) var(--padding-bottom);
+  background: var(--c-fondo);
+}
+
+.funciones__inner {
+  --padding-x: clamp(1.25rem, 0.5rem + 3vw, 4rem);
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-inline: var(--padding-x);
+}
+
+.funciones__intro {
+  max-width: 640px;
+  margin-bottom: clamp(var(--sp-6), 3vw, var(--sp-8));
+}
+
+.funciones__titulo {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+}
+
+.funciones__lista {
+  --gap: clamp(var(--sp-5), 2.5vw, var(--sp-6));
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.funcion {
+  --padding: clamp(var(--sp-5), 2vw, var(--sp-6));
+  padding: var(--padding);
+  background: var(--c-blanco);
+  border: 1px solid var(--c-borde-suave);
+  border-radius: var(--radio-md);
+  transition: border-color var(--trans-media), box-shadow var(--trans-media);
+}
+
+.funcion:hover {
+  border-color: var(--c-borde);
+  box-shadow: var(--sombra-md);
+}
+
+.funcion__icono {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: var(--sp-4);
+  color: var(--c-verde);
+  background: var(--c-verde-claro);
+  border-radius: var(--radio-sm);
+}
+
+.funcion__titulo {
+  margin-bottom: var(--sp-3);
+  font-size: var(--fs-body-lg);
+  font-weight: var(--fw-bold);
+  line-height: 1.25;
+  letter-spacing: var(--ls-tight);
+}
+
+.funcion__texto {
+  font-size: var(--fs-small);
+  line-height: 1.65;
+  color: var(--c-texto-cuerpo);
+}
+
+/* --- Los dos niveles --- */
+
+.niveles {
+  --padding-top: var(--section-y);
+  --padding-bottom: var(--section-y);
+
+  padding-block: var(--padding-top) var(--padding-bottom);
+  background: var(--c-blanco);
+}
+
+.niveles__inner {
+  --padding-x: clamp(1.25rem, 0.5rem + 3vw, 4rem);
+  max-width: 1080px;
+  margin-inline: auto;
+  padding-inline: var(--padding-x);
+}
+
+.niveles__intro {
+  max-width: 640px;
+  margin-bottom: clamp(var(--sp-6), 3vw, var(--sp-7));
+}
+
+.niveles__titulo {
+  margin-block: var(--sp-4) var(--sp-4);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+}
+
+.niveles__lead {
+  font-size: var(--fs-body-lg);
+  color: var(--c-texto-cuerpo);
+}
+
+.niveles__grid {
+  --gap: clamp(var(--sp-5), 2.5vw, var(--sp-6));
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--gap);
+}
+
+.nivel {
+  --padding: clamp(var(--sp-5), 2.5vw, var(--sp-6));
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--padding);
+  background: var(--c-fondo);
+  border: 1px solid var(--c-borde-suave);
+  border-radius: var(--radio-lg);
+}
+
+/* El nivel con soporte de ingenieria se destaca sin gritar */
+.nivel--destacado {
+  position: relative;
+  background: var(--c-texto);
+  border-color: var(--c-texto);
+  color: var(--c-blanco);
+}
+
+.nivel__marca {
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: var(--sp-4);
+  padding: 4px var(--sp-3);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--c-texto);
+  background: var(--c-verde-marca);
+  border-radius: var(--radio-pill);
+}
+
+.nivel__cab { margin-bottom: var(--sp-5); }
+
+.nivel__nombre {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: var(--ls-tight);
+}
+
+.nivel--destacado .nivel__nombre { color: var(--c-blanco); }
+
+.nivel__precio {
+  margin-top: var(--sp-3);
+  font-size: var(--fs-body-lg);
+  font-weight: var(--fw-bold);
+  color: var(--c-verde);
+}
+
+.nivel--destacado .nivel__precio { color: var(--c-verde-marca); }
+
+.nivel__nota {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-xs);
+  color: var(--c-texto-suave);
+}
+
+.nivel--destacado .nivel__nota { color: rgba(255, 255, 255, .5); }
+
+.nivel__texto {
+  margin-bottom: var(--sp-5);
+  font-size: var(--fs-small);
+  line-height: 1.65;
+  color: var(--c-texto-cuerpo);
+}
+
+.nivel--destacado .nivel__texto { color: rgba(255, 255, 255, .72); }
+
+.nivel__lista {
+  display: grid;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-6);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--c-borde-suave);
+}
+
+.nivel--destacado .nivel__lista { border-top-color: rgba(255, 255, 255, .14); }
+
+.nivel__lista li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--sp-3);
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--c-texto-cuerpo);
+}
+
+.nivel__lista li::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  background: var(--c-verde-claro) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='8' viewBox='0 0 12 9' fill='none'%3E%3Cpath d='M1 4.5L4.5 8L11 1' stroke='%23028B00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center no-repeat;
+  border-radius: var(--radio-pill);
+}
+
+.nivel--destacado .nivel__lista li { color: rgba(255, 255, 255, .82); }
+
+.nivel--destacado .nivel__lista li::before {
+  background-color: rgba(57, 181, 74, .18);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='8' viewBox='0 0 12 9' fill='none'%3E%3Cpath d='M1 4.5L4.5 8L11 1' stroke='%2339B54A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.nivel__cta { margin-top: auto; }
+
+.niveles__pie {
+  margin-top: var(--sp-6);
+  font-size: var(--fs-small);
+  line-height: 1.65;
+  color: var(--c-texto-suave);
+  text-align: center;
+}
+
+/* --- Responsive --- */
+
+@media (max-width: 1100px) {
+  .funciones__lista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  .plataforma__inner { grid-template-columns: minmax(0, 1fr); }
+  .niveles__grid { grid-template-columns: minmax(0, 1fr); }
+  .nivel { height: auto; }
+}
+
+@media (max-width: 640px) {
+  .funciones__lista { grid-template-columns: minmax(0, 1fr); }
 }
