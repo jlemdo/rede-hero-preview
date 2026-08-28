@@ -230,6 +230,8 @@
       p.classList.toggle('is-activo', Number(p.dataset.paso) === estado.paso);
     });
 
+    if (typeof refrescarPerfil === 'function') { refrescarPerfil(); }
+
     barra.style.width = (estado.paso / TOTAL * 100) + '%';
     contador.textContent = estado.paso;
     barra.parentElement.setAttribute('aria-valuenow', estado.paso);
@@ -260,6 +262,71 @@
   btnSig.addEventListener('click', siguiente);
   btnAtras.addEventListener('click', atras);
 
+  /* --- Panel vivo: se llena con cada respuesta ---------------------------- */
+
+  function fila(clave) { return seccion.querySelector('[data-fila="' + clave + '"]'); }
+
+  function ponerFila(clave, valor) {
+    var f = fila(clave);
+    if (!f) { return; }
+    f.querySelector('.perfil__valor').textContent = valor;
+    f.classList.add('is-lleno');
+  }
+
+  function milesTxt(n) {
+    if (!n) { return ''; }
+    if (n >= 1000000) { return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M sq ft'; }
+    if (n >= 1000)    { return Math.round(n / 1000) + 'K sq ft'; }
+    return n + ' sq ft';
+  }
+
+  var TXT_SECTOR = {
+    k12: 'K-12 school district',
+    postsec: 'Post-secondary',
+    health: 'Healthcare',
+    muni: 'Municipality',
+    commercial: 'Commercial property',
+    housing: 'Housing operator',
+    other: 'Institutional'
+  };
+
+  var TXT_PROV = { bc: 'BC', ab: 'AB', sk: 'SK', other: '' };
+
+  function refrescarPerfil() {
+    if (estado.scope) {
+      ponerFila('scope', estado.scope === 'single' ? 'One building' : 'Multiple buildings');
+    }
+
+    var sector = $('#c-sector').value;
+    var prov   = $('#c-province').value;
+    if (sector) {
+      var txt = TXT_SECTOR[sector] || 'Organization';
+      if (TXT_PROV[prov]) { txt += ', ' + TXT_PROV[prov]; }
+      ponerFila('sector', txt);
+    }
+
+    var clave = selTipo.value;
+    if (clave && estado.paso >= 3) {
+      var b = BENCHMARKS[clave];
+      ponerFila('tipo', b.label);
+
+      // Adelanto del benchmark: recompensa parcial antes del resultado
+      var adelanto = $('#adelanto');
+      $('#adelanto-pct').textContent = b.savingsPct.toFixed(1);
+      $('#adelanto-txt').textContent =
+        'average historical cost reduction for ' + b.label.toLowerCase() + ' buildings';
+      adelanto.hidden = false;
+      $('#prueba').hidden = true;   // el dato propio sustituye a la prueba social
+    }
+
+    var area = numero($('#c-area').value);
+    if (area) { ponerFila('area', milesTxt(area)); }
+
+    var listas = seccion.querySelectorAll('.perfil__fila.is-lleno').length;
+    $('#etiqueta-progreso').textContent = listas + ' of 4';
+  }
+
+
   /* --- Paso 1: uno o varios edificios ------------------------------------- */
 
   function elegirScope(valor) {
@@ -276,6 +343,15 @@
       window.setTimeout(siguiente, 220);   // avanza solo tras elegir
     });
   });
+
+  // Cada cambio en un campo actualiza el panel derecho al momento
+  ['#c-sector', '#c-province', '#c-type', '#c-area'].forEach(function (sel) {
+    var el = $(sel);
+    if (!el) { return; }
+    el.addEventListener('change', refrescarPerfil);
+    el.addEventListener('input', refrescarPerfil);
+  });
+
 
   /* --- Utilidades --------------------------------------------------------- */
 
@@ -353,6 +429,46 @@
 
     $('#espera').hidden = true;
     $('#salida').hidden = false;
+
+    // La columna de preguntas deja de tener sentido: pasa a agradecer y
+    // ofrecer contacto directo a quien prefiera hablar.
+    $('#pasos').hidden = true;
+    $('#cierre').hidden = false;
+  }
+
+  /* --- Reiniciar ---------------------------------------------------------- */
+
+  var btnReiniciar = $('#btn-reiniciar');
+  if (btnReiniciar) {
+    btnReiniciar.addEventListener('click', function () {
+      estado.paso = 1;
+      estado.scope = '';
+
+      ['#c-area', '#c-spend', '#c-sites'].forEach(function (sel) {
+        var el = $(sel); if (el) { el.value = ''; }
+      });
+      $('#c-sector').value = '';
+      $('#c-province').value = 'bc';
+      selTipo.value = 'school';
+
+      seccion.querySelectorAll('.opcion').forEach(function (o) {
+        o.classList.remove('is-elegida');
+      });
+      seccion.querySelectorAll('.perfil__fila').forEach(function (f) {
+        f.classList.remove('is-lleno');
+        f.querySelector('.perfil__valor').textContent = '-';
+      });
+
+      $('#adelanto').hidden = true;
+      $('#prueba').hidden = false;
+      $('#salida').hidden = true;
+      $('#espera').hidden = false;
+      $('#cierre').hidden = true;
+      $('#pasos').hidden = false;
+
+      if (flip) { flip.classList.remove('girada'); }
+      pintarPaso();
+    });
   }
 
   /* --- Giro de la tarjeta ------------------------------------------------- */

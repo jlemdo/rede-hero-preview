@@ -715,7 +715,10 @@ button {
 }
 
 @media (max-width: 640px) {
+  .header__inner { gap: var(--sp-3); }
+  .header__actions { gap: var(--sp-3); }
   .header__actions .btn { --btn-px: var(--sp-4); font-size: var(--fs-small); }
+  .header__logo img { width: clamp(120px, 32vw, 150px); }
 
   /* Area tactil minima de 44px: es lo que ocupa un dedo */
   .enlace-flecha,
@@ -1017,8 +1020,10 @@ button {
   margin-top: 0;
 }
 
+/* Ambas columnas reservan el mismo hueco al pie: boton + nota.
+   El panel derecho tiene padding propio, asi que su reserva lo descuenta. */
 .pasos { padding-bottom: 140px; }
-.flip__cara--frente .resultado { padding-bottom: calc(var(--padding) + 140px); }
+.flip__cara--frente .resultado { padding-bottom: 140px; }
 .calc__nota, .resultado__legal { min-height: 0; }
 .resultado__legal { left: var(--padding); right: var(--padding); bottom: var(--padding); }
 
@@ -1758,4 +1763,216 @@ select.campo__input option { color: var(--c-texto); background: var(--c-blanco);
 
 @media (max-width: 900px) {
   .pasos__nav { padding-top: var(--sp-5); }
+}
+
+
+/* ==========================================================================
+   PANEL VIVO
+   El panel derecho no espera vacio: se llena con cada respuesta. Cada paso
+   produce un cambio visible, y en el paso 3 aparece el benchmark del sector
+   como adelanto del resultado.
+   ========================================================================== */
+
+.espera {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0;
+  text-align: left;
+}
+
+.perfil {
+  display: grid;
+  gap: var(--sp-1);
+  margin-bottom: var(--sp-5);
+}
+
+.perfil__fila {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--sp-3);
+  padding-block: var(--sp-3);
+  border-bottom: 1px solid var(--c-borde-suave);
+  opacity: .45;
+  transition: opacity var(--trans-media);
+}
+
+.perfil__fila:last-child { border-bottom: 0; }
+.perfil__fila.is-lleno { opacity: 1; }
+
+.perfil__punto {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radio-pill);
+  background: var(--c-borde);
+  transition: background-color var(--trans-media), transform var(--trans-media);
+}
+
+.perfil__fila.is-lleno .perfil__punto {
+  background: var(--c-verde);
+  transform: scale(1.15);
+}
+
+.perfil__texto {
+  font-size: var(--fs-small);
+  color: var(--c-texto-suave);
+}
+
+.perfil__valor {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  color: var(--c-texto);
+  text-align: right;
+}
+
+.perfil__fila.is-lleno .perfil__valor { animation: entrarValor 320ms ease; }
+
+@keyframes entrarValor {
+  from { opacity: 0; transform: translateX(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --- Adelanto del benchmark (paso 3) --- */
+
+.adelanto {
+  margin-bottom: var(--sp-5);
+  padding: var(--sp-5);
+  text-align: center;
+  background: var(--c-verde-claro);
+  border-radius: var(--radio-md);
+  animation: entrarPaso 380ms ease;
+}
+
+.adelanto[hidden] { display: none; }
+
+.adelanto__cifra {
+  font-size: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1;
+  letter-spacing: var(--ls-tight);
+  color: var(--c-verde);
+  font-variant-numeric: tabular-nums;
+}
+
+.adelanto__texto {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--c-texto-cuerpo);
+}
+
+/* --- Prueba social mientras completa --- */
+
+.prueba {
+  margin-top: auto;
+  padding: var(--sp-4);
+  background: var(--c-fondo-alt);
+  border-radius: var(--radio-sm);
+}
+
+.prueba[hidden] { display: none; }
+
+.prueba__cifra {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: var(--ls-tight);
+  color: var(--c-verde);
+}
+
+.prueba__texto {
+  margin-top: var(--sp-1);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--c-texto-suave);
+}
+
+
+/* ==========================================================================
+   CIERRE: sustituye a las preguntas cuando el formulario termina
+   ========================================================================== */
+
+.cierre {
+  display: flex;
+  flex-direction: column;
+  animation: entrarPaso 380ms ease;
+}
+
+.cierre[hidden] { display: none; }
+
+.cierre__icono {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--sp-5);
+  color: var(--c-verde-marca);
+  background: rgba(57, 181, 74, .16);
+  border-radius: var(--radio-pill);
+}
+
+.cierre__titulo {
+  margin-bottom: var(--sp-3);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-bold);
+  color: var(--c-blanco);
+}
+
+.cierre__texto {
+  margin-bottom: var(--sp-6);
+  font-size: var(--fs-small);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, .62);
+}
+
+.cierre__contacto {
+  display: grid;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-5);
+}
+
+.contacto {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: var(--radio-sm);
+  transition: border-color var(--trans-media), background-color var(--trans-media);
+}
+
+.contacto:hover {
+  background: rgba(255, 255, 255, .09);
+  border-color: var(--c-verde-marca);
+}
+
+.contacto__icono {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: var(--c-verde-marca);
+  background: rgba(57, 181, 74, .14);
+  border-radius: var(--radio-sm);
+}
+
+.contacto__label {
+  display: block;
+  font-size: var(--fs-xs);
+  color: rgba(255, 255, 255, .5);
+}
+
+.contacto__dato {
+  display: block;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  color: var(--c-blanco);
+}
+
+.cierre__reiniciar {
+  align-self: flex-start;
+  margin-top: auto;
+  font-size: var(--fs-small);
 }
