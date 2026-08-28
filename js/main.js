@@ -427,13 +427,22 @@
       });
     }
 
-    $('#espera').hidden = true;
-    $('#salida').hidden = false;
+    // El resultado pasa a la IZQUIERDA, donde estaban las preguntas.
+    $('#cierre-cifra').textContent = dinero(oportunidad);
+    $('#cierre-nota').textContent = gasto
+      ? 'in annual opportunity, based on your entered utility spend'
+      : 'in annual opportunity, estimated from historical cost per square foot';
+    $('#c-d-tipo').textContent = b.label;
+    $('#c-d-pct').textContent = b.savingsPct.toFixed(1) + ' per cent';
+    $('#c-d-payback').textContent = b.payback + ' years';
+    $('#c-rec-titulo').textContent = $('#rec-titulo').textContent;
+    $('#c-rec-texto').textContent = $('#rec-texto').textContent;
 
-    // La columna de preguntas deja de tener sentido: pasa a agradecer y
-    // ofrecer contacto directo a quien prefiera hablar.
     $('#pasos').hidden = true;
     $('#cierre').hidden = false;
+
+    // Y la DERECHA pasa a ser el formulario, sin tener que girar la tarjeta.
+    if (flip) { flip.classList.add('girada'); marcarInerte(true); }
   }
 
   /* --- Reiniciar ---------------------------------------------------------- */
@@ -464,6 +473,7 @@
       $('#salida').hidden = true;
       $('#espera').hidden = false;
       $('#cierre').hidden = true;
+      $('#cierre-extra').hidden = true;
       $('#pasos').hidden = false;
 
       if (flip) { flip.classList.remove('girada'); }
@@ -540,6 +550,10 @@
       'one business day.</p>';
 
     form.replaceWith(caja);
+
+    // Solo ahora aparecen el contacto directo y el reinicio
+    var extra = $('#cierre-extra');
+    if (extra) { extra.hidden = false; }
   });
 
   pintarPaso();

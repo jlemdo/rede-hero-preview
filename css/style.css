@@ -1558,8 +1558,14 @@ html { scroll-behavior: smooth; }
 .pasos {
   display: flex;
   flex-direction: column;
+  grid-column: 1;
   min-width: 0;
 }
+
+/* display:flex gana sobre el atributo hidden, asi que hay que declararlo */
+.pasos[hidden],
+.cierre[hidden],
+.flip[hidden] { display: none; }
 
 .pasos__cabecera { margin-bottom: var(--sp-5); }
 
@@ -1895,6 +1901,8 @@ select.campo__input option { color: var(--c-texto); background: var(--c-blanco);
 .cierre {
   display: flex;
   flex-direction: column;
+  grid-column: 1;        /* ocupa la columna izquierda, donde estaban las preguntas */
+  min-width: 0;
   animation: entrarPaso 380ms ease;
 }
 
@@ -1976,3 +1984,96 @@ select.campo__input option { color: var(--c-texto); background: var(--c-blanco);
   margin-top: auto;
   font-size: var(--fs-small);
 }
+
+
+/* ==========================================================================
+   RESULTADO EN LA COLUMNA IZQUIERDA
+   Al terminar los pasos, la izquierda deja de ser preguntas y pasa a mostrar
+   el resultado. La derecha se convierte en el formulario.
+   ========================================================================== */
+
+.cierre__label {
+  margin-bottom: var(--sp-3);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .5);
+}
+
+.cierre__cifra {
+  font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1;
+  letter-spacing: var(--ls-tight);
+  color: var(--c-verde-marca);
+  font-variant-numeric: tabular-nums;
+}
+
+.cierre__nota {
+  margin-top: var(--sp-3);
+  margin-bottom: var(--sp-6);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .62);
+}
+
+.cierre__datos {
+  margin-bottom: var(--sp-5);
+  padding-block: var(--sp-4);
+  border-block: 1px solid rgba(255, 255, 255, .12);
+}
+
+.cierre__fila {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding-block: var(--sp-2);
+}
+
+.cierre__fila dt {
+  font-size: var(--fs-small);
+  color: rgba(255, 255, 255, .55);
+}
+
+.cierre__fila dd {
+  margin: 0;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  color: var(--c-blanco);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.cierre__recomienda {
+  padding: var(--sp-4);
+  background: rgba(57, 181, 74, .12);
+  border-left: 3px solid var(--c-verde-marca);
+  border-radius: var(--radio-sm);
+}
+
+.cierre__rec-titulo {
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  color: var(--c-verde-marca);
+}
+
+.cierre__rec-texto {
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .7);
+}
+
+/* Contacto y reinicio: solo tras enviar el formulario */
+.cierre__extra {
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-5);
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  animation: entrarPaso 380ms ease;
+}
+
+.cierre__extra[hidden] { display: none; }
+
+.cierre__extra .cierre__contacto { margin-bottom: var(--sp-4); }
