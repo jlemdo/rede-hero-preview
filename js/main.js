@@ -476,7 +476,7 @@
       $('#cierre-extra').hidden = true;
       $('#pasos').hidden = false;
 
-      if (flip) { flip.classList.remove('girada'); }
+      if (flip) { flip.classList.remove('girada', 'enviado'); }
       pintarPaso();
     });
   }
@@ -489,7 +489,7 @@
   var caraFrente = flip.querySelector('.flip__cara--frente');
   var caraDorso  = flip.querySelector('.flip__cara--dorso');
   var btnAbrir   = flip.querySelector('[data-flip="abrir"]');
-  var btnCerrar  = flip.querySelector('[data-flip="cerrar"]');
+  var btnCerrar  = flip.querySelector('[data-flip="cerrar"]');   // puede no existir
 
   /* La cara oculta se marca inerte: fuera del recorrido de teclado y de los
      lectores de pantalla. Se usa inert y no visibility, porque esa propiedad
@@ -554,6 +554,9 @@
     // Solo ahora aparecen el contacto directo y el reinicio
     var extra = $('#cierre-extra');
     if (extra) { extra.hidden = false; }
+
+    // Respaldo para navegadores sin :has() (Safari < 15.4, Firefox antiguo)
+    if (flip) { flip.classList.add('enviado'); }
   });
 
   pintarPaso();

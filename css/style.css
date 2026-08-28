@@ -1173,7 +1173,10 @@ button {
 /* --- Responsive --- */
 
 @media (max-width: 900px) {
-  .calc__panel { grid-template-columns: minmax(0, 1fr); }
+  .calc__panel {
+    --padding: clamp(var(--sp-4), 4vw, var(--sp-6));
+    grid-template-columns: minmax(0, 1fr);
+  }
 
   /* La tarjeta deja de estirarse cuando las columnas se apilan */
   .flip,
@@ -1186,6 +1189,55 @@ button {
 
   /* Sin altura que rellenar, el CTA sigue el flujo normal */
   .resultado__cta { margin-top: var(--sp-4); }
+
+  /* Los bloques anclados al fondo vuelven al flujo normal */
+  .pasos__nav,
+  .salida .resultado__cta,
+  .calc__nota,
+  .resultado__legal {
+    position: static;
+    left: auto; right: auto; bottom: auto;
+  }
+
+  .pasos { padding-bottom: 0; }
+  .flip__cara--frente .resultado { padding-bottom: var(--padding); }
+
+  /* Separacion real entre el ultimo campo y la navegacion */
+  .pasos__nav { margin-top: var(--sp-6); }
+  .calc__nota { margin-top: var(--sp-4); }
+}
+
+/* --- Movil: la tarjeta usa todo el ancho disponible --- */
+
+@media (max-width: 640px) {
+  /* En movil el panel se pega a los bordes del contenedor: cada pixel de
+     padding se lo quita al contenido, que es lo que importa. */
+  .calc__panel {
+    --padding: var(--sp-3);
+    --gap: var(--sp-4);
+  }
+
+  .calc__inner { --padding-x: var(--sp-4); }
+
+  /* Sin esto la tarjeta se queda estrecha y parece una columna delgada */
+  .flip,
+  .flip__cara,
+  .flip__cara .resultado,
+  .pasos,
+  .cierre { width: 100%; }
+
+  .resultado { --padding: var(--sp-5); }
+
+  /* Los dos botones de navegacion, uno junto a otro pero con aire */
+  .pasos__nav { gap: var(--sp-3); }
+  .pasos__nav .btn--fantasma { flex: 0 0 auto; }
+
+  /* Area tactil comoda en los campos */
+  .campo__input { padding-block: var(--sp-4); }
+  select.campo__input { min-height: 52px; }
+
+  /* Las opciones del paso 1 necesitan aire entre ellas y el boton */
+  .opciones { gap: var(--sp-3); margin-bottom: var(--sp-2); }
 }
 
 
@@ -1687,25 +1739,47 @@ html { scroll-behavior: smooth; }
 }
 .btn--fantasma[hidden] { display: none; }
 
-/* Los select heredan el estilo de los campos */
+/* --- Select con flecha propia ---
+   Se anula la apariencia nativa (que Safari y Firefox pintan distinto) y se
+   dibuja un chevron con SVG. Los gradientes CSS para hacer flechas se ven
+   rotos a ciertos tamanos: un SVG siempre se ve igual. */
+
 select.campo__input {
   appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   cursor: pointer;
-  background-image:
-    linear-gradient(45deg, transparent 50%, rgba(255,255,255,.5) 50%),
-    linear-gradient(135deg, rgba(255,255,255,.5) 50%, transparent 50%);
-  background-position: right 2px center, right 7px center;
-  background-size: 5px 5px, 5px 5px;
+  padding-right: var(--sp-7);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23ffffff' stroke-opacity='0.55' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  padding-right: var(--sp-5);
+  background-position: right var(--sp-4) center;
+  background-size: 12px 8px;
+  text-overflow: ellipsis;
 }
-select.campo__input option { color: var(--c-texto); background: var(--c-blanco); }
 
-.campo--claro select.campo__input {
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--c-texto-suave) 50%),
-    linear-gradient(135deg, var(--c-texto-suave) 50%, transparent 50%);
+/* Safari en iOS ignora appearance:none si hay border-radius en el propio
+   select. Se neutraliza aqui y el estilo lo pone el envoltorio. */
+select.campo__input {
+  border-radius: 0;
+  background-color: transparent;
 }
+
+select.campo__input:focus { outline: none; }
+
+/* El menu desplegado lo pinta el sistema: se fuerza texto legible */
+select.campo__input option {
+  color: var(--c-texto);
+  background: var(--c-blanco);
+}
+
+/* Variante clara */
+.campo--claro select.campo__input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236B6B6B' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* El envoltorio del select se comporta como el resto de campos */
+.campo__wrap:has(select) { padding-right: 0; }
+.campo__wrap:has(select) .campo__input { padding-inline: var(--sp-4) var(--sp-7); }
 
 /* --- Estado de espera, antes de calcular --- */
 
@@ -2151,4 +2225,101 @@ select.campo__input option { color: var(--c-texto); background: var(--c-blanco);
 .flip:has(.tras-envio:not([hidden])) .resultado {
   height: auto;
   padding-bottom: var(--padding);
+}
+
+/* Marca de campo opcional en las etiquetas */
+.campo__opt {
+  font-weight: var(--fw-regular);
+  color: var(--c-texto-suave);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+
+/* ==========================================================================
+   COMPATIBILIDAD ENTRE NAVEGADORES
+   Safari en iOS y macOS aplica estilos propios a formularios y botones que
+   hay que neutralizar. Firefox pinta los select con su propio relleno.
+   ========================================================================== */
+
+/* Safari redondea y sombrea los inputs por su cuenta */
+input,
+select,
+textarea,
+button {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  font: inherit;
+}
+
+/* iOS hace zoom al enfocar un campo si la fuente baja de 16px */
+@media (max-width: 900px) {
+  .campo__input,
+  select.campo__input,
+  input.campo__input { font-size: 16px; }
+}
+
+/* Firefox anade un relleno interno al texto del select */
+@-moz-document url-prefix() {
+  select.campo__input { text-indent: -2px; }
+}
+
+/* Firefox pinta un punteado al enfocar botones */
+button::-moz-focus-inner,
+input::-moz-focus-inner { border: 0; padding: 0; }
+
+/* Safari no hereda el color en los placeholder */
+::-webkit-input-placeholder { color: var(--c-texto-suave); opacity: 1; }
+::placeholder { color: var(--c-texto-suave); opacity: 1; }
+
+.campo__input::-webkit-input-placeholder { color: rgba(255, 255, 255, .3); }
+.campo--claro .campo__input::-webkit-input-placeholder { color: var(--c-texto-suave); }
+
+/* Safari muestra los botones de incremento en los campos numericos */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
+
+/* Safari en iOS pinta un fondo azul al autocompletar */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--c-texto);
+  -webkit-box-shadow: 0 0 0 1000px var(--c-fondo) inset;
+  transition: background-color 9999s ease-out;
+}
+
+.campo:not(.campo--claro) input:-webkit-autofill {
+  -webkit-text-fill-color: var(--c-blanco);
+  -webkit-box-shadow: 0 0 0 1000px #1f1f1f inset;
+}
+
+/* Safari necesita el prefijo para el suavizado de fuentes */
+body { -webkit-font-smoothing: antialiased; }
+
+/* Safari antiguo no entiende gap en flex: se garantiza el minimo con margen */
+@supports not (gap: 1rem) {
+  .pasos__nav > * + * { margin-left: var(--sp-3); }
+  .opciones > * + *   { margin-top: var(--sp-3); }
+  .captura > * + *    { margin-top: var(--sp-3); }
+}
+
+/* :has() no existe en Firefox antiguo ni Safari < 15.4.
+   Respaldo: la clase la pone el JS. */
+.flip.enviado {
+  height: auto;
+  align-items: start;
+}
+.flip.enviado .flip__cara--dorso { position: relative; inset: auto; }
+.flip.enviado .flip__cara--frente { display: none; }
+.flip.enviado .resultado { height: auto; padding-bottom: var(--padding); }
+
+/* Evita el rebote de scroll de iOS dentro de la tarjeta */
+.resultado { -webkit-overflow-scrolling: touch; }
+
+/* Safari en iOS ignora el tamano tactil si no hay altura explicita */
+@media (hover: none) and (pointer: coarse) {
+  .btn, .opcion, .contacto, .reiniciar { min-height: 48px; }
+  .nav__link, .header__login { min-height: 44px; }
 }
