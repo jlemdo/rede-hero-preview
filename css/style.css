@@ -2723,3 +2723,178 @@ body { -webkit-font-smoothing: antialiased; }
   .cta-final__acciones { flex-direction: column; }
   .cta-final__acciones .btn { width: 100%; }
 }
+
+
+/* ==========================================================================
+   FOOTER
+   Navegacion segun el brief §5.2. Client Login vive aqui, no en la
+   navegacion principal.
+   ========================================================================== */
+
+.pie {
+  background: var(--c-texto);
+  color: var(--c-blanco);
+}
+
+.pie__inner {
+  --padding-x: clamp(1.25rem, 0.5rem + 3vw, 4rem);
+  --padding-y: clamp(var(--sp-7), 4vw, var(--sp-9));
+  --gap: clamp(var(--sp-6), 4vw, var(--sp-8));
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: var(--gap);
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding: var(--padding-y) var(--padding-x);
+}
+
+/* --- Bloque de marca --- */
+
+.pie__logo { display: inline-block; }
+
+.pie__logo img {
+  width: 150px;
+  height: auto;
+  /* El logo es verde sobre claro: en fondo oscuro se aclara el gris del tagline */
+  filter: brightness(1.6);
+}
+
+.pie__tagline {
+  max-width: 34ch;
+  margin-top: var(--sp-5);
+  font-size: var(--fs-small);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, .6);
+}
+
+.pie__pron {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+  font-size: var(--fs-xs);
+  color: rgba(255, 255, 255, .45);
+}
+
+/* Boton de pronunciacion: lo pide el brief §3.5 */
+.pron {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  color: var(--c-verde-marca);
+  background: rgba(57, 181, 74, .14);
+  border-radius: var(--radio-pill);
+  transition: background-color var(--trans-rapida);
+}
+
+.pron:hover { background: rgba(57, 181, 74, .26); }
+
+/* --- Columnas de enlaces --- */
+
+.pie__nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.pie__titulo {
+  margin-bottom: var(--sp-4);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .45);
+}
+
+.pie__lista { display: grid; gap: var(--sp-1); }
+
+.pie__lista a {
+  display: inline-block;
+  padding-block: var(--sp-2);
+  font-size: var(--fs-small);
+  color: rgba(255, 255, 255, .82);
+  transition: color var(--trans-rapida);
+}
+
+.pie__lista a:hover { color: var(--c-verde-marca); }
+
+.pie__direccion {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-xs);
+  font-style: normal;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, .45);
+}
+
+/* --- Franja inferior --- */
+
+.pie__base { border-top: 1px solid rgba(255, 255, 255, .12); }
+
+.pie__base-inner {
+  --padding-x: clamp(1.25rem, 0.5rem + 3vw, 4rem);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding: var(--sp-5) var(--padding-x);
+}
+
+.pie__legal {
+  font-size: var(--fs-xs);
+  color: rgba(255, 255, 255, .45);
+}
+
+.pie__legales {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-5);
+}
+
+.pie__legales a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 44px;
+  font-size: var(--fs-xs);
+  color: rgba(255, 255, 255, .55);
+  transition: color var(--trans-rapida);
+}
+
+.pie__legales a:hover { color: var(--c-blanco); }
+
+.pie__login {
+  padding-left: var(--sp-5);
+  border-left: 1px solid rgba(255, 255, 255, .16);
+  color: rgba(255, 255, 255, .82) !important;
+}
+
+/* --- Responsive --- */
+
+@media (max-width: 900px) {
+  .pie__inner { grid-template-columns: minmax(0, 1fr); }
+  .pie__nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .pie__nav { grid-template-columns: minmax(0, 1fr); }
+
+  .pie__base-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-3);
+  }
+
+  .pie__legales { gap: var(--sp-4); }
+
+  .pie__login {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
