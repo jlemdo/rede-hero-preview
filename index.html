@@ -524,48 +524,6 @@
           <p class="cierre__rec-texto" id="c-rec-texto"></p>
         </div>
 
-        <!-- Contacto y reinicio: solo tras enviar el formulario -->
-        <div class="cierre__extra" id="cierre-extra" hidden>
-          <div class="cierre__contacto">
-            <a class="contacto" href="tel:+17783276851">
-              <span class="contacto__icono" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a1 1 0 01-1 1
-                           A16 16 0 014 5a1 1 0 011-1z" stroke="currentColor"
-                        stroke-width="1.7" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <span>
-                <span class="contacto__label">Call the team</span>
-                <span class="contacto__dato">778.327.6851</span>
-              </span>
-            </a>
-
-            <a class="contacto" href="mailto:matthew@getrede.ca">
-              <span class="contacto__icono" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/>
-                  <path d="M3.5 6.5L12 13l8.5-6.5" stroke="currentColor" stroke-width="1.7"
-                        stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <span>
-                <span class="contacto__label">Send an email</span>
-                <span class="contacto__dato">matthew@getrede.ca</span>
-              </span>
-            </a>
-          </div>
-
-          <button class="btn btn--fantasma cierre__reiniciar" type="button" id="btn-reiniciar">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M3 12a9 9 0 019-9 9 9 0 016.7 3M21 12a9 9 0 01-9 9 9 9 0 01-6.7-3"
-                    stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-              <path d="M18 3v4h-4M6 21v-4h4" stroke="currentColor" stroke-width="1.7"
-                    stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Run another check
-          </button>
-        </div>
       </div>
 
       <!-- ================= COLUMNA DERECHA: la tarjeta de resultado ================= -->
@@ -740,6 +698,51 @@
                 Only used to prepare your analysis.
               </p>
             </form>
+
+            <!-- Contacto directo y reinicio. Aparecen dentro de la tarjeta
+                 blanca, bajo el mensaje de confirmacion, para no cargar la
+                 columna izquierda. -->
+            <div class="tras-envio" id="cierre-extra" hidden>
+              <div class="tras-envio__contacto">
+                <a class="contacto contacto--claro" href="tel:+17783276851">
+                  <span class="contacto__icono" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a1 1 0 01-1 1
+                               A16 16 0 014 5a1 1 0 011-1z" stroke="currentColor"
+                            stroke-width="1.7" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span>
+                    <span class="contacto__label">Call the team</span>
+                    <span class="contacto__dato">778.327.6851</span>
+                  </span>
+                </a>
+
+                <a class="contacto contacto--claro" href="mailto:matthew@getrede.ca">
+                  <span class="contacto__icono" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                      <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/>
+                      <path d="M3.5 6.5L12 13l8.5-6.5" stroke="currentColor" stroke-width="1.7"
+                            stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  <span>
+                    <span class="contacto__label">Send an email</span>
+                    <span class="contacto__dato">matthew@getrede.ca</span>
+                  </span>
+                </a>
+              </div>
+
+              <button class="reiniciar" type="button" id="btn-reiniciar">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M3 12a9 9 0 019-9 9 9 0 016.7 3M21 12a9 9 0 01-9 9 9 9 0 01-6.7-3"
+                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M18 3v4h-4M6 21v-4h4" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Run another check
+              </button>
+            </div>
           </div>
         </div>
 

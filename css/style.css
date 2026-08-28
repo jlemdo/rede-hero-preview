@@ -2066,14 +2066,89 @@ select.campo__input option { color: var(--c-texto); background: var(--c-blanco);
   color: rgba(255, 255, 255, .7);
 }
 
-/* Contacto y reinicio: solo tras enviar el formulario */
-.cierre__extra {
-  margin-top: var(--sp-6);
+
+
+
+/* ==========================================================================
+   TRAS ENVIAR EL FORMULARIO
+   El contacto directo y el reinicio viven dentro de la tarjeta blanca, bajo
+   el mensaje de confirmacion, para no cargar la columna izquierda.
+   ========================================================================== */
+
+.tras-envio {
+  margin-top: var(--sp-5);
   padding-top: var(--sp-5);
-  border-top: 1px solid rgba(255, 255, 255, .12);
+  border-top: 1px solid var(--c-borde-suave);
   animation: entrarPaso 380ms ease;
 }
 
-.cierre__extra[hidden] { display: none; }
+.tras-envio[hidden] { display: none; }
 
-.cierre__extra .cierre__contacto { margin-bottom: var(--sp-4); }
+.tras-envio__contacto {
+  display: grid;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+
+/* Variante clara del bloque de contacto */
+.contacto--claro {
+  background: var(--c-fondo);
+  border-color: var(--c-borde);
+}
+
+.contacto--claro:hover {
+  background: var(--c-verde-claro);
+  border-color: var(--c-verde);
+}
+
+.contacto--claro .contacto__icono {
+  color: var(--c-verde);
+  background: var(--c-verde-claro);
+}
+
+.contacto--claro .contacto__label { color: var(--c-texto-suave); }
+.contacto--claro .contacto__dato  { color: var(--c-texto); }
+
+/* Reinicio discreto: es una accion secundaria */
+.reiniciar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  width: 100%;
+  min-height: 44px;
+  padding: var(--sp-3);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--c-texto-suave);
+  border-radius: var(--radio-sm);
+  transition: color var(--trans-rapida), background-color var(--trans-rapida);
+}
+
+.reiniciar:hover {
+  color: var(--c-verde);
+  background: var(--c-fondo-alt);
+}
+
+
+/* Al enviar el formulario aparece el contacto y la tarjeta necesita crecer.
+   La altura fija que alinea las columnas deja de aplicarse en ese momento. */
+.flip:has(.tras-envio:not([hidden])) {
+  height: auto;
+  align-items: start;
+}
+
+.flip:has(.tras-envio:not([hidden])) .flip__cara--dorso {
+  position: relative;
+  inset: auto;
+}
+
+.flip:has(.tras-envio:not([hidden])) .flip__cara--frente {
+  display: none;
+}
+
+/* El pie de la tarjeta deja de reservar hueco: ya no hay nada que alinear */
+.flip:has(.tras-envio:not([hidden])) .resultado {
+  height: auto;
+  padding-bottom: var(--padding);
+}
