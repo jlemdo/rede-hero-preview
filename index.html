@@ -407,17 +407,20 @@
               </select>
             </div>
           </div>
-          <div class="campo">
-            <label class="campo__label" for="c-province">Province</label>
-            <div class="campo__wrap">
-              <select class="campo__input" id="c-province">
-                <option value="bc">British Columbia</option>
-                <option value="ab">Alberta</option>
-                <option value="sk">Saskatchewan</option>
-                <option value="other">Other or not sure</option>
-              </select>
+          <fieldset class="campo campo--grupo">
+            <legend class="campo__label">Where are your buildings?</legend>
+            <div class="duo" role="radiogroup" aria-label="Region">
+              <button class="duo__btn is-elegida" type="button"
+                      role="radio" aria-checked="true" data-prov="bc">
+                British Columbia
+              </button>
+              <button class="duo__btn" type="button"
+                      role="radio" aria-checked="false" data-prov="ca">
+                Rest of Canada
+              </button>
             </div>
-          </div>
+            <input type="hidden" id="c-province" value="bc">
+          </fieldset>
         </div>
 
         <!-- PASO 3 -->

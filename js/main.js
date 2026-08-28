@@ -290,7 +290,7 @@
     other: 'Institutional'
   };
 
-  var TXT_PROV = { bc: 'BC', ab: 'AB', sk: 'SK', other: '' };
+  var TXT_PROV = { bc: 'BC', ca: 'Canada' };
 
   function refrescarPerfil() {
     if (estado.scope) {
@@ -341,6 +341,19 @@
     o.addEventListener('click', function () {
       elegirScope(o.dataset.scope);
       window.setTimeout(siguiente, 220);   // avanza solo tras elegir
+    });
+  });
+
+  // Selector de region: dos botones en lugar de un desplegable
+  seccion.querySelectorAll('.duo__btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      seccion.querySelectorAll('.duo__btn').forEach(function (o) {
+        var activa = o === b;
+        o.classList.toggle('is-elegida', activa);
+        o.setAttribute('aria-checked', String(activa));
+      });
+      $('#c-province').value = b.dataset.prov;
+      refrescarPerfil();
     });
   });
 

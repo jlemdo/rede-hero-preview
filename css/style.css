@@ -2323,3 +2323,48 @@ body { -webkit-font-smoothing: antialiased; }
   .btn, .opcion, .contacto, .reiniciar { min-height: 48px; }
   .nav__link, .header__login { min-height: 44px; }
 }
+
+
+/* --- Selector de dos opciones (region) ---
+   Con solo dos valores excluyentes, dos botones se leen mejor que un
+   desplegable y se tocan mas facil en movil. */
+
+.campo--grupo {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-top: var(--sp-2);
+  padding: 4px;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: var(--radio-sm);
+}
+
+.duo__btn {
+  min-height: 44px;
+  padding: var(--sp-3) var(--sp-2);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  color: rgba(255, 255, 255, .65);
+  background: transparent;
+  border-radius: calc(var(--radio-sm) - 3px);
+  transition: color var(--trans-rapida), background-color var(--trans-media);
+}
+
+.duo__btn:hover { color: var(--c-blanco); }
+
+.duo__btn.is-elegida {
+  color: var(--c-blanco);
+  background: var(--c-verde);
+}
+
+@media (max-width: 400px) {
+  .duo { grid-template-columns: 1fr; }
+}
