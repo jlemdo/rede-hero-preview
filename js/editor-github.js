@@ -122,8 +122,17 @@
      Se lee el archivo directo, sin la API, para no gastar cuota ni necesitar
      token en las visitas normales. */
 
-  window.RedeTextos = fetch('data/textos.json?t=' + Date.now())
-    .then(function (r) { return r.ok ? r.json() : {}; })
-    .catch(function () { return {}; });
+  window.RedeTextos = (function () {
+    // Safari bloquea fetch sobre file:// por politica de seguridad. En un
+    // servidor no ocurre, pero al abrir el HTML localmente hay que evitarlo
+    // o deja un error en consola.
+    if (window.location.protocol === 'file:') {
+      return Promise.resolve({});
+    }
+
+    return fetch('data/textos.json?t=' + Date.now())
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .catch(function () { return {}; });
+  })();
 
 })();
