@@ -228,3 +228,6 @@
 .barra-edicion .es-discreto:hover { color: rgba(255, 255, 255, .8); }
 
 .barra-edicion button:disabled { opacity: .6; cursor: wait; }
+
+/* Envoltorio temporal para editar solo una parte del texto */
+.caja-edicion { outline: none; }

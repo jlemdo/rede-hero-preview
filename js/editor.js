@@ -57,15 +57,16 @@
 
   function rutaDe(el) {
     var partes = [];
-    while (el && el !== document.body) {
-      var padre = el.parentNode;
+    var nodo = el;
+    while (nodo && nodo !== document.body) {
+      var padre = nodo.parentNode;
       if (!padre) { break; }
       var hermanos = Array.prototype.filter.call(padre.children, function (h) {
-        return h.tagName === el.tagName;
+        return h.tagName === nodo.tagName;
       });
-      var i = hermanos.indexOf(el);
-      partes.unshift(el.tagName.toLowerCase() + (i > 0 ? '[' + i + ']' : ''));
-      el = padre;
+      var i = hermanos.indexOf(nodo);
+      partes.unshift(nodo.tagName.toLowerCase() + (i > 0 ? '[' + i + ']' : ''));
+      nodo = padre;
     }
     return partes.join('/');
   }
@@ -91,6 +92,10 @@
      Esto corre SIEMPRE, en modo edicion o no. Es lo que hace que los
      cambios persistan al recargar. */
 
+  /* Tramos con estilo propio dentro de un texto, como la palabra en verde
+     del titular. Se editan por separado para que no pierdan su color. */
+  var TRAMOS = '.acento, mark, strong, em';
+
   var elementos = Array.prototype.filter.call(
     document.querySelectorAll(SELECTOR),
     function (el) {
@@ -100,6 +105,14 @@
       return true;
     }
   );
+
+  /* Se anaden los tramos de color como editables aparte */
+  Array.prototype.forEach.call(document.querySelectorAll(TRAMOS), function (t) {
+    if (!t.textContent.trim()) { return; }
+    // Solo si esta dentro de un texto que ya es editable
+    if (!t.closest(SELECTOR)) { return; }
+    elementos.push(t);
+  });
 
   var textosPagina = {};
 
@@ -130,12 +143,31 @@
      se reemplaza el contenido completo: dejar solo el primer nodo partiria
      la frase. Se pierde el color de esa palabra, que es el precio de poder
      editar la frase entera. */
-  function aplicarTexto(el, texto) {
-    var svg = el.querySelector('svg');
+  function esTramo(el) {
+    return el.matches('.acento, mark, strong, em');
+  }
 
+  function aplicarTexto(el, texto) {
+    // Un tramo de color es un elemento simple: se cambia y ya
+    if (esTramo(el)) {
+      el.textContent = texto;
+      return;
+    }
+
+    var svg = el.querySelector('svg');
     if (svg) {
       el.textContent = texto + ' ';
       el.appendChild(svg);
+      return;
+    }
+
+    /* Si el elemento CONTIENE un tramo de color, se cambia solo el texto
+       que hay antes, para que ese tramo conserve su estilo. El tramo se
+       edita por su cuenta con doble clic. */
+    var tramo = el.querySelector('.acento, mark, strong, em');
+    if (tramo) {
+      var primero = primerNodoTexto(el);
+      if (primero) { primero.nodeValue = texto + ' '; }
       return;
     }
 
@@ -160,6 +192,14 @@
   }
 
   function textoDe(el) {
+    if (esTramo(el)) { return el.textContent.trim(); }
+
+    /* Si CONTIENE un tramo de color, se devuelve solo la parte de fuera:
+       es lo que se va a editar. */
+    if (el.querySelector('.acento, mark, strong, em')) {
+      var primero = primerNodoTexto(el);
+      if (primero) { return primero.nodeValue.replace(/\s+/g, ' ').trim(); }
+    }
     return textoVisible(el);
   }
 
@@ -173,6 +213,10 @@
   document.body.classList.add('modo-edicion');
 
   var cambios = 0;
+
+  /* Se fija la ruta de cada editable antes de tocar nada. Asi los tramos
+     hijos conservan la suya aunque el padre se edite primero. */
+  elementos.forEach(function (el) { el.dataset.ruta = rutaDe(el); });
 
   elementos.forEach(function (el) {
     el.classList.add('editable');
@@ -188,32 +232,55 @@
   function abrirEdicion(el) {
     if (el.isContentEditable) { return; }
 
-    var original = textoDe(el);
+    var ruta = el.dataset.ruta;
     var svg = el.querySelector('svg');
+    var tramo = esTramo(el) ? null : el.querySelector('.acento, mark, strong, em');
 
-    // plaintext-only impide pegar formato: los estilos quedan intactos
-    el.setAttribute('contenteditable', 'plaintext-only');
-    if (!el.isContentEditable) {
-      el.setAttribute('contenteditable', 'true');   // respaldo para Firefox
+    /* Si el elemento contiene un tramo de color o un icono, no se puede
+       hacer editable entero: al escribir se perderian. En su lugar se edita
+       SOLO su primer nodo de texto, dentro de un envoltorio temporal.
+       El resto del elemento no se toca en ningun momento. */
+    var caja = null;
+    var nodoTexto = null;
+
+    if (svg || tramo) {
+      nodoTexto = primerNodoTexto(el);
+      if (!nodoTexto) { return; }
+
+      caja = document.createElement('span');
+      caja.className = 'caja-edicion';
+      el.insertBefore(caja, nodoTexto);
+      caja.appendChild(nodoTexto);
+    }
+
+    var destino = caja || el;
+    var original = destino.textContent.replace(/\s+/g, ' ').trim();
+
+    destino.setAttribute('contenteditable', 'plaintext-only');
+    if (!destino.isContentEditable) {
+      destino.setAttribute('contenteditable', 'true');   // respaldo para Firefox
     }
 
     el.classList.add('editando');
-    if (svg) { el.textContent = original; }   // el icono se repone al cerrar
+    destino.focus();
+    seleccionarTodo(destino);
 
-    el.focus();
-    seleccionarTodo(el);
+    var cerrado = false;
 
     function cerrar(guardar) {
-      el.removeAttribute('contenteditable');
+      if (cerrado) { return; }
+      cerrado = true;
+
+      destino.removeAttribute('contenteditable');
       el.classList.remove('editando');
 
-      var nuevo = el.textContent.trim();
+      var nuevo = destino.textContent.replace(/\s+/g, ' ').trim();
 
       if (guardar && nuevo && nuevo !== original) {
         var d = leerTodo();
-        var p = pagina();
-        if (!d[p]) { d[p] = {}; }
-        d[p][rutaDe(el)] = nuevo;
+        var pag = pagina();
+        if (!d[pag]) { d[pag] = {}; }
+        d[pag][ruta] = nuevo;
         guardarTodo(d);
         cambios++;
         actualizarBarra();
@@ -222,15 +289,21 @@
         nuevo = original;
       }
 
-      aplicarTexto(el, nuevo);
+      if (caja) {
+        // Se devuelve el texto a su sitio y se retira el envoltorio
+        caja.textContent = nuevo + ' ';
+        while (caja.firstChild) { el.insertBefore(caja.firstChild, caja); }
+        caja.remove();
+      } else {
+        destino.textContent = nuevo;
+      }
     }
 
-    el.addEventListener('blur', function () { cerrar(true); }, { once: true });
+    destino.addEventListener('blur', function () { cerrar(true); }, { once: true });
 
-    el.addEventListener('keydown', function (ev) {
-      if (ev.key === 'Escape') { ev.preventDefault(); cerrar(false); el.blur(); }
-      // Enter guarda, salvo en parrafos largos donde Shift+Enter hace salto
-      if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); el.blur(); }
+    destino.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') { ev.preventDefault(); cerrar(false); destino.blur(); }
+      if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); destino.blur(); }
     });
   }
 
