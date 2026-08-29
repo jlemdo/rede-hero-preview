@@ -212,6 +212,33 @@
 
   document.body.classList.add('modo-edicion');
 
+  /* --- Mantener el modo edicion al navegar -------------------------------
+     Los enlaces internos conservan ?edit, para que el cliente pueda recorrer
+     el sitio sin salir del modo edicion. El enlace de salida se respeta. */
+
+  Array.prototype.forEach.call(document.querySelectorAll('a[href]'), function (a) {
+    if (a.id === 'ed-salir') { return; }
+
+    var href = a.getAttribute('href');
+    if (!href) { return; }
+
+    // Solo paginas del propio sitio
+    if (!/\.html(\?|#|$)/.test(href) && href !== '/') { return; }
+    if (/^(https?:|mailto:|tel:)/.test(href)) { return; }
+    if (href.indexOf('edit=') > -1) { return; }
+
+    var sep = href.indexOf('?') > -1 ? '&' : '?';
+    var ancla = '';
+    var i = href.indexOf('#');
+
+    if (i > -1) {
+      ancla = href.slice(i);
+      href = href.slice(0, i);
+    }
+
+    a.setAttribute('href', href + sep + 'edit=' + CLAVE + ancla);
+  });
+
   var cambios = 0;
 
   /* Se fija la ruta de cada editable antes de tocar nada. Asi los tramos
