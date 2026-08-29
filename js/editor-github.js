@@ -58,6 +58,9 @@
       return fetch(url, { headers: cabeceras() })
         .then(function (r) {
           if (r.status === 404) { return { datos: {}, sha: null }; }
+          if (r.status === 401 || r.status === 403) {
+            throw new Error('token-invalido');
+          }
           if (!r.ok) { throw new Error('GitHub respondio ' + r.status); }
           return r.json().then(function (j) {
             var texto = decodeURIComponent(escape(atob(j.content.replace(/\n/g, ''))));
