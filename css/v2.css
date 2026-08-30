@@ -1,0 +1,377 @@
+/* ==========================================================================
+   HOME V2 — SWISS MODERNISM APLICADO A DATOS ENERGETICOS
+
+   La idea: el sitio se comporta como un informe tecnico, no como una landing.
+   Rejilla visible, asimetria deliberada, el dato como protagonista.
+
+   Lo que NO se hace, a proposito:
+     - tarjetas flotantes con sombra
+     - iconos dentro de cuadritos de color
+     - rejillas de tres columnas por costumbre
+     - alternar blanco y gris para separar secciones
+
+   Lo que si:
+     - una rejilla de 12 columnas que se ve
+     - lineas finas como estructura, no cajas
+     - contraste extremo de escala entre el dato y el texto
+     - numeracion de secciones, unidades explicitas, fuentes citadas
+   ========================================================================== */
+
+.v2 {
+  --v2-linea: #DCDCDC;
+  --v2-linea-fuerte: #1A1A1A;
+  --v2-tinta: #0A0A0A;
+  --v2-tinta-media: #5A5A5A;
+  --v2-papel: #FCFCFA;
+  --v2-acento: var(--c-verde);
+
+  /* Base matematica de 8px, como pide el estilo suizo */
+  --v2-u: 8px;
+  --v2-gap: clamp(16px, 2vw, 32px);
+  --v2-marco: clamp(20px, 4vw, 64px);
+
+  --v2-mono: 'Fira Code', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+
+.v2-hero {
+  position: relative;
+  padding: 0;
+  background: var(--v2-papel);
+  border-bottom: 1px solid var(--v2-linea-fuerte);
+  overflow: hidden;
+}
+
+/* La rejilla se ve. Es el sistema, no una decoracion. */
+.v2-hero__rejilla {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  padding-inline: var(--v2-marco);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.v2-hero__rejilla span {
+  border-left: 1px solid var(--v2-linea);
+  opacity: .55;
+}
+
+.v2-hero__rejilla span:last-child { border-right: 1px solid var(--v2-linea); }
+
+/* Se ocultan columnas en pantallas estrechas para no saturar */
+@media (max-width: 900px) {
+  .v2-hero__rejilla span:nth-child(n+7) { display: none; }
+  .v2-hero__rejilla { grid-template-columns: repeat(6, 1fr); }
+}
+
+.v2-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--v2-gap);
+  max-width: 1600px;
+  margin-inline: auto;
+  padding: clamp(28px, 4vw, 56px) var(--v2-marco) 0;
+}
+
+/* --- Barra superior: coordenadas del documento --- */
+
+.v2-meta {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--v2-u);
+  padding-bottom: calc(var(--v2-u) * 2);
+  border-bottom: 1px solid var(--v2-linea-fuerte);
+
+  font-family: var(--v2-mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--v2-tinta-media);
+}
+
+.v2-meta__marca { color: var(--v2-tinta); font-weight: 600; }
+
+/* --- Titular: ocupa 7 de 12, no la mitad exacta --- */
+
+.v2-hero__texto {
+  grid-column: 1 / 8;
+  padding-block: clamp(40px, 6vw, 88px) clamp(32px, 4vw, 56px);
+}
+
+.v2-indice {
+  display: block;
+  margin-bottom: calc(var(--v2-u) * 3);
+  font-family: var(--v2-mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  color: var(--v2-acento);
+}
+
+.v2-hero__titulo {
+  margin: 0;
+  font-size: clamp(2.4rem, 1rem + 5.4vw, 5.5rem);
+  font-weight: 500;               /* peso medio, no negrita: mas preciso */
+  line-height: .96;
+  letter-spacing: -.035em;
+  color: var(--v2-tinta);
+  text-wrap: balance;
+}
+
+.v2-hero__titulo em {
+  font-style: normal;
+  font-weight: 300;
+  color: var(--v2-tinta-media);
+}
+
+.v2-hero__lead {
+  max-width: 46ch;
+  margin-top: calc(var(--v2-u) * 4);
+  padding-top: calc(var(--v2-u) * 3);
+  border-top: 1px solid var(--v2-linea);
+  font-size: clamp(.95rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.6;
+  color: var(--v2-tinta-media);
+}
+
+/* --- Acciones: sin botones redondeados --- */
+
+.v2-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: calc(var(--v2-u) * 5);
+  border: 1px solid var(--v2-linea-fuerte);
+  width: fit-content;
+}
+
+.v2-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--v2-u) * 1.5);
+  min-height: 52px;
+  padding-inline: calc(var(--v2-u) * 3);
+
+  font-family: var(--v2-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--v2-tinta);
+  background: transparent;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.v2-btn + .v2-btn { border-left: 1px solid var(--v2-linea-fuerte); }
+
+.v2-btn--principal {
+  color: #fff;
+  background: var(--v2-tinta);
+}
+
+.v2-btn--principal:hover { background: var(--v2-acento); }
+.v2-btn:not(.v2-btn--principal):hover { background: var(--v2-tinta); color: #fff; }
+
+.v2-btn svg { transition: transform 180ms ease; }
+.v2-btn:hover svg { transform: translateX(3px); }
+
+/* --- El dato: ocupa 5 columnas y manda --- */
+
+.v2-hero__dato {
+  grid-column: 8 / -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-block: clamp(40px, 6vw, 88px) clamp(32px, 4vw, 56px);
+  padding-left: var(--v2-gap);
+  border-left: 1px solid var(--v2-linea-fuerte);
+}
+
+.v2-dato__etiqueta {
+  font-family: var(--v2-mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--v2-tinta-media);
+}
+
+/* La cifra a escala de titular, que es de lo que va este sitio */
+.v2-dato__cifra {
+  margin-block: calc(var(--v2-u) * 2) 0;
+  font-size: clamp(3.5rem, 1rem + 8vw, 8rem);
+  font-weight: 500;
+  line-height: .84;
+  letter-spacing: -.04em;
+  color: var(--v2-acento);
+  font-variant-numeric: tabular-nums;
+}
+
+.v2-dato__pie {
+  max-width: 30ch;
+  margin-top: calc(var(--v2-u) * 3);
+  font-size: .9375rem;
+  line-height: 1.5;
+  color: var(--v2-tinta);
+}
+
+.v2-dato__fuente {
+  margin-top: calc(var(--v2-u) * 3);
+  padding-top: calc(var(--v2-u) * 2);
+  border-top: 1px solid var(--v2-linea);
+  font-family: var(--v2-mono);
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: .04em;
+  color: var(--v2-tinta-media);
+}
+
+/* --- Pie del hero: los benchmarks como tira de datos --- */
+
+.v2-tira {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--v2-linea-fuerte);
+}
+
+.v2-tira__item {
+  padding: calc(var(--v2-u) * 3) 0 calc(var(--v2-u) * 3) calc(var(--v2-u) * 2);
+  border-left: 1px solid var(--v2-linea);
+}
+
+.v2-tira__item:first-child { border-left: 0; padding-left: 0; }
+
+.v2-tira__valor {
+  font-size: clamp(1.25rem, .9rem + 1vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -.02em;
+  color: var(--v2-tinta);
+  font-variant-numeric: tabular-nums;
+}
+
+.v2-tira__nombre {
+  margin-top: var(--v2-u);
+  font-family: var(--v2-mono);
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--v2-tinta-media);
+}
+
+/* ==========================================================================
+   REVELADO
+   300-400ms con power1.out, segun la guia consultada. Sobrio, sin rebotes.
+   ========================================================================== */
+
+.v2-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: v2-entra 420ms cubic-bezier(.25, .46, .45, .94) forwards;
+}
+
+.v2-reveal:nth-child(2) { animation-delay: 60ms; }
+.v2-reveal:nth-child(3) { animation-delay: 120ms; }
+
+@keyframes v2-entra {
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-reveal { animation: none; opacity: 1; transform: none; }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 1000px) {
+  .v2-hero__texto { grid-column: 1 / -1; padding-bottom: calc(var(--v2-u) * 4); }
+
+  .v2-hero__dato {
+    grid-column: 1 / -1;
+    padding-left: 0;
+    padding-top: calc(var(--v2-u) * 4);
+    border-left: 0;
+    border-top: 1px solid var(--v2-linea-fuerte);
+  }
+
+  .v2-tira { grid-template-columns: repeat(3, 1fr); }
+  .v2-tira__item:nth-child(4) { border-left: 0; padding-left: 0; }
+}
+
+@media (max-width: 600px) {
+  .v2-tira { grid-template-columns: repeat(2, 1fr); }
+  .v2-tira__item:nth-child(odd) { border-left: 0; padding-left: 0; }
+
+  .v2-acciones { width: 100%; flex-direction: column; }
+  .v2-btn { justify-content: space-between; }
+  .v2-btn + .v2-btn { border-left: 0; border-top: 1px solid var(--v2-linea-fuerte); }
+}
+
+/* ==========================================================================
+   SELECTOR DE VERSION
+   Boton fijo para alternar entre el Home actual y esta propuesta.
+   Temporal: desaparece cuando se elija una.
+   ========================================================================== */
+
+.selector-v {
+  position: fixed;
+  right: clamp(12px, 2vw, 24px);
+  bottom: clamp(12px, 2vw, 24px);
+  z-index: 900;
+
+  display: flex;
+  align-items: center;
+  font-family: var(--v2-mono, ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: #0A0A0A;
+  border-radius: 2px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .22);
+  overflow: hidden;
+}
+
+.selector-v__etiqueta {
+  padding: 0 12px;
+  color: rgba(255, 255, 255, .45);
+  border-right: 1px solid rgba(255, 255, 255, .14);
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.selector-v a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 16px;
+  color: rgba(255, 255, 255, .6);
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.selector-v a:hover { color: #fff; background: rgba(255, 255, 255, .08); }
+
+.selector-v a.es-activa {
+  color: #0A0A0A;
+  background: var(--c-verde-marca, #39B54A);
+  font-weight: 600;
+}
+
+/* La barra del editor y este selector no deben pisarse */
+.modo-edicion .selector-v { bottom: 90px; }
+
+@media (max-width: 720px) {
+  .selector-v__etiqueta { display: none; }
+  .modo-edicion .selector-v { bottom: 134px; }
+}
