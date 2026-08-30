@@ -11,18 +11,19 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/v2.css">
+<link rel="stylesheet" href="css/v3.css">
 <link rel="stylesheet" href="css/editor.css">
 </head>
-<body class="v2">
+<body class="v3">
 
 <!-- ==========================================================================
      HEADER
-     Se reutiliza el del sitio para poder comparar solo el hero.
+     Se reutiliza el del sitio para que la comparacion aisle el hero.
      ========================================================================== -->
 <header class="header" id="header">
   <div class="header__inner">
@@ -96,110 +97,113 @@
 
 
 <!-- ==========================================================================
-     HERO V2
-     El dato manda. Rejilla visible, asimetria deliberada, cero tarjetas.
-     Mismo copy que el Home actual.
+     HERO V3 — LA FACTURA
+
+     El hero es el documento que los clientes de Rede reciben doce veces al
+     ano y archivan sin mirar. Ahi vive el dinero que Rede recupera.
+     Mismo copy que las otras versiones.
      ========================================================================== -->
-<section class="v2-hero">
+<main class="v3-doc">
+  <article class="v3-hoja">
 
-  <!-- La rejilla de 12 columnas es visible: es el sistema, no un adorno -->
-  <div class="v2-hero__rejilla" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span><span></span>
-  </div>
+    <header class="v3-cab">
+      <div>
+        <p class="v3-cab__emisor">Rede Energy Solutions Ltd.</p>
+        <p class="v3-cab__sub">Building energy efficiency &middot; Western Canada</p>
+      </div>
+      <div class="v3-cab__ref">
+        Statement period <b>2016&ndash;2026</b><br>
+        Portfolio <b>22 facilities</b><br>
+        Prepared for <b>a school division</b>
+      </div>
+    </header>
 
-  <div class="v2-hero__inner">
+    <div class="v3-cuerpo">
 
-    <div class="v2-meta">
-      <span class="v2-meta__marca">Rede Energy Solutions</span>
-      <span>Building energy efficiency</span>
-      <span>Western Canada &middot; Est. 2008</span>
+      <div class="v3-arg">
+        <h1 class="v3-titulo">
+          Cut energy costs without adding more to your team.
+        </h1>
+
+        <p class="v3-lead">
+          Rede helps public sector and multi-site organizations find and recover
+          unnecessary energy costs through better data, smarter decisions, and
+          engineering expertise that stays engaged for the long term.
+        </p>
+
+        <div class="v3-acciones">
+          <a href="index.html#calculator" class="v3-btn">
+            Check your opportunity
+            <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+              <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="contact.html" class="v3-btn v3-btn--claro">
+            Book a call
+            <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+              <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Los importes: cada linea es un concepto, como en una factura real.
+           Los porcentajes son benchmarks historicos de BC Hydro C-Op. -->
+      <div class="v3-importes">
+        <p class="v3-importes__titulo">Recoverable, by building type</p>
+
+        <div class="v3-linea-item">
+          <span class="v3-linea-item__concepto">Schools</span>
+          <span class="v3-linea-item__valor">9.5%</span>
+        </div>
+        <div class="v3-linea-item">
+          <span class="v3-linea-item__concepto">Universities and colleges</span>
+          <span class="v3-linea-item__valor">7.9%</span>
+        </div>
+        <div class="v3-linea-item">
+          <span class="v3-linea-item__concepto">Medium offices</span>
+          <span class="v3-linea-item__valor">7.0%</span>
+        </div>
+        <div class="v3-linea-item">
+          <span class="v3-linea-item__concepto">Hospitals</span>
+          <span class="v3-linea-item__valor">4.8%</span>
+        </div>
+
+        <div class="v3-total">
+          <p class="v3-total__etiqueta">Identified for one district</p>
+          <p class="v3-total__cifra">$2,940,000</p>
+          <p class="v3-total__pie">
+            in unnecessary annual energy costs. Paid year after year, without a
+            portfolio-wide view of where they were recoverable.
+          </p>
+        </div>
+      </div>
     </div>
 
-    <div class="v2-hero__texto v2-reveal">
-      <span class="v2-indice">01 / The opportunity</span>
-
-      <h1 class="v2-hero__titulo">
-        Cut energy costs<br>
-        <em>without adding more</em><br>
-        to your team.
-      </h1>
-
-      <p class="v2-hero__lead">
-        Rede helps public sector and multi-site organizations find and recover
-        unnecessary energy costs through better data, smarter decisions, and
-        engineering expertise that stays engaged for the long term.
+    <footer class="v3-pie">
+      <p class="v3-pie__nota">
+        Percentages are historical averages from the BC Hydro Continuous
+        Optimization Program to March 2024, by building type.
       </p>
+      <p>Rede &middot; Since 2008</p>
+    </footer>
 
-      <div class="v2-acciones">
-        <a href="index.html#calculator" class="v2-btn v2-btn--principal">
-          Check your opportunity
-          <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
-            <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
-                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <a href="contact.html" class="v2-btn">
-          Book a call
-          <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
-            <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
-                  stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
-    </div>
-
-    <!-- El dato real, a escala de titular -->
-    <div class="v2-hero__dato v2-reveal">
-      <p class="v2-dato__etiqueta">Identified to date</p>
-      <p class="v2-dato__cifra">$2.94M</p>
-      <p class="v2-dato__pie">
-        in unnecessary annual energy costs, for a single Western Canadian
-        school district.
-      </p>
-      <p class="v2-dato__fuente">
-        Costs that had been paid year after year, without a portfolio-wide view
-        of where they were recoverable.
-      </p>
-    </div>
-
-    <!-- Los benchmarks reales como tira de datos, no como tarjetas -->
-    <div class="v2-tira v2-reveal">
-      <div class="v2-tira__item">
-        <p class="v2-tira__valor">9.5<span style="font-size:.5em">%</span></p>
-        <p class="v2-tira__nombre">Schools</p>
-      </div>
-      <div class="v2-tira__item">
-        <p class="v2-tira__valor">7.9<span style="font-size:.5em">%</span></p>
-        <p class="v2-tira__nombre">Universities</p>
-      </div>
-      <div class="v2-tira__item">
-        <p class="v2-tira__valor">7.0<span style="font-size:.5em">%</span></p>
-        <p class="v2-tira__nombre">Offices</p>
-      </div>
-      <div class="v2-tira__item">
-        <p class="v2-tira__valor">4.8<span style="font-size:.5em">%</span></p>
-        <p class="v2-tira__nombre">Hospitals</p>
-      </div>
-      <div class="v2-tira__item">
-        <p class="v2-tira__valor">1.7<span style="font-size:.5em">yr</span></p>
-        <p class="v2-tira__nombre">Avg. payback</p>
-      </div>
-    </div>
-
-  </div>
-</section>
+    <span class="v3-sello" aria-hidden="true">Recoverable</span>
+  </article>
+</main>
 
 
 <!-- ==========================================================================
      SELECTOR DE VERSION
-     Temporal, para comparar propuestas. Se retira al elegir una.
+     Temporal, para comparar propuestas.
      ========================================================================== -->
 <nav class="selector-v" aria-label="Design version">
   <span class="selector-v__etiqueta">Design</span>
   <a href="index.html">1</a>
-  <a href="home-v2.html" class="es-activa" aria-current="page">2</a>
-  <a href="home-v3.html">3</a>
+  <a href="home-v2.html">2</a>
+  <a href="home-v3.html" class="es-activa" aria-current="page">3</a>
 </nav>
 
 <script src="js/main.js"></script>

@@ -1,0 +1,356 @@
+/* ==========================================================================
+   HOME V3 — LA FACTURA
+
+   El mundo: la factura de servicios. Es el documento que los clientes de Rede
+   reciben doce veces al ano, archivan sin mirar, y donde vive exactamente el
+   dinero que Rede recupera. Nadie en el sector lo ha usado como lenguaje.
+
+   Derivado del mundo cultural del publico, no del tema. "Energia" lleva a
+   verde, hojas y paneles solares: ese es el surco. La factura lleva a papel
+   termico, casillas de importe, lineas de concepto y sellos de vencimiento.
+
+   Prohibiciones respetadas (craft-floor):
+     - sin eyebrow ni kicker sobre el titular
+     - sin numeracion de seccion decorativa
+     - sin plantilla de metrica heroica
+     - sin tarjetas iguales en rejilla
+     - monoespaciada solo donde hay medicion real, no como disfraz
+   ========================================================================== */
+
+.v3 {
+  --v3-papel: #F4F2ED;          /* papel de factura, no blanco */
+  --v3-tinta: #14140F;
+  --v3-tinta-2: #6B6A61;
+  --v3-linea: #C9C6BC;
+  --v3-linea-fina: #DEDBD2;
+  --v3-marca: #028B00;
+  --v3-rojo: #B4342A;           /* el rojo del sello de vencido */
+
+  --v3-u: 8px;
+  --v3-marco: clamp(16px, 3.5vw, 56px);
+
+  /* Medicion: numeros de importe. Aqui la monoespaciada si tiene trabajo. */
+  --v3-num: 'Fira Code', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  background: var(--v3-papel);
+}
+
+/* ==========================================================================
+   EL DOCUMENTO
+   ========================================================================== */
+
+.v3-doc {
+  position: relative;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: var(--v3-marco);
+  padding-block: clamp(24px, 4vw, 56px) clamp(40px, 6vw, 80px);
+  background: var(--v3-papel);
+}
+
+/* La hoja tiene bordes, como un papel real sobre una mesa */
+.v3-hoja {
+  position: relative;
+  border: 1px solid var(--v3-linea);
+  background:
+    /* franja de perforacion superior */
+    repeating-linear-gradient(90deg,
+      var(--v3-linea) 0 4px, transparent 4px 10px) top left / 100% 1px no-repeat,
+    #FBFAF6;
+}
+
+/* --- Cabecera del documento --- */
+
+.v3-cab {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--v3-u);
+  align-items: start;
+  padding: calc(var(--v3-u) * 3) calc(var(--v3-u) * 3) calc(var(--v3-u) * 2.5);
+  border-bottom: 2px solid var(--v3-tinta);
+}
+
+.v3-cab__emisor {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  color: var(--v3-tinta);
+}
+
+.v3-cab__sub {
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--v3-tinta-2);
+}
+
+.v3-cab__ref {
+  font-family: var(--v3-num);
+  font-size: 10px;
+  line-height: 1.7;
+  text-align: right;
+  color: var(--v3-tinta-2);
+}
+
+.v3-cab__ref b { color: var(--v3-tinta); font-weight: 500; }
+
+/* --- El cuerpo: donde va el argumento --- */
+
+.v3-cuerpo {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+}
+
+.v3-arg {
+  padding: clamp(28px, 4vw, 52px) calc(var(--v3-u) * 3);
+  border-right: 1px solid var(--v3-linea);
+}
+
+/* El titular no lleva etiqueta encima. Se sostiene solo. */
+.v3-titulo {
+  margin: 0;
+  font-size: clamp(2.1rem, .9rem + 4.4vw, 4.1rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -.035em;
+  color: var(--v3-tinta);
+  text-wrap: balance;
+}
+
+/* El tachado se reserva para los importes: ahi si significa "recuperado".
+   En el titular invertia el sentido de la frase. */
+.v3-linea-item--tachada .v3-linea-item__concepto {
+  text-decoration: line-through;
+  text-decoration-thickness: .07em;
+  text-decoration-color: var(--v3-rojo);
+  opacity: .75;
+}
+
+.v3-lead {
+  max-width: 44ch;
+  margin-top: calc(var(--v3-u) * 3.5);
+  font-size: clamp(.95rem, .92rem + .15vw, 1.0625rem);
+  line-height: 1.65;
+  color: var(--v3-tinta-2);
+}
+
+/* --- Acciones: pensadas como acciones de documento --- */
+
+.v3-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--v3-u) * 1.5);
+  margin-top: calc(var(--v3-u) * 5);
+}
+
+.v3-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--v3-u) * 1.25);
+  min-height: 50px;
+  padding-inline: calc(var(--v3-u) * 3);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--v3-papel);
+  background: var(--v3-tinta);
+  border: 1px solid var(--v3-tinta);
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+.v3-btn:hover { background: var(--v3-marca); border-color: var(--v3-marca); }
+
+.v3-btn--claro {
+  color: var(--v3-tinta);
+  background: transparent;
+}
+
+.v3-btn--claro:hover {
+  color: var(--v3-papel);
+  background: var(--v3-tinta);
+}
+
+.v3-btn svg { transition: transform 200ms ease; }
+.v3-btn:hover svg { transform: translateX(3px); }
+
+/* --- La columna de importes: el corazon de la idea --- */
+
+.v3-importes {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(28px, 4vw, 52px) calc(var(--v3-u) * 3);
+}
+
+.v3-importes__titulo {
+  padding-bottom: calc(var(--v3-u) * 1.5);
+  border-bottom: 1px solid var(--v3-tinta);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--v3-tinta);
+}
+
+/* Cada linea es un concepto facturado */
+.v3-linea-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: var(--v3-u);
+  padding-block: calc(var(--v3-u) * 1.75);
+  border-bottom: 1px solid var(--v3-linea-fina);
+}
+
+.v3-linea-item__concepto {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--v3-tinta-2);
+}
+
+.v3-linea-item__valor {
+  font-family: var(--v3-num);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--v3-tinta);
+  font-variant-numeric: tabular-nums;
+}
+
+/* El total: lo que Rede encontro. Doble linea, como en un balance. */
+.v3-total {
+  margin-top: calc(var(--v3-u) * 3);
+  padding-top: calc(var(--v3-u) * 2);
+  border-top: 2px solid var(--v3-tinta);
+}
+
+.v3-total__etiqueta {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--v3-marca);
+}
+
+.v3-total__cifra {
+  margin-top: calc(var(--v3-u) * 1.25);
+  font-family: var(--v3-num);
+  font-size: clamp(2.2rem, 1rem + 3.4vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -.03em;
+  color: var(--v3-marca);
+  font-variant-numeric: tabular-nums;
+}
+
+.v3-total__pie {
+  margin-top: calc(var(--v3-u) * 1.75);
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--v3-tinta-2);
+}
+
+/* --- El sello: lo unico que rompe la cuadricula --- */
+
+.v3-sello {
+  position: absolute;
+  right: clamp(-8px, 1vw, 24px);
+  bottom: clamp(48px, 8vw, 96px);
+  z-index: 2;
+
+  padding: calc(var(--v3-u) * 1.25) calc(var(--v3-u) * 2.5);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--v3-rojo);
+  border: 2px solid var(--v3-rojo);
+  border-radius: 2px;
+  rotate: -6deg;
+  opacity: .82;
+  background: rgba(251, 250, 246, .7);
+}
+
+/* --- Pie del documento --- */
+
+.v3-pie {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--v3-u);
+  align-items: center;
+  padding: calc(var(--v3-u) * 2) calc(var(--v3-u) * 3);
+  border-top: 1px solid var(--v3-linea);
+  font-family: var(--v3-num);
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--v3-tinta-2);
+}
+
+.v3-pie__nota { max-width: 62ch; }
+
+/* ==========================================================================
+   MOVIMIENTO
+   Un solo momento: el documento se asienta. Nada mas se mueve.
+   ========================================================================== */
+
+.v3-hoja {
+  animation: v3-asienta 520ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.v3-sello {
+  animation: v3-sella 340ms cubic-bezier(.34, 1.4, .64, 1) 620ms both;
+}
+
+@keyframes v3-asienta {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes v3-sella {
+  from { opacity: 0; rotate: -18deg; scale: 1.5; }
+  to   { opacity: .82; rotate: -6deg; scale: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v3-hoja, .v3-sello { animation: none; opacity: 1; transform: none; }
+  .v3-sello { opacity: .82; }
+}
+
+/* ==========================================================================
+   SUPERFICIES DEL NAVEGADOR
+   Las partes que no dibujamos tambien llevan el diseno.
+   ========================================================================== */
+
+.v3 ::selection { background: var(--v3-marca); color: var(--v3-papel); }
+.v3 { caret-color: var(--v3-marca); accent-color: var(--v3-marca); }
+
+.v3 :focus-visible {
+  outline: 2px solid var(--v3-tinta);
+  outline-offset: 2px;
+  border-radius: 0;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .v3-cuerpo { grid-template-columns: 1fr; }
+
+  .v3-arg {
+    border-right: 0;
+    border-bottom: 1px solid var(--v3-linea);
+  }
+
+  .v3-sello {
+    right: auto;
+    left: calc(var(--v3-u) * 3);
+    bottom: auto;
+    top: clamp(200px, 42vw, 320px);
+  }
+}
+
+@media (max-width: 560px) {
+  .v3-cab { grid-template-columns: 1fr; }
+  .v3-cab__ref { text-align: left; }
+  .v3-pie { grid-template-columns: 1fr; }
+  .v3-acciones { flex-direction: column; align-items: stretch; }
+  .v3-btn { justify-content: space-between; }
+  .v3-sello { display: none; }   /* en movil estorba mas que aporta */
+}
