@@ -279,16 +279,25 @@
 .d2 .nav__caret { transition: transform var(--d2-normal) ease; }
 .d2 .nav__link[aria-expanded="true"] .nav__caret { transform: rotate(180deg); }
 
-/* --- El desplegable --- */
+/* --- El desplegable ---
+   Estructura del mega-menu de la referencia: panel ancho con las entradas a
+   la izquierda, cada una con su icono, y un bloque destacado a la derecha.
+
+   Cambia respecto a la referencia: alli el destacado es una imagen suelta;
+   aqui es el panel oscuro con la cifra, que es lo que Rede tiene que contar.
+   -------------------------------------------------------------------------- */
 
 .d2 .nav__item--has-drop { position: relative; }
 
 .d2 .nav__drop {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 12px);
   left: 50%;
   translate: -50% 0;
-  min-width: 340px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: var(--d2-e2);
+  width: min(760px, calc(100vw - 40px));
   margin: 0;
   padding: var(--d2-e2);
   list-style: none;
@@ -300,9 +309,21 @@
 
 .d2 .nav__drop[hidden] { display: none; }
 
+/* La columna de entradas */
+.d2 .nav__drop__lista {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .d2 .nav__drop a {
-  display: block;
-  padding: var(--d2-e2) var(--d2-e3);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--d2-e2);
+  padding: var(--d2-e2);
   border-radius: var(--d2-radio-sm);
   text-decoration: none;
   transition: background-color var(--d2-rapido) ease;
@@ -310,19 +331,100 @@
 
 .d2 .nav__drop a:hover { background: var(--d2-tinta); }
 
+/* El icono: va suelto en la composicion, sin cuadrito de color */
+.d2 .nav__drop__icono {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-top: 1px;
+  color: var(--c-verde);
+}
+
+.d2 .nav__drop__icono svg { display: block; }
+
 .d2 .nav__drop span {
   display: block;
   font-weight: var(--fw-bold);
+  line-height: 1.3;
   color: var(--c-texto);
 }
 
 .d2 .nav__drop small {
   display: block;
-  margin-top: 2px;
+  margin-top: 3px;
   font-size: .8125rem;
-  line-height: 1.4;
+  line-height: 1.45;
   color: var(--c-texto-suave);
 }
+
+/* El bloque destacado de la derecha */
+.d2 .nav__drop__destacado {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--d2-e2);
+  padding: var(--d2-e4);
+  overflow: hidden;
+  color: var(--c-blanco);
+  background: var(--d2-oscuro);
+  border-radius: var(--d2-radio-md);
+}
+
+/* La imagen de fondo, tenue para que el texto se lea */
+.d2 .nav__drop__destacado img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .26;
+}
+
+/* Velo inferior: asegura la lectura del texto sobre cualquier zona del
+   esquema mecanico, que tiene lineas claras en sitios impredecibles. */
+.d2 .nav__drop__destacado::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+    rgba(14, 42, 18, .85) 0%,
+    rgba(14, 42, 18, .35) 55%,
+    transparent 100%);
+}
+
+.d2 .nav__drop__destacado > * { position: relative; z-index: 1; }
+
+.d2 .nav__drop__cifra {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: var(--fw-extrabold);
+  line-height: 1;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.d2 .nav__drop__texto {
+  margin: 0;
+  font-size: .8125rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .82);
+}
+
+.d2 .nav__drop__enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: .875rem;
+  font-weight: var(--fw-bold);
+  color: var(--c-blanco);
+  text-decoration: none;
+  transition: gap var(--d2-rapido) ease;
+}
+
+.d2 .nav__drop__enlace:hover { gap: 12px; }
 
 .d2 .header__actions {
   display: flex;
@@ -545,7 +647,7 @@
 
 .d2-logos {
   --marquee-gap: clamp(28px, 3.4vw, 52px);
-  --marquee-alto: 44px;
+  --marquee-alto: 54px;
 
   padding-block: clamp(40px, 5vw, 64px);
   background: var(--d2-tinta);
@@ -605,7 +707,7 @@
 .d2-marquee img {
   display: block;
   flex-shrink: 0;
-  width: 150px;
+  width: 168px;
   height: var(--marquee-alto);
   object-fit: contain;
   object-position: center;
@@ -663,7 +765,7 @@
   .d2-hero__acciones { flex-direction: column; align-items: stretch; }
   .d2-panel__metricas { grid-template-columns: 1fr; gap: var(--d2-e3); }
   .d2-panel__pie { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .d2-logos { --marquee-alto: 34px; }
+  .d2-logos { --marquee-alto: 42px; }
 }
 
 /* En movil el boton del header compite con la hamburguesa: se compacta */
