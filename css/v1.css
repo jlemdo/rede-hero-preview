@@ -51,7 +51,7 @@
   );
   border: 1px solid var(--c-borde);
   border-left: 4px solid var(--c-verde);   /* el filo, como en las citas */
-  border-radius: 0;                        /* cuadrado, como el hero */
+  border-radius: var(--radio-lg);          /* 16px, como el panel del hero */
 }
 
 .respuesta__texto {
@@ -74,7 +74,7 @@
   background: var(--c-blanco);
   border: 2px solid var(--c-verde);
   border-bottom-width: 2px;
-  border-radius: 0;
+  border-radius: var(--radio-sm);   /* 6px, como los botones del hero */
   white-space: nowrap;
   transition: background-color var(--trans-media), color var(--trans-media);
 }
@@ -116,7 +116,7 @@
     transparent 14px 28px
   );
   border: 1px solid var(--c-borde);
-  border-radius: 0;
+  border-radius: var(--radio-lg);   /* 16px, como el panel del hero */
 }
 
 .prueba-sec .eyebrow {
@@ -226,24 +226,27 @@
 /* ==========================================================================
    3 — LA CALCULADORA
 
-   Antes: esquinas redondeadas en el panel, en cada opcion, en la tarjeta, en
-   el boton y en la pildora del contador. El hero no tiene ni una.
+   La regla del hero no es "todo cuadrado". Es una jerarquia:
 
-   Ahora: todo cuadrado, y el resultado tratado como el panel "Portfolio
-   overview" del hero, que es el objeto que el cliente ya aprobo.
+     botones          6px   (--radio-sm)   se tocan, piden ser suaves
+     paneles y datos  16px  (--radio-lg)   superficies que contienen algo
+     textura de fondo 0px                  no es un objeto, es fondo
+
+   Lo que se corrige aqui es lo que no seguia esa jerarquia: el rectangulo
+   gris del ejemplo, que en el hero seria una metrica apoyada en una linea.
 
    La logica no se toca: solo cambia la piel.
    ========================================================================== */
 
-.calc__panel { border-radius: 0; }
+/* El panel es una superficie de contenido, como el del hero */
+.calc__panel { border-radius: var(--radio-lg); }
 
-/* El progreso: barra fina cuadrada, como la del hero */
 .pasos__contador { color: var(--c-verde); }
 
-/* Las opciones: rectangulos con filo, no pildoras.
-   El filo verde aparece al elegir, igual que el borde del dato. */
+/* Las opciones se tocan: mismo radio que los botones.
+   El filo verde marca la elegida, como el borde del dato. */
 .calc .opcion {
-  border-radius: 0;
+  border-radius: var(--radio-sm);
   border-left: 3px solid transparent;
   transition: background-color var(--trans-media),
               border-color var(--trans-media);
@@ -254,23 +257,14 @@
 .calc .opcion.es-elegida,
 .calc .opcion[aria-pressed="true"] { border-left-color: var(--c-verde); }
 
-/* Botones cuadrados, como los del hero */
-.calc__btn,
-.resultado__cta,
-.calc .btn { border-radius: 0; }
-
-/* --- La tarjeta de resultado --- */
-
+/* La tarjeta de resultado: superficie, 16px */
 .calc .resultado,
 .flip__cara--frente .resultado,
-.flip__cara--dorso .resultado { border-radius: 0; }
-
-/* Las etiquetas "0 of 4" y "Benchmark" dejan de ser pildoras */
-.calc .pastilla { border-radius: 0; }
+.flip__cara--dorso .resultado { border-radius: var(--radio-lg); }
 
 /* El bloque de ejemplo: en el hero una metrica no vive dentro de un
    rectangulo gris, se apoya en una linea y lleva su etiqueta debajo.
-   Mismo tratamiento aqui. */
+   Esto si cambia, porque es lo que hacia que se leyera como plantilla. */
 .calc .prueba,
 .calc .adelanto {
   padding: var(--sp-4) 0 0;
@@ -298,4 +292,47 @@
 
 @media (max-width: 560px) {
   .prueba-sec .cita__texto::before { margin-left: 0; float: none; }
+}
+
+/* ==========================================================================
+   OBJETIVOS TACTILES
+
+   Dos controles quedaban por debajo de los 44px que pide Apple: el boton de
+   pronunciacion del pie (28px) y el de ver contrasena (40px).
+
+   Se amplia el area que se puede tocar sin agrandar el circulo visible, con
+   un pseudo elemento centrado. El diseno no cambia, solo el area sensible.
+   ========================================================================== */
+
+.pron,
+.ver-pass { position: relative; }
+
+.pron::after,
+.ver-pass::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  transform: translate(-50%, -50%);
+}
+
+/* ==========================================================================
+   EL BOTON DEL PASO 4
+
+   En el ultimo paso el texto cambia a "Show benchmark result", mas largo que
+   "Next". Con nowrap y 390px de ancho, el boton se salia 44px.
+
+   Se le permite ajustar el texto solo en pantallas estrechas. En el resto
+   sigue en una linea, como estaba.
+   ========================================================================== */
+
+@media (max-width: 560px) {
+  .calc__btn {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.25;
+    padding-inline: var(--sp-4);
+  }
 }
