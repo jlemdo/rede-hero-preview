@@ -240,7 +240,7 @@ button {
   display: block;
   width: 24px;
   height: 2px;
-  background: var(--c-texto);
+  background: var(--c-superficie-oscura);
   border-radius: 2px;
   transition: transform var(--trans-media), opacity var(--trans-rapida);
 }
@@ -856,7 +856,7 @@ button {
   gap: var(--gap);
   margin-top: clamp(var(--sp-7), 4vw, var(--sp-8));
   padding: var(--padding);
-  background: var(--c-texto);
+  background: var(--c-superficie-oscura);
   border-radius: var(--radio-lg);
 }
 
@@ -964,7 +964,7 @@ button {
   align-items: stretch;   /* la tarjeta llena su columna: el eje de giro queda centrado */
   gap: var(--gap);
   padding: var(--padding);
-  background: var(--c-texto);
+  background: var(--c-superficie-oscura);
   border-radius: var(--radio-lg);
 }
 
@@ -2489,7 +2489,7 @@ body { -webkit-font-smoothing: antialiased; }
   --padding-bottom: var(--section-y);
 
   padding-block: var(--padding-top) var(--padding-bottom);
-  background: var(--c-texto);
+  background: var(--c-superficie-oscura);
   color: var(--c-blanco);
 }
 
@@ -2733,7 +2733,7 @@ body { -webkit-font-smoothing: antialiased; }
    ========================================================================== */
 
 .pie {
-  background: var(--c-texto);
+  background: var(--c-superficie-oscura);
   color: var(--c-blanco);
 }
 
@@ -3121,7 +3121,7 @@ body { -webkit-font-smoothing: antialiased; }
 .acceso__nota {
   margin-top: var(--sp-7);
   padding: var(--sp-5);
-  background: var(--c-texto);
+  background: var(--c-superficie-oscura);
   border-radius: var(--radio-md);
 }
 
@@ -3586,7 +3586,7 @@ body { -webkit-font-smoothing: antialiased; }
 /* El nivel con soporte de ingenieria se destaca sin gritar */
 .nivel--destacado {
   position: relative;
-  background: var(--c-texto);
+  background: var(--c-superficie-oscura);
   border-color: var(--c-texto);
   color: var(--c-blanco);
 }

@@ -30,7 +30,12 @@
   --c-verde-logo:       #39A935;
 
   /* Neutros */
-  --c-texto:            #1A1A1A;   /* titulares */
+  --c-texto:            #333333;   /* titulares. La guia de marca dice "DARK GREY BETTER FOR WEB" (PDF p.8) */
+
+  /* Superficie oscura. Es un uso distinto del texto: aqui el gris de marca
+     no da contraste suficiente para poner blanco encima, asi que la
+     superficie conserva su propio valor. */
+  --c-superficie-oscura: #1A1A1A;
   --c-texto-cuerpo:     #333333;   /* cuerpo — la guía dice "dark grey better for web" */
   --c-texto-suave:      #6B6B6B;   /* secundario, etiquetas */
   --c-blanco:           #FFFFFF;

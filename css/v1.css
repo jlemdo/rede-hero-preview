@@ -50,7 +50,6 @@
     transparent 14px 28px
   );
   border: 1px solid var(--c-borde);
-  border-left: 4px solid var(--c-verde);   /* el filo, como en las citas */
   border-radius: var(--radio-lg);          /* 16px, como el panel del hero */
 }
 
@@ -109,32 +108,46 @@
 .prueba-sec__dato {
   align-self: start;
   padding: clamp(var(--sp-6), 3vw, var(--sp-7));
-  background-color: var(--c-fondo-alt);
+  /* Tinta del verde al 10%, de la escala oficial de marca. Antes era un gris
+     de sistema que no pertenecia a la paleta. */
+  background-color: var(--c-verde-claro);
   background-image: repeating-linear-gradient(
     45deg,
-    rgba(0, 0, 0, .018) 0 14px,
+    rgba(2, 139, 0, .04) 0 14px,
     transparent 14px 28px
   );
-  border: 1px solid var(--c-borde);
+  border: 1px solid rgba(2, 139, 0, .16);
   border-radius: var(--radio-lg);   /* 16px, como el panel del hero */
 }
 
+/* El eyebrow que ya existe hace de etiqueta de la medida: se pega a la cifra
+   para que se lean como un solo bloque, igual que en el panel del hero. */
 .prueba-sec .eyebrow {
-  margin: 0 0 var(--sp-5);
+  margin: 0 0 var(--sp-3);
   color: var(--c-verde);
 }
 
 /* La cifra manda, en negro. El verde queda para el acento, no para el bloque
    entero: asi se lee como dato y no como decoracion. */
+/* La cifra medía 72px, mas que el titular del hero (64px). Una cifra que
+   grita mas que el titular se lee como diapositiva.
+
+   El techo es 40px, que es lo que mide en el panel del hero. Y se presenta
+   como lo que Rede hace: una lectura contra una referencia, con su etiqueta
+   arriba y su contexto debajo, no un numero flotando. */
 .prueba-sec__cifra {
+  position: relative;
   margin: 0;
-  font-size: clamp(2.75rem, 1.6rem + 4.4vw, 4.5rem);
+  padding-top: var(--sp-4);
+  font-size: clamp(2rem, 1.4rem + 1.4vw, 2.5rem);   /* techo 40px */
   font-weight: var(--fw-extrabold);
-  line-height: .95;
-  letter-spacing: -.04em;
+  line-height: 1.05;
+  letter-spacing: -.03em;
   color: var(--c-texto);
   font-variant-numeric: tabular-nums;
+  border-top: 2px solid var(--c-verde);
 }
+
 
 .prueba-sec__pie {
   max-width: 34ch;
@@ -245,17 +258,25 @@
 
 /* Las opciones se tocan: mismo radio que los botones.
    El filo verde marca la elegida, como el borde del dato. */
+/* Sin filo lateral: la opcion elegida se marca con su borde completo y un
+   fondo suave, que es como se comporta un control de verdad. */
 .calc .opcion {
   border-radius: var(--radio-sm);
-  border-left: 3px solid transparent;
+  border: 1px solid rgba(255, 255, 255, .14);
   transition: background-color var(--trans-media),
               border-color var(--trans-media);
 }
 
-.calc .opcion:hover { border-left-color: rgba(255, 255, 255, .25); }
+.calc .opcion:hover {
+  background: rgba(255, 255, 255, .06);
+  border-color: rgba(255, 255, 255, .28);
+}
 
 .calc .opcion.es-elegida,
-.calc .opcion[aria-pressed="true"] { border-left-color: var(--c-verde); }
+.calc .opcion[aria-pressed="true"] {
+  background: rgba(57, 181, 74, .12);
+  border-color: var(--c-verde-marca);
+}
 
 /* La tarjeta de resultado: superficie, 16px */
 .calc .resultado,
@@ -395,4 +416,56 @@
   line-height: 1.3;
   color: var(--c-blanco);
   opacity: .85;
+}
+
+/* ==========================================================================
+   FUERA LOS FILOS DE COLOR
+
+   El patron "border-left de color sobre una caja" es el recurso mas
+   reconocible de plantilla automatica. El hero no lo usa ni una vez.
+
+   Quedaban tres en el estilo base: la recomendacion del resultado, las citas
+   de las paginas interiores y el aviso de requisitos.
+
+   En su lugar, cada bloque se distingue por lo que ya tiene: su fondo, su
+   tipografia y una linea completa arriba cuando hace falta separarlo.
+   ========================================================================== */
+
+/* La recomendacion del resultado: "Recommended next step" */
+.cierre__recomienda {
+  border-left: 0;
+  border-top: 1px solid rgba(57, 181, 74, .34);
+  border-radius: var(--radio-sm);
+  background: rgba(57, 181, 74, .10);
+}
+
+/* Las citas de las paginas interiores */
+.cita {
+  border-left: 0;
+  border-radius: var(--radio-sm);
+}
+
+/* El aviso de requisitos */
+.requisitos__nota {
+  border-left: 0;
+  border-top: 1px solid rgba(2, 139, 0, .28);
+}
+
+/* ==========================================================================
+   EL RESULTADO DE LA CALCULADORA
+
+   Misma regla: la cifra no puede gritar mas que el titular, y no se presenta
+   sola. Se lee como una medida de informe, con su etiqueta y su contexto.
+   ========================================================================== */
+
+.resultado__cifra {
+  font-size: clamp(2rem, 1.4rem + 1.4vw, 2.5rem);   /* techo 40px */
+  line-height: 1.05;
+  letter-spacing: -.03em;
+}
+
+/* Cuando faltan datos no es una cifra, asi que no se presenta como tal */
+.resultado__cifra.es-incompleto {
+  font-size: clamp(1.05rem, 1rem + .4vw, 1.25rem);
+  letter-spacing: 0;
 }
