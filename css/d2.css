@@ -852,7 +852,10 @@
   --padding-bottom: clamp(56px, 8vw, 104px);
 
   padding-block: var(--padding-top) var(--padding-bottom);
-  background: var(--d2-tinta);
+  /* Blanco: los banners de la empresa son verdes y sobre la tinta se
+     fundian con el fondo. El ritmo lo marca la seccion de logos, que si
+     lleva tinta. */
+  background: var(--c-blanco);
 }
 
 .d2-problema__inner {
@@ -897,91 +900,127 @@
   color: var(--c-texto-cuerpo);
 }
 
-/* --- Las tarjetas ---
-   Blancas y elevadas sobre el fondo de color, con la sombra tintada del
-   sistema. Se elevan al pasar el raton, que es el gesto de la referencia. */
+/* --- Las senales: FILAS ALTERNAS ---
+
+   Este es el recurso dominante de la referencia: ocho de sus diecisiete
+   secciones son una fila con imagen a un lado y texto al otro, alternando
+   el lado en cada una.
+
+   Se elige frente a la rejilla de tarjetas porque una rejilla de tres es
+   justo lo que ya hacia el diseno 1. Aqui cada senal tiene su propio espacio
+   y su propia imagen, asi que se leen como tres argumentos, no como tres
+   celdas de una tabla.
+   -------------------------------------------------------------------------- */
 
 .d2-senales {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--d2-e4);
+  gap: clamp(48px, 7vw, 96px);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .d2-senal {
-  display: flex;
-  flex-direction: column;
-  padding: clamp(24px, 3vw, 32px);
-  background: var(--c-blanco);
-  border: 1px solid rgba(2, 51, 0, .08);
-  border-radius: var(--d2-radio-lg);
-  box-shadow: var(--d2-sombra-sm);
-  transition: transform var(--d2-normal) ease,
-              box-shadow var(--d2-normal) ease;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 72px);
 }
 
-.d2-senal:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--d2-sombra-alta);
+/* La alternancia: en las pares, la imagen pasa a la derecha */
+.d2-senal:nth-child(even) .d2-senal__media { order: 2; }
+
+/* La imagen, con el recorte asimetrico de la referencia:
+   la esquina superior izquierda muy redondeada y las demas menos. */
+.d2-senal__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  border-radius: 88px var(--d2-radio-lg) var(--d2-radio-lg) var(--d2-radio-lg);
+  box-shadow: var(--d2-sombra-md);
+  border: 1px solid rgba(2, 51, 0, .1);
 }
 
-/* El icono va suelto en la composicion, sin cuadrito de color */
-.d2-senal__icono {
+.d2-senal:nth-child(even) .d2-senal__media {
+  /* En las pares el recorte se refleja, para que mire hacia el texto */
+  border-radius: var(--d2-radio-lg) 88px var(--d2-radio-lg) var(--d2-radio-lg);
+}
+
+.d2-senal__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 620ms var(--d2-curva);
+}
+
+.d2-senal:hover .d2-senal__media img { transform: scale(1.04); }
+
+/* El numero de orden: da secuencia a los tres argumentos */
+.d2-senal__n {
   display: block;
-  margin-bottom: var(--d2-e4);
+  margin-bottom: var(--d2-e2);
+  font-size: .8125rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .12em;
   color: var(--c-verde);
+  font-variant-numeric: tabular-nums;
 }
-
-.d2-senal__icono svg { display: block; }
 
 .d2-senal__titulo {
-  margin: 0 0 var(--d2-e2);
-  font-size: 1.1875rem;
-  font-weight: var(--fw-bold);
-  line-height: 1.3;
-  letter-spacing: -.015em;
+  margin: 0 0 var(--d2-e3);
+  font-size: clamp(1.4rem, 1.1rem + 1.1vw, 2rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
+  letter-spacing: -.025em;
   color: var(--c-texto);
+  text-wrap: balance;
 }
 
 .d2-senal__texto {
+  max-width: 46ch;
   margin: 0;
-  font-size: .9375rem;
-  line-height: 1.65;
+  font-size: clamp(1rem, .95rem + .25vw, 1.0625rem);
+  line-height: 1.7;
   color: var(--c-texto-cuerpo);
 }
 
-/* --- El cierre: la banda con el esquema mecanico --- */
+@media (prefers-reduced-motion: reduce) {
+  .d2-senal__media img { transition: none; }
+  .d2-senal:hover .d2-senal__media img { transform: none; }
+}
+
+/* --- El cierre: BANDA DE CIFRAS ---
+
+   Patron de la referencia: fondo oscuro y las cifras enormes en fila, con
+   su etiqueta debajo. Sustituye a la banda con boton, que repetia la
+   composicion del diseno 1.
+
+   Las cifras son las reales de Rede, las mismas que ya usa el sitio.
+   -------------------------------------------------------------------------- */
 
 .d2-cierre {
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--d2-e4);
-  margin-top: clamp(36px, 5vw, 64px);
-  padding: clamp(32px, 4vw, 48px);
+  margin-top: clamp(56px, 8vw, 104px);
+  padding: clamp(40px, 6vw, 72px) clamp(24px, 4vw, 56px);
   overflow: hidden;
+  text-align: center;
   background: var(--d2-oscuro);
   border-radius: var(--d2-radio-lg);
 }
 
-/* El esquema mecanico de la empresa, tenue, detras del texto */
 .d2-cierre__fondo {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: .22;
+  opacity: .18;
 }
 
 .d2-cierre > *:not(.d2-cierre__fondo) { position: relative; z-index: 1; }
 
 .d2-cierre__texto {
-  margin: 0;
+  margin: 0 0 clamp(32px, 4vw, 52px);
   font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
@@ -989,42 +1028,62 @@
   color: var(--c-blanco);
 }
 
-/* Sobre oscuro el boton de contorno desaparece: va el solido en blanco */
-.d2-cierre .d2-btn {
-  color: var(--d2-oscuro);
-  background: var(--c-blanco);
-  border-color: var(--c-blanco);
+.d2-cifras {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--d2-e4);
+  max-width: 800px;
+  margin-inline: auto;
 }
 
-.d2-cierre .d2-btn:hover {
+.d2-cifra__valor {
+  margin: 0;
+  font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1;
+  letter-spacing: -.035em;
   color: var(--c-blanco);
-  background: var(--c-verde);
-  border-color: var(--c-verde);
+  font-variant-numeric: tabular-nums;
+}
+
+.d2-cifra__nombre {
+  margin: var(--d2-e2) 0 0;
+  font-size: .875rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, .72);
+}
+
+/* Una linea separa las cifras, en vez de dejarlas sueltas */
+.d2-cifras > div + div {
+  border-left: 1px solid rgba(255, 255, 255, .16);
 }
 
 /* --------------------------------------------------------------------------
    RESPONSIVE DE LA SECCION 3
-
-   La referencia colapsa todo a 100% de golpe. Aqui se hace por pasos:
-   tres columnas, dos, una. Se lee mejor en tableta.
    -------------------------------------------------------------------------- */
 
-@media (max-width: 1000px) {
-  .d2-senales { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 860px) {
+  /* Las filas se apilan: imagen arriba, texto debajo.
+     El order se anula, o las pares saldrian con el texto primero. */
+  .d2-senal { grid-template-columns: 1fr; gap: var(--d2-e4); }
+  .d2-senal:nth-child(even) .d2-senal__media { order: 0; }
 
-  /* La tercera pasa a ocupar el ancho: mejor que dejarla huerfana */
-  .d2-senal:last-child { grid-column: 1 / -1; }
+  /* El recorte se suaviza: a este tamano 88px se come la imagen */
+  .d2-senal__media,
+  .d2-senal:nth-child(even) .d2-senal__media {
+    border-radius: 48px var(--d2-radio-lg) var(--d2-radio-lg) var(--d2-radio-lg);
+  }
 }
 
-@media (max-width: 680px) {
-  .d2-senales { grid-template-columns: 1fr; gap: var(--d2-e3); }
-  .d2-senal:last-child { grid-column: auto; }
+@media (max-width: 620px) {
+  /* Tres cifras no caben en fila: pasan a una columna con linea horizontal */
+  .d2-cifras { grid-template-columns: 1fr; gap: 0; }
 
-  .d2-cierre {
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
+  .d2-cifras > div + div {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, .16);
+    padding-top: var(--d2-e4);
+    margin-top: var(--d2-e4);
   }
-
-  .d2-cierre .d2-btn { width: 100%; }
+}
 }
