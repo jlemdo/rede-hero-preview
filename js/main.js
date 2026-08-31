@@ -392,15 +392,22 @@
     var gastoFinal = gasto || (area ? area * b.costPerFt2 : 0);
     var oportunidad = gastoFinal * (b.savingsPct / 100);
 
-    $('#cifra').textContent = dinero(oportunidad);
+    /* Sin superficie ni gasto no hay nada que calcular. Mostrar "$0" haria
+       dudar del metodo, asi que se pide el dato que falta. */
+    var hayDatos = gastoFinal > 0;
+
+    $('#cifra').textContent = hayDatos ? dinero(oportunidad) : 'Add your area';
+    $('#cifra').classList.toggle('es-incompleto', !hayDatos);
     $('#etiqueta-tipo').textContent = b.label;
     $('#d-tipo').textContent = b.label;
     $('#d-pct').textContent = b.savingsPct.toFixed(1) + ' per cent';
     $('#d-payback').textContent = b.payback + ' years';
 
-    $('#cifra-nota').textContent = gasto
-      ? 'in annual opportunity, based on your entered utility spend'
-      : 'in annual opportunity, estimated from historical cost per square foot';
+    $('#cifra-nota').textContent = !hayDatos
+      ? 'Enter your total area or annual utility spend and we will estimate the opportunity.'
+      : (gasto
+        ? 'in annual opportunity, based on your entered utility spend'
+        : 'in annual opportunity, estimated from historical cost per square foot');
 
     // La recomendacion depende del alcance
     var unaSola = estado.scope === 'single' || sitios <= 1;

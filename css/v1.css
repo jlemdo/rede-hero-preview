@@ -336,3 +336,63 @@
     padding-inline: var(--sp-4);
   }
 }
+
+/* ==========================================================================
+   EL DORSO DE LA TARJETA
+
+   El frente define la altura y el dorso se superpone en absoluto. El dorso
+   lleva cuatro campos mas un boton, que no caben en esa altura: el boton
+   quedaba cortado por la mitad y la nota legal caia fuera del blanco.
+
+   Obligar a desplazarse dentro de una tarjeta seria peor: el boton de envio
+   quedaria escondido. Como el dorso es la unica cara visible cuando esta
+   girada, se le deja ocupar el alto que necesita y el contenedor crece con
+   el. El frente sigue mandando mientras la tarjeta no esta girada, asi que
+   no hay salto al abrir.
+   ========================================================================== */
+
+/* Girada: el contenedor deja de imponer la altura del frente */
+.flip.girada { height: auto; }
+.flip.girada .flip__cara--dorso { position: relative; inset: auto; }
+
+/* Y el frente se retira del flujo para no sumar su altura */
+.flip.girada .flip__cara--frente {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.flip__cara--dorso .resultado {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+}
+
+/* El formulario ya no se estira mas alla de la tarjeta */
+.flip__cara--dorso .captura { flex: 0 0 auto; }
+
+/* La nota legal cierra el bloque, dentro del blanco */
+.flip__cara--dorso .resultado__legal {
+  margin-top: var(--sp-4);
+  min-height: 0;
+}
+
+/* ==========================================================================
+   EL RESULTADO SIN DATOS
+
+   Si el cliente avanza sin escribir superficie ni gasto, no hay nada que
+   calcular. Antes salia "$0", que hace dudar del metodo entero.
+
+   Ahora se pide el dato que falta. Como ya no es una cifra, no se presenta
+   como tal: baja de tamano y pierde el verde, que en este diseno esta
+   reservado para el dato real.
+   ========================================================================== */
+
+.resultado__cifra.es-incompleto {
+  font-size: clamp(1.1rem, 1rem + .5vw, 1.375rem);
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  color: var(--c-blanco);
+  opacity: .85;
+}
