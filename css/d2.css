@@ -831,3 +831,200 @@
   /* Muy estrecho: manda la hamburguesa, el boton ya esta en el menu */
   .d2 .header__actions { display: none; }
 }
+
+/* ==========================================================================
+   SECCION 3 — PORTFOLIO VISIBILITY PROBLEM
+
+   Patron de la referencia: fondo de color suave que separa la seccion sin
+   necesidad de lineas, titulo centrado con su entradilla, y rejilla de
+   tarjetas blancas elevadas.
+
+   Ellos usan cuatro tarjetas; nosotros tenemos tres senales, asi que la
+   rejilla es de tres. El numero de columnas lo decide el contenido.
+
+   El cierre "Rede closes that gap" cambia por completo respecto al diseno 1:
+   alli era una franja oscura, aqui es una banda con el esquema mecanico de
+   la empresa detras.
+   ========================================================================== */
+
+.d2-problema {
+  --padding-top: clamp(56px, 8vw, 104px);
+  --padding-bottom: clamp(56px, 8vw, 104px);
+
+  padding-block: var(--padding-top) var(--padding-bottom);
+  background: var(--d2-tinta);
+}
+
+.d2-problema__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+/* --- La cabecera, centrada como en la referencia --- */
+
+.d2-problema__cabecera {
+  max-width: 760px;
+  margin-inline: auto;
+  margin-bottom: clamp(36px, 5vw, 64px);
+  text-align: center;
+}
+
+.d2-eyebrow {
+  margin: 0 0 var(--d2-e3);
+  font-size: .875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--c-verde);
+}
+
+.d2-titulo-seccion {
+  margin: 0;
+  font-size: clamp(1.9rem, 1.2rem + 2.4vw, 2.75rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.12;
+  letter-spacing: -.03em;
+  color: var(--c-texto);
+  text-wrap: balance;
+}
+
+.d2-lead-seccion {
+  max-width: 62ch;
+  margin: var(--d2-e4) auto 0;
+  font-size: clamp(1rem, .95rem + .3vw, 1.0625rem);
+  line-height: 1.7;
+  color: var(--c-texto-cuerpo);
+}
+
+/* --- Las tarjetas ---
+   Blancas y elevadas sobre el fondo de color, con la sombra tintada del
+   sistema. Se elevan al pasar el raton, que es el gesto de la referencia. */
+
+.d2-senales {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--d2-e4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2-senal {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 3vw, 32px);
+  background: var(--c-blanco);
+  border: 1px solid rgba(2, 51, 0, .08);
+  border-radius: var(--d2-radio-lg);
+  box-shadow: var(--d2-sombra-sm);
+  transition: transform var(--d2-normal) ease,
+              box-shadow var(--d2-normal) ease;
+}
+
+.d2-senal:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--d2-sombra-alta);
+}
+
+/* El icono va suelto en la composicion, sin cuadrito de color */
+.d2-senal__icono {
+  display: block;
+  margin-bottom: var(--d2-e4);
+  color: var(--c-verde);
+}
+
+.d2-senal__icono svg { display: block; }
+
+.d2-senal__titulo {
+  margin: 0 0 var(--d2-e2);
+  font-size: 1.1875rem;
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  letter-spacing: -.015em;
+  color: var(--c-texto);
+}
+
+.d2-senal__texto {
+  margin: 0;
+  font-size: .9375rem;
+  line-height: 1.65;
+  color: var(--c-texto-cuerpo);
+}
+
+/* --- El cierre: la banda con el esquema mecanico --- */
+
+.d2-cierre {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--d2-e4);
+  margin-top: clamp(36px, 5vw, 64px);
+  padding: clamp(32px, 4vw, 48px);
+  overflow: hidden;
+  background: var(--d2-oscuro);
+  border-radius: var(--d2-radio-lg);
+}
+
+/* El esquema mecanico de la empresa, tenue, detras del texto */
+.d2-cierre__fondo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .22;
+}
+
+.d2-cierre > *:not(.d2-cierre__fondo) { position: relative; z-index: 1; }
+
+.d2-cierre__texto {
+  margin: 0;
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
+  letter-spacing: -.03em;
+  color: var(--c-blanco);
+}
+
+/* Sobre oscuro el boton de contorno desaparece: va el solido en blanco */
+.d2-cierre .d2-btn {
+  color: var(--d2-oscuro);
+  background: var(--c-blanco);
+  border-color: var(--c-blanco);
+}
+
+.d2-cierre .d2-btn:hover {
+  color: var(--c-blanco);
+  background: var(--c-verde);
+  border-color: var(--c-verde);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE DE LA SECCION 3
+
+   La referencia colapsa todo a 100% de golpe. Aqui se hace por pasos:
+   tres columnas, dos, una. Se lee mejor en tableta.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+  .d2-senales { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* La tercera pasa a ocupar el ancho: mejor que dejarla huerfana */
+  .d2-senal:last-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 680px) {
+  .d2-senales { grid-template-columns: 1fr; gap: var(--d2-e3); }
+  .d2-senal:last-child { grid-column: auto; }
+
+  .d2-cierre {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .d2-cierre .d2-btn { width: 100%; }
+}
