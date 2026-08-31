@@ -13,14 +13,16 @@
    El copy no cambia: es el aprobado, palabra por palabra.
    ========================================================================== */
 
-/* La textura del hero, reutilizada. Mismo angulo y mismo paso. */
-.rayado-diagonal {
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(0, 0, 0, .018) 0 14px,
-    transparent 14px 28px
-  );
-}
+/* NOTA IMPORTANTE SOBRE LA TEXTURA DIAGONAL
+
+   El rayado a 45 grados NO es decoracion: es el marcador de "aqui va una
+   imagen". En el estilo base vive solo dentro de .ph--foto, .ph--retrato,
+   .ph--video y .ph--equipo, que son huecos de material pendiente.
+
+   Usarlo en bloques de contenido rompe su significado: el rayado deja de
+   comunicar nada y los huecos reales de foto ya no se distinguen.
+
+   No usarlo fuera de un placeholder. */
 
 /* ==========================================================================
    1 — REDE CLOSES THAT GAP
@@ -43,13 +45,14 @@
   flex-wrap: wrap;
   gap: clamp(var(--sp-4), 2.4vw, var(--sp-6));
   padding: var(--padding);
-  background-color: var(--c-fondo-alt);
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(0, 0, 0, .018) 0 14px,
-    transparent 14px 28px
-  );
-  border: 1px solid var(--c-borde);
+  /* Esta frase es la conclusion de la seccion del problema: el giro. Por eso
+     no es una caja mas, sino la unica superficie oscura de la zona clara.
+
+     El recurso viene del hero, que ya alterna claro y oscuro para separar lo
+     que se explica de lo que se demuestra. Aqui hace lo mismo: corta el
+     ritmo y obliga a leer. Sin textura prestada y sin filo de color. */
+  background: var(--c-superficie-oscura);
+  border: 0;
   border-radius: var(--radio-lg);          /* 16px, como el panel del hero */
 }
 
@@ -59,28 +62,29 @@
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: var(--ls-tight);
-  color: var(--c-texto);                   /* negro sobre claro, no al reves */
+  color: var(--c-blanco);
 }
 
 /* El enlace toma el gesto del boton de contorno del hero */
+/* Sobre oscuro el boton de contorno desaparece, asi que aqui va el primario
+   del hero: verde solido, 6px, borde de 2px, peso 700. */
 .respuesta .enlace-flecha {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-3);
   min-height: 48px;
   padding-inline: clamp(var(--sp-5), 2vw, var(--sp-6));
-  color: var(--c-verde);
-  background: var(--c-blanco);
+  color: var(--c-blanco);
+  background: var(--c-verde);
   border: 2px solid var(--c-verde);
-  border-bottom-width: 2px;
   border-radius: var(--radio-sm);   /* 6px, como los botones del hero */
   white-space: nowrap;
-  transition: background-color var(--trans-media), color var(--trans-media);
+  transition: background-color var(--trans-media), border-color var(--trans-media);
 }
 
 .respuesta .enlace-flecha:hover {
-  color: var(--c-blanco);
-  background: var(--c-verde);
+  background: var(--c-verde-hover);
+  border-color: var(--c-verde-hover);
 }
 
 /* ==========================================================================
@@ -110,12 +114,7 @@
   padding: clamp(var(--sp-6), 3vw, var(--sp-7));
   /* Tinta del verde al 10%, de la escala oficial de marca. Antes era un gris
      de sistema que no pertenecia a la paleta. */
-  background-color: var(--c-verde-claro);
-  background-image: repeating-linear-gradient(
-    45deg,
-    rgba(2, 139, 0, .04) 0 14px,
-    transparent 14px 28px
-  );
+  background: var(--c-verde-claro);
   border: 1px solid rgba(2, 139, 0, .16);
   border-radius: var(--radio-lg);   /* 16px, como el panel del hero */
 }
@@ -468,4 +467,99 @@
 .resultado__cifra.es-incompleto {
   font-size: clamp(1.05rem, 1rem + .4vw, 1.25rem);
   letter-spacing: 0;
+}
+
+/* ==========================================================================
+   FUERA LOS ICONOS EN CUADRITO DE COLOR
+
+   El patron "icono dentro de un cuadrado de color claro" es de los que mas
+   delatan una plantilla. Estaba en seis sitios del estilo base.
+
+   El hero no lo usa: sus iconos van sueltos dentro de la composicion, con el
+   verde en el trazo. Aqui se hace lo mismo, quitando la caja y dejando el
+   icono a su tamano real, alineado con el texto que acompana.
+   ========================================================================== */
+
+.senal__icono,
+.contacto__icono,
+.funcion__icono,
+.valor__icono,
+.ventaja__icono {
+  display: block;
+  width: auto;
+  height: auto;
+  background: none;
+  border-radius: 0;
+  color: var(--c-verde);
+}
+
+/* El svg es inline: sin esto hereda el centrado del place-items heredado */
+.senal__icono svg,
+.contacto__icono svg,
+.funcion__icono svg,
+.valor__icono svg,
+.ventaja__icono svg {
+  display: block;
+}
+
+/* El de contacto va junto al texto, asi que se mantiene en linea, pero
+   igualmente sin cuadrito de color detras. */
+.contacto__icono {
+  flex-shrink: 0;
+  background: none;
+  border-radius: 0;
+}
+
+.contacto__icono svg { display: inline-block; vertical-align: middle; }
+
+/* La variante clara tiene mas especificidad y conservaba el fondo */
+.contacto--claro .contacto__icono {
+  background: none;
+  border-radius: 0;
+}
+
+/* ==========================================================================
+   LA JERARQUIA DE ESQUINAS, APLICADA A TODO EL SITIO
+
+   El hero solo usa dos valores: 6px en lo que se toca y 16px en las
+   superficies. El estilo base tenia ademas un intermedio de 10px
+   (--radio-md) repartido en dieciocho elementos, que difumina la jerarquia:
+   deja de leerse cual es un control y cual es una superficie.
+
+   Los bloques que son superficie pasan a 16px, como el panel del hero.
+   ========================================================================== */
+
+.senal,
+.ruta,
+.proceso,
+.dos-col__izq,
+.flip__cara,
+.funcion,
+.requisito,
+.fondos__caja,
+.bepi,
+.valor,
+.acceso__nota { border-radius: var(--radio-lg); }
+
+/* Lo que se toca se queda en 6px */
+.duo__btn { border-radius: var(--radio-sm); }
+
+/* ==========================================================================
+   LAS CIFRAS QUE QUEDABAN SOBRE EL TECHO
+
+   El techo es 40px, que es lo que mide la cifra en el panel del hero. Una
+   cifra mas grande que eso compite con el titular y se lee como diapositiva.
+
+   Quedaban dos: el cierre del resultado a 56px y el adelanto a 44px.
+   ========================================================================== */
+
+.cierre__cifra {
+  font-size: clamp(2rem, 1.4rem + 1.4vw, 2.5rem);   /* techo 40px */
+  line-height: 1.05;
+  letter-spacing: -.03em;
+}
+
+.adelanto__cifra {
+  font-size: clamp(1.75rem, 1.3rem + 1.1vw, 2.25rem);   /* por debajo del techo */
+  line-height: 1.1;
 }
