@@ -1,0 +1,301 @@
+/* ==========================================================================
+   DISENO 1 — AJUSTES DE COHERENCIA CON EL HERO
+
+   El cliente eligio el diseno 1. Estas reglas alinean tres secciones con el
+   idioma que ya establece el hero, que es lo que da caracter al sitio:
+
+     - bordes cuadrados, sin esquinas muy redondeadas
+     - textura de rayado diagonal en vez de cajas de color plano
+     - el verde reservado para el dato, no para decorar superficies
+     - todo dato apoyado en su comparacion, como el "14% lower vs baseline"
+
+   Va en archivo aparte para poder revertir sin tocar style.css.
+   El copy no cambia: es el aprobado, palabra por palabra.
+   ========================================================================== */
+
+/* La textura del hero, reutilizada. Mismo angulo y mismo paso. */
+.rayado-diagonal {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, .018) 0 14px,
+    transparent 14px 28px
+  );
+}
+
+/* ==========================================================================
+   1 — REDE CLOSES THAT GAP
+
+   Antes: barra negra con esquinas redondeadas, texto a la izquierda y enlace
+   a la derecha. Una caja de color que no aporta informacion.
+
+   Ahora: franja clara con el rayado del hero y un filo verde a la izquierda.
+   La frase es una conclusion, asi que se trata como tal: grande, en negro,
+   sobre la textura. Sin caja de color, sin esquinas redondeadas.
+   ========================================================================== */
+
+.respuesta {
+  --padding: clamp(var(--sp-6), 3.4vw, var(--sp-8));
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: clamp(var(--sp-4), 2.4vw, var(--sp-6));
+  padding: var(--padding);
+  background-color: var(--c-fondo-alt);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, .018) 0 14px,
+    transparent 14px 28px
+  );
+  border: 1px solid var(--c-borde);
+  border-left: 4px solid var(--c-verde);   /* el filo, como en las citas */
+  border-radius: 0;                        /* cuadrado, como el hero */
+}
+
+.respuesta__texto {
+  margin: 0;
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  color: var(--c-texto);                   /* negro sobre claro, no al reves */
+}
+
+/* El enlace toma el gesto del boton de contorno del hero */
+.respuesta .enlace-flecha {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 48px;
+  padding-inline: clamp(var(--sp-5), 2vw, var(--sp-6));
+  color: var(--c-verde);
+  background: var(--c-blanco);
+  border: 2px solid var(--c-verde);
+  border-bottom-width: 2px;
+  border-radius: 0;
+  white-space: nowrap;
+  transition: background-color var(--trans-media), color var(--trans-media);
+}
+
+.respuesta .enlace-flecha:hover {
+  color: var(--c-blanco);
+  background: var(--c-verde);
+}
+
+/* ==========================================================================
+   2 — WHAT THIS LOOKS LIKE IN PRACTICE
+
+   Antes: la cifra en verde flotando sobre negro, y tres citas en cajas grises
+   identicas con barrita verde, apiladas.
+
+   Ahora: la cifra se presenta como en el panel del hero, sobre blanco y con
+   su pie de contexto inmediatamente debajo. Las citas pierden la caja y se
+   separan con lineas, que es como se ordena una lista de fuentes.
+
+   El copy es el mismo. Solo cambia como se presenta.
+   ========================================================================== */
+
+.prueba-sec {
+  background: var(--c-blanco);
+  color: var(--c-texto);
+}
+
+/* --- El dato --- */
+
+/* Se trata como el panel "Portfolio overview" del hero: tarjeta blanca,
+   borde fino, cuadrada, sobre la textura diagonal. */
+.prueba-sec__dato {
+  align-self: start;
+  padding: clamp(var(--sp-6), 3vw, var(--sp-7));
+  background-color: var(--c-fondo-alt);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, .018) 0 14px,
+    transparent 14px 28px
+  );
+  border: 1px solid var(--c-borde);
+  border-radius: 0;
+}
+
+.prueba-sec .eyebrow {
+  margin: 0 0 var(--sp-5);
+  color: var(--c-verde);
+}
+
+/* La cifra manda, en negro. El verde queda para el acento, no para el bloque
+   entero: asi se lee como dato y no como decoracion. */
+.prueba-sec__cifra {
+  margin: 0;
+  font-size: clamp(2.75rem, 1.6rem + 4.4vw, 4.5rem);
+  font-weight: var(--fw-extrabold);
+  line-height: .95;
+  letter-spacing: -.04em;
+  color: var(--c-texto);
+  font-variant-numeric: tabular-nums;
+}
+
+.prueba-sec__pie {
+  max-width: 34ch;
+  margin: var(--sp-4) 0 0;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  color: var(--c-texto);
+}
+
+.prueba-sec__texto {
+  margin: clamp(var(--sp-5), 2.4vw, var(--sp-6)) 0 0;
+  padding-top: clamp(var(--sp-5), 2.4vw, var(--sp-6));
+  font-size: var(--fs-body-sm);
+  line-height: 1.65;
+  color: var(--c-texto-cuerpo);
+  border-top: 1px solid var(--c-borde);
+}
+
+/* --- Las citas: sin caja, separadas por lineas --- */
+
+.prueba-sec .citas {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prueba-sec .cita {
+  padding: clamp(var(--sp-5), 2.6vw, var(--sp-6)) 0;
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--c-borde);
+  border-radius: 0;
+}
+
+.prueba-sec .cita:first-child { border-top: 0; padding-top: 0; }
+.prueba-sec .cita:last-child { padding-bottom: 0; }
+
+.prueba-sec .cita__texto {
+  margin: 0;
+  font-size: clamp(1.0625rem, 1rem + .45vw, 1.3125rem);
+  font-weight: var(--fw-regular);
+  line-height: 1.5;
+  letter-spacing: -.015em;
+  color: var(--c-texto);
+}
+
+/* La comilla se saca al margen: marca que es una voz ajena sin necesitar
+   una caja alrededor. */
+.prueba-sec .cita__texto::before {
+  content: "\201C";
+  float: left;
+  margin-left: -.52em;
+  font-size: 1em;
+  line-height: 1;
+  color: var(--c-verde);
+}
+
+.prueba-sec .cita__autor {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-3);
+  margin: var(--sp-4) 0 0;
+}
+
+.prueba-sec .cita__nombre {
+  font-size: var(--fs-body-sm);
+  font-weight: var(--fw-bold);
+  color: var(--c-texto);
+}
+
+.prueba-sec .cita__org {
+  font-size: var(--fs-body-sm);
+  color: var(--c-texto-cuerpo);
+}
+
+/* Una linea verde corta antes del nombre, en vez del filo de la caja */
+.prueba-sec .cita__nombre::before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  margin-right: var(--sp-3);
+  vertical-align: middle;
+  background: var(--c-verde);
+}
+
+/* ==========================================================================
+   3 — LA CALCULADORA
+
+   Antes: esquinas redondeadas en el panel, en cada opcion, en la tarjeta, en
+   el boton y en la pildora del contador. El hero no tiene ni una.
+
+   Ahora: todo cuadrado, y el resultado tratado como el panel "Portfolio
+   overview" del hero, que es el objeto que el cliente ya aprobo.
+
+   La logica no se toca: solo cambia la piel.
+   ========================================================================== */
+
+.calc__panel { border-radius: 0; }
+
+/* El progreso: barra fina cuadrada, como la del hero */
+.pasos__contador { color: var(--c-verde); }
+
+/* Las opciones: rectangulos con filo, no pildoras.
+   El filo verde aparece al elegir, igual que el borde del dato. */
+.calc .opcion {
+  border-radius: 0;
+  border-left: 3px solid transparent;
+  transition: background-color var(--trans-media),
+              border-color var(--trans-media);
+}
+
+.calc .opcion:hover { border-left-color: rgba(255, 255, 255, .25); }
+
+.calc .opcion.es-elegida,
+.calc .opcion[aria-pressed="true"] { border-left-color: var(--c-verde); }
+
+/* Botones cuadrados, como los del hero */
+.calc__btn,
+.resultado__cta,
+.calc .btn { border-radius: 0; }
+
+/* --- La tarjeta de resultado --- */
+
+.calc .resultado,
+.flip__cara--frente .resultado,
+.flip__cara--dorso .resultado { border-radius: 0; }
+
+/* Las etiquetas "0 of 4" y "Benchmark" dejan de ser pildoras */
+.calc .pastilla { border-radius: 0; }
+
+/* El bloque de ejemplo: en el hero una metrica no vive dentro de un
+   rectangulo gris, se apoya en una linea y lleva su etiqueta debajo.
+   Mismo tratamiento aqui. */
+.calc .prueba,
+.calc .adelanto {
+  padding: var(--sp-4) 0 0;
+  text-align: left;
+  background: none;
+  border-top: 2px solid var(--c-texto);
+  border-radius: 0;
+}
+
+/* La cifra en negro: el verde se reserva para el resultado real */
+.calc .prueba__cifra,
+.calc .adelanto__cifra {
+  color: var(--c-texto);
+  letter-spacing: -.03em;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .respuesta { align-items: flex-start; }
+  .respuesta .enlace-flecha { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 560px) {
+  .prueba-sec .cita__texto::before { margin-left: 0; float: none; }
+}
