@@ -542,27 +542,60 @@
   color: var(--c-texto);
 }
 
+/* Es un control, asi que toma la forma de los controles del sistema:
+   pildora completa, como los botones. Y llega al minimo tactil. */
 .d2-panel__filtro {
-  padding: 8px var(--d2-e2);
+  min-height: 44px;
+  padding: 0 var(--d2-e4) 0 var(--d2-e3);
   font-size: .8125rem;
+  font-weight: var(--fw-semibold, 600);
   font-family: inherit;
   color: var(--c-texto-cuerpo);
-  background: var(--c-blanco);
-  border: 1px solid var(--c-borde);
-  border-radius: var(--d2-radio-sm);
+  background: var(--d2-tinta);
+  border: 1px solid rgba(2, 51, 0, .12);
+  border-radius: var(--d2-radio-full);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+
+  /* La flecha, dibujada en el propio fondo: sin ella el select se ve plano */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236B6B6B' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--d2-e2) center;
+  transition: background-color var(--d2-rapido) ease,
+              border-color var(--d2-rapido) ease;
 }
+
+.d2-panel__filtro:hover {
+  background-color: var(--c-blanco);
+  border-color: var(--c-verde);
+}
+
+/* --- Las metricas ---
+   En el diseno 1 iban una al lado de otra separadas por aire. Aqui cada una
+   vive en su propia superficie, como las tarjetas del sistema: es el mismo
+   recurso que usa la referencia para agrupar informacion. */
 
 .d2-panel__metricas {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--d2-e4);
-  padding-bottom: var(--d2-e4);
-  border-bottom: 1px solid var(--c-borde-suave);
+  gap: var(--d2-e2);
+  margin-bottom: var(--d2-e4);
 }
+
+.d2-metrica {
+  padding: var(--d2-e3);
+  background: var(--d2-tinta);
+  border-radius: var(--d2-radio-md);
+  transition: background-color var(--d2-normal) ease;
+}
+
+.d2-metrica:hover { background: rgba(2, 139, 0, .07); }
 
 .d2-metrica__label {
   margin: 0 0 6px;
-  font-size: .875rem;
+  font-size: .8125rem;
+  line-height: 1.35;
   color: var(--c-texto-suave);
 }
 
@@ -578,35 +611,37 @@
 }
 
 .d2-metrica__valor small {
-  font-size: .875rem;
+  font-size: .8125rem;
   font-weight: var(--fw-regular);
   color: var(--c-texto-suave);
   letter-spacing: 0;
 }
 
-/* El delta: toda cifra lleva su comparacion */
+/* El delta va en pildora: es el mismo lenguaje de formas del sistema */
 .d2-metrica__delta {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin: 8px 0 0;
-  font-size: .875rem;
-  color: var(--c-texto-suave);
-}
-
-.d2-metrica__delta strong {
-  font-weight: var(--fw-bold);
+  gap: 5px;
+  margin: var(--d2-e1) 0 0;
+  padding: 4px 10px;
+  font-size: .75rem;
   color: var(--c-verde);
+  background: rgba(2, 139, 0, .1);
+  border-radius: var(--d2-radio-full);
 }
 
+.d2-metrica__delta strong { font-weight: var(--fw-bold); }
 .d2-metrica__delta svg { color: var(--c-verde); flex-shrink: 0; }
+
+/* --- El grafico --- */
 
 .d2-panel__pie {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--d2-e3);
-  margin-top: var(--d2-e4);
+  flex-wrap: wrap;
+  margin-bottom: var(--d2-e2);
 }
 
 .d2-panel__pie p {
@@ -620,7 +655,7 @@
   display: flex;
   align-items: center;
   gap: var(--d2-e3);
-  font-size: .8125rem;
+  font-size: .75rem;
   color: var(--c-texto-suave);
 }
 
@@ -630,7 +665,18 @@
   gap: 6px;
 }
 
-.d2-grafico { margin-top: var(--d2-e3); }
+.d2-grafico { margin-top: var(--d2-e2); }
+.d2-grafico svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* Los meses bajo el grafico: sin ellos no se lee como un grafico real */
+.d2-grafico__meses {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  margin-top: var(--d2-e1);
+  font-size: .6875rem;
+  color: var(--c-texto-suave);
+  text-align: center;
+}
 .d2-grafico svg { display: block; width: 100%; height: auto; }
 
 /* ==========================================================================
