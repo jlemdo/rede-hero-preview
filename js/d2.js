@@ -58,3 +58,63 @@
     observador.observe(el);
   });
 })();
+
+/* ==========================================================================
+   LAS CIFRAS DEL CIERRE
+
+   Rotan destacando una cada vez. Las tres siguen visibles: en una banda de
+   cierre la gente pasa rapido, y si solo se viera un dato se perderian los
+   otros dos.
+
+   Solo se mueve cuando la banda esta en pantalla, para no gastar ciclos ni
+   distraer con algo que nadie esta viendo.
+   ========================================================================== */
+
+(function () {
+  'use strict';
+
+  var caja = document.getElementById('cifras-cierre');
+  if (!caja) { return; }
+
+  var cifras = caja.querySelectorAll('.d2-cifra');
+  if (cifras.length < 2) { return; }
+
+  /* Si el usuario pidio menos movimiento, todas quedan legibles y quietas */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    Array.prototype.forEach.call(cifras, function (c) {
+      c.classList.add('es-activa');
+    });
+    return;
+  }
+
+  var INTERVALO = 4000;
+  var actual = 0;
+  var reloj = null;
+
+  function avanzar() {
+    cifras[actual].classList.remove('es-activa');
+    actual = (actual + 1) % cifras.length;
+    cifras[actual].classList.add('es-activa');
+  }
+
+  function arrancar() { if (!reloj) { reloj = setInterval(avanzar, INTERVALO); } }
+  function parar() { clearInterval(reloj); reloj = null; }
+
+  /* Solo gira cuando se ve */
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entradas) {
+      entradas[0].isIntersecting ? arrancar() : parar();
+    }, { threshold: 0.25 }).observe(caja);
+  } else {
+    arrancar();
+  }
+
+  /* Se detiene al pasar el raton, por si alguien esta leyendo una cifra */
+  caja.addEventListener('mouseenter', parar);
+  caja.addEventListener('mouseleave', arrancar);
+
+  /* Y en pestana oculta no consume nada */
+  document.addEventListener('visibilitychange', function () {
+    document.hidden ? parar() : arrancar();
+  });
+})();

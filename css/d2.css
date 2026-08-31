@@ -1028,34 +1028,88 @@
   color: var(--c-blanco);
 }
 
+/* Las cifras rotan: una queda destacada por turno mientras las otras dos
+   se atenuan. Se eligio esto frente a mostrar una sola porque en una banda
+   de cierre la gente pasa rapido: si solo se ve un dato, se pierden los
+   otros dos. Asi hay movimiento sin perder informacion. */
+
 .d2-cifras {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--d2-e4);
-  max-width: 800px;
+  max-width: 820px;
   margin-inline: auto;
 }
 
+.d2-cifra {
+  padding-inline: var(--d2-e2);
+  opacity: .42;
+  transition: opacity 700ms var(--d2-curva);
+}
+
+.d2-cifra.es-activa { opacity: 1; }
+
 .d2-cifra__valor {
   margin: 0;
-  font-size: clamp(2rem, 1.4rem + 2vw, 3rem);
+  font-size: clamp(1.75rem, 1.2rem + 1.9vw, 2.75rem);
   font-weight: var(--fw-extrabold);
   line-height: 1;
   letter-spacing: -.035em;
   color: var(--c-blanco);
   font-variant-numeric: tabular-nums;
+  transition: transform 700ms var(--d2-curva);
 }
+
+/* La activa crece un punto: se nota sin dar un salto */
+.d2-cifra.es-activa .d2-cifra__valor { transform: scale(1.08); }
+
+/* Y gana un subrayado que crece bajo la cifra */
+.d2-cifra__linea {
+  display: block;
+  width: 100%;
+  max-width: 72px;
+  height: 2px;
+  margin: var(--d2-e2) auto 0;
+  background: var(--c-verde-marca);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 700ms var(--d2-curva);
+}
+
+.d2-cifra.es-activa .d2-cifra__linea { transform: scaleX(1); }
 
 .d2-cifra__nombre {
   margin: var(--d2-e2) 0 0;
   font-size: .875rem;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, .72);
+  line-height: 1.45;
+  color: rgba(255, 255, 255, .74);
 }
 
-/* Una linea separa las cifras, en vez de dejarlas sueltas */
-.d2-cifras > div + div {
-  border-left: 1px solid rgba(255, 255, 255, .16);
+/* Sin movimiento: todas quedan legibles y sin animacion */
+@media (prefers-reduced-motion: reduce) {
+  .d2-cifra { opacity: 1; transition: none; }
+  .d2-cifra__valor { transition: none; }
+  .d2-cifra.es-activa .d2-cifra__valor { transform: none; }
+  .d2-cifra__linea { transition: none; }
+}
+
+/* --- El CTA del cierre --- */
+
+.d2-cierre__cta {
+  margin-top: clamp(32px, 4vw, 48px);
+}
+
+/* Sobre oscuro el contorno desaparece: va el solido en blanco */
+.d2-cierre__cta .d2-btn {
+  color: var(--d2-oscuro);
+  background: var(--c-blanco);
+  border-color: var(--c-blanco);
+}
+
+.d2-cierre__cta .d2-btn:hover {
+  color: var(--c-blanco);
+  background: var(--c-verde);
+  border-color: var(--c-verde);
 }
 
 /* --------------------------------------------------------------------------
