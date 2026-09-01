@@ -1,83 +1,153 @@
 /* ==========================================================================
-   HERO DEL DISEÑO 2 — TRES VARIANTES PARA COMPARAR
+   VARIANTES DE SECCION — DISEÑO 2
 
-   Los tres heros son el mismo marcado. Lo unico que cambia es una clase en
-   la seccion, asi que lo que se ve es exactamente la misma pieza con dos
-   ajustes distintos: no hay diferencias escondidas de maquetacion.
+   Cada seccion que haya que decidir se envuelve en un carrusel con sus
+   opciones dentro. No gira solo: se cambia a mano.
 
-     A  ·  el hero actual, sin tocar
-     B  ·  el panel un 20% mas pequeño, render mas a la derecha
-     C  ·  panel a tamaño original pero translucido, render mas a la derecha
+   Las variantes comparten el MISMO marcado. Lo unico que cambia es una clase
+   en la seccion, asi que lo que se compara es la misma pieza con un ajuste,
+   sin diferencias escondidas de maquetacion.
 
-   Esta hoja es temporal: se retira al elegir una.
+   Es andamiaje de decision. Al elegir una opcion se queda esa diapositiva y
+   se retira el resto: la pagina final no lleva carrusel.
    ========================================================================== */
 
 
 /* --------------------------------------------------------------------------
-   EL ROTULO QUE SEPARA CADA VARIANTE
-   Es andamiaje de revision, no diseño. Por eso va en gris neutro y no usa
-   ninguno de los recursos de la marca.
+   EL CARRUSEL
    -------------------------------------------------------------------------- */
 
-.cmp-rotulo {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  max-width: var(--d2-ancho);
-  margin-inline: auto;
-  padding: 40px var(--d2-gutter) 0;
+.d2-caru {
+  position: relative;
 }
 
-.cmp-rotulo__n {
+/* Las diapositivas ocultas se sacan del flujo con [hidden], no con display
+   en CSS: asi el lector de pantalla tampoco las anuncia. */
+.d2-caru__diapo[hidden] { display: none; }
+
+.d2-caru__diapo > .d2-hero {
+  animation: d2-caru-entra .32s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@keyframes d2-caru-entra {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+
+/* --------------------------------------------------------------------------
+   LOS MANDOS
+
+   Van dentro del hero, abajo a la derecha: es donde no estorban ni al
+   titular ni al panel de datos.
+   -------------------------------------------------------------------------- */
+
+.d2-caru__mandos {
+  position: absolute;
+  right: max(var(--d2-gutter), calc(50vw - var(--d2-ancho) / 2 + var(--d2-gutter)));
+  bottom: 26px;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+
+  background: rgba(255, 255, 255, .9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--c-borde-suave, #E2E6E2);
+  border-radius: 999px;
+  box-shadow: 0 2px 18px rgba(2, 51, 0, .12);
+}
+
+.d2-caru__flecha {
   display: grid;
   place-items: center;
   flex: none;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
+  border: 0;
   border-radius: 999px;
-  background: #14161A;
+  background: transparent;
+  color: var(--c-texto, #333);
+  cursor: pointer;
+  transition: background-color .18s, color .18s;
+}
+
+.d2-caru__flecha:hover {
+  background: var(--c-verde, #009B27);
   color: #fff;
-  font-family: var(--d2-fuente, inherit);
-  font-size: 14px;
-  font-weight: 700;
 }
 
-.cmp-rotulo b {
-  display: block;
-  font-size: 15px;
-  line-height: 1.3;
+.d2-caru__flecha:focus-visible {
+  outline: 2px solid var(--c-verde, #009B27);
+  outline-offset: 2px;
 }
 
-.cmp-rotulo small {
-  display: block;
-  margin-top: 2px;
+.d2-caru__puntos {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.d2-caru__punto {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
   color: #6B7280;
-  font-size: 12.5px;
-  line-height: 1.45;
+  cursor: pointer;
+  font: inherit;
+  transition: background-color .18s, color .18s;
 }
 
-/* Una linea de separacion entre variantes, para que no se lean como una sola
-   pagina larga */
-.cmp-rotulo + .d2-hero { border-bottom: 1px solid var(--c-borde-suave, #E2E6E2); }
+.d2-caru__punto span {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.d2-caru__punto small {
+  font-size: 11.5px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.d2-caru__punto:hover { background: rgba(0, 0, 0, .05); color: var(--c-texto, #333); }
+
+.d2-caru__punto.es-activo {
+  background: var(--c-verde, #009B27);
+  color: #fff;
+}
+
+.d2-caru__punto:focus-visible {
+  outline: 2px solid var(--c-verde, #009B27);
+  outline-offset: 2px;
+}
 
 
 /* ==========================================================================
-   VARIANTE B — el panel un 20% mas pequeño
+   OPCION 2 — el panel un 20% mas pequeño
    ========================================================================== */
 
 /* El panel no tiene ancho propio: lo da la columna de la rejilla. Encogerlo
-   con transform:scale desenfocaria el texto, asi que se reduce la columna y
-   el panel la sigue.
+   con transform:scale desenfocaria el texto, asi que se estrecha la columna
+   y el panel la sigue.
 
-   El 20% se aplica a la columna del panel, y el hueco que deja se lo queda
-   la columna de texto: asi el titular respira en vez de dejar un vacio. */
+   El hueco que deja se lo queda la columna de texto: el titular respira en
+   vez de dejar un vacio. */
 
 .d2-hero.es-variante-b .d2-hero__inner {
   grid-template-columns: minmax(0, 1.22fr) minmax(0, .82fr);
 }
 
-/* Los adentros del panel se ajustan al nuevo ancho. Sin esto el padding y
-   las cifras quedarian desproporcionados dentro de una caja mas estrecha. */
+/* Los adentros se ajustan al nuevo ancho: sin esto, el padding y las cifras
+   quedarian desproporcionados dentro de una caja mas estrecha. */
 .d2-hero.es-variante-b .d2-panel {
   padding: clamp(16px, 1.9vw, 22px);
 }
@@ -90,20 +160,19 @@
   font-size: 15px;
 }
 
-/* El render se desplaza a la derecha.
-   `object-position` mueve el encuadre dentro del hueco: el 0% actual enseña
-   el borde izquierdo de la foto; subirlo trae el edificio hacia el centro y
-   deja el lado izquierdo mas despejado, que es donde cae el titular. */
+/* El render se desplaza a la derecha. `object-position` mueve el encuadre
+   dentro del hueco: el 0% actual enseña el borde izquierdo de la foto;
+   subirlo trae el edificio hacia el centro y despeja la zona del titular. */
 .d2-hero.es-variante-b .d2-hero__fondo {
   object-position: 18% 50%;
 }
 
 
 /* ==========================================================================
-   VARIANTE C — panel translucido, tamaño original
+   OPCION 3 — panel translucido, tamaño original
    ========================================================================== */
 
-/* Aqui la rejilla no se toca: el panel mide lo mismo que en el hero actual.
+/* La rejilla no se toca: el panel mide lo mismo que en el hero original.
    Lo unico que cambia es que deja ver el render por detras. */
 
 .d2-hero.es-variante-c .d2-hero__fondo {
@@ -111,21 +180,21 @@
 }
 
 .d2-hero.es-variante-c .d2-panel {
-  /* 92%: se intuye la imagen sin que las cifras pierdan contraste.
-     El desenfoque es lo que hace que el texto siga legible aunque debajo
-     pase una zona con detalle. */
+  /* 92%: se intuye la imagen sin que las cifras pierdan contraste. Medido:
+     la cifra grande queda en 4.77:1, por encima del minimo AA. El desenfoque
+     es lo que mantiene el texto legible cuando debajo pasa una zona con
+     detalle. */
   background: rgba(255, 255, 255, .92);
   -webkit-backdrop-filter: blur(14px) saturate(112%);
   backdrop-filter: blur(14px) saturate(112%);
 
-  /* Un borde algo mas presente: sobre foto, el borde suave se pierde y la
-     caja parecia flotar sin apoyo. */
+  /* Sobre foto, el borde suave se pierde y la caja parece flotar sin apoyo */
   border-color: rgba(255, 255, 255, .75);
   box-shadow: 0 2px 40px rgba(2, 51, 0, .22);
 }
 
-/* Si el navegador no sabe hacer el desenfoque, el fondo sube a casi opaco.
-   Un panel translucido sin blur sobre una foto es ilegible. */
+/* Sin soporte de desenfoque el fondo sube a casi opaco: un panel translucido
+   sin blur sobre una foto es ilegible. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .d2-hero.es-variante-c .d2-panel { background: rgba(255, 255, 255, .97); }
 }
@@ -157,9 +226,45 @@
     border-color: var(--c-borde-suave, #E2E6E2);
     box-shadow: var(--d2-sombra-lg);
   }
+}
 
-  /* El desplazamiento del encuadre si se mantiene: con el render a todo el
-     ancho, seguir viendo el edificio centrado funciona igual de bien. */
+@media (max-width: 760px) {
+  /* El hero mide 1150px en movil: los mandos abajo quedaban a 500px de
+     scroll y nadie los veria. Suben arriba del todo, donde se ven al
+     entrar, y se centran. */
+  .d2-caru { display: flex; flex-direction: column; }
+  .d2-caru__diapo { order: 2; }
 
-  .cmp-rotulo { padding-top: 32px; }
+  .d2-caru__mandos {
+    order: 1;
+    position: static;
+    align-self: center;
+    margin: 14px 0 2px;
+    transform: none;
+  }
+
+  /* Solo el numero: la etiqueta no cabe sin apretar los botones */
+  .d2-caru__punto small { display: none; }
+  .d2-caru__punto { padding: 0 14px; }
+
+  /* 44px de alto real para el dedo, sin agrandar la pastilla */
+  .d2-caru__punto,
+  .d2-caru__flecha { position: relative; }
+  .d2-caru__punto::after,
+  .d2-caru__flecha::after {
+    content: '';
+    position: absolute;
+    inset: -5px 0;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   MENOS MOVIMIENTO
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .d2-caru__diapo > .d2-hero { animation: none; }
+  .d2-caru__flecha,
+  .d2-caru__punto { transition: none; }
 }
