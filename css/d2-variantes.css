@@ -1,0 +1,165 @@
+/* ==========================================================================
+   HERO DEL DISEÑO 2 — TRES VARIANTES PARA COMPARAR
+
+   Los tres heros son el mismo marcado. Lo unico que cambia es una clase en
+   la seccion, asi que lo que se ve es exactamente la misma pieza con dos
+   ajustes distintos: no hay diferencias escondidas de maquetacion.
+
+     A  ·  el hero actual, sin tocar
+     B  ·  el panel un 20% mas pequeño, render mas a la derecha
+     C  ·  panel a tamaño original pero translucido, render mas a la derecha
+
+   Esta hoja es temporal: se retira al elegir una.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   EL ROTULO QUE SEPARA CADA VARIANTE
+   Es andamiaje de revision, no diseño. Por eso va en gris neutro y no usa
+   ninguno de los recursos de la marca.
+   -------------------------------------------------------------------------- */
+
+.cmp-rotulo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding: 40px var(--d2-gutter) 0;
+}
+
+.cmp-rotulo__n {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  background: #14161A;
+  color: #fff;
+  font-family: var(--d2-fuente, inherit);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.cmp-rotulo b {
+  display: block;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.cmp-rotulo small {
+  display: block;
+  margin-top: 2px;
+  color: #6B7280;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+/* Una linea de separacion entre variantes, para que no se lean como una sola
+   pagina larga */
+.cmp-rotulo + .d2-hero { border-bottom: 1px solid var(--c-borde-suave, #E2E6E2); }
+
+
+/* ==========================================================================
+   VARIANTE B — el panel un 20% mas pequeño
+   ========================================================================== */
+
+/* El panel no tiene ancho propio: lo da la columna de la rejilla. Encogerlo
+   con transform:scale desenfocaria el texto, asi que se reduce la columna y
+   el panel la sigue.
+
+   El 20% se aplica a la columna del panel, y el hueco que deja se lo queda
+   la columna de texto: asi el titular respira en vez de dejar un vacio. */
+
+.d2-hero.es-variante-b .d2-hero__inner {
+  grid-template-columns: minmax(0, 1.22fr) minmax(0, .82fr);
+}
+
+/* Los adentros del panel se ajustan al nuevo ancho. Sin esto el padding y
+   las cifras quedarian desproporcionados dentro de una caja mas estrecha. */
+.d2-hero.es-variante-b .d2-panel {
+  padding: clamp(16px, 1.9vw, 22px);
+}
+
+.d2-hero.es-variante-b .d2-metrica__valor {
+  font-size: clamp(26px, 2.6vw, 32px);
+}
+
+.d2-hero.es-variante-b .d2-panel__titulo {
+  font-size: 15px;
+}
+
+/* El render se desplaza a la derecha.
+   `object-position` mueve el encuadre dentro del hueco: el 0% actual enseña
+   el borde izquierdo de la foto; subirlo trae el edificio hacia el centro y
+   deja el lado izquierdo mas despejado, que es donde cae el titular. */
+.d2-hero.es-variante-b .d2-hero__fondo {
+  object-position: 18% 50%;
+}
+
+
+/* ==========================================================================
+   VARIANTE C — panel translucido, tamaño original
+   ========================================================================== */
+
+/* Aqui la rejilla no se toca: el panel mide lo mismo que en el hero actual.
+   Lo unico que cambia es que deja ver el render por detras. */
+
+.d2-hero.es-variante-c .d2-hero__fondo {
+  object-position: 18% 50%;
+}
+
+.d2-hero.es-variante-c .d2-panel {
+  /* 92%: se intuye la imagen sin que las cifras pierdan contraste.
+     El desenfoque es lo que hace que el texto siga legible aunque debajo
+     pase una zona con detalle. */
+  background: rgba(255, 255, 255, .92);
+  -webkit-backdrop-filter: blur(14px) saturate(112%);
+  backdrop-filter: blur(14px) saturate(112%);
+
+  /* Un borde algo mas presente: sobre foto, el borde suave se pierde y la
+     caja parecia flotar sin apoyo. */
+  border-color: rgba(255, 255, 255, .75);
+  box-shadow: 0 2px 40px rgba(2, 51, 0, .22);
+}
+
+/* Si el navegador no sabe hacer el desenfoque, el fondo sube a casi opaco.
+   Un panel translucido sin blur sobre una foto es ilegible. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .d2-hero.es-variante-c .d2-panel { background: rgba(255, 255, 255, .97); }
+}
+
+
+/* --------------------------------------------------------------------------
+   MOVIL
+
+   Por debajo de 1000px el hero ya apila en una columna y el render pasa a
+   ocupar todo el ancho al 22% de opacidad, detras del contenido.
+
+   Ahi las dos variantes dejan de tener sentido: no hay dos columnas que
+   reequilibrar, y sobre un fondo tan tenue la transparencia no se aprecia
+   pero si resta contraste. Las tres vuelven a ser iguales, que es lo que
+   hace el hero original.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+  .d2-hero.es-variante-b .d2-hero__inner { grid-template-columns: 1fr; }
+
+  .d2-hero.es-variante-b .d2-panel { padding: clamp(20px, 2.4vw, 28px); }
+  .d2-hero.es-variante-b .d2-metrica__valor { font-size: clamp(28px, 3.4vw, 38px); }
+  .d2-hero.es-variante-b .d2-panel__titulo { font-size: 16px; }
+
+  .d2-hero.es-variante-c .d2-panel {
+    background: var(--c-blanco, #fff);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-color: var(--c-borde-suave, #E2E6E2);
+    box-shadow: var(--d2-sombra-lg);
+  }
+
+  /* El desplazamiento del encuadre si se mantiene: con el render a todo el
+     ancho, seguir viendo el edificio centrado funciona igual de bien. */
+
+  .cmp-rotulo { padding-top: 32px; }
+}
