@@ -160,11 +160,17 @@
   font-size: 15px;
 }
 
-/* El render se desplaza a la derecha. `object-position` mueve el encuadre
-   dentro del hueco: el 0% actual enseña el borde izquierdo de la foto;
-   subirlo trae el edificio hacia el centro y despeja la zona del titular. */
+/* El render se desplaza a la derecha.
+
+   `object-position` NO sirve aqui: la imagen es mas ancha que su hueco
+   (1.83 contra 1.52), asi que con `cover` solo sobran 204px de ancho. Un 18%
+   movia 37px sobre 1183px de imagen: invisible.
+
+   Se desplaza el elemento entero y se ensancha otro tanto, para que no
+   quede un hueco blanco por la izquierda al correrlo. */
 .d2-hero.es-variante-b .d2-hero__fondo {
-  object-position: 18% 50%;
+  right: -9%;
+  width: 77%;
 }
 
 
@@ -176,15 +182,21 @@
    Lo unico que cambia es que deja ver el render por detras. */
 
 .d2-hero.es-variante-c .d2-hero__fondo {
-  object-position: 18% 50%;
+  right: -9%;
+  width: 77%;
+  /* El render sube de opacidad SOLO en esta variante: con el 50% original,
+     bajo un panel translucido apenas quedaba un 4% de imagen visible y el
+     efecto no se apreciaba. */
+  opacity: .68;
 }
 
 .d2-hero.es-variante-c .d2-panel {
-  /* 92%: se intuye la imagen sin que las cifras pierdan contraste. Medido:
-     la cifra grande queda en 4.77:1, por encima del minimo AA. El desenfoque
-     es lo que mantiene el texto legible cuando debajo pasa una zona con
-     detalle. */
-  background: rgba(255, 255, 255, .92);
+  /* 78%: con el 92% de antes, y estando el render ya al 50%, quedaba un 4%
+     de imagen visible y no se apreciaba nada. Bajando la caja y subiendo el
+     render, el edificio se ve de verdad por detras.
+     El desenfoque es lo que mantiene el texto legible cuando debajo pasa una
+     zona con detalle. Contraste medido mas abajo. */
+  background: rgba(255, 255, 255, .78);
   -webkit-backdrop-filter: blur(14px) saturate(112%);
   backdrop-filter: blur(14px) saturate(112%);
 
