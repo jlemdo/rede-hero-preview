@@ -1,3 +1,6 @@
 # Nunca subir credenciales
 *.token
 .env
+
+# Fuente del hero de diseno 3: 6,3 MB. Solo se sirve el JPEG derivado.
+assets/img/d3/building-sketch.png

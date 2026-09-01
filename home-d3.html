@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>REDE | Energy in Motion</title>
+<meta name="description" content="REDE combines utility data, energy engineering and ongoing support to help multi-site organizations reduce costs and improve performance across every building.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/selector.css">
+<link rel="stylesheet" href="css/d3.css">
+</head>
+<body>
+
+<main id="top">
+
+  <!-- ==================================================================
+       HEADER
+       ================================================================== -->
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="REDE home">
+      <img src="assets/img/d3/rede-logo.png" alt="REDE Building Energy Efficiency" width="226" height="70">
+    </a>
+
+    <button class="menu-button" id="btn-menu" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-principal">
+      <svg class="icono-menu" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
+      <svg class="icono-cerrar" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+
+    <nav class="nav" id="nav-principal">
+      <a href="#solutions">Solutions</a>
+      <a href="#approach">Approach</a>
+      <a href="#about">About</a>
+      <a href="#faq">FAQ</a>
+      <a class="login" href="#contact">Client Login</a>
+      <a class="nav-cta" href="#contact">Book a Call
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </nav>
+  </header>
+
+  <!-- ==================================================================
+       1. HERO
+       ================================================================== -->
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Energy management for multi-site organizations</p>
+      <h1>Cut energy costs<br>without adding<br>more to <span>your team.</span></h1>
+      <p class="lede">REDE combines utility data, energy engineering and ongoing support to help multi-site organizations reduce costs and improve performance across every building.</p>
+      <div class="button-row">
+        <a class="button" href="#solutions">Explore solutions
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a class="button button-outline" href="#solutions">Book a call
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <img src="assets/img/d3/building-sketch.jpg" alt="Engineering sketch of a multi-building portfolio" width="1920" height="1047" fetchpriority="high">
+
+      <div class="hero-signal" aria-hidden="true"><span></span><span></span><span></span></div>
+
+      <div class="portfolio-card" aria-label="Illustrative portfolio overview">
+        <div class="portfolio-head">
+          <strong>Portfolio overview</strong>
+          <span>All buildings&#8964;</span>
+        </div>
+
+        <div class="portfolio-stats">
+          <div>
+            <small>Total annual cost savings</small>
+            <b>$480K</b>
+            <em>&#9660; 14% lower vs baseline</em>
+          </div>
+          <div>
+            <small>Total energy savings</small>
+            <b>2.7M <i>kWh</i></b>
+            <em>&#9660; 11% lower vs baseline</em>
+          </div>
+        </div>
+
+        <div class="chart-head">
+          <small>Monthly cost trend</small>
+          <span><i></i> With REDE &nbsp; &middot; &middot; &middot; &nbsp; Without REDE</span>
+        </div>
+
+        <svg class="chart" viewBox="0 0 520 105" role="img" aria-label="Monthly cost trend">
+          <path class="gridline" d="M12 18H510M12 52H510M12 86H510"/>
+          <path class="baseline" d="M12 36L55 32L98 43L141 33L184 46L227 30L270 24L313 34L356 18L399 23L442 16L510 26"/>
+          <path class="active-line" d="M12 65L55 62L98 76L141 70L184 82L227 74L270 78L313 70L356 81L399 73L442 83L510 79"/>
+          <circle cx="12" cy="65" r="2.8"/><circle cx="55" cy="62" r="2.8"/><circle cx="98" cy="76" r="2.8"/>
+          <circle cx="141" cy="70" r="2.8"/><circle cx="184" cy="82" r="2.8"/><circle cx="227" cy="74" r="2.8"/>
+          <circle cx="270" cy="78" r="2.8"/><circle cx="313" cy="70" r="2.8"/><circle cx="356" cy="81" r="2.8"/>
+          <circle cx="399" cy="73" r="2.8"/><circle cx="442" cy="83" r="2.8"/><circle cx="510" cy="79" r="2.8"/>
+        </svg>
+
+        <div class="months">
+          <span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================================
+       2. PROOF STRIP
+       ================================================================== -->
+  <section class="proof-strip" aria-label="Public portfolio proof">
+    <p>Proven across<br>complex multi-site<br>portfolios</p>
+
+    <div class="client-list">
+      <small>PUBLIC-SECTOR PORTFOLIOS WE&rsquo;VE WORKED WITH</small>
+      <div class="client-logos">
+        <span class="client-logo image-logo calgary-logo">
+          <img src="assets/img/logos-clientes/calgary-board.png" alt="Calgary Board of Education" width="400" height="200" loading="lazy">
+        </span>
+        <span class="client-logo type-logo">Northland<br><b>School Division</b></span>
+        <span class="client-logo image-logo victoria-logo">
+          <img src="assets/img/logos-clientes/greater-victoria.png" alt="Greater Victoria School District" width="693" height="200" loading="lazy">
+        </span>
+        <span class="client-logo type-logo"><b>SD63</b><br>Saanich Schools</span>
+        <span class="client-logo type-logo">Fort Vermilion<br><b>School Division</b></span>
+      </div>
+    </div>
+
+    <div class="proof-number">
+      <b>$4.4M</b>
+      <span>Cumulative savings</span>
+      <small>for one long-term client</small>
+    </div>
+  </section>
+
+  <!-- ==================================================================
+       3. OPERATIONS  —  mapa interactivo de 5 edificios
+       ================================================================== -->
+  <section class="operations" id="approach">
+    <div class="operations-copy">
+      <p class="eyebrow light">Portfolio intelligence</p>
+      <h2>Energy costs are visible.<br><span>The biggest opportunities are not.</span></h2>
+      <p>Utility bills show what each building spent, but not which sites are underperforming or where your team should investigate first.</p>
+      <p>REDE compares building energy performance across your portfolio, helping you prioritize detailed energy audits and capital projects.</p>
+      <a href="#contact">See how REDE prioritizes buildings
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="portfolio-map">
+      <div class="map-visual-content">
+        <div class="map-legend">
+          <span class="map-disclaimer-inline">For visual representation only. Not actual client data.</span>
+        </div>
+
+        <svg class="benchmark-chart" viewBox="0 0 700 500" role="img"
+             aria-label="Illustrative connected profile of five buildings compared with expected energy performance">
+          <text class="zone-label" x="101" y="91">ABOVE EXPECTED USE</text>
+          <text class="zone-label" x="101" y="276">BELOW EXPECTED USE</text>
+          <line class="benchmark-line" x1="86" y1="252" x2="640" y2="252"/>
+          <path class="portfolio-profile-line" d="M135 340C180 340 200 290 245 290S310 145 355 145 420 220 465 220 530 180 575 180"/>
+
+          <g class="site-bubble" data-sitio="central" role="button" tabindex="0"
+             aria-label="Central Office: -8% benchmark variance, 82 kWh per square metre energy use intensity, Low savings potential">
+            <circle class="bubble" cx="135" cy="340" r="18"/>
+            <circle class="bubble-core" cx="135" cy="340" r="5"/>
+            <text class="site-label" x="135" y="378"><tspan x="135">CENTRAL</tspan><tspan x="135" dy="11">OFFICE</tspan></text>
+          </g>
+
+          <g class="site-bubble" data-sitio="north" role="button" tabindex="0"
+             aria-label="North Campus: -3% benchmark variance, 108 kWh per square metre energy use intensity, Moderate savings potential">
+            <circle class="bubble" cx="245" cy="290" r="24"/>
+            <circle class="bubble-core" cx="245" cy="290" r="5"/>
+            <text class="site-label" x="245" y="334"><tspan x="245">NORTH</tspan><tspan x="245" dy="11">CAMPUS</tspan></text>
+          </g>
+
+          <g class="site-bubble hot" data-sitio="riverside" role="button" tabindex="0"
+             aria-label="Riverside Centre: +18% benchmark variance, 176 kWh per square metre energy use intensity, High savings potential">
+            <circle class="bubble" cx="355" cy="145" r="31"/>
+            <circle class="bubble-core" cx="355" cy="145" r="5"/>
+            <text class="site-label" x="355" y="196"><tspan x="355">RIVERSIDE</tspan><tspan x="355" dy="11">CENTRE</tspan></text>
+          </g>
+
+          <g class="site-bubble" data-sitio="operations" role="button" tabindex="0"
+             aria-label="Operations Centre: +7% benchmark variance, 194 kWh per square metre energy use intensity, Medium savings potential">
+            <circle class="bubble" cx="465" cy="220" r="21"/>
+            <circle class="bubble-core" cx="465" cy="220" r="5"/>
+            <text class="site-label" x="465" y="261"><tspan x="465">OPERATIONS</tspan><tspan x="465" dy="11">CENTRE</tspan></text>
+          </g>
+
+          <g class="site-bubble" data-sitio="west" role="button" tabindex="0"
+             aria-label="West Campus: +12% benchmark variance, 146 kWh per square metre energy use intensity, Moderate savings potential">
+            <circle class="bubble" cx="575" cy="180" r="16"/>
+            <circle class="bubble-core" cx="575" cy="180" r="5"/>
+            <text class="site-label" x="575" y="216"><tspan x="575">WEST</tspan><tspan x="575" dy="11">CAMPUS</tspan></text>
+          </g>
+        </svg>
+
+        <div class="map-reading" id="lectura-mapa" aria-live="polite">
+          <small id="lectura-titulo">Priority opportunity</small>
+          <b id="lectura-nombre">Riverside Centre</b>
+          <div><span>Benchmark variance</span><strong id="lectura-variance">+18%</strong></div>
+          <div><span>Energy use intensity</span><strong id="lectura-intensidad">176 kWh/m&sup2;</strong></div>
+          <div><span>Savings potential</span><strong id="lectura-potencial">High</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================================
+       4. CUSTOMER REVIEW
+       ================================================================== -->
+  <section class="case-study customer-review">
+    <svg class="review-engineering-lines" viewBox="0 0 1440 620" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M720 0V170H910L1030 290H1440M910 170V50M1030 290V505H1290L1440 430"/>
+      <circle cx="910" cy="170" r="6"/>
+      <circle cx="1030" cy="290" r="6"/>
+    </svg>
+
+    <div class="review-content">
+      <p class="eyebrow">What our clients say</p>
+      <blockquote>&ldquo;The REDE team is all about proactively implementing energy solutions. They see a gap and they take care of it.&rdquo;</blockquote>
+      <div class="review-attribution">
+        <b>Alex Telford</b>
+        <span>SD27 &middot; British Columbia</span>
+      </div>
+    </div>
+
+    <div class="review-metrics">
+      <div><b>20</b><span>Buildings connected</span></div>
+      <div><b>$500K+</b><span>Annual savings</span></div>
+      <div><b>$4.4M</b><span>Cumulative savings</span></div>
+    </div>
+  </section>
+
+  <!-- ==================================================================
+       5. SIGNAL CHAPTER  —  calculadora
+       ================================================================== -->
+  <section class="signal-chapter" id="calculator">
+    <svg class="network-field" viewBox="0 0 1440 760" preserveAspectRatio="none" aria-hidden="true">
+      <path class="network-grid" d="M0 610H1440M250 0V760M970 0V760"/>
+      <path class="network-path ghost" d="M-20 550C180 550 190 370 380 370S580 540 770 400 980 170 1180 270 1320 370 1460 300"/>
+      <path class="network-path pulse" d="M-20 550C180 550 190 370 380 370S580 540 770 400 980 170 1180 270 1320 370 1460 300"/>
+      <g><circle class="node-halo" cx="250" cy="466" r="18"/><circle class="node" cx="250" cy="466" r="5"/></g>
+      <g><circle class="node-halo" cx="380" cy="370" r="18"/><circle class="node" cx="380" cy="370" r="5"/></g>
+      <g><circle class="node-halo" cx="770" cy="400" r="18"/><circle class="node" cx="770" cy="400" r="5"/></g>
+      <g><circle class="node-halo" cx="970" cy="255" r="18"/><circle class="node" cx="970" cy="255" r="5"/></g>
+      <g><circle class="node-halo" cx="1180" cy="270" r="18"/><circle class="node" cx="1180" cy="270" r="5"/></g>
+    </svg>
+
+    <div class="chapter-copy">
+      <p class="eyebrow light">Check your opportunity</p>
+      <h2>Find out what your buildings<br>may be trying to tell you.</h2>
+      <p>Use a few basic inputs to compare your building or portfolio against historical BC Hydro Continuous Optimization results. The output is a planning benchmark, not a savings guarantee.</p>
+    </div>
+
+    <div class="calculator-shell">
+      <div class="calc-main">
+        <div class="step-line">
+          <span>Step 1 of 4</span>
+          <i></i>
+        </div>
+        <h3>How many buildings are in scope?</h3>
+        <p>A portfolio needs comparison across buildings. A single facility needs a focused investigation of that site.</p>
+
+        <div class="scope-options" role="radiogroup" aria-label="How many buildings are in scope?">
+          <label id="lbl-uno">
+            <input type="radio" name="alcance" value="one">
+            <span>
+              <b>One building</b>
+              <small>A single facility or campus building.</small>
+            </span>
+          </label>
+          <label id="lbl-varios" class="selected">
+            <input type="radio" name="alcance" value="multiple" checked>
+            <span>
+              <b>Multiple buildings</b>
+              <small>A portfolio where comparison matters.</small>
+            </span>
+          </label>
+        </div>
+
+        <button class="calc-next" type="button">Next
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+
+        <small class="disclaimer">This is an early planning check. Eligibility, scope, and incentives are confirmed through a conversation with the REDE team.</small>
+      </div>
+
+      <aside class="profile-panel">
+        <div class="profile-title">
+          <span>Your profile</span>
+          <small>1 of 4</small>
+        </div>
+
+        <ul>
+          <li class="active">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+            Scope <b id="perfil-alcance">Portfolio</b>
+          </li>
+          <li>&#9675; Organization <b>&mdash;</b></li>
+          <li>&#9675; Building type <b>&mdash;</b></li>
+          <li>&#9675; Portfolio size <b>&mdash;</b></li>
+        </ul>
+
+        <div class="opportunity">
+          <small>Illustrative opportunity</small>
+          <b id="perfil-cifra">$2.94M</b>
+          <span id="perfil-nota">identified for one Western Canadian school district</span>
+        </div>
+
+        <p>Benchmarks come from historical REDE results by building type.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ==================================================================
+       6. TEAM + SOLUTIONS
+       ================================================================== -->
+  <section class="solutions team-solutions" id="about">
+    <div class="team-solutions-intro">
+      <div class="why-copy">
+        <p class="eyebrow">The REDE team</p>
+        <h2>Engineering discipline.<br>Portfolio momentum.</h2>
+        <p>REDE works between data, facilities and capital planning&mdash;so opportunity becomes action and action becomes a result your organization can defend.</p>
+        <ul>
+          <li>Independent, practical engineering</li>
+          <li>Built for multi-site organizations</li>
+          <li>Ongoing measurement and support</li>
+        </ul>
+      </div>
+
+      <div class="section-heading" id="solutions">
+        <div>
+          <p class="eyebrow">One connected system</p>
+          <h2>From scattered signals<br>to measurable action.</h2>
+        </div>
+        <p>Each service is valuable on its own. Together, they create a continuous line from portfolio insight to verified performance.</p>
+      </div>
+    </div>
+
+    <div class="team-roster" aria-label="REDE team portrait placeholders">
+      <article>
+        <div class="team-photo-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+          <span>Photo</span>
+        </div>
+        <div class="team-member-meta">
+          <small>01</small>
+          <div><b>Team member</b><span>Name &middot; Title</span></div>
+        </div>
+      </article>
+
+      <article>
+        <div class="team-photo-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+          <span>Photo</span>
+        </div>
+        <div class="team-member-meta">
+          <small>02</small>
+          <div><b>Team member</b><span>Name &middot; Title</span></div>
+        </div>
+      </article>
+
+      <article>
+        <div class="team-photo-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+          <span>Photo</span>
+        </div>
+        <div class="team-member-meta">
+          <small>03</small>
+          <div><b>Team member</b><span>Name &middot; Title</span></div>
+        </div>
+      </article>
+
+      <article>
+        <div class="team-photo-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+          <span>Photo</span>
+        </div>
+        <div class="team-member-meta">
+          <small>04</small>
+          <div><b>Team member</b><span>Name &middot; Title</span></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="solution-track">
+      <div class="track-line"></div>
+
+      <article>
+        <span class="solution-node">01</span>
+        <h3>Energy Gap Analysis</h3>
+        <p>Find the operational and capital opportunities hidden across your portfolio.</p>
+        <a href="#contact">Explore
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </article>
+
+      <article>
+        <span class="solution-node">02</span>
+        <h3>RUN</h3>
+        <p>Turn utility data into a focused, ongoing plan your facilities team can act on.</p>
+        <a href="#contact">Explore
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </article>
+
+      <article>
+        <span class="solution-node">03</span>
+        <h3>Recommissioning</h3>
+        <p>Restore building performance with targeted engineering&mdash;not broad replacement.</p>
+        <a href="#contact">Explore
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </article>
+
+      <article>
+        <span class="solution-node">04</span>
+        <h3>Energy Management</h3>
+        <p>Keep savings visible, verified and moving in the right direction year after year.</p>
+        <a href="#contact">Explore
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ==================================================================
+       7. FAQ
+       ================================================================== -->
+  <section class="faq-section" id="faq">
+    <div class="faq-intro">
+      <p class="eyebrow">Common questions</p>
+    </div>
+
+    <div class="faq-block">
+      <details name="faq" open>
+        <summary>Do we need a dedicated energy manager?
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="faq-cuerpo"><p>No. REDE is designed to add energy-management capacity without adding another full-time role to your team.</p></div>
+      </details>
+
+      <details name="faq">
+        <summary>Can REDE work across different building types?
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="faq-cuerpo"><p>Yes. The portfolio approach creates a comparable view across schools, offices, recreation facilities and other multi-site public assets.</p></div>
+      </details>
+
+      <details name="faq">
+        <summary>How quickly can we identify opportunities?
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="faq-cuerpo"><p>An initial portfolio screen can surface priority buildings quickly. Scope, eligibility and implementation timing are then confirmed with your team.</p></div>
+      </details>
+
+      <details name="faq">
+        <summary>Is this only about capital projects?
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+        <div class="faq-cuerpo"><p>No. REDE combines operational improvements, recommissioning, capital planning and ongoing measurement.</p></div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ==================================================================
+       8. FINAL CTA
+       ================================================================== -->
+  <section class="final-cta" id="contact">
+    <svg class="network-field" viewBox="0 0 1440 760" preserveAspectRatio="none" aria-hidden="true">
+      <path class="network-grid" d="M0 610H1440M250 0V760M970 0V760"/>
+      <path class="network-path ghost" d="M-20 550C180 550 190 370 380 370S580 540 770 400 980 170 1180 270 1320 370 1460 300"/>
+      <path class="network-path pulse" d="M-20 550C180 550 190 370 380 370S580 540 770 400 980 170 1180 270 1320 370 1460 300"/>
+      <g><circle class="node-halo" cx="250" cy="466" r="18"/><circle class="node" cx="250" cy="466" r="5"/></g>
+      <g><circle class="node-halo" cx="380" cy="370" r="18"/><circle class="node" cx="380" cy="370" r="5"/></g>
+      <g><circle class="node-halo" cx="770" cy="400" r="18"/><circle class="node" cx="770" cy="400" r="5"/></g>
+      <g><circle class="node-halo" cx="970" cy="255" r="18"/><circle class="node" cx="970" cy="255" r="5"/></g>
+      <g><circle class="node-halo" cx="1180" cy="270" r="18"/><circle class="node" cx="1180" cy="270" r="5"/></g>
+    </svg>
+
+    <p class="eyebrow light">Start with the portfolio</p>
+    <h2>Find where your energy<br>is going next.</h2>
+    <p>Bring us your buildings, bills and questions. We&rsquo;ll help you see the opportunity clearly.</p>
+    <a class="button white-button" href="mailto:hello@redeenergy.ca">Book a call
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </section>
+
+  <!-- ==================================================================
+       FOOTER
+       ================================================================== -->
+  <footer>
+    <a class="brand" href="#top" aria-label="REDE home">
+      <img src="assets/img/d3/rede-logo.png" alt="REDE Building Energy Efficiency" width="226" height="70" loading="lazy">
+    </a>
+    <p>Building energy efficiency for multi-site organizations across Western Canada.</p>
+    <div>
+      <a href="#solutions">Solutions</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <small>&copy; 2026 REDE Energy Solutions</small>
+  </footer>
+
+</main>
+
+<nav class="selector-v" aria-label="Design version">
+  <span class="selector-v__etiqueta">Design</span>
+  <a href="index.html">1</a>
+  <a href="home-d2.html">2</a>
+  <a href="home-d3.html" class="es-activa" aria-current="page">3</a>
+</nav>
+
+<script src="js/d3.js"></script>
+</body>
+</html>
