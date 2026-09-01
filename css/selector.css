@@ -53,3 +53,57 @@
   .selector-v__etiqueta { display: none; }
   .modo-edicion .selector-v { bottom: 134px; }
 }
+
+/* ==========================================================================
+   QUE NO TAPE EL DISEÑO
+
+   Es una herramienta de revision, no parte de la maqueta. Estaba fijo encima
+   del contenido y en movil tapaba texto de las secciones.
+
+   Ahora se puede plegar: queda un tirador pequeno y el contenido se ve
+   entero. La eleccion se recuerda mientras dure la visita.
+   ========================================================================== */
+
+.selector-v {
+  transition: transform .25s cubic-bezier(.4, 0, .2, 1), opacity .2s;
+}
+
+/* Plegado: se desliza hacia fuera y deja solo el tirador */
+.selector-v.esta-plegado {
+  transform: translateX(calc(100% - 34px));
+}
+.selector-v.esta-plegado a { opacity: 0; pointer-events: none; }
+
+.selector-v__tirador {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: 34px;
+  flex: none;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  transition: transform .25s;
+}
+.selector-v__tirador:hover { background: rgba(255, 255, 255, .1); }
+.selector-v__tirador:focus-visible {
+  outline: 2px solid var(--c-verde-marca, #39B54A);
+  outline-offset: -2px;
+}
+.selector-v.esta-plegado .selector-v__tirador { transform: rotate(180deg); }
+
+/* Mientras no se pliega, se aparta un poco al pasar por encima:
+   asi se lee lo que hay debajo sin tener que tocarlo. */
+@media (hover: hover) {
+  .selector-v:not(.esta-plegado):hover { opacity: .35; }
+  .selector-v:not(.esta-plegado):hover:focus-within { opacity: 1; }
+}
+
+@media (max-width: 720px) {
+  .selector-v { font-size: 12px; }
+  .selector-v a { min-width: 38px; }
+}

@@ -56,7 +56,15 @@ body {
   line-height: 1.65;
 }
 
-h1, h2, h3, b, strong { font-family: var(--display); }
+/* Los titulares NO heredan el negrita del navegador: el diseno de Erick
+   los define en peso normal y solo algunas reglas los suben a 700. Sin esto,
+   los h2 salen mas anchos y desbordan su columna en pantallas grandes. */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--display);
+  font-size: inherit;
+  font-weight: inherit;
+}
+b, strong { font-family: var(--display); }
 h1, h2, h3, p { margin-top: 0; }
 
 
@@ -624,7 +632,7 @@ h1, h2, h3, p { margin-top: 0; }
   gap:70px;
   display:grid
 }
-.section-heading h2,.why h2 {
+.section-heading h2,.why h2,.why-copy h2 {
   letter-spacing:-.035em;
   margin:0;
   font-size:clamp(40px,4vw,60px);
@@ -1138,7 +1146,7 @@ footer>small {
     grid-template-columns:1fr;
     gap:25px
   }
-  .section-heading h2,.why h2 {
+  .section-heading h2,.why h2,.why-copy h2 {
     font-size:39px
   }
   .solution-track {
@@ -1605,7 +1613,7 @@ footer .brand {
   grid-template-columns:1fr .7fr;
   max-width:1150px
 }
-.section-heading h2,.why h2 {
+.section-heading h2,.why h2,.why-copy h2 {
   font-family:Arial,Helvetica,sans-serif;
   font-weight:700
 }
@@ -2118,7 +2126,7 @@ footer .brand img {
   .solutions {
     padding:90px 22px
   }
-  .section-heading h2,.why h2 {
+  .section-heading h2,.why h2,.why-copy h2 {
     font-size:40px
   }
   .solution-track {
@@ -2504,4 +2512,62 @@ button:focus-visible,
 .final-cta a:focus-visible,
 .profile-panel a:focus-visible {
   outline-color: #8ee59b;
+}
+
+/* --------------------------------------------------------------------------
+   5. ZONA TACTIL EN MOVIL
+
+   El original deja enlaces de 20-21px de alto. En pantalla se ven bien, pero
+   con el dedo se fallan: la recomendacion es 44px.
+
+   Se agranda SOLO la zona sensible, no el diseno: el padding que se anade se
+   descuenta con un margen negativo igual, asi ningun elemento se mueve. Y
+   solo aplica en punteros gruesos (dedo), no con raton.
+
+   Comprobado: las posiciones antes y despues son identicas.
+   -------------------------------------------------------------------------- */
+
+@media (pointer: coarse) {
+
+  /* Enlaces de texto sueltos dentro de bloques.
+     Son inline-flex: el padding vertical altera el ancho que calcula el
+     padre, asi que la zona se agranda con un pseudo-elemento superpuesto.
+     El enlace no cambia de caja; solo crece lo que responde al dedo. */
+  .operations-copy > a,
+  .solution-track a,
+  .case-study > a,
+  footer > div a {
+    position: relative;
+  }
+  .operations-copy > a::after,
+  .solution-track a::after,
+  .case-study > a::after,
+  footer > div a::after {
+    content: '';
+    position: absolute;
+    inset: -12px 0;
+  }
+
+  /* El radio de la calculadora: la etiqueta entera ya es pulsable y mide
+     mas de 44px, asi que el circulo no se toca. Agrandarlo desplazaba el
+     texto del panel. */
+
+  /* Enlaces del header en tablet: el menu de escritorio se muestra desde
+     761px, pero ahi ya se navega con el dedo. Misma tecnica: zona sensible
+     mayor sin tocar la caja. */
+  .nav > a:not(.nav-cta) {
+    position: relative;
+  }
+  .nav > a:not(.nav-cta)::after {
+    content: '';
+    position: absolute;
+    inset: -12px 0;
+  }
+
+  /* El selector de version es una herramienta de revision, no del diseno */
+  .selector-v a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
 }
