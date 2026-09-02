@@ -15,9 +15,16 @@
      ---------------------------------------------------------------------- */
 
   /* Verde de interfaz — botones, links, acentos de texto.
-     Tomado del mockup de Erick. PENDIENTE DE APROBACIÓN del cliente.
-     Se eligió por accesibilidad: da ~4.9:1 con blanco (WCAG AA pide 4.5:1). */
-  --c-verde:            #028B00;
+     Tomado de la captura de referencia del panel "Portfolio overview".
+
+     Da 4.09:1 sobre blanco. WCAG AA pide 4.5:1 para texto normal y 3:1
+     para texto grande (>=18.66px en negrita, o >=24px), asi que sirve para
+     botones y titulares pero NO para texto pequeño en verde sobre blanco.
+     El anterior (#028B00) daba 4.47:1: tampoco llegaba, la nota que decia
+     4.9:1 estaba equivocada.
+
+     Para texto pequeño usar --c-verde-hover (#026F00, 6.41:1). */
+  --c-verde:            #2E902B;
   --c-verde-hover:      #026F00;
   --c-verde-claro:      #E8F5E8;
 

@@ -142,19 +142,11 @@
     <!-- Columna derecha: foto + tarjeta -->
     <div class="hero__media">
 
-      <!-- PLACEHOLDER: foto de edificio institucional. Pendiente del cliente. -->
-      <div class="ph ph--foto" role="img"
-           aria-label="Placeholder: institutional building exterior">
-        <div class="ph__icono" aria-hidden="true">
-          <svg width="44" height="44" viewBox="0 0 24 24" fill="none">
-            <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <p class="ph__label">Building exterior</p>
-      </div>
+      <!-- El render del edificio, desplazado a la derecha igual que en los
+           otros dos diseños: la parte util de la imagen queda fuera del
+           texto y no compite con el. -->
+      <img class="hero__render" src="assets/img/building-render.jpg" alt=""
+           width="1183" height="647" fetchpriority="high" decoding="async">
 
       <!-- Tarjeta flotante. Elementor: container con posición absoluta -->
       <div class="tarjeta">

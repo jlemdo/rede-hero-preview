@@ -454,8 +454,12 @@
 .d2-hero__fondo {
   position: absolute;
   top: 0;
-  right: 0;
-  width: 68%;
+
+  /* Desplazado a la derecha: la imagen es mas apaisada que su hueco, asi
+     que centrada dejaba la parte util detras del texto. Lo llevan las tres
+     variantes, no solo las dos ultimas. */
+  right: -9%;
+  width: 77%;
   height: 100%;
   object-fit: cover;
   object-position: center left;
@@ -583,14 +587,15 @@
   margin-bottom: var(--d2-e4);
 }
 
-.d2-metrica {
-  padding: var(--d2-e3);
-  background: var(--d2-tinta);
-  border-radius: var(--d2-radio-md);
-  transition: background-color var(--d2-normal) ease;
-}
+/* Sin caja: las cifras van directas sobre el panel, como en los diseños 1
+   y 3. El recuadro verde competia con el propio numero, que es lo que
+   tiene que destacar.
 
-.d2-metrica:hover { background: rgba(2, 139, 0, .07); }
+   Se conserva el padding vertical para que las dos metricas sigan
+   separadas del borde y entre si. */
+.d2-metrica {
+  padding-block: var(--d2-e2);
+}
 
 .d2-metrica__label {
   margin: 0 0 6px;
@@ -618,20 +623,23 @@
 }
 
 /* El delta va en pildora: es el mismo lenguaje de formas del sistema */
+/* Sin pastilla: el dato va suelto bajo la cifra, como en los diseños 1 y 3.
+
+   El verde pasa al tono oscuro. A 12px hace falta 4.5:1 para cumplir AA, y
+   --c-verde da 4.09 sobre blanco; --c-verde-hover da 6.41. Quitar el fondo
+   ya subia el contraste de 3.57 a 4.09 -- el verde al 10% oscurecia la
+   base -- pero no bastaba. */
 .d2-metrica__delta {
   display: inline-flex;
   align-items: center;
   gap: 5px;
   margin: var(--d2-e1) 0 0;
-  padding: 4px 10px;
   font-size: .75rem;
-  color: var(--c-verde);
-  background: rgba(2, 139, 0, .1);
-  border-radius: var(--d2-radio-full);
+  color: var(--c-verde-hover);
 }
 
 .d2-metrica__delta strong { font-weight: var(--fw-bold); }
-.d2-metrica__delta svg { color: var(--c-verde); flex-shrink: 0; }
+.d2-metrica__delta svg { flex-shrink: 0; }
 
 /* --- El grafico --- */
 

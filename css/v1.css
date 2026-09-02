@@ -563,3 +563,43 @@
   font-size: clamp(1.75rem, 1.3rem + 1.1vw, 2.25rem);   /* por debajo del techo */
   line-height: 1.1;
 }
+
+
+/* ==========================================================================
+   EL RENDER DEL HERO
+
+   Sustituye al placeholder gris. Va desplazado a la derecha, igual que en
+   los diseños 2 y 3: la imagen es mas apaisada que su hueco, asi que
+   dejandola centrada la parte util quedaba detras del texto.
+
+   Se desborda por la derecha a proposito; .hero lo contiene con
+   overflow-x: clip, que recorta sin romper el sticky del header.
+   ========================================================================== */
+
+.hero__render {
+  position: absolute;
+  top: 0;
+  right: -15%;
+  width: 115%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center left;
+  pointer-events: none;
+
+  /* El borde izquierdo se funde con el fondo para que la imagen no corte
+     en seco junto a la columna de texto. */
+  mask-image: linear-gradient(to right, transparent 0%, #000 18%, #000 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 18%, #000 100%);
+}
+
+/* En pantallas estrechas el hero pasa a una columna: la imagen cubre el
+   ancho y se atenua, porque ahi si queda detras del texto. */
+@media (max-width: 900px) {
+  .hero__render {
+    right: 0;
+    width: 100%;
+    opacity: .22;
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 40%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 40%);
+  }
+}

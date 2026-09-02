@@ -109,6 +109,52 @@
       mostrar(actual + (dx < 0 ? 1 : -1));
     }, { passive: true });
 
+
+    /* ----------------------------------------------------------------------
+       MINIMIZAR LOS MANDOS
+
+       La barra se encoge hasta quedar en un boton redondo pegado al borde
+       derecho, para poder mirar la seccion sin ella encima. Volviendo a
+       pulsar ese boton se abre otra vez.
+
+       El boton nunca se oculta: es lo unico que queda, y sin el no habria
+       forma de recuperar los mandos.
+       ---------------------------------------------------------------------- */
+
+    var mandos = caja.querySelector('.d2-caru__mandos');
+    var ocultar = caja.querySelector('[data-caru-ocultar]');
+
+    if (mandos && ocultar) {
+      var minimizado = false;
+      var CLAVE_P = CLAVE + '-minimizado';
+
+      try { minimizado = sessionStorage.getItem(CLAVE_P) === '1'; } catch (e) {}
+
+      function pintarMinimizado() {
+        mandos.classList.toggle('esta-minimizado', minimizado);
+        ocultar.setAttribute('aria-expanded', minimizado ? 'false' : 'true');
+        ocultar.setAttribute('aria-label', minimizado ? 'Mostrar las opciones' : 'Minimizar las opciones');
+
+        /* Minimizados quedan recortados por overflow:hidden: sin esto
+           seguirian recibiendo el tabulador y el foco se iria a un boton
+           que no se ve. */
+        Array.prototype.forEach.call(
+          mandos.querySelectorAll('button:not([data-caru-ocultar])'),
+          function (b) { b.tabIndex = minimizado ? -1 : 0; }
+        );
+
+        try { sessionStorage.setItem(CLAVE_P, minimizado ? '1' : '0'); } catch (e) {}
+      }
+
+      ocultar.addEventListener('click', function (e) {
+        e.stopPropagation();
+        minimizado = !minimizado;
+        pintarMinimizado();
+      });
+
+      pintarMinimizado();
+    }
+
     mostrar(actual);
   });
 })();
