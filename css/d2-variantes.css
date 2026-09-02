@@ -205,6 +205,35 @@
   box-shadow: 0 2px 40px rgba(2, 51, 0, .22);
 }
 
+/* Las cajas de las metricas tienen su propio fondo menta OPACO y ocupan el
+   26% del panel, justo donde va la vista primero. Transparentar solo el
+   panel dejaba pasar la imagen por los margenes pero no por el centro, que
+   es lo que se estaba viendo (o mejor dicho, lo que no se veia).
+
+   Se transparentan tambien, manteniendo el tono menta: la caja sigue
+   leyendose como una superficie, no como un agujero. */
+.d2-hero.es-variante-c .d2-metrica {
+  background: rgba(242, 249, 242, .62);
+}
+
+.d2-hero.es-variante-c .d2-panel__filtro {
+  background: rgba(242, 249, 242, .62);
+}
+
+/* Al transparentar las metricas, la etiqueta cayo de 4.18:1 a 3.41:1: el
+   fondo menta solido le hacia de respaldo. Se oscurece el texto para
+   recuperar el contraste sin renunciar al efecto. */
+.d2-hero.es-variante-c .d2-metrica__label {
+  color: #4A4A4A;
+}
+
+/* El grafico lleva una rejilla y un area en gris muy claro; sobre la imagen
+   pierden referencia. Se refuerzan un punto para que el dato siga
+   leyendose como un grafico y no como un dibujo suelto. */
+.d2-hero.es-variante-c .d2-grafico svg g[stroke="#EFEFEF"] line {
+  stroke: rgba(120, 130, 122, .34);
+}
+
 /* Sin soporte de desenfoque el fondo sube a casi opaco: un panel translucido
    sin blur sobre una foto es ilegible. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -231,6 +260,9 @@
   .d2-hero.es-variante-b .d2-metrica__valor { font-size: clamp(28px, 3.4vw, 38px); }
   .d2-hero.es-variante-b .d2-panel__titulo { font-size: 16px; }
 
+  /* El panel vuelve a opaco: sobre un render al 22% la transparencia no se
+     aprecia y solo resta contraste. Las capas de dentro tambien, o quedaria
+     un panel opaco con las metricas translucidas. */
   .d2-hero.es-variante-c .d2-panel {
     background: var(--c-blanco, #fff);
     -webkit-backdrop-filter: none;
@@ -238,6 +270,13 @@
     border-color: var(--c-borde-suave, #E2E6E2);
     box-shadow: var(--d2-sombra-lg);
   }
+
+  .d2-hero.es-variante-c .d2-metrica,
+  .d2-hero.es-variante-c .d2-panel__filtro { background: var(--d2-tinta); }
+
+  .d2-hero.es-variante-c .d2-metrica__label { color: var(--c-texto-suave); }
+
+  .d2-hero.es-variante-c .d2-grafico svg g[stroke="#EFEFEF"] line { stroke: #EFEFEF; }
 }
 
 @media (max-width: 760px) {
