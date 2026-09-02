@@ -187,7 +187,7 @@
   /* El render sube de opacidad SOLO en esta variante: con el 50% original,
      bajo un panel translucido apenas quedaba un 4% de imagen visible y el
      efecto no se apreciaba. */
-  opacity: .72;
+  opacity: .66;
 }
 
 .d2-hero.es-variante-c .d2-panel {
@@ -201,7 +201,7 @@
      Sin blur el trazo se conserva y se reconoce el edificio. Como el dibujo
      es claro y de poco contraste, el texto encima sigue leyendose: medido
      mas abajo. */
-  background: rgba(255, 255, 255, .68);
+  background: rgba(255, 255, 255, .78);
 
   /* Sobre foto, el borde suave se pierde y la caja parece flotar sin apoyo */
   border-color: rgba(255, 255, 255, .75);
@@ -216,18 +216,18 @@
    Se transparentan tambien, manteniendo el tono menta: la caja sigue
    leyendose como una superficie, no como un agujero. */
 .d2-hero.es-variante-c .d2-metrica {
-  background: rgba(242, 249, 242, .55);
+  background: rgba(242, 249, 242, .66);
 }
 
 .d2-hero.es-variante-c .d2-panel__filtro {
-  background: rgba(242, 249, 242, .55);
+  background: rgba(242, 249, 242, .66);
 }
 
 /* Al transparentar las metricas, la etiqueta cayo de 4.18:1 a 3.41:1: el
    fondo menta solido le hacia de respaldo. Se oscurece el texto para
    recuperar el contraste sin renunciar al efecto. */
 .d2-hero.es-variante-c .d2-metrica__label {
-  color: #4A4A4A;
+  color: #3D3D3D;
 }
 
 /* El grafico lleva una rejilla y un area en gris muy claro; sobre la imagen
@@ -257,23 +257,33 @@
   .d2-hero.es-variante-b .d2-metrica__valor { font-size: clamp(28px, 3.4vw, 38px); }
   .d2-hero.es-variante-b .d2-panel__titulo { font-size: 16px; }
 
-  /* El panel vuelve a opaco: sobre un render al 22% la transparencia no se
-     aprecia y solo resta contraste. Las capas de dentro tambien, o quedaria
-     un panel opaco con las metricas translucidas. */
-  .d2-hero.es-variante-c .d2-panel {
-    background: var(--c-blanco, #fff);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    border-color: var(--c-borde-suave, #E2E6E2);
-    box-shadow: var(--d2-sombra-lg);
+  /* La transparencia SE MANTIENE en movil: es una variante que hay que
+     comparar, y si en el movil se ve como la 1 no se puede juzgar.
+
+     Se sube un punto respecto a escritorio porque aqui el render pasa por
+     DETRAS del texto (no a un lado), asi que hay mas superficie de dibujo
+     bajo las cifras. Contraste comprobado. */
+  /* El desplazamiento (right/width) es para la version de dos columnas. En
+     movil el render debe volver a ocupar todo el ancho: con el 77% quedaba
+     en 300px sobre un panel de 350 y un tercio de la caja no tenia nada
+     debajo. */
+  .d2-hero.es-variante-b .d2-hero__fondo,
+  .d2-hero.es-variante-c .d2-hero__fondo {
+    right: 0;
+    width: 100%;
   }
 
-  .d2-hero.es-variante-c .d2-metrica,
-  .d2-hero.es-variante-c .d2-panel__filtro { background: var(--d2-tinta); }
+  /* La regla base baja el render al 22% en movil, y a ese nivel no se ve
+     nada por detras del panel. Solo en esta variante sube, que es de lo
+     que trata la opcion. */
+  /* La regla base baja el render al 22% en movil. Sube al mismo .66 que en
+     escritorio para que la cantidad de dibujo que atraviesa el panel sea la
+     misma en los dos sitios. */
+  .d2-hero.es-variante-c .d2-hero__fondo { opacity: .66; }
 
-  .d2-hero.es-variante-c .d2-metrica__label { color: var(--c-texto-suave); }
-
-  .d2-hero.es-variante-c .d2-grafico svg g[stroke="#EFEFEF"] line { stroke: #EFEFEF; }
+  /* Los MISMOS valores que en escritorio: es la misma variante, y si aqui
+     se ve mas solida no se puede comparar. Las reglas de panel y metricas
+     ya son globales, asi que no hace falta repetirlas. */
 }
 
 @media (max-width: 760px) {
@@ -315,4 +325,197 @@
   .d2-caru__diapo > .d2-hero { animation: none; }
   .d2-caru__flecha,
   .d2-caru__punto { transition: none; }
+}
+
+
+/* ==========================================================================
+   EL FILTRO "ALL BUILDINGS" NO ES UN CONTROL
+
+   El panel es una ILUSTRACION de lo que hace el producto, no el producto.
+   Estaba montado con un <select> real: se podia desplegar, recibia foco y
+   el lector de pantalla lo anunciaba como un control. Prometia algo que no
+   existe.
+
+   Ahora es un <span> decorativo. Se conserva el aspecto porque forma parte
+   del dibujo del panel, pero deja de comportarse como algo pulsable.
+   Aplica a las tres variantes.
+   ========================================================================== */
+
+span.d2-panel__filtro {
+  /* Un span no tiene caja propia: se le da la del select que sustituye */
+  display: inline-flex;
+  align-items: center;
+
+  /* Ya no es interactivo */
+  cursor: default;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Sin estados: no responde al raton porque no hay nada que pulsar */
+span.d2-panel__filtro:hover {
+  background-color: var(--d2-tinta);
+  border-color: rgba(2, 51, 0, .12);
+}
+
+
+/* ==========================================================================
+   EL PANEL COBRA VIDA
+
+   El panel entraba de una pieza: aparecia entero y quieto, y se leia como
+   una captura de pantalla. Animado se lee como un producto que esta
+   funcionando.
+
+   Tres capas, en este orden:
+     1. las cifras cuentan hasta su valor      (lo hace el JS)
+     2. las lineas del grafico se dibujan
+     3. los puntos aparecen sobre la linea ya trazada
+
+   El orden importa: primero el dato, despues su evolucion. Al reves, la
+   linea distrae de la cifra, que es lo que hay que leer.
+
+   Todo arranca cuando el panel entra en pantalla, no al cargar: si no,
+   sucede antes de que nadie lo vea.
+   ========================================================================== */
+
+/* --- Las lineas del grafico se dibujan --- */
+
+.d2-grafico .g-linea,
+.d2-grafico .g-base {
+  /* ~500 unidades medidas con getTotalLength() */
+  stroke-dasharray: 520;
+  stroke-dashoffset: 520;
+}
+
+.d2-panel.esta-vivo .g-base {
+  animation: d2-trazar 1.5s cubic-bezier(.33, 1, .68, 1) .35s forwards;
+}
+
+.d2-panel.esta-vivo .g-linea {
+  /* La verde entra despues: es la protagonista y conviene que se lea sola */
+  animation: d2-trazar 1.6s cubic-bezier(.33, 1, .68, 1) .55s forwards;
+}
+
+@keyframes d2-trazar {
+  to { stroke-dashoffset: 0; }
+}
+
+/* --- El area bajo la linea --- */
+
+.d2-grafico .g-area {
+  opacity: 0;
+  transform-origin: bottom;
+}
+
+.d2-panel.esta-vivo .g-area {
+  /* Entra cuando la linea ya casi termino de trazarse */
+  animation: d2-rellenar 1s ease-out 1.35s forwards;
+}
+
+@keyframes d2-rellenar {
+  from { opacity: 0; transform: scaleY(.55); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --- Los puntos, uno tras otro --- */
+
+.d2-grafico .g-puntos circle {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.d2-panel.esta-vivo .g-puntos circle {
+  animation: d2-punto .42s cubic-bezier(.34, 1.56, .64, 1) forwards;
+}
+
+/* Escalonado: siguen el recorrido de la linea, de enero a diciembre */
+.d2-panel.esta-vivo .g-puntos circle:nth-child(1) { animation-delay: 1.35s; }
+.d2-panel.esta-vivo .g-puntos circle:nth-child(2) { animation-delay: 1.47s; }
+.d2-panel.esta-vivo .g-puntos circle:nth-child(3) { animation-delay: 1.59s; }
+.d2-panel.esta-vivo .g-puntos circle:nth-child(4) { animation-delay: 1.71s; }
+.d2-panel.esta-vivo .g-puntos circle:nth-child(5) { animation-delay: 1.83s; }
+
+@keyframes d2-punto {
+  from { opacity: 0; transform: scale(0); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* --- La rejilla, discreta --- */
+
+.d2-grafico .g-rejilla { opacity: 0; }
+
+.d2-panel.esta-vivo .g-rejilla {
+  animation: d2-aparecer .8s ease-out .15s forwards;
+}
+
+@keyframes d2-aparecer {
+  to { opacity: 1; }
+}
+
+/* --- Las cajas de las metricas --- */
+
+.d2-panel .d2-metrica {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.d2-panel.esta-vivo .d2-metrica {
+  animation: d2-subir .7s cubic-bezier(.22, 1, .36, 1) forwards;
+}
+
+.d2-panel.esta-vivo .d2-metrica:nth-of-type(1) { animation-delay: .1s; }
+.d2-panel.esta-vivo .d2-metrica:nth-of-type(2) { animation-delay: .22s; }
+
+@keyframes d2-subir {
+  to { opacity: 1; transform: none; }
+}
+
+/* La pastilla del delta entra al final, cuando su cifra ya se leyo */
+.d2-panel .d2-metrica__delta {
+  opacity: 0;
+  transform: scale(.94);
+}
+
+.d2-panel.esta-vivo .d2-metrica__delta {
+  animation: d2-pastilla .5s cubic-bezier(.34, 1.56, .64, 1) forwards;
+}
+
+.d2-panel.esta-vivo .d2-metrica:nth-of-type(1) .d2-metrica__delta { animation-delay: 1.05s; }
+.d2-panel.esta-vivo .d2-metrica:nth-of-type(2) .d2-metrica__delta { animation-delay: 1.17s; }
+
+@keyframes d2-pastilla {
+  to { opacity: 1; transform: none; }
+}
+
+/* --- Los meses --- */
+
+.d2-grafico__meses span {
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.d2-panel.esta-vivo .d2-grafico__meses span {
+  animation: d2-aparecer .5s ease-out forwards;
+}
+
+
+/* --------------------------------------------------------------------------
+   SIN MOVIMIENTO
+
+   Si el sistema pide menos animacion, el panel aparece ya montado. No se
+   trata de acelerarlo: se trata de que no haya nada que seguir con la vista.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .d2-grafico .g-linea,
+  .d2-grafico .g-base { stroke-dasharray: none; stroke-dashoffset: 0; }
+
+  .d2-grafico .g-area,
+  .d2-grafico .g-rejilla,
+  .d2-grafico .g-puntos circle,
+  .d2-panel .d2-metrica,
+  .d2-panel .d2-metrica__delta,
+  .d2-grafico__meses span { opacity: 1; transform: none; animation: none; }
 }
