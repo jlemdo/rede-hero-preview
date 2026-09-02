@@ -840,137 +840,3715 @@
 
 
 <!-- ==========================================================================
-     SECCIONES OCULTAS PARA LA PRIMERA SUBIDA
+     SECCION 3 — THE PROBLEM
 
-     Solo se publican el hero y los dos carruseles. Lo que sigue esta
-     terminado pero se guarda hasta que se aprueben las variantes.
+     Tres formas de presentar los mismos tres puntos.
 
-     PARA DEVOLVERLAS: quitar la linea de apertura y la de cierre de este
-     comentario, y cambiar los ~~ por guiones dobles (los comentarios HTML
-     no se pueden anidar, por eso se neutralizaron).
+     La version anterior --filas alternas con foto-- medía 2470px, casi tres
+     pantallas para tres ideas. Y tenia un defecto de fondo: los tres puntos
+     son PARALELOS, tres sintomas del mismo problema, pero el zigzag los
+     presenta en secuencia, como pasos de un proceso.
+
+     NN/g midió ese layout con eyetracking: los usuarios tropiezan al
+     escanearlo. El matiz decisivo es que el perjuicio aparece SOLO con
+     imagenes decorativas; las informativas rinden igual. Esa es la variable
+     que corrigen las tres variantes.
      ========================================================================== -->
-<!--
-<!~~ ==========================================================================
-     SECCION 3 — PORTFOLIO VISIBILITY PROBLEM
 
-     Copy literal del aprobado. Lo unico que cambia es la forma: fondo de
-     color suave, cabecera centrada y tarjetas elevadas, que es el patron de
-     la referencia.
-     ========================================================================== ~~>
-<section class="d2-problema">
-  <div class="d2-problema__inner">
+<div class="d2-caru" id="caru-problema" data-caru>
 
-    <div class="d2-problema__cabecera">
-      <p class="d2-eyebrow d2-entra">The problem</p>
-      <h2 class="d2-titulo-seccion d2-entra">
-        Most organizations are not managing their energy. They are just paying for it.
-      </h2>
-      <p class="d2-lead-seccion d2-entra">
-        Utility bills get processed, budgets get approved, and facilities teams stay
-        busy putting out fires. But nobody is tracking whether the buildings are
-        actually performing well, or what it would take to improve them. The result
-        is unnecessary cost and emissions that compound quietly, year over year.
-      </p>
+  <!-- ====================================================================
+       OPCION 1 — TRIPTICO ALINEADO
+
+       Tres columnas de igual ancho. Los cuerpos de texto alineados se
+       recorren de un vistazo, y la disposicion en paralelo dice la verdad
+       sobre el contenido: no hay un orden que seguir.
+
+       Sin fotos. Las que habia eran decorativas --no se puede escribir un
+       alt con significado para ellas-- y era justamente eso lo que
+       perjudicaba el escaneo.
+       ==================================================================== -->
+  <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Opcion 1: triptico alineado">
+    <section class="d2-prob-tri" aria-labelledby="prob-tri-titulo">
+      <div class="d2-prob-tri__inner">
+
+        <div class="d2-prob-tri__cabecera">
+          <p class="d2-eyebrow">The problem</p>
+          <h2 class="d2-prob-tri__titulo" id="prob-tri-titulo">
+            Most organizations are not managing their energy. They are just paying for it.
+          </h2>
+          <p class="d2-prob-tri__lead">
+            Utility bills get processed, budgets get approved, and facilities teams stay
+            busy putting out fires. But nobody is tracking whether the buildings are
+            actually performing well, or what it would take to improve them. The result
+            is unnecessary cost and emissions that compound quietly, year over year.
+          </p>
+        </div>
+
+        <!-- Lista SIN orden: los tres puntos son paralelos. Dos son causas y
+             uno es consecuencia, asi que numerarlos induciria a error. Los
+             numerales se pintan desde CSS y no los ve un lector de pantalla. -->
+        <ul class="d2-prob-tri__lista">
+          <li>
+            <h3>Teams stretched thin</h3>
+            <p>
+              Energy management falls to whoever has time, which means it does not get
+              done properly. Teams stay reactive, responding to problems instead of
+              preventing them.
+            </p>
+          </li>
+          <li>
+            <h3>Data scattered everywhere</h3>
+            <p>
+              Utility data lives in accounts payable and arrives from multiple vendors
+              in different formats. Consolidating it takes real effort before it tells
+              you anything useful.
+            </p>
+          </li>
+          <li>
+            <h3>Costs compound quietly</h3>
+            <p>
+              Without benchmarking there is no way to know whether performance is good
+              or bad. Budgets absorb the difference, and nobody sees where the money
+              is going.
+            </p>
+          </li>
+        </ul>
+
+        <div class="d2-prob-tri__cierre">
+          <p class="d2-prob-tri__remate">Rede closes that gap.</p>
+          <a href="index.html#calculator" class="d2-btn">
+            Check your opportunity
+            <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+              <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                    stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- ====================================================================
+       OPCION 2 — EL EDIFICIO ANOTADO
+
+       Un solo dibujo con los tres puntos anclados a el.
+
+       Es la unica variante donde la imagen argumenta: el edificio muestra
+       DONDE ocurre cada problema --en la sala de calderas, en contabilidad,
+       en el presupuesto-- en vez de acompañar el texto con una foto de
+       archivo.
+
+       El dibujo es SVG y va en el marcado, no como imagen externa: asi
+       hereda los colores del sistema y se lee nitido a cualquier tamaño.
+       ==================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 2: tres lecturas" hidden>
+    <!-- ====================================================================
+         OPCION 2 — TRES LECTURAS
+
+         Cada punto lleva su propio grafico pequeño. No son ilustraciones:
+         son el mismo idioma que el panel del hero --linea de datos, area
+         bajo la curva, puntos de lectura, leyenda-- que es lo que esta
+         pagina usa para hablar de energia.
+
+         El intento anterior era un edificio dibujado con lineas sueltas al
+         lado. No se entendia: el numero 1 en una caja vacia, unas curvas
+         que no se sabia de donde salian, y una linea flotando. Yo sabia que
+         representaba cada cosa, pero el dibujo no lo decia.
+
+         Aqui cada grafico muestra el dato del que habla su texto:
+
+           01  la carga de trabajo sube y el tiempo para gestionarla baja
+           02  cinco fuentes de factura que no se juntan
+           03  dos lineas que se separan: lo que se paga y lo que se deberia
+
+         Se trazan al entrar en pantalla, con la misma tecnica del panel del
+         hero: stroke-dasharray al largo del trazo y stroke-dashoffset
+         animado a cero.
+         ==================================================================== -->
+    <section class="d2-prob-lec" aria-labelledby="prob-lec-titulo">
+      <div class="d2-prob-lec__inner">
+
+        <div class="d2-prob-lec__cabecera">
+          <p class="d2-eyebrow">The problem</p>
+          <h2 class="d2-prob-lec__titulo" id="prob-lec-titulo">
+            Most organizations are not managing their energy. They are just paying for it.
+          </h2>
+          <p class="d2-prob-lec__lead">
+            Utility bills get processed, budgets get approved, and facilities teams stay
+            busy putting out fires. But nobody is tracking whether the buildings are
+            actually performing well, or what it would take to improve them. The result
+            is unnecessary cost and emissions that compound quietly, year over year.
+          </p>
+        </div>
+
+        <ul class="d2-prob-lec__lista">
+
+          <li>
+            <!-- 01 — Dos lineas que se cruzan: la carga sube, el tiempo baja -->
+            <div class="d2-lec__grafico" aria-hidden="true">
+              <svg viewBox="0 0 260 96" role="presentation">
+                <g class="d2-lec__rejilla">
+                  <line x1="6" y1="24" x2="254" y2="24"/>
+                  <line x1="6" y1="52" x2="254" y2="52"/>
+                  <line x1="6" y1="80" x2="254" y2="80"/>
+                </g>
+                <path class="d2-lec__sube" d="M12 74 L60 68 L108 58 L156 44 L204 32 L248 22"/>
+                <path class="d2-lec__baja" d="M12 30 L60 38 L108 46 L156 58 L204 68 L248 76"/>
+                <g class="d2-lec__puntos">
+                  <circle cx="12" cy="74" r="3"/>
+                  <circle cx="248" cy="22" r="3"/>
+                </g>
+              </svg>
+              <p class="d2-lec__leyenda">
+                <span><i class="d2-lec__llave d2-lec__llave--sube"></i>Workload</span>
+                <span><i class="d2-lec__llave d2-lec__llave--baja"></i>Time to manage it</span>
+              </p>
+            </div>
+            <h3>Teams stretched thin</h3>
+            <p>
+              Energy management falls to whoever has time, which means it does not get
+              done properly. Teams stay reactive, responding to problems instead of
+              preventing them.
+            </p>
+          </li>
+
+          <li>
+            <!-- 02 — Cinco fuentes que llegan pero no se juntan -->
+            <div class="d2-lec__grafico" aria-hidden="true">
+              <svg viewBox="0 0 260 96" role="presentation">
+                <g class="d2-lec__rejilla">
+                  <line x1="6" y1="24" x2="254" y2="24"/>
+                  <line x1="6" y1="52" x2="254" y2="52"/>
+                  <line x1="6" y1="80" x2="254" y2="80"/>
+                </g>
+                <!-- Cada barra es una fuente de factura, a su altura y sin relacion -->
+                <g class="d2-lec__barras">
+                  <rect x="26"  y="38" width="16" height="42" rx="2"/>
+                  <rect x="72"  y="20" width="16" height="60" rx="2"/>
+                  <rect x="118" y="52" width="16" height="28" rx="2"/>
+                  <rect x="164" y="30" width="16" height="50" rx="2"/>
+                  <rect x="210" y="60" width="16" height="20" rx="2"/>
+                </g>
+                <!-- La linea de puntos que NO llega a unirlas -->
+                <path class="d2-lec__hueco" d="M34 34 L80 16 L126 48 L172 26 L218 56"/>
+              </svg>
+              <p class="d2-lec__leyenda">
+                <span><i class="d2-lec__llave d2-lec__llave--barra"></i>Separate vendor accounts</span>
+              </p>
+            </div>
+            <h3>Data scattered everywhere</h3>
+            <p>
+              Utility data lives in accounts payable and arrives from multiple vendors
+              in different formats. Consolidating it takes real effort before it tells
+              you anything useful.
+            </p>
+          </li>
+
+          <li>
+            <!-- 03 — La brecha que se abre entre lo pagado y lo esperable -->
+            <div class="d2-lec__grafico" aria-hidden="true">
+              <svg viewBox="0 0 260 96" role="presentation">
+                <g class="d2-lec__rejilla">
+                  <line x1="6" y1="24" x2="254" y2="24"/>
+                  <line x1="6" y1="52" x2="254" y2="52"/>
+                  <line x1="6" y1="80" x2="254" y2="80"/>
+                </g>
+                <!-- El area entre las dos lineas: eso es lo que se paga de mas -->
+                <path class="d2-lec__brecha"
+                      d="M12 62 L60 58 L108 50 L156 40 L204 30 L248 22 L248 66 L204 64 L156 62 L108 62 L60 62 L12 64 Z"/>
+                <path class="d2-lec__pagado" d="M12 62 L60 58 L108 50 L156 40 L204 30 L248 22"/>
+                <path class="d2-lec__esperado" d="M12 64 L60 62 L108 62 L156 62 L204 64 L248 66"/>
+                <g class="d2-lec__puntos">
+                  <circle cx="248" cy="22" r="3"/>
+                </g>
+              </svg>
+              <p class="d2-lec__leyenda">
+                <span><i class="d2-lec__llave d2-lec__llave--sube"></i>What gets paid</span>
+                <span><i class="d2-lec__llave d2-lec__llave--plano"></i>What it should cost</span>
+              </p>
+            </div>
+            <h3>Costs compound quietly</h3>
+            <p>
+              Without benchmarking there is no way to know whether performance is good
+              or bad. Budgets absorb the difference, and nobody sees where the money
+              is going.
+            </p>
+          </li>
+
+        </ul>
+
+        <div class="d2-prob-lec__cierre">
+          <p class="d2-prob-lec__remate">Rede closes that gap.</p>
+          <a href="index.html#calculator" class="d2-btn">
+            Check your opportunity
+            <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+              <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                    stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- ====================================================================
+       OPCION 3 — HOY / CON REDE
+
+       Eje de lectura distinto: en vez de recorrer tres puntos hacia abajo,
+       se comparan dos columnas de izquierda a derecha.
+
+       Da sitio a la idea de coste sin escalada de miedo. La evidencia dice
+       que el encuadre de perdida no aporta nada --219 estudios, r = .01-- y
+       que con quien gasta un presupuesto ajeno es aun mas debil. Asi que la
+       columna derecha no amenaza: describe.
+       ==================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 3: hoy y con Rede" hidden>
+    <section class="d2-prob-comp" aria-labelledby="prob-comp-titulo">
+      <div class="d2-prob-comp__inner">
+
+        <div class="d2-prob-comp__cabecera">
+          <p class="d2-eyebrow">The problem</p>
+          <h2 class="d2-prob-comp__titulo" id="prob-comp-titulo">
+            Most organizations are not managing their energy. They are just paying for it.
+          </h2>
+          <p class="d2-prob-comp__lead">
+            Utility bills get processed, budgets get approved, and facilities teams stay
+            busy putting out fires. But nobody is tracking whether the buildings are
+            actually performing well, or what it would take to improve them. The result
+            is unnecessary cost and emissions that compound quietly, year over year.
+          </p>
+        </div>
+
+        <div class="d2-prob-comp__tabla">
+          <div class="d2-prob-comp__encabezados" aria-hidden="true">
+            <span class="d2-prob-comp__eti">How it works now</span>
+            <span class="d2-prob-comp__eti d2-prob-comp__eti--rede">With Rede</span>
+          </div>
+
+          <ul class="d2-prob-comp__lista">
+            <li>
+              <div class="d2-prob-comp__hoy">
+                <h3>Teams stretched thin</h3>
+                <p>
+                  Energy management falls to whoever has time, which means it does not get
+                  done properly. Teams stay reactive, responding to problems instead of
+                  preventing them.
+                </p>
+              </div>
+              <div class="d2-prob-comp__rede">
+                <p><span class="d2-prob-comp__marca" aria-hidden="true"></span>Engineering expertise that stays engaged, so the work gets done without adding headcount.</p>
+              </div>
+            </li>
+            <li>
+              <div class="d2-prob-comp__hoy">
+                <h3>Data scattered everywhere</h3>
+                <p>
+                  Utility data lives in accounts payable and arrives from multiple vendors
+                  in different formats. Consolidating it takes real effort before it tells
+                  you anything useful.
+                </p>
+              </div>
+              <div class="d2-prob-comp__rede">
+                <p><span class="d2-prob-comp__marca" aria-hidden="true"></span>Every account and vendor consolidated into one place, ready to act on.</p>
+              </div>
+            </li>
+            <li>
+              <div class="d2-prob-comp__hoy">
+                <h3>Costs compound quietly</h3>
+                <p>
+                  Without benchmarking there is no way to know whether performance is good
+                  or bad. Budgets absorb the difference, and nobody sees where the money
+                  is going.
+                </p>
+              </div>
+              <div class="d2-prob-comp__rede">
+                <p><span class="d2-prob-comp__marca" aria-hidden="true"></span>Benchmarked performance across every site, so the gap is visible before it compounds.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="d2-prob-comp__cierre">
+          <a href="index.html#calculator" class="d2-btn">
+            Check your opportunity
+            <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+              <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                    stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Minimizar las opciones">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Opcion anterior">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="d2-caru__puntos" role="tablist" aria-label="Version de la seccion">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Triptico</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Lecturas</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Comparativa</small></button>
     </div>
 
-    <!~~ Filas alternas: el recurso dominante de la referencia. La imagen
-         cambia de lado en cada fila. ~~>
-    <ul class="d2-senales">
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Opcion siguiente">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
 
-      <li class="d2-senal d2-entra">
-        <div class="d2-senal__media">
-          <img src="assets/img/banners/senal-1.jpg"
-               alt="Mechanical schematic of boilers, air handling units and pumps in a school facility"
-               width="1400" height="465" loading="lazy">
+<!-- ==========================================================================
+     SECCION 5 — LA CALCULADORA
+
+     Tres formas de presentar la MISMA herramienta. La logica no cambia en
+     ninguna: los trece benchmarks de BC Hydro, la formula y los campos son
+     los mismos. Lo que cambia es cuando y donde aparece el numero.
+
+     El copy es el aprobado, literal.
+     ========================================================================== -->
+
+<div class="d2-caru" id="caru-calc" data-caru>
+
+  <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Opcion 1: panel unico">
+    <!-- ====================================================================
+         OPCION 1 — PANEL UNICO
+
+         Los cuatro campos a la vista a la vez, y el resultado al lado.
+
+         Es la disposicion mejor respaldada por la evidencia: en el estudio
+         de Iftikhar et al. (60 pruebas contrabalanceadas) la pagina unica
+         gano al multipagina en usabilidad --76 frente a 67-- y en errores
+         --21 frente a 35--. Y Baymard: "el numero de campos afecta a la
+         usabilidad mucho mas que el numero de pasos".
+
+         Sin animacion mas alla de la entrada: el numero esta siempre
+         presente, no hay nada que revelar.
+         ==================================================================== -->
+    <section class="calc calc--unico" id="calculator">
+      <div class="calc__inner">
+
+        <div class="calc__intro">
+        <p class="eyebrow">Check your opportunity</p>
+        <h2 class="calc__titulo">Find out what your buildings may be trying to tell you.</h2>
+        <p class="calc__lead">
+        Use a few basic inputs to compare your building or portfolio against
+        historical BC Hydro Continuous Optimization results. The output is a
+        planning benchmark, not a savings guarantee.
+        </p>
         </div>
-        <div class="d2-senal__texto-col">
-          <span class="d2-senal__n">01</span>
-          <h3 class="d2-senal__titulo">Teams stretched thin</h3>
-          <p class="d2-senal__texto">
-            Energy management falls to whoever has time, which means it does not get
-            done properly. Teams stay reactive, responding to problems instead of
-            preventing them.
+
+
+        <div class="calc__panel">
+
+          <div class="pasos" id="pasos" data-abierto>
+
+          <div class="pasos__cabecera">
+          <p class="pasos__contador">Step <span id="paso-n">1</span> of 4</p>
+          <div class="barra" role="progressbar" aria-valuemin="1" aria-valuemax="4"
+          aria-valuenow="1" aria-label="Progress">
+          <span class="barra__fill" id="barra"></span>
+          </div>
+          </div>
+
+          <!-- PASO 1 -->
+          <div class="calc__campos">
+          <div class="paso-calc is-activo" data-paso="1">
+          <h3 class="paso-calc__titulo">How many buildings are in scope?</h3>
+          <p class="paso-calc__ayuda">
+          A portfolio needs comparison across buildings. A single facility needs a
+          focused investigation of that site.
           </p>
-        </div>
-      </li>
+          <div class="opciones">
+          <button class="opcion" type="button" data-scope="single">
+          <span class="opcion__titulo">One building</span>
+          <span class="opcion__texto">A single facility or campus building.</span>
+          </button>
+          <button class="opcion" type="button" data-scope="multi">
+          <span class="opcion__titulo">Multiple buildings</span>
+          <span class="opcion__texto">A portfolio where comparison matters.</span>
+          </button>
+          </div>
+          </div>
 
-      <li class="d2-senal d2-entra">
-        <div class="d2-senal__media">
-          <img src="assets/img/banners/senal-2.jpg"
-               alt="Energy conservation data across a school district portfolio"
-               width="1400" height="465" loading="lazy">
-        </div>
-        <div class="d2-senal__texto-col">
-          <span class="d2-senal__n">02</span>
-          <h3 class="d2-senal__titulo">Data scattered everywhere</h3>
-          <p class="d2-senal__texto">
-            Utility data lives in accounts payable and arrives from multiple vendors
-            in different formats. Consolidating it takes real effort before it tells
-            you anything useful.
+          <!-- PASO 2 -->
+          <div class="paso-calc" data-paso="2">
+          <h3 class="paso-calc__titulo">What kind of organization is this?</h3>
+          <p class="paso-calc__ayuda">
+          This helps us understand your operating context before we look at the
+          building benchmark.
           </p>
-        </div>
-      </li>
+          <div class="campo">
+          <label class="campo__label" for="c-sector">Organization or sector</label>
+          <div class="campo__wrap">
+          <select class="campo__input" id="c-sector">
+          <option value="">Select one</option>
+          <option value="k12">K-12 school district</option>
+          <option value="postsec">Post-secondary institution</option>
+          <option value="health">Healthcare or care provider</option>
+          <option value="muni">Municipality or regional district</option>
+          <option value="commercial">Commercial property operator</option>
+          <option value="housing">Housing operator</option>
+          <option value="other">Other institutional operator</option>
+          </select>
+          </div>
+          </div>
+          <fieldset class="campo campo--grupo">
+          <legend class="campo__label">Where are your buildings?</legend>
+          <div class="duo" role="radiogroup" aria-label="Region">
+          <button class="duo__btn is-elegida" type="button"
+          role="radio" aria-checked="true" data-prov="bc">
+          British Columbia
+          </button>
+          <button class="duo__btn" type="button"
+          role="radio" aria-checked="false" data-prov="ca">
+          Rest of Canada
+          </button>
+          </div>
+          <input type="hidden" id="c-province" value="bc">
+          </fieldset>
+          </div>
 
-      <li class="d2-senal d2-entra">
-        <div class="d2-senal__media">
-          <img src="assets/img/banners/senal-3.jpg"
-               alt="Energy savings tracked over time across multiple school sites"
-               width="1400" height="465" loading="lazy">
-        </div>
-        <div class="d2-senal__texto-col">
-          <span class="d2-senal__n">03</span>
-          <h3 class="d2-senal__titulo">Costs compound quietly</h3>
-          <p class="d2-senal__texto">
-            Without benchmarking there is no way to know whether performance is good
-            or bad. Budgets absorb the difference, and nobody sees where the money
-            is going.
+          <!-- PASO 3 -->
+          <div class="paso-calc" data-paso="3">
+          <h3 class="paso-calc__titulo">Which building type is the closest match?</h3>
+          <p class="paso-calc__ayuda">
+          Choose the closest available match from historical C-Op building categories.
           </p>
-        </div>
-      </li>
+          <div class="campo">
+          <label class="campo__label" for="c-type">Building type</label>
+          <div class="campo__wrap">
+          <select class="campo__input" id="c-type"></select>
+          </div>
+          </div>
+          <div class="campo">
+          <label class="campo__label" for="c-area">Total area in square feet</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="c-area" type="text" inputmode="numeric"
+          placeholder="1,850,000" autocomplete="off">
+          <span class="campo__sufijo">sq ft</span>
+          </div>
+          </div>
+          <p class="paso-calc__nota">
+          If you manage multiple sites, use total portfolio area.
+          </p>
+          </div>
 
-    </ul>
+          <!-- PASO 4 -->
+          <div class="paso-calc" data-paso="4">
+          <h3 class="paso-calc__titulo">What is your annual utility spend?</h3>
+          <p class="paso-calc__ayuda">
+          Use electricity and fuel combined if available. If you are not sure, we
+          will estimate using the historical cost per square foot for this
+          building type.
+          </p>
+          <div class="campo">
+          <label class="campo__label" for="c-spend">Annual utility spend</label>
+          <div class="campo__wrap">
+          <span class="campo__prefijo">$</span>
+          <input class="campo__input" id="c-spend" type="text" inputmode="numeric"
+          placeholder="Optional" autocomplete="off">
+          </div>
+          </div>
+          <div class="campo">
+          <label class="campo__label" for="c-sites">Number of sites</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="c-sites" type="text" inputmode="numeric"
+          placeholder="22" autocomplete="off">
+          </div>
+          </div>
+          </div>
 
-    <!~~ El cierre: banda de cifras sobre oscuro, patron de la referencia.
-         Las cifras son las reales que ya usa el sitio. ~~>
-    <div class="d2-cierre d2-entra">
-      <img class="d2-cierre__fondo" src="assets/img/banners/esquema-mecanico.jpg"
-           alt="" aria-hidden="true" loading="lazy">
-
-      <p class="d2-cierre__texto">Rede closes that gap.</p>
-
-      <div class="d2-cifras" id="cifras-cierre">
-        <div class="d2-cifra es-activa">
-          <p class="d2-cifra__valor">$2.94M</p>
-          <span class="d2-cifra__linea" aria-hidden="true"></span>
-          <p class="d2-cifra__nombre">Identified for one Western Canadian school district</p>
-        </div>
-        <div class="d2-cifra">
-          <p class="d2-cifra__valor">9.5%</p>
-          <span class="d2-cifra__linea" aria-hidden="true"></span>
-          <p class="d2-cifra__nombre">Average cost reduction for schools</p>
-        </div>
-        <div class="d2-cifra">
-          <p class="d2-cifra__valor">2008</p>
-          <span class="d2-cifra__linea" aria-hidden="true"></span>
-          <p class="d2-cifra__nombre">Working with public sector portfolios since</p>
-        </div>
-      </div>
-
-      <div class="d2-cierre__cta">
-        <a href="index.html#calculator" class="d2-btn">
-          Check your opportunity
+          <!-- Navegacion -->
+          </div>
+          <div class="pasos__nav">
+          <button class="btn btn--fantasma" type="button" id="btn-atras" hidden>
           <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
-            <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
-                  stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6.5 1L1.5 6L6.5 11M2 6h15" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </a>
+          Back
+          </button>
+          <button class="btn btn--primary btn--lg calc__btn" type="button" id="btn-siguiente">
+          <span id="btn-texto">Next</span>
+          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+          <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          </button>
+          </div>
+
+          <p class="calc__nota">
+          This is an early planning check. Eligibility, scope, and incentives are
+          confirmed through a conversation with the Rede team.
+          </p>
+          </div>
+
+          <!-- Al terminar, esto sustituye a las preguntas. La columna deja de estar
+          muerta y ofrece contacto directo a quien prefiera hablar. -->
+
+          <div class="cierre" id="cierre" hidden>
+          <p class="cierre__label">Your benchmark opportunity</p>
+          <p class="cierre__cifra" id="cierre-cifra">$0</p>
+          <p class="cierre__nota" id="cierre-nota">
+          in annual opportunity, based on historical benchmark results
+          </p>
+
+          <dl class="cierre__datos">
+          <div class="cierre__fila">
+          <dt>Benchmark type</dt>
+          <dd id="c-d-tipo">-</dd>
+          </div>
+          <div class="cierre__fila">
+          <dt>Historical cost reduction</dt>
+          <dd id="c-d-pct">-</dd>
+          </div>
+          <div class="cierre__fila">
+          <dt>Average simple payback</dt>
+          <dd id="c-d-payback">-</dd>
+          </div>
+          </dl>
+
+          <div class="cierre__recomienda">
+          <p class="cierre__rec-titulo" id="c-rec-titulo">Recommended next step</p>
+          <p class="cierre__rec-texto" id="c-rec-texto"></p>
+          </div>
+
+          </div>
+
+          <!-- ================= COLUMNA DERECHA: la tarjeta de resultado ================= -->
+
+          <div class="flip" id="flip" data-flip-panel>
+
+          <!-- ANVERSO -->
+          <div class="flip__cara flip__cara--frente">
+          <div class="resultado">
+
+          <!-- Panel vivo: se va llenando con cada respuesta.
+          Cada paso produce un cambio visible, y en el paso 3 aparece ya
+          el benchmark del sector como adelanto del resultado. -->
+          <div class="espera" id="espera">
+
+          <div class="resultado__head">
+          <p class="resultado__label">Your profile</p>
+          <span class="pastilla" id="etiqueta-progreso">Building it</span>
+          </div>
+
+          <ul class="perfil" id="perfil">
+          <li class="perfil__fila" data-fila="scope">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Scope</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="sector">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Organization</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="tipo">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Building type</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="area">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Portfolio size</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="spend">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Annual spend</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="sites">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Sites</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          </ul>
+
+          <!-- Adelanto del benchmark. Aparece al elegir tipo de edificio. -->
+          <div class="adelanto" id="adelanto" hidden>
+          <p class="adelanto__cifra"><span id="adelanto-pct">0</span>%</p>
+          <p class="adelanto__texto" id="adelanto-txt">
+          average historical cost reduction for this building type
+          </p>
+          </div>
+
+          <!-- Prueba social mientras el perfil se completa -->
+          <div class="prueba" id="prueba">
+          <p class="prueba__cifra">$2.94M</p>
+          <p class="prueba__texto">
+          identified for one Western Canadian school district
+          </p>
+          </div>
+          </div>
+
+          <!-- Resultado, tras calcular -->
+          <div class="salida" id="salida" hidden>
+          <div class="resultado__head">
+          <p class="resultado__label">Your benchmark opportunity</p>
+          <span class="pastilla" id="etiqueta-tipo">Benchmark</span>
+          </div>
+
+          <p class="resultado__cifra" id="cifra">$0</p>
+          <p class="resultado__nota" id="cifra-nota">
+          in annual opportunity, based on historical benchmark results
+          </p>
+
+          <dl class="desglose">
+          <div class="desglose__fila">
+          <dt>Benchmark type</dt>
+          <dd id="d-tipo">-</dd>
+          </div>
+          <div class="desglose__fila">
+          <dt>Historical cost reduction</dt>
+          <dd id="d-pct">-</dd>
+          </div>
+          <div class="desglose__fila">
+          <dt>Average simple payback</dt>
+          <dd id="d-payback">-</dd>
+          </div>
+          </dl>
+
+          <div class="recomienda">
+          <p class="recomienda__titulo" id="rec-titulo">Recommended next step</p>
+          <p class="recomienda__texto" id="rec-texto"></p>
+          </div>
+
+          <button class="btn btn--primary btn--block resultado__cta" type="button"
+          data-flip="abrir" aria-controls="flip" aria-expanded="false">
+          <span id="rec-boton">See the recommended path</span>
+          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+          <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          </button>
+          </div>
+
+          <p class="resultado__legal">
+          Benchmarks come from historical BC Hydro C-Op results by building type.
+          </p>
+          </div>
+          </div>
+
+          <!-- REVERSO: captura para HubSpot -->
+          <div class="flip__cara flip__cara--dorso">
+          <div class="resultado resultado--dorso">
+          <div class="resultado__head">
+          <p class="resultado__label" id="dorso-titulo">Your recommended path</p>
+          </div>
+
+          <p class="captura__titulo">Want the real number for your portfolio?</p>
+          <p class="captura__texto">
+          Leave your details and the team will put together a closer look at
+          your actual buildings.
+          </p>
+
+          <form class="captura" data-hubspot="opportunity-check" onsubmit="return false">
+          <div class="campo campo--claro">
+          <label class="campo__label" for="h-name">Name</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-name" name="firstname" type="text"
+          autocomplete="name" required>
+          </div>
+          </div>
+
+          <div class="campo campo--claro">
+          <label class="campo__label" for="h-org">Organization</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-org" name="company" type="text"
+          autocomplete="organization" required>
+          </div>
+          </div>
+
+          <div class="campo campo--claro">
+          <label class="campo__label" for="h-email">Work email</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-email" name="email" type="email"
+          autocomplete="email" required>
+          </div>
+          </div>
+
+          <div class="campo campo--claro">
+          <label class="campo__label" for="h-phone">Phone <span class="campo__opt">(optional)</span></label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-phone" name="phone" type="tel"
+          inputmode="tel" autocomplete="tel">
+          </div>
+          </div>
+
+          <!-- Contexto que viaja a HubSpot con el contacto -->
+          <input type="hidden" name="scope" value="">
+          <input type="hidden" name="sector" value="">
+          <input type="hidden" name="province" value="">
+          <input type="hidden" name="building_type" value="">
+          <input type="hidden" name="area" value="">
+          <input type="hidden" name="annual_spend" value="">
+          <input type="hidden" name="sites" value="">
+          <input type="hidden" name="benchmark_opportunity" value="">
+
+          <button class="btn btn--primary btn--block" type="submit">
+          Send me the deeper look
+          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+          <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          </button>
+
+          <p class="captura__legal">
+          Only used to prepare your analysis.
+          </p>
+          </form>
+
+          <!-- Contacto directo y reinicio. Aparecen dentro de la tarjeta
+          blanca, bajo el mensaje de confirmacion, para no cargar la
+          columna izquierda. -->
+          <div class="tras-envio" id="cierre-extra" hidden>
+          <div class="tras-envio__contacto">
+          <a class="contacto contacto--claro" href="tel:+17783276851">
+          <span class="contacto__icono" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a1 1 0 01-1 1
+          A16 16 0 014 5a1 1 0 011-1z" stroke="currentColor"
+          stroke-width="1.7" stroke-linejoin="round"/>
+          </svg>
+          </span>
+          <span>
+          <span class="contacto__label">Call the team</span>
+          <span class="contacto__dato">778.327.6851</span>
+          </span>
+          </a>
+
+          <a class="contacto contacto--claro" href="mailto:matthew@getrede.ca">
+          <span class="contacto__icono" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M3.5 6.5L12 13l8.5-6.5" stroke="currentColor" stroke-width="1.7"
+          stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          </span>
+          <span>
+          <span class="contacto__label">Send an email</span>
+          <span class="contacto__dato">matthew@getrede.ca</span>
+          </span>
+          </a>
+          </div>
+
+          <button class="reiniciar" type="button" id="btn-reiniciar">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 12a9 9 0 019-9 9 9 0 016.7 3M21 12a9 9 0 01-9 9 9 9 0 01-6.7-3"
+          stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M18 3v4h-4M6 21v-4h4" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Run another check
+          </button>
+          </div>
+          </div>
+          </div>
+
+          </div>
+
+        </div>
       </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 2: pantalla partida" hidden>
+    <!-- ====================================================================
+         OPCION 2 — PANTALLA PARTIDA
+
+         Campos a la izquierda, resultado en un carril fijo a la derecha que
+         acompaña mientras se rellena.
+
+         Es la unica de las tres donde el numero se ve cambiar, y por eso es
+         la que lleva animacion. El valor entra con una transicion cruzada,
+         no con un contador ascendente: un contador teatraliza una cifra que
+         se presenta como benchmark y no como garantia.
+         ==================================================================== -->
+    <section class="calc calc--partido" id="calculator">
+      <div class="calc__inner">
+
+        <div class="calc__intro">
+        <p class="eyebrow">Check your opportunity</p>
+        <h2 class="calc__titulo">Find out what your buildings may be trying to tell you.</h2>
+        <p class="calc__lead">
+        Use a few basic inputs to compare your building or portfolio against
+        historical BC Hydro Continuous Optimization results. The output is a
+        planning benchmark, not a savings guarantee.
+        </p>
+        </div>
+
+
+        <div class="calc__panel">
+
+          <div class="pasos" id="pasos" data-abierto>
+
+          <div class="pasos__cabecera">
+          <p class="pasos__contador">Step <span id="paso-n">1</span> of 4</p>
+          <div class="barra" role="progressbar" aria-valuemin="1" aria-valuemax="4"
+          aria-valuenow="1" aria-label="Progress">
+          <span class="barra__fill" id="barra"></span>
+          </div>
+          </div>
+
+          <!-- PASO 1 -->
+          <div class="calc__campos">
+          <div class="paso-calc is-activo" data-paso="1">
+          <h3 class="paso-calc__titulo">How many buildings are in scope?</h3>
+          <p class="paso-calc__ayuda">
+          A portfolio needs comparison across buildings. A single facility needs a
+          focused investigation of that site.
+          </p>
+          <div class="opciones">
+          <button class="opcion" type="button" data-scope="single">
+          <span class="opcion__titulo">One building</span>
+          <span class="opcion__texto">A single facility or campus building.</span>
+          </button>
+          <button class="opcion" type="button" data-scope="multi">
+          <span class="opcion__titulo">Multiple buildings</span>
+          <span class="opcion__texto">A portfolio where comparison matters.</span>
+          </button>
+          </div>
+          </div>
+
+          <!-- PASO 2 -->
+          <div class="paso-calc" data-paso="2">
+          <h3 class="paso-calc__titulo">What kind of organization is this?</h3>
+          <p class="paso-calc__ayuda">
+          This helps us understand your operating context before we look at the
+          building benchmark.
+          </p>
+          <div class="campo">
+          <label class="campo__label" for="c-sector">Organization or sector</label>
+          <div class="campo__wrap">
+          <select class="campo__input" id="c-sector">
+          <option value="">Select one</option>
+          <option value="k12">K-12 school district</option>
+          <option value="postsec">Post-secondary institution</option>
+          <option value="health">Healthcare or care provider</option>
+          <option value="muni">Municipality or regional district</option>
+          <option value="commercial">Commercial property operator</option>
+          <option value="housing">Housing operator</option>
+          <option value="other">Other institutional operator</option>
+          </select>
+          </div>
+          </div>
+          <fieldset class="campo campo--grupo">
+          <legend class="campo__label">Where are your buildings?</legend>
+          <div class="duo" role="radiogroup" aria-label="Region">
+          <button class="duo__btn is-elegida" type="button"
+          role="radio" aria-checked="true" data-prov="bc">
+          British Columbia
+          </button>
+          <button class="duo__btn" type="button"
+          role="radio" aria-checked="false" data-prov="ca">
+          Rest of Canada
+          </button>
+          </div>
+          <input type="hidden" id="c-province" value="bc">
+          </fieldset>
+          </div>
+
+          <!-- PASO 3 -->
+          <div class="paso-calc" data-paso="3">
+          <h3 class="paso-calc__titulo">Which building type is the closest match?</h3>
+          <p class="paso-calc__ayuda">
+          Choose the closest available match from historical C-Op building categories.
+          </p>
+          <div class="campo">
+          <label class="campo__label" for="c-type">Building type</label>
+          <div class="campo__wrap">
+          <select class="campo__input" id="c-type"></select>
+          </div>
+          </div>
+          <div class="campo">
+          <label class="campo__label" for="c-area">Total area in square feet</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="c-area" type="text" inputmode="numeric"
+          placeholder="1,850,000" autocomplete="off">
+          <span class="campo__sufijo">sq ft</span>
+          </div>
+          </div>
+          <p class="paso-calc__nota">
+          If you manage multiple sites, use total portfolio area.
+          </p>
+          </div>
+
+          <!-- PASO 4 -->
+          <div class="paso-calc" data-paso="4">
+          <h3 class="paso-calc__titulo">What is your annual utility spend?</h3>
+          <p class="paso-calc__ayuda">
+          Use electricity and fuel combined if available. If you are not sure, we
+          will estimate using the historical cost per square foot for this
+          building type.
+          </p>
+          <div class="campo">
+          <label class="campo__label" for="c-spend">Annual utility spend</label>
+          <div class="campo__wrap">
+          <span class="campo__prefijo">$</span>
+          <input class="campo__input" id="c-spend" type="text" inputmode="numeric"
+          placeholder="Optional" autocomplete="off">
+          </div>
+          </div>
+          <div class="campo">
+          <label class="campo__label" for="c-sites">Number of sites</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="c-sites" type="text" inputmode="numeric"
+          placeholder="22" autocomplete="off">
+          </div>
+          </div>
+          </div>
+
+          <!-- Navegacion -->
+          </div>
+          <div class="pasos__nav">
+          <button class="btn btn--fantasma" type="button" id="btn-atras" hidden>
+          <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+          <path d="M6.5 1L1.5 6L6.5 11M2 6h15" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back
+          </button>
+          <button class="btn btn--primary btn--lg calc__btn" type="button" id="btn-siguiente">
+          <span id="btn-texto">Next</span>
+          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+          <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          </button>
+          </div>
+
+          <p class="calc__nota">
+          This is an early planning check. Eligibility, scope, and incentives are
+          confirmed through a conversation with the Rede team.
+          </p>
+          </div>
+
+          <!-- Al terminar, esto sustituye a las preguntas. La columna deja de estar
+          muerta y ofrece contacto directo a quien prefiera hablar. -->
+
+          <div class="cierre" id="cierre" hidden>
+          <p class="cierre__label">Your benchmark opportunity</p>
+          <p class="cierre__cifra" id="cierre-cifra">$0</p>
+          <p class="cierre__nota" id="cierre-nota">
+          in annual opportunity, based on historical benchmark results
+          </p>
+
+          <dl class="cierre__datos">
+          <div class="cierre__fila">
+          <dt>Benchmark type</dt>
+          <dd id="c-d-tipo">-</dd>
+          </div>
+          <div class="cierre__fila">
+          <dt>Historical cost reduction</dt>
+          <dd id="c-d-pct">-</dd>
+          </div>
+          <div class="cierre__fila">
+          <dt>Average simple payback</dt>
+          <dd id="c-d-payback">-</dd>
+          </div>
+          </dl>
+
+          <div class="cierre__recomienda">
+          <p class="cierre__rec-titulo" id="c-rec-titulo">Recommended next step</p>
+          <p class="cierre__rec-texto" id="c-rec-texto"></p>
+          </div>
+
+          </div>
+
+          <!-- ================= COLUMNA DERECHA: la tarjeta de resultado ================= -->
+
+          <div class="flip" id="flip" data-flip-panel>
+
+          <!-- ANVERSO -->
+          <div class="flip__cara flip__cara--frente">
+          <div class="resultado">
+
+          <!-- Panel vivo: se va llenando con cada respuesta.
+          Cada paso produce un cambio visible, y en el paso 3 aparece ya
+          el benchmark del sector como adelanto del resultado. -->
+          <div class="espera" id="espera">
+
+          <div class="resultado__head">
+          <p class="resultado__label">Your profile</p>
+          <span class="pastilla" id="etiqueta-progreso">Building it</span>
+          </div>
+
+          <ul class="perfil" id="perfil">
+          <li class="perfil__fila" data-fila="scope">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Scope</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="sector">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Organization</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="tipo">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Building type</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="area">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Portfolio size</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="spend">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Annual spend</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="sites">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Sites</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          </ul>
+
+          <!-- Adelanto del benchmark. Aparece al elegir tipo de edificio. -->
+          <div class="adelanto" id="adelanto" hidden>
+          <p class="adelanto__cifra"><span id="adelanto-pct">0</span>%</p>
+          <p class="adelanto__texto" id="adelanto-txt">
+          average historical cost reduction for this building type
+          </p>
+          </div>
+
+          <!-- Prueba social mientras el perfil se completa -->
+          <div class="prueba" id="prueba">
+          <p class="prueba__cifra">$2.94M</p>
+          <p class="prueba__texto">
+          identified for one Western Canadian school district
+          </p>
+          </div>
+          </div>
+
+          <!-- Resultado, tras calcular -->
+          <div class="salida" id="salida" hidden>
+          <div class="resultado__head">
+          <p class="resultado__label">Your benchmark opportunity</p>
+          <span class="pastilla" id="etiqueta-tipo">Benchmark</span>
+          </div>
+
+          <p class="resultado__cifra" id="cifra">$0</p>
+          <p class="resultado__nota" id="cifra-nota">
+          in annual opportunity, based on historical benchmark results
+          </p>
+
+          <dl class="desglose">
+          <div class="desglose__fila">
+          <dt>Benchmark type</dt>
+          <dd id="d-tipo">-</dd>
+          </div>
+          <div class="desglose__fila">
+          <dt>Historical cost reduction</dt>
+          <dd id="d-pct">-</dd>
+          </div>
+          <div class="desglose__fila">
+          <dt>Average simple payback</dt>
+          <dd id="d-payback">-</dd>
+          </div>
+          </dl>
+
+          <div class="recomienda">
+          <p class="recomienda__titulo" id="rec-titulo">Recommended next step</p>
+          <p class="recomienda__texto" id="rec-texto"></p>
+          </div>
+
+          <button class="btn btn--primary btn--block resultado__cta" type="button"
+          data-flip="abrir" aria-controls="flip" aria-expanded="false">
+          <span id="rec-boton">See the recommended path</span>
+          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+          <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          </button>
+          </div>
+
+          <p class="resultado__legal">
+          Benchmarks come from historical BC Hydro C-Op results by building type.
+          </p>
+          </div>
+          </div>
+
+          <!-- REVERSO: captura para HubSpot -->
+          <div class="flip__cara flip__cara--dorso">
+          <div class="resultado resultado--dorso">
+          <div class="resultado__head">
+          <p class="resultado__label" id="dorso-titulo">Your recommended path</p>
+          </div>
+
+          <p class="captura__titulo">Want the real number for your portfolio?</p>
+          <p class="captura__texto">
+          Leave your details and the team will put together a closer look at
+          your actual buildings.
+          </p>
+
+          <form class="captura" data-hubspot="opportunity-check" onsubmit="return false">
+          <div class="campo campo--claro">
+          <label class="campo__label" for="h-name">Name</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-name" name="firstname" type="text"
+          autocomplete="name" required>
+          </div>
+          </div>
+
+          <div class="campo campo--claro">
+          <label class="campo__label" for="h-org">Organization</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-org" name="company" type="text"
+          autocomplete="organization" required>
+          </div>
+          </div>
+
+          <div class="campo campo--claro">
+          <label class="campo__label" for="h-email">Work email</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-email" name="email" type="email"
+          autocomplete="email" required>
+          </div>
+          </div>
+
+          <div class="campo campo--claro">
+          <label class="campo__label" for="h-phone">Phone <span class="campo__opt">(optional)</span></label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-phone" name="phone" type="tel"
+          inputmode="tel" autocomplete="tel">
+          </div>
+          </div>
+
+          <!-- Contexto que viaja a HubSpot con el contacto -->
+          <input type="hidden" name="scope" value="">
+          <input type="hidden" name="sector" value="">
+          <input type="hidden" name="province" value="">
+          <input type="hidden" name="building_type" value="">
+          <input type="hidden" name="area" value="">
+          <input type="hidden" name="annual_spend" value="">
+          <input type="hidden" name="sites" value="">
+          <input type="hidden" name="benchmark_opportunity" value="">
+
+          <button class="btn btn--primary btn--block" type="submit">
+          Send me the deeper look
+          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+          <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          </button>
+
+          <p class="captura__legal">
+          Only used to prepare your analysis.
+          </p>
+          </form>
+
+          <!-- Contacto directo y reinicio. Aparecen dentro de la tarjeta
+          blanca, bajo el mensaje de confirmacion, para no cargar la
+          columna izquierda. -->
+          <div class="tras-envio" id="cierre-extra" hidden>
+          <div class="tras-envio__contacto">
+          <a class="contacto contacto--claro" href="tel:+17783276851">
+          <span class="contacto__icono" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a1 1 0 01-1 1
+          A16 16 0 014 5a1 1 0 011-1z" stroke="currentColor"
+          stroke-width="1.7" stroke-linejoin="round"/>
+          </svg>
+          </span>
+          <span>
+          <span class="contacto__label">Call the team</span>
+          <span class="contacto__dato">778.327.6851</span>
+          </span>
+          </a>
+
+          <a class="contacto contacto--claro" href="mailto:matthew@getrede.ca">
+          <span class="contacto__icono" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M3.5 6.5L12 13l8.5-6.5" stroke="currentColor" stroke-width="1.7"
+          stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          </span>
+          <span>
+          <span class="contacto__label">Send an email</span>
+          <span class="contacto__dato">matthew@getrede.ca</span>
+          </span>
+          </a>
+          </div>
+
+          <button class="reiniciar" type="button" id="btn-reiniciar">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 12a9 9 0 019-9 9 9 0 016.7 3M21 12a9 9 0 01-9 9 9 9 0 01-6.7-3"
+          stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M18 3v4h-4M6 21v-4h4" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Run another check
+          </button>
+          </div>
+          </div>
+          </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 3: asistente por pasos" hidden>
+    <!-- ====================================================================
+         OPCION 3 — ASISTENTE POR PASOS
+
+         La que ya existe. Se conserva como opcion conservadora: sigue la
+         convencion de "una cosa por pagina" de GOV.UK, que los compradores
+         del sector publico reconocen.
+
+         Su inconveniente es real: el numero queda oculto hasta el final,
+         que es la peor posicion para una herramienta cuyo valor ES el
+         numero.
+
+         Solo animacion de entrada. Animar el cambio de paso distraeria de
+         la pregunta, que es lo unico que debe leerse en cada pantalla.
+         ==================================================================== -->
+    <section class="calc calc--pasos" id="calculator">
+      <div class="calc__inner">
+
+        <div class="calc__intro">
+        <p class="eyebrow">Check your opportunity</p>
+        <h2 class="calc__titulo">Find out what your buildings may be trying to tell you.</h2>
+        <p class="calc__lead">
+        Use a few basic inputs to compare your building or portfolio against
+        historical BC Hydro Continuous Optimization results. The output is a
+        planning benchmark, not a savings guarantee.
+        </p>
+        </div>
+
+
+        <div class="calc__panel">
+
+          <div class="pasos" id="pasos" >
+
+          <div class="pasos__cabecera">
+          <p class="pasos__contador">Step <span id="paso-n">1</span> of 4</p>
+          <div class="barra" role="progressbar" aria-valuemin="1" aria-valuemax="4"
+          aria-valuenow="1" aria-label="Progress">
+          <span class="barra__fill" id="barra"></span>
+          </div>
+          </div>
+
+          <!-- PASO 1 -->
+          <div class="paso-calc is-activo" data-paso="1">
+          <h3 class="paso-calc__titulo">How many buildings are in scope?</h3>
+          <p class="paso-calc__ayuda">
+          A portfolio needs comparison across buildings. A single facility needs a
+          focused investigation of that site.
+          </p>
+          <div class="opciones">
+          <button class="opcion" type="button" data-scope="single">
+          <span class="opcion__titulo">One building</span>
+          <span class="opcion__texto">A single facility or campus building.</span>
+          </button>
+          <button class="opcion" type="button" data-scope="multi">
+          <span class="opcion__titulo">Multiple buildings</span>
+          <span class="opcion__texto">A portfolio where comparison matters.</span>
+          </button>
+          </div>
+          </div>
+
+          <!-- PASO 2 -->
+          <div class="paso-calc" data-paso="2">
+          <h3 class="paso-calc__titulo">What kind of organization is this?</h3>
+          <p class="paso-calc__ayuda">
+          This helps us understand your operating context before we look at the
+          building benchmark.
+          </p>
+          <div class="campo">
+          <label class="campo__label" for="c-sector">Organization or sector</label>
+          <div class="campo__wrap">
+          <select class="campo__input" id="c-sector">
+          <option value="">Select one</option>
+          <option value="k12">K-12 school district</option>
+          <option value="postsec">Post-secondary institution</option>
+          <option value="health">Healthcare or care provider</option>
+          <option value="muni">Municipality or regional district</option>
+          <option value="commercial">Commercial property operator</option>
+          <option value="housing">Housing operator</option>
+          <option value="other">Other institutional operator</option>
+          </select>
+          </div>
+          </div>
+          <fieldset class="campo campo--grupo">
+          <legend class="campo__label">Where are your buildings?</legend>
+          <div class="duo" role="radiogroup" aria-label="Region">
+          <button class="duo__btn is-elegida" type="button"
+          role="radio" aria-checked="true" data-prov="bc">
+          British Columbia
+          </button>
+          <button class="duo__btn" type="button"
+          role="radio" aria-checked="false" data-prov="ca">
+          Rest of Canada
+          </button>
+          </div>
+          <input type="hidden" id="c-province" value="bc">
+          </fieldset>
+          </div>
+
+          <!-- PASO 3 -->
+          <div class="paso-calc" data-paso="3">
+          <h3 class="paso-calc__titulo">Which building type is the closest match?</h3>
+          <p class="paso-calc__ayuda">
+          Choose the closest available match from historical C-Op building categories.
+          </p>
+          <div class="campo">
+          <label class="campo__label" for="c-type">Building type</label>
+          <div class="campo__wrap">
+          <select class="campo__input" id="c-type"></select>
+          </div>
+          </div>
+          <div class="campo">
+          <label class="campo__label" for="c-area">Total area in square feet</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="c-area" type="text" inputmode="numeric"
+          placeholder="1,850,000" autocomplete="off">
+          <span class="campo__sufijo">sq ft</span>
+          </div>
+          </div>
+          <p class="paso-calc__nota">
+          If you manage multiple sites, use total portfolio area.
+          </p>
+          </div>
+
+          <!-- PASO 4 -->
+          <div class="paso-calc" data-paso="4">
+          <h3 class="paso-calc__titulo">What is your annual utility spend?</h3>
+          <p class="paso-calc__ayuda">
+          Use electricity and fuel combined if available. If you are not sure, we
+          will estimate using the historical cost per square foot for this
+          building type.
+          </p>
+          <div class="campo">
+          <label class="campo__label" for="c-spend">Annual utility spend</label>
+          <div class="campo__wrap">
+          <span class="campo__prefijo">$</span>
+          <input class="campo__input" id="c-spend" type="text" inputmode="numeric"
+          placeholder="Optional" autocomplete="off">
+          </div>
+          </div>
+          <div class="campo">
+          <label class="campo__label" for="c-sites">Number of sites</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="c-sites" type="text" inputmode="numeric"
+          placeholder="22" autocomplete="off">
+          </div>
+          </div>
+          </div>
+
+          <!-- Navegacion -->
+          <div class="pasos__nav">
+          <button class="btn btn--fantasma" type="button" id="btn-atras" hidden>
+          <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+          <path d="M6.5 1L1.5 6L6.5 11M2 6h15" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back
+          </button>
+          <button class="btn btn--primary btn--lg calc__btn" type="button" id="btn-siguiente">
+          <span id="btn-texto">Next</span>
+          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+          <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          </button>
+          </div>
+
+          <p class="calc__nota">
+          This is an early planning check. Eligibility, scope, and incentives are
+          confirmed through a conversation with the Rede team.
+          </p>
+          </div>
+
+          <!-- Al terminar, esto sustituye a las preguntas. La columna deja de estar
+          muerta y ofrece contacto directo a quien prefiera hablar. -->
+
+          <div class="cierre" id="cierre" hidden>
+          <p class="cierre__label">Your benchmark opportunity</p>
+          <p class="cierre__cifra" id="cierre-cifra">$0</p>
+          <p class="cierre__nota" id="cierre-nota">
+          in annual opportunity, based on historical benchmark results
+          </p>
+
+          <dl class="cierre__datos">
+          <div class="cierre__fila">
+          <dt>Benchmark type</dt>
+          <dd id="c-d-tipo">-</dd>
+          </div>
+          <div class="cierre__fila">
+          <dt>Historical cost reduction</dt>
+          <dd id="c-d-pct">-</dd>
+          </div>
+          <div class="cierre__fila">
+          <dt>Average simple payback</dt>
+          <dd id="c-d-payback">-</dd>
+          </div>
+          </dl>
+
+          <div class="cierre__recomienda">
+          <p class="cierre__rec-titulo" id="c-rec-titulo">Recommended next step</p>
+          <p class="cierre__rec-texto" id="c-rec-texto"></p>
+          </div>
+
+          </div>
+
+          <!-- ================= COLUMNA DERECHA: la tarjeta de resultado ================= -->
+
+          <div class="flip" id="flip" data-flip-panel>
+
+          <!-- ANVERSO -->
+          <div class="flip__cara flip__cara--frente">
+          <div class="resultado">
+
+          <!-- Panel vivo: se va llenando con cada respuesta.
+          Cada paso produce un cambio visible, y en el paso 3 aparece ya
+          el benchmark del sector como adelanto del resultado. -->
+          <div class="espera" id="espera">
+
+          <div class="resultado__head">
+          <p class="resultado__label">Your profile</p>
+          <span class="pastilla" id="etiqueta-progreso">Building it</span>
+          </div>
+
+          <ul class="perfil" id="perfil">
+          <li class="perfil__fila" data-fila="scope">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Scope</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="sector">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Organization</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="tipo">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Building type</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="area">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Portfolio size</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="spend">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Annual spend</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila" data-fila="sites">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Sites</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          </ul>
+
+          <!-- Adelanto del benchmark. Aparece al elegir tipo de edificio. -->
+          <div class="adelanto" id="adelanto" hidden>
+          <p class="adelanto__cifra"><span id="adelanto-pct">0</span>%</p>
+          <p class="adelanto__texto" id="adelanto-txt">
+          average historical cost reduction for this building type
+          </p>
+          </div>
+
+          <!-- Prueba social mientras el perfil se completa -->
+          <div class="prueba" id="prueba">
+          <p class="prueba__cifra">$2.94M</p>
+          <p class="prueba__texto">
+          identified for one Western Canadian school district
+          </p>
+          </div>
+          </div>
+
+          <!-- Resultado, tras calcular -->
+          <div class="salida" id="salida" hidden>
+          <div class="resultado__head">
+          <p class="resultado__label">Your benchmark opportunity</p>
+          <span class="pastilla" id="etiqueta-tipo">Benchmark</span>
+          </div>
+
+          <p class="resultado__cifra" id="cifra">$0</p>
+          <p class="resultado__nota" id="cifra-nota">
+          in annual opportunity, based on historical benchmark results
+          </p>
+
+          <dl class="desglose">
+          <div class="desglose__fila">
+          <dt>Benchmark type</dt>
+          <dd id="d-tipo">-</dd>
+          </div>
+          <div class="desglose__fila">
+          <dt>Historical cost reduction</dt>
+          <dd id="d-pct">-</dd>
+          </div>
+          <div class="desglose__fila">
+          <dt>Average simple payback</dt>
+          <dd id="d-payback">-</dd>
+          </div>
+          </dl>
+
+          <div class="recomienda">
+          <p class="recomienda__titulo" id="rec-titulo">Recommended next step</p>
+          <p class="recomienda__texto" id="rec-texto"></p>
+          </div>
+
+          <button class="btn btn--primary btn--block resultado__cta" type="button"
+          data-flip="abrir" aria-controls="flip" aria-expanded="false">
+          <span id="rec-boton">See the recommended path</span>
+          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+          <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          </button>
+          </div>
+
+          <p class="resultado__legal">
+          Benchmarks come from historical BC Hydro C-Op results by building type.
+          </p>
+          </div>
+          </div>
+
+          <!-- REVERSO: captura para HubSpot -->
+          <div class="flip__cara flip__cara--dorso">
+          <div class="resultado resultado--dorso">
+          <div class="resultado__head">
+          <p class="resultado__label" id="dorso-titulo">Your recommended path</p>
+          </div>
+
+          <p class="captura__titulo">Want the real number for your portfolio?</p>
+          <p class="captura__texto">
+          Leave your details and the team will put together a closer look at
+          your actual buildings.
+          </p>
+
+          <form class="captura" data-hubspot="opportunity-check" onsubmit="return false">
+          <div class="campo campo--claro">
+          <label class="campo__label" for="h-name">Name</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-name" name="firstname" type="text"
+          autocomplete="name" required>
+          </div>
+          </div>
+
+          <div class="campo campo--claro">
+          <label class="campo__label" for="h-org">Organization</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-org" name="company" type="text"
+          autocomplete="organization" required>
+          </div>
+          </div>
+
+          <div class="campo campo--claro">
+          <label class="campo__label" for="h-email">Work email</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-email" name="email" type="email"
+          autocomplete="email" required>
+          </div>
+          </div>
+
+          <div class="campo campo--claro">
+          <label class="campo__label" for="h-phone">Phone <span class="campo__opt">(optional)</span></label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-phone" name="phone" type="tel"
+          inputmode="tel" autocomplete="tel">
+          </div>
+          </div>
+
+          <!-- Contexto que viaja a HubSpot con el contacto -->
+          <input type="hidden" name="scope" value="">
+          <input type="hidden" name="sector" value="">
+          <input type="hidden" name="province" value="">
+          <input type="hidden" name="building_type" value="">
+          <input type="hidden" name="area" value="">
+          <input type="hidden" name="annual_spend" value="">
+          <input type="hidden" name="sites" value="">
+          <input type="hidden" name="benchmark_opportunity" value="">
+
+          <button class="btn btn--primary btn--block" type="submit">
+          Send me the deeper look
+          <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+          <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+          stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          </button>
+
+          <p class="captura__legal">
+          Only used to prepare your analysis.
+          </p>
+          </form>
+
+          <!-- Contacto directo y reinicio. Aparecen dentro de la tarjeta
+          blanca, bajo el mensaje de confirmacion, para no cargar la
+          columna izquierda. -->
+          <div class="tras-envio" id="cierre-extra" hidden>
+          <div class="tras-envio__contacto">
+          <a class="contacto contacto--claro" href="tel:+17783276851">
+          <span class="contacto__icono" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a1 1 0 01-1 1
+          A16 16 0 014 5a1 1 0 011-1z" stroke="currentColor"
+          stroke-width="1.7" stroke-linejoin="round"/>
+          </svg>
+          </span>
+          <span>
+          <span class="contacto__label">Call the team</span>
+          <span class="contacto__dato">778.327.6851</span>
+          </span>
+          </a>
+
+          <a class="contacto contacto--claro" href="mailto:matthew@getrede.ca">
+          <span class="contacto__icono" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M3.5 6.5L12 13l8.5-6.5" stroke="currentColor" stroke-width="1.7"
+          stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          </span>
+          <span>
+          <span class="contacto__label">Send an email</span>
+          <span class="contacto__dato">matthew@getrede.ca</span>
+          </span>
+          </a>
+          </div>
+
+          <button class="reiniciar" type="button" id="btn-reiniciar">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 12a9 9 0 019-9 9 9 0 016.7 3M21 12a9 9 0 01-9 9 9 9 0 01-6.7-3"
+          stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M18 3v4h-4M6 21v-4h4" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Run another check
+          </button>
+          </div>
+          </div>
+          </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Minimizar las opciones">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Opcion anterior">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="d2-caru__puntos" role="tablist" aria-label="Version de la seccion">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Panel</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Partido</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Pasos</small></button>
     </div>
+
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Opcion siguiente">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- ==========================================================================
+     SECCION RUTAS / SOLUTIONS — TRES VARIANTES
+
+     El copy va LITERAL del aprobado (secciones/rutas.html): tres rutas,
+     no cuatro ni cinco. El encargo hablaba de "cuatro servicios" y el
+     documento del cliente (copy/word/document.xml) describe CINCO tarjetas
+     con precio --Energy Gap Analysis, Recommissioning, RUN Intelligence,
+     RUN Insights, Energy Management--. Ese reparto de cinco es de la PAGINA
+     Solutions, no del bloque de la home. Aqui se respeta el bloque de la
+     home, que agrupa esas cinco piezas en tres rutas por VERBO
+     (Investigate / Optimize / Manage). No se inventa una cuarta ruta ni se
+     bajan precios de la pagina interior: seria copy nuevo. Queda anotado
+     como pregunta para Erick.
+
+     Las tres variantes cambian el EJE REAL, no la piel:
+       1. AUTOSELECCION  — se entra por la situacion del lector, no por el
+                           servicio. El protagonista es la pregunta.
+       2. ESCALERA       — un unico eje horizontal de compromiso creciente;
+                           las rutas son tramos de una linea continua.
+       3. COMPARATIVA    — matriz de filas: se lee por atributo cruzando las
+                           tres rutas, no ruta por ruta.
+     ========================================================================== -->
+
+<div class="d2-caru" id="caru-rutas" data-caru>
+
+  <!-- ======================================================================
+       OPCION 1 — AUTOSELECCION POR SITUACION
+
+       Eje de lectura: la columna izquierda fija plantea la pregunta y las
+       rutas responden. El elemento protagonista es el criterio de eleccion,
+       no el catalogo.
+
+       Por que este orden y no por precio: el propio lead del copy dice que
+       la ruta correcta "depende de lo que ya sabes, lo que necesitan tus
+       edificios y cuanto apoyo tiene tu equipo". Es un criterio de
+       situacion, y ordenar por situacion es lo que el copy ya afirma. NN/g
+       (Dykes, 2024, "Explicitly State the Difference Between Options")
+       sostiene que cuando las opciones se distinguen poco, hay que hacer
+       explicito el atributo que las separa, o el usuario asume que todas
+       son iguales. Aqui ese atributo se nombra en un rotulo por ruta.
+       ====================================================================== -->
+  <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Opcion 1: Autoseleccion">
+    <section class="d2-rutas-sel" id="solutions">
+      <div class="d2-rutas-sel__inner">
+
+        <div class="d2-rutas-sel__cabecera">
+          <p class="d2-rutas-sel__eyebrow">Solutions</p>
+          <h2 class="d2-rutas-sel__titulo">Every organization&rsquo;s situation is different.</h2>
+          <p class="d2-rutas-sel__lead">
+            The right path depends on what you already know, what your buildings need,
+            and how much support your team has in-house.
+          </p>
+        </div>
+
+        <!-- ul y no ol: las tres rutas no tienen un orden obligatorio. Se
+             puede entrar por cualquiera, y el marcado no debe afirmar lo
+             contrario. -->
+        <ul class="d2-rutas-sel__lista">
+
+          <li class="d2-rutas-sel__ruta">
+            <!-- El rotulo de situacion es el gancho de autoseleccion. NO es
+                 copy nuevo del cliente: reformula literalmente el eje que el
+                 propio lead enuncia ("what you already know"). Si Erick lo
+                 quiere textual del aprobado, se sustituye por el tag. -->
+            <p class="d2-rutas-sel__caso">If you don&rsquo;t know where the costs are</p>
+            <p class="d2-rutas-sel__tag">Investigate</p>
+            <h3 class="d2-rutas-sel__titulo-ruta">Energy Gap Analysis + Site Investigation</h3>
+            <p class="d2-rutas-sel__texto">
+              Start by finding out where the unnecessary energy costs are. EGA looks
+              across a portfolio. Site Investigation brings the same level of focus to
+              one building.
+            </p>
+            <a class="d2-rutas-sel__link" href="#">
+              See Investigate
+              <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+
+          <li class="d2-rutas-sel__ruta">
+            <p class="d2-rutas-sel__caso">If your buildings drift from their design</p>
+            <p class="d2-rutas-sel__tag">Optimize</p>
+            <h3 class="d2-rutas-sel__titulo-ruta">RCx / C-Op</h3>
+            <p class="d2-rutas-sel__texto">
+              Correct operational drift in schedules, setpoints, controls, and sequences
+              so buildings run closer to the way they were intended to.
+            </p>
+            <a class="d2-rutas-sel__link" href="#">
+              See Optimize
+              <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+
+          <li class="d2-rutas-sel__ruta">
+            <p class="d2-rutas-sel__caso">If your team needs ongoing support</p>
+            <p class="d2-rutas-sel__tag">Manage</p>
+            <h3 class="d2-rutas-sel__titulo-ruta">Energy Management + RUN</h3>
+            <p class="d2-rutas-sel__texto">
+              Keep performance visible over time through ongoing support, reporting, and
+              the utility data infrastructure to see what is changing.
+            </p>
+            <a class="d2-rutas-sel__link" href="#">
+              See Manage
+              <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================================
+       OPCION 2 — ESCALERA DE COMPROMISO
+
+       Eje de lectura: horizontal y continuo. Las tres rutas dejan de ser
+       tres cajas paralelas y pasan a ser tres tramos de UNA linea, de menor
+       a mayor compromiso. Cambia que se agrupa con que: lo que agrupa ya no
+       es la tarjeta, es el eje.
+
+       Por que se puede ordenar aqui y en la opcion 1 no: esta variante SI
+       afirma un orden, asi que usa <ol>. El orden es de compromiso
+       creciente (un diagnostico puntual, un proyecto, una relacion
+       continua), que es el que el propio catalogo del cliente ya sigue en
+       la pagina Solutions.
+
+       Aviso: Gartner describe la compra B2B como NO lineal --seis "buying
+       jobs" que el comprador revisita en vez de recorrer en orden--. Por
+       eso la escalera se dibuja como eje de compromiso y NO como proceso
+       obligatorio: no hay flechas de "paso 1, paso 2", y cada tramo tiene
+       su propio enlace de entrada. Se puede entrar por el tramo que sea.
+       ====================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 2: Escalera" hidden>
+    <section class="d2-rutas-esc" id="solutions">
+      <div class="d2-rutas-esc__inner">
+
+        <div class="d2-rutas-esc__cabecera">
+          <p class="d2-rutas-esc__eyebrow">Solutions</p>
+          <h2 class="d2-rutas-esc__titulo">Every organization&rsquo;s situation is different.</h2>
+          <p class="d2-rutas-esc__lead">
+            The right path depends on what you already know, what your buildings need,
+            and how much support your team has in-house.
+          </p>
+        </div>
+
+        <div class="d2-rutas-esc__eje">
+
+          <!-- El rail es decorativo: el orden ya lo lleva el <ol>. Por eso
+               aria-hidden. El trazo se dibuja al entrar con
+               stroke-dasharray/dashoffset, la misma tecnica del panel del
+               hero, una sola pasada. -->
+          <svg class="d2-rutas-esc__rail" viewBox="0 0 1200 8" preserveAspectRatio="none"
+               aria-hidden="true" focusable="false">
+            <line class="d2-rutas-esc__rail-linea" x1="0" y1="4" x2="1200" y2="4"/>
+          </svg>
+
+          <ol class="d2-rutas-esc__lista">
+
+            <li class="d2-rutas-esc__peldano">
+              <span class="d2-rutas-esc__nodo" aria-hidden="true"></span>
+              <p class="d2-rutas-esc__tag">Investigate</p>
+              <h3 class="d2-rutas-esc__titulo-ruta">Energy Gap Analysis + Site Investigation</h3>
+              <p class="d2-rutas-esc__texto">
+                Start by finding out where the unnecessary energy costs are. EGA looks
+                across a portfolio. Site Investigation brings the same level of focus to
+                one building.
+              </p>
+              <a class="d2-rutas-esc__link" href="#">
+                See Investigate
+                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                  <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </li>
+
+            <li class="d2-rutas-esc__peldano">
+              <span class="d2-rutas-esc__nodo" aria-hidden="true"></span>
+              <p class="d2-rutas-esc__tag">Optimize</p>
+              <h3 class="d2-rutas-esc__titulo-ruta">RCx / C-Op</h3>
+              <p class="d2-rutas-esc__texto">
+                Correct operational drift in schedules, setpoints, controls, and sequences
+                so buildings run closer to the way they were intended to.
+              </p>
+              <a class="d2-rutas-esc__link" href="#">
+                See Optimize
+                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                  <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </li>
+
+            <li class="d2-rutas-esc__peldano">
+              <span class="d2-rutas-esc__nodo" aria-hidden="true"></span>
+              <p class="d2-rutas-esc__tag">Manage</p>
+              <h3 class="d2-rutas-esc__titulo-ruta">Energy Management + RUN</h3>
+              <p class="d2-rutas-esc__texto">
+                Keep performance visible over time through ongoing support, reporting, and
+                the utility data infrastructure to see what is changing.
+              </p>
+              <a class="d2-rutas-esc__link" href="#">
+                See Manage
+                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                  <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </li>
+
+          </ol>
+
+          <!-- Los extremos rotulan el eje. Sin ellos, la linea es adorno:
+               el lector no sabe que magnitud crece de izquierda a derecha.
+               Van fuera de la lista para no colarse en el recuento de
+               elementos que anuncia un lector de pantalla. -->
+          <p class="d2-rutas-esc__extremos">
+            <span class="d2-rutas-esc__extremo">One-time diagnostic</span>
+            <span class="d2-rutas-esc__extremo">Ongoing partnership</span>
+          </p>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================================
+       OPCION 3 — COMPARATIVA POR ATRIBUTO
+
+       Eje de lectura girado 90 grados: se lee por FILA cruzando las tres
+       rutas ("cual mira todo el portfolio?"), no columna a columna. Es la
+       unica de las tres que permite comparar el mismo atributo entre rutas
+       sin memorizar.
+
+       Por que existe esta variante: el meta-analisis de Chernev, Bockenholt
+       y Goodman (2015, Journal of Consumer Psychology, 99 observaciones)
+       encuentra que la sobrecarga de eleccion no aparece por el numero de
+       opciones sino cuando se cumplen sus moderadores; dos de ellos son la
+       COMPLEJIDAD DEL CONJUNTO (opciones dificiles de comparar) y la
+       INCERTIDUMBRE DE PREFERENCIA (el que elige no sabe que quiere). Con
+       tres opciones el numero no es el problema; la comparabilidad si. Esta
+       rejilla ataca exactamente ese moderador.
+
+       Es tabla de datos real, no maquetacion: por eso <table> con <th
+       scope>. Un lector de pantalla anuncia la cabecera de fila y de
+       columna en cada celda, que es justo la relacion que se quiere leer.
+       ====================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 3: Comparativa" hidden>
+    <section class="d2-rutas-cmp" id="solutions">
+      <div class="d2-rutas-cmp__inner">
+
+        <div class="d2-rutas-cmp__cabecera">
+          <p class="d2-rutas-cmp__eyebrow">Solutions</p>
+          <h2 class="d2-rutas-cmp__titulo">Every organization&rsquo;s situation is different.</h2>
+          <p class="d2-rutas-cmp__lead">
+            The right path depends on what you already know, what your buildings need,
+            and how much support your team has in-house.
+          </p>
+        </div>
+
+        <!-- El envoltorio con overflow-x aisla el scroll de la tabla: si en
+             390px la rejilla no cabe, se desplaza ELLA y no la pagina. El
+             contrato prohibe scroll horizontal de pagina, no de un contenedor
+             que lo declara. -->
+        <div class="d2-rutas-cmp__marco">
+          <table class="d2-rutas-cmp__tabla">
+            <caption class="d2-rutas-cmp__caption">
+              The three paths compared by what you already know, what your buildings
+              need, and how much support your team has in-house.
+            </caption>
+            <thead>
+              <tr>
+                <td class="d2-rutas-cmp__esquina"></td>
+                <th scope="col">
+                  <span class="d2-rutas-cmp__tag">Investigate</span>
+                  <span class="d2-rutas-cmp__titulo-ruta">Energy Gap Analysis + Site Investigation</span>
+                </th>
+                <th scope="col">
+                  <span class="d2-rutas-cmp__tag">Optimize</span>
+                  <span class="d2-rutas-cmp__titulo-ruta">RCx / C-Op</span>
+                </th>
+                <th scope="col">
+                  <span class="d2-rutas-cmp__tag">Manage</span>
+                  <span class="d2-rutas-cmp__titulo-ruta">Energy Management + RUN</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Fila unica de descripcion: el copy aprobado da UN parrafo por
+                   ruta y no se trocea, porque trocearlo seria reescribirlo.
+                   Las filas de atributo que faltan (alcance, plazo, precio)
+                   estan PENDIENTE DE ERICK. -->
+              <tr>
+                <th scope="row">What it is</th>
+                <td>
+                  Start by finding out where the unnecessary energy costs are. EGA looks
+                  across a portfolio. Site Investigation brings the same level of focus to
+                  one building.
+                </td>
+                <td>
+                  Correct operational drift in schedules, setpoints, controls, and sequences
+                  so buildings run closer to the way they were intended to.
+                </td>
+                <td>
+                  Keep performance visible over time through ongoing support, reporting, and
+                  the utility data infrastructure to see what is changing.
+                </td>
+              </tr>
+
+              <!-- PENDIENTE DE ERICK — fila "Scope" (portfolio / building /
+                   ongoing), fila "Commitment" y fila "Starting price". La
+                   pagina interior Solutions SI tiene precios aprobados
+                   ($5K la EGA, 1-2% del gasto anual para RUN Intelligence,
+                   Intelligence + $20K/ano para RUN Insights, "contact us" en
+                   RCx y EM), pero esos textos son de OTRA pagina y ademas no
+                   mapean 1:1 sobre estas tres rutas. No se traen sin que
+                   Erick confirme el mapeo. Sin esa fila, esta variante es
+                   una comparativa de una sola dimension y rinde por debajo
+                   de su potencial: es el dato que mas le falta. -->
+
+              <tr>
+                <th scope="row">Where to start</th>
+                <td>
+                  <a class="d2-rutas-cmp__link" href="#">
+                    See Investigate
+                    <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                      <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                </td>
+                <td>
+                  <a class="d2-rutas-cmp__link" href="#">
+                    See Optimize
+                    <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                      <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                </td>
+                <td>
+                  <a class="d2-rutas-cmp__link" href="#">
+                    See Manage
+                    <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                      <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Minimizar las opciones">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Opcion anterior">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="d2-caru__puntos" role="tablist" aria-label="Version de la seccion">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Autoseleccion</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Escalera</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Comparativa</small></button>
+    </div>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Opcion siguiente">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- ==========================================================================
+     PRUEBA SOCIAL / BANDA DE CIFRAS — TRES VARIANTES
+
+     El copy va literal del aprobado. Las cifras tambien: $2.94M, 9.5%, 2008.
+     Ni una se redondea ni se inventa otra.
+
+     EL MATIZ DEL 9.5% (importante, ver DECISIONES.md D-20):
+     el 9.5% es el dato de ESCUELAS del estudio BC Hydro Continuous
+     Optimization. El promedio de TODOS los tipos de edificio es 5.7%. Si la
+     cifra sale sin ese matiz, afirma algo que el dato no dice, y el comprador
+     --un administrador de sector publico-- puede verificarlo. Por eso las tres
+     variantes llevan el "schools" pegado a la cifra, no en una nota al pie.
+
+     POR QUE NO HAY CONTADORES ASCENDENTES:
+     el CONTRATO los prohibe para estimaciones. Aqui el dato es historico y
+     confirmado, asi que la prohibicion por "es una estimacion" no aplica --
+     pero hay una razon mas fuerte que si aplica: NN/g documenta que nunca se
+     animen los elementos criticos de una pagina, porque el usuario los ignora
+     al confundirlos con publicidad y ademas cuestan de leer mientras se mueven.
+     La cifra ES el elemento critico de esta seccion. Un contador la vuelve
+     ilegible justo en los ~2s en que el lector la mira. Se queda quieta.
+     ========================================================================== -->
+
+<div class="d2-caru" id="caru-prueba" data-caru>
+
+  <!-- ======================================================================
+       OPCION 1 — REGISTRO
+       Las cifras arriba en su propia banda, las voces debajo. Cada cifra
+       lleva SU procedencia en la misma linea: sin eso son tres numeros
+       huerfanos, y el copy de Rede se define por tener la fuente a la vista.
+       ====================================================================== -->
+  <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Opcion 1: Registro">
+
+    <section class="d2-prueba-reg">
+      <div class="d2-prueba-reg__inner">
+
+        <p class="d2-prueba-reg__eyebrow">What this looks like in practice</p>
+
+        <!-- Las tres cifras no tienen orden: ninguna va antes que otra, asi
+             que <ul>. Un <ol> afirmaria una secuencia que no existe. -->
+        <ul class="d2-prueba-reg__cifras">
+
+          <li class="d2-prueba-reg__cifra-item">
+            <p class="d2-prueba-reg__cifra">$2.94M</p>
+            <p class="d2-prueba-reg__pie">
+              in unnecessary annual energy costs identified for a large Western Canadian
+              school district.
+            </p>
+          </li>
+
+          <!-- El 9.5% con su acotacion en la propia etiqueta. No es letra
+               pequeña de descargo: es parte de lo que la cifra significa. -->
+          <li class="d2-prueba-reg__cifra-item">
+            <p class="d2-prueba-reg__cifra">9.5<span class="d2-prueba-reg__unidad">%</span></p>
+            <p class="d2-prueba-reg__pie">
+              average historical cost reduction for schools. Across all building
+              types the average is 5.7%.
+            </p>
+            <!-- PENDIENTE DE ERICK: confirmar como quiere citar la fuente
+                 (BC Hydro Continuous Optimization). El dato esta verificado
+                 en DECISIONES.md pero la redaccion exacta del credito no. -->
+            <p class="d2-prueba-reg__fuente">BC Hydro Continuous Optimization</p>
+          </li>
+
+          <li class="d2-prueba-reg__cifra-item">
+            <p class="d2-prueba-reg__cifra">2008</p>
+            <p class="d2-prueba-reg__pie">
+              the year Rede started doing this work in Western Canada.
+            </p>
+          </li>
+
+        </ul>
+
+        <p class="d2-prueba-reg__texto">
+          These were costs that had been paid, year after year, without anyone knowing
+          they were recoverable. The same diagnostic and optimization approach can apply
+          to eligible commercial, institutional, municipal, post-secondary, and care
+          facilities.
+        </p>
+
+        <ul class="d2-prueba-reg__citas">
+          <li class="d2-prueba-reg__cita">
+            <blockquote class="d2-prueba-reg__cita-texto">
+              Before Northland started working with Rede, we had no energy management plan
+              at all. We recognized quickly that we can save money with an energy
+              management program.</blockquote>
+            <p class="d2-prueba-reg__autor">
+              <span class="d2-prueba-reg__nombre">Wayne Turpin</span>
+              <span class="d2-prueba-reg__org">Northland School Division</span>
+            </p>
+          </li>
+
+          <li class="d2-prueba-reg__cita">
+            <blockquote class="d2-prueba-reg__cita-texto">
+              The Rede team is all about proactively implementing energy solutions. They
+              see a gap and they take care of it.</blockquote>
+            <p class="d2-prueba-reg__autor">
+              <span class="d2-prueba-reg__nombre">Alex Telford</span>
+              <span class="d2-prueba-reg__org">SD27 British Columbia</span>
+            </p>
+          </li>
+
+          <li class="d2-prueba-reg__cita">
+            <blockquote class="d2-prueba-reg__cita-texto">
+              For people like myself, money talks. If we can engage someone like Rede to
+              find inefficiencies within our facilities, then we are able to address them.</blockquote>
+            <p class="d2-prueba-reg__autor">
+              <span class="d2-prueba-reg__nombre">Norman Buhler</span>
+              <span class="d2-prueba-reg__org">Fort Vermilion School Division</span>
+            </p>
+          </li>
+        </ul>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================================
+       OPCION 2 — RESPALDADA
+       Cambia QUE SE AGRUPA CON QUE, que es el eje de la variante: cada cifra
+       comparte marco con la voz que la respalda. En la opcion 1 las cifras
+       viven en una banda y las citas en otra: el lector tiene que fiarse de
+       que estan relacionadas. Aqui el contorno lo afirma.
+
+       Freling et al. (2020, OBHDP 160, 51-67), meta-analisis de 61 estudios:
+       la evidencia estadistica persuade MAS que la anecdotica cuando el
+       compromiso emocional es bajo --amenaza leve, tema no sanitario, afecta
+       a terceros--, que es exactamente este caso: un administrador decidiendo
+       sobre un presupuesto ajeno. Por eso la cifra manda el marco y la cita
+       va debajo dandole cuerpo, y no al reves.
+       ====================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 2: Respaldada" hidden>
+
+    <section class="d2-prueba-resp">
+      <div class="d2-prueba-resp__inner">
+
+        <header class="d2-prueba-resp__cabecera">
+          <p class="d2-prueba-resp__eyebrow">What this looks like in practice</p>
+          <p class="d2-prueba-resp__texto">
+            These were costs that had been paid, year after year, without anyone knowing
+            they were recoverable. The same diagnostic and optimization approach can apply
+            to eligible commercial, institutional, municipal, post-secondary, and care
+            facilities.
+          </p>
+        </header>
+
+        <ul class="d2-prueba-resp__lista">
+
+          <li class="d2-prueba-resp__par">
+            <div class="d2-prueba-resp__dato">
+              <p class="d2-prueba-resp__cifra">$2.94M</p>
+              <p class="d2-prueba-resp__pie">
+                in unnecessary annual energy costs identified for a large Western Canadian
+                school district.
+              </p>
+            </div>
+            <blockquote class="d2-prueba-resp__cita">
+              Before Northland started working with Rede, we had no energy management plan
+              at all. We recognized quickly that we can save money with an energy
+              management program.</blockquote>
+            <p class="d2-prueba-resp__autor">
+              <span class="d2-prueba-resp__nombre">Wayne Turpin</span>
+              <span class="d2-prueba-resp__org">Northland School Division</span>
+            </p>
+          </li>
+
+          <li class="d2-prueba-resp__par">
+            <div class="d2-prueba-resp__dato">
+              <p class="d2-prueba-resp__cifra">9.5<span class="d2-prueba-resp__unidad">%</span></p>
+              <p class="d2-prueba-resp__pie">
+                average historical cost reduction for schools. Across all building
+                types the average is 5.7%.
+              </p>
+              <!-- PENDIENTE DE ERICK: redaccion exacta del credito a BC Hydro. -->
+              <p class="d2-prueba-resp__fuente">BC Hydro Continuous Optimization</p>
+            </div>
+            <blockquote class="d2-prueba-resp__cita">
+              The Rede team is all about proactively implementing energy solutions. They
+              see a gap and they take care of it.</blockquote>
+            <p class="d2-prueba-resp__autor">
+              <span class="d2-prueba-resp__nombre">Alex Telford</span>
+              <span class="d2-prueba-resp__org">SD27 British Columbia</span>
+            </p>
+          </li>
+
+          <li class="d2-prueba-resp__par">
+            <div class="d2-prueba-resp__dato">
+              <p class="d2-prueba-resp__cifra">2008</p>
+              <p class="d2-prueba-resp__pie">
+                the year Rede started doing this work in Western Canada.
+              </p>
+            </div>
+            <blockquote class="d2-prueba-resp__cita">
+              For people like myself, money talks. If we can engage someone like Rede to
+              find inefficiencies within our facilities, then we are able to address them.</blockquote>
+            <p class="d2-prueba-resp__autor">
+              <span class="d2-prueba-resp__nombre">Norman Buhler</span>
+              <span class="d2-prueba-resp__org">Fort Vermilion School Division</span>
+            </p>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================================
+       OPCION 3 — RECORRIDO
+       Cambia EL EJE DE LECTURA: las otras dos se leen en horizontal, tres
+       cosas en paralelo. Esta se lee en vertical y en orden, porque el 2008
+       deja de ser una cifra suelta y pasa a ser el origen de una linea.
+
+       Aqui SI es <ol>: el orden es el argumento. Empezo en 2008, por eso hay
+       un historico de 9.5%, y por eso se pudieron encontrar $2.94M. Las otras
+       dos variantes no pueden sostener eso porque presentan las tres a la vez.
+       ====================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 3: Recorrido" hidden>
+
+    <section class="d2-prueba-rec">
+      <div class="d2-prueba-rec__inner">
+
+        <header class="d2-prueba-rec__cabecera">
+          <p class="d2-prueba-rec__eyebrow">What this looks like in practice</p>
+          <p class="d2-prueba-rec__texto">
+            These were costs that had been paid, year after year, without anyone knowing
+            they were recoverable. The same diagnostic and optimization approach can apply
+            to eligible commercial, institutional, municipal, post-secondary, and care
+            facilities.
+          </p>
+        </header>
+
+        <ol class="d2-prueba-rec__linea">
+
+          <li class="d2-prueba-rec__hito">
+            <div class="d2-prueba-rec__marca" aria-hidden="true"></div>
+            <div class="d2-prueba-rec__cuerpo">
+              <p class="d2-prueba-rec__cifra">2008</p>
+              <p class="d2-prueba-rec__pie">
+                the year Rede started doing this work in Western Canada.
+              </p>
+            </div>
+          </li>
+
+          <li class="d2-prueba-rec__hito">
+            <div class="d2-prueba-rec__marca" aria-hidden="true"></div>
+            <div class="d2-prueba-rec__cuerpo">
+              <p class="d2-prueba-rec__cifra">9.5<span class="d2-prueba-rec__unidad">%</span></p>
+              <p class="d2-prueba-rec__pie">
+                average historical cost reduction for schools. Across all building
+                types the average is 5.7%.
+              </p>
+              <!-- PENDIENTE DE ERICK: redaccion exacta del credito a BC Hydro. -->
+              <p class="d2-prueba-rec__fuente">BC Hydro Continuous Optimization</p>
+              <blockquote class="d2-prueba-rec__cita">
+                The Rede team is all about proactively implementing energy solutions. They
+                see a gap and they take care of it.</blockquote>
+              <p class="d2-prueba-rec__autor">
+                <span class="d2-prueba-rec__nombre">Alex Telford</span>
+                <span class="d2-prueba-rec__org">SD27 British Columbia</span>
+              </p>
+            </div>
+          </li>
+
+          <li class="d2-prueba-rec__hito d2-prueba-rec__hito--final">
+            <div class="d2-prueba-rec__marca" aria-hidden="true"></div>
+            <div class="d2-prueba-rec__cuerpo">
+              <p class="d2-prueba-rec__cifra">$2.94M</p>
+              <p class="d2-prueba-rec__pie">
+                in unnecessary annual energy costs identified for a large Western Canadian
+                school district.
+              </p>
+              <blockquote class="d2-prueba-rec__cita">
+                Before Northland started working with Rede, we had no energy management plan
+                at all. We recognized quickly that we can save money with an energy
+                management program.</blockquote>
+              <p class="d2-prueba-rec__autor">
+                <span class="d2-prueba-rec__nombre">Wayne Turpin</span>
+                <span class="d2-prueba-rec__org">Northland School Division</span>
+              </p>
+              <blockquote class="d2-prueba-rec__cita">
+                For people like myself, money talks. If we can engage someone like Rede to
+                find inefficiencies within our facilities, then we are able to address them.</blockquote>
+              <p class="d2-prueba-rec__autor">
+                <span class="d2-prueba-rec__nombre">Norman Buhler</span>
+                <span class="d2-prueba-rec__org">Fort Vermilion School Division</span>
+              </p>
+            </div>
+          </li>
+
+        </ol>
+      </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Minimizar las opciones">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Opcion anterior">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="d2-caru__puntos" role="tablist" aria-label="Version de la seccion">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Registro</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Respaldada</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Recorrido</small></button>
+    </div>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Opcion siguiente">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- ==========================================================================
+     SECCION 6 — RESEÑAS DE CLIENTE
+
+     Dos formas de presentar las mismas tres voces. El copy es el aprobado,
+     literal, y los nombres y organizaciones son reales.
+
+     La opcion 2 reproduce el componente editorial que pidio el cliente. El
+     original venia en React con Next.js, Tailwind y TypeScript; este sitio
+     es HTML, CSS y JS planos porque acaba en WordPress. Se ha reconstruido
+     el DISEÑO --numeral gigante, cita ligera, retrato que toma color,
+     selectores de linea que se alargan, contador 01/03-- con los tokens de
+     esta web en vez de las clases de utilidad de Tailwind.
+
+     Un cambio obligado: el componente original pone el retrato de la
+     persona. Aqui no hay fotos de los clientes, pero si sus logos, que en
+     ese hueco dicen mas: el distrito reconoce el suyo.
+     ========================================================================== -->
+
+<div class="d2-caru" id="caru-resenas" data-caru>
+
+  <!-- ====================================================================
+       OPCION 1 — TRES A LA VEZ
+
+       Las tres citas visibles en paralelo. Nadie tiene que pulsar nada
+       para leerlas, que es lo que importa cuando el contenido es corto:
+       si caben, mostrarlas cuesta menos que esconderlas tras un control.
+
+       Sin retratos: el logo del distrito hace de firma y ancla la cita a
+       una organizacion verificable.
+       ==================================================================== -->
+  <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Opcion 1: tres a la vez">
+    <section class="d2-res-tres" aria-labelledby="res-tres-titulo">
+      <div class="d2-res-tres__inner">
+
+        <div class="d2-res-tres__intro">
+          <p class="d2-res-tres__eyebrow">In their words</p>
+          <h2 class="d2-res-tres__titulo" id="res-tres-titulo">
+            What the districts say.
+          </h2>
+        </div>
+
+        <ul class="d2-res-tres__lista">
+          <li class="d2-res-tres__item">
+            <blockquote class="d2-res-tres__cita">
+              Before Northland started working with Rede, we had no energy management plan
+              at all. We recognized quickly that we can save money with an energy
+              management program.
+            </blockquote>
+            <div class="d2-res-tres__pie">
+              <img class="d2-res-tres__logo" src="assets/img/logos-clientes/northland.png"
+                   alt="Northland School Division" width="244" height="200" loading="lazy" decoding="async">
+              <div>
+                <p class="d2-res-tres__nombre">Wayne Turpin</p>
+                <p class="d2-res-tres__org">Northland School Division</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="d2-res-tres__item">
+            <blockquote class="d2-res-tres__cita">
+              The Rede team is all about proactively implementing energy solutions. They
+              see a gap and they take care of it.
+            </blockquote>
+            <div class="d2-res-tres__pie">
+              <img class="d2-res-tres__logo" src="assets/img/logos-clientes/cariboo-chilcotin.png"
+                   alt="Cariboo Chilcotin School District 27" width="400" height="200" loading="lazy" decoding="async">
+              <div>
+                <p class="d2-res-tres__nombre">Alex Telford</p>
+                <p class="d2-res-tres__org">SD27 British Columbia</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="d2-res-tres__item">
+            <blockquote class="d2-res-tres__cita">
+              For people like myself, money talks. If we can engage someone like Rede to
+              find inefficiencies within our facilities, then we are able to address them.
+            </blockquote>
+            <div class="d2-res-tres__pie">
+              <img class="d2-res-tres__logo" src="assets/img/logos-clientes/fort-vermilion.png"
+                   alt="Fort Vermilion School Division" width="200" height="200" loading="lazy" decoding="async">
+              <div>
+                <p class="d2-res-tres__nombre">Norman Buhler</p>
+                <p class="d2-res-tres__org">Fort Vermilion School Division</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- ====================================================================
+       OPCION 2 — EDITORIAL
+
+       El componente que pidio el cliente, traducido a esta web.
+
+       Del original se conserva todo lo que lo define:
+         · el numeral gigante en peso ligero, casi transparente
+         · la cita grande y de trazo fino, no en negrita
+         · el retrato --aqui el logo-- en gris, a color al pasar el raton
+         · los selectores de linea: el activo se alarga, los otros crecen
+           un poco al apuntarlos
+         · el contador 01 / 03 en versalitas espaciadas
+         · el cruce: sale, cambia, entra, con 300ms de por medio
+
+       Lo que cambia, y por que:
+         · Tailwind por tokens propios: aqui no hay compilacion
+         · el retrato por el logo del distrito: no hay fotos de clientes
+         · las flechas de lucide-react se dibujan en SVG en linea
+       ==================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 2: editorial" hidden>
+    <section class="d2-res-ed" aria-labelledby="res-ed-titulo">
+      <div class="d2-res-ed__cabecera">
+        <p class="d2-res-ed__eyebrow">In their words</p>
+        <h2 class="d2-res-ed__titulo" id="res-ed-titulo">What the districts say.</h2>
+        <p class="d2-res-ed__sub">
+          Three public sector organizations on what changed after bringing Rede in.
+        </p>
+      </div>
+
+      <div class="d2-res-ed__inner" data-res-ed>
+
+        <div class="d2-res-ed__fila">
+          <!-- El numeral: decorativo, el contador de abajo ya lo dice -->
+          <span class="d2-res-ed__num" data-res-num aria-hidden="true">01</span>
+
+          <div class="d2-res-ed__cuerpo">
+            <!-- La region viva: se anuncia el cambio de cita sin saltar el
+                 foco a ningun sitio -->
+            <div role="status" aria-live="polite">
+              <blockquote class="d2-res-ed__cita" data-res-cita>
+                Before Northland started working with Rede, we had no energy management plan
+                at all. We recognized quickly that we can save money with an energy
+                management program.
+              </blockquote>
+
+              <div class="d2-res-ed__autor" data-res-autor>
+                <span class="d2-res-ed__marco">
+                  <img class="d2-res-ed__logo" data-res-logo
+                       src="assets/img/logos-clientes/northland.png"
+                       alt="" width="244" height="200" loading="lazy" decoding="async">
+                </span>
+                <span>
+                  <span class="d2-res-ed__nombre" data-res-nombre>Wayne Turpin</span>
+                  <span class="d2-res-ed__meta">
+                    <span data-res-cargo>Superintendent</span>
+                    <span class="d2-res-ed__barra" aria-hidden="true">/</span>
+                    <span class="d2-res-ed__org" data-res-org>Northland School Division</span>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d2-res-ed__mandos">
+          <div class="d2-res-ed__izq">
+            <div class="d2-res-ed__lineas" role="tablist" aria-label="Client reviews">
+              <button class="d2-res-ed__linea es-activa" type="button" role="tab"
+                      aria-selected="true" data-res-a="0" aria-label="Review 1 of 3"><span></span></button>
+              <button class="d2-res-ed__linea" type="button" role="tab"
+                      aria-selected="false" data-res-a="1" aria-label="Review 2 of 3"><span></span></button>
+              <button class="d2-res-ed__linea" type="button" role="tab"
+                      aria-selected="false" data-res-a="2" aria-label="Review 3 of 3"><span></span></button>
+            </div>
+            <span class="d2-res-ed__contador" data-res-contador aria-hidden="true">01 / 03</span>
+          </div>
+
+          <div class="d2-res-ed__flechas">
+            <button class="d2-res-ed__flecha" type="button" data-res-ir="-1" aria-label="Previous review">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="d2-res-ed__flecha" type="button" data-res-ir="1" aria-label="Next review">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.8"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Minimizar las opciones">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Opcion anterior">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="d2-caru__puntos" role="tablist" aria-label="Version de la seccion">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Tres</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Editorial</small></button>
+    </div>
+
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Opcion siguiente">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- ==========================================================================
+     SECCION EQUIPO — "More than engineers."
+
+     Tres variantes. El eje que cambia entre ellas es DONDE VIVE LA
+     CREDENCIAL y con que se agrupa, porque la investigacion dice que la
+     foto y la credencial sirven a dos lectores distintos:
+
+     - El visitante del sitio: NN/g ("About Us Information on Websites",
+       Kaley y Nielsen, 2019, 70+ usuarios) documenta que los usuarios
+       quieren ver fotos de empleados reales y detectan el stock. En
+       "Photos as Web Content" (Nielsen, 2010) el eyetracking de una pagina
+       de bios muestra que los retratos se miran mas que las bios pese a
+       ocupar mucho menos espacio.
+     - El evaluador de la licitacion: en el SF-330 (GSA, Rev. 7/2021), el
+       formulario de cualificaciones de ingenieria bajo el Brooks Act, hay
+       campos para titulacion, registro profesional y otras cualificaciones
+       -- y NINGUN campo de fotografia. Los RFP de distritos escolares
+       puntuan "Personnel Qualifications" con peso explicito.
+
+     Lo que NO esta respaldado: cualquier cifra de conversion atribuida a
+     las fotos de equipo en B2B. No existe un experimento publicado en ese
+     contexto. Ver el reporte.
+
+     Convencion del sector, medida en 10 firmas (Stantec, WSP, Arup, Buro
+     Happold, Dunsky, Cadmus, Introba, CIMA+, Willdan): 9 de 10 NO ponen
+     post-nominales junto al nombre; las entierran en la prosa de la bio.
+     Aqui se hace lo contrario a proposito, y por eso se documenta: el
+     comprador es un administrador publico que evalua por credencial.
+
+     Fotos: hay tres reales de 5:7. Falta la cuarta persona. Ninguna
+     variante inventa un placeholder: el hueco va marcado en comentario.
+
+     Copy literal del aprobado. Sin acentos en los comentarios.
+     ========================================================================== -->
+
+<div class="d2-caru" id="caru-equipo" data-caru>
+
+  <!-- ======================================================================
+       OPCION 1 — FICHA
+       Eje: la credencial vive PEGADA AL RETRATO, en una banda propia sobre
+       la foto. Cada persona es una ficha cerrada; la unidad de lectura es
+       la persona completa.
+       ====================================================================== -->
+  <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Opcion 1: Ficha">
+    <section class="d2-equipo-ficha">
+      <div class="d2-equipo-ficha__inner">
+
+        <div class="d2-equipo-ficha__intro">
+          <p class="d2-equipo-ficha__eyebrow">People behind Rede</p>
+          <h2 class="d2-equipo-ficha__titulo">More than engineers.</h2>
+          <p class="d2-equipo-ficha__lead">
+            Rede is a small team of engineers, project managers, data analysts, and energy
+            efficiency professionals. We work alongside your team rather than delivering a
+            report and moving on.
+          </p>
+        </div>
+
+        <!-- ul y no ol: el orden de las personas no significa nada. -->
+        <ul class="d2-equipo-ficha__lista">
+
+          <li class="d2-equipo-ficha__persona">
+            <div class="d2-equipo-ficha__marco">
+              <img class="d2-equipo-ficha__foto"
+                   src="assets/img/equipo/matthew-redekopp.jpg"
+                   alt="Matthew Redekopp"
+                   width="300" height="420" loading="lazy" decoding="async">
+              <!-- La credencial se apoya sobre la foto: es la banda que ata
+                   el rostro a la licencia sin gastar una linea del cuerpo. -->
+              <p class="d2-equipo-ficha__cred">P.Eng., CEM, LEED AP</p>
+            </div>
+            <h3 class="d2-equipo-ficha__nombre">Matthew Redekopp</h3>
+            <p class="d2-equipo-ficha__cargo">Founder and CEO</p>
+            <p class="d2-equipo-ficha__bio">
+              Matthew founded Rede in 2008 to serve communities and organizations that
+              larger engineering firms were not reaching. Nearly two decades later, he
+              leads a team helping organizations across Western Canada reduce energy costs
+              and manage buildings more effectively.
+            </p>
+          </li>
+
+          <li class="d2-equipo-ficha__persona">
+            <div class="d2-equipo-ficha__marco">
+              <img class="d2-equipo-ficha__foto"
+                   src="assets/img/equipo/marco-bieri.jpg"
+                   alt="Marco Bieri"
+                   width="300" height="420" loading="lazy" decoding="async">
+              <p class="d2-equipo-ficha__cred">P.Eng., M.Eng., M.Sc., CEM</p>
+            </div>
+            <h3 class="d2-equipo-ficha__nombre">Marco Bieri</h3>
+            <p class="d2-equipo-ficha__cargo">Energy Efficiency Engineer</p>
+            <p class="d2-equipo-ficha__bio">
+              Marco brings deep expertise in recommissioning, energy auditing, and building
+              performance diagnostics, along with a rigorous approach to data analysis and
+              measurement verification.
+            </p>
+          </li>
+
+          <li class="d2-equipo-ficha__persona">
+            <div class="d2-equipo-ficha__marco">
+              <img class="d2-equipo-ficha__foto"
+                   src="assets/img/equipo/erica-letchford.jpg"
+                   alt="Erica Letchford"
+                   width="298" height="417" loading="lazy" decoding="async">
+              <p class="d2-equipo-ficha__cred">BID, LEED AP</p>
+            </div>
+            <h3 class="d2-equipo-ficha__nombre">Erica Letchford</h3>
+            <p class="d2-equipo-ficha__cargo">Director of Operations</p>
+            <p class="d2-equipo-ficha__bio">
+              Erica has spent nearly two decades working to reduce energy consumption and
+              operating costs in residential, commercial, and institutional facilities. She
+              brings a project manager's instinct for keeping the big picture in view while
+              managing the details.
+            </p>
+          </li>
+
+          <!-- PENDIENTE DE ERICK — cuarta persona.
+               Falta la foto y faltan nombre, credenciales, cargo y bio.
+               Cuando lleguen, se duplica un <li> de arriba y se rellena; la
+               rejilla ya esta preparada para cuatro (ver el CSS: en
+               escritorio son cuatro columnas y con tres se centra sola, asi
+               que anadir la cuarta no toca nada mas).
+               No se pone un placeholder con iniciales: una silueta gris
+               junto a tres rostros reales llama la atencion sobre lo que
+               falta en vez de sobre el equipo. -->
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================================
+       OPCION 2 — DOSSIER
+       Eje: la credencial se SEPARA del retrato y se agrupa consigo misma.
+       Las tres fotos forman una banda horizontal continua arriba, y debajo
+       hay una tabla de personal donde la columna de credenciales se lee en
+       vertical, de un vistazo, como en un SF-330.
+
+       El motivo: el evaluador no lee tres bios, escanea si hay P.Eng. La
+       banda de fotos cubre al visitante; la tabla cubre al evaluador. Los
+       dos publicos no compiten por el mismo espacio.
+       ====================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 2: Dossier" hidden>
+    <section class="d2-equipo-dosier">
+      <div class="d2-equipo-dosier__inner">
+
+        <div class="d2-equipo-dosier__intro">
+          <p class="d2-equipo-dosier__eyebrow">People behind Rede</p>
+          <h2 class="d2-equipo-dosier__titulo">More than engineers.</h2>
+          <p class="d2-equipo-dosier__lead">
+            Rede is a small team of engineers, project managers, data analysts, and energy
+            efficiency professionals. We work alongside your team rather than delivering a
+            report and moving on.
+          </p>
+        </div>
+
+        <!-- La banda de retratos. Van juntos y sin texto: aqui la foto solo
+             tiene que decir "son personas reales, no stock". El nombre
+             viaja abajo, en la fila que le corresponde.
+             aria-hidden porque cada nombre ya esta en la tabla de abajo:
+             repetirlo haria que un lector de pantalla oyera los tres
+             nombres dos veces seguidas sin aportar nada. -->
+        <div class="d2-equipo-dosier__banda" aria-hidden="true">
+          <img class="d2-equipo-dosier__retrato"
+               src="assets/img/equipo/matthew-redekopp.jpg"
+               alt="" width="300" height="420" loading="lazy" decoding="async">
+          <img class="d2-equipo-dosier__retrato"
+               src="assets/img/equipo/marco-bieri.jpg"
+               alt="" width="300" height="420" loading="lazy" decoding="async">
+          <img class="d2-equipo-dosier__retrato"
+               src="assets/img/equipo/erica-letchford.jpg"
+               alt="" width="298" height="417" loading="lazy" decoding="async">
+          <!-- PENDIENTE DE ERICK — falta el cuarto retrato.
+               La banda usa flex con reparto igual, asi que con tres fotos
+               se reparte el ancho entre tres y no queda ningun hueco. Al
+               anadir la cuarta se reparte entre cuatro. Degrada sola. -->
+        </div>
+
+        <!-- La tabla de personal. Es una lista de definiciones visual, no
+             una <table>: no hay relacion fila-columna que consultar, es una
+             ficha por persona con campos siempre en el mismo sitio. La
+             regularidad la da la rejilla, no el marcado. -->
+        <ul class="d2-equipo-dosier__lista">
+
+          <li class="d2-equipo-dosier__fila">
+            <div class="d2-equipo-dosier__id">
+              <h3 class="d2-equipo-dosier__nombre">Matthew Redekopp</h3>
+              <p class="d2-equipo-dosier__cargo">Founder and CEO</p>
+            </div>
+            <p class="d2-equipo-dosier__cred">P.Eng., CEM, LEED AP</p>
+            <p class="d2-equipo-dosier__bio">
+              Matthew founded Rede in 2008 to serve communities and organizations that
+              larger engineering firms were not reaching. Nearly two decades later, he
+              leads a team helping organizations across Western Canada reduce energy costs
+              and manage buildings more effectively.
+            </p>
+          </li>
+
+          <li class="d2-equipo-dosier__fila">
+            <div class="d2-equipo-dosier__id">
+              <h3 class="d2-equipo-dosier__nombre">Marco Bieri</h3>
+              <p class="d2-equipo-dosier__cargo">Energy Efficiency Engineer</p>
+            </div>
+            <p class="d2-equipo-dosier__cred">P.Eng., M.Eng., M.Sc., CEM</p>
+            <p class="d2-equipo-dosier__bio">
+              Marco brings deep expertise in recommissioning, energy auditing, and building
+              performance diagnostics, along with a rigorous approach to data analysis and
+              measurement verification.
+            </p>
+          </li>
+
+          <li class="d2-equipo-dosier__fila">
+            <div class="d2-equipo-dosier__id">
+              <h3 class="d2-equipo-dosier__nombre">Erica Letchford</h3>
+              <p class="d2-equipo-dosier__cargo">Director of Operations</p>
+            </div>
+            <p class="d2-equipo-dosier__cred">BID, LEED AP</p>
+            <p class="d2-equipo-dosier__bio">
+              Erica has spent nearly two decades working to reduce energy consumption and
+              operating costs in residential, commercial, and institutional facilities. She
+              brings a project manager's instinct for keeping the big picture in view while
+              managing the details.
+            </p>
+          </li>
+
+          <!-- PENDIENTE DE ERICK — cuarta fila de personal.
+               Se duplica un <li> y se rellenan los cuatro campos. La fila no
+               depende de que exista la foto: si Erick manda los datos sin
+               retrato, esta variante ya funciona con la fila puesta y la
+               banda de arriba en tres. -->
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================================
+       OPCION 3 — FIRMA
+       Eje: la credencial deja de ser un atributo de cada persona y pasa a
+       ser una propiedad de la FIRMA. Un retrato destacado (el fundador, que
+       es quien tiene la historia de 2008) ocupa la izquierda; los otros dos
+       van en una columna estrecha a la derecha; y todas las credenciales
+       del equipo se recogen en una sola linea al pie de la seccion.
+
+       Es lo mismo que hace la portada de una propuesta: una cara, un
+       parrafo, y las siglas del equipo juntas debajo. Ninguna credencial
+       se pierde -- cambian de dueño, del individuo al conjunto.
+       ====================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 3: Firma" hidden>
+    <section class="d2-equipo-firma">
+      <div class="d2-equipo-firma__inner">
+
+        <div class="d2-equipo-firma__intro">
+          <p class="d2-equipo-firma__eyebrow">People behind Rede</p>
+          <h2 class="d2-equipo-firma__titulo">More than engineers.</h2>
+        </div>
+
+        <div class="d2-equipo-firma__cuerpo">
+
+          <!-- El destacado. No es "el jefe es mas importante": es que su bio
+               es la unica que cuenta el origen de la empresa (2008), y ese
+               parrafo pide mas aire que los otros dos. -->
+          <article class="d2-equipo-firma__principal">
+            <img class="d2-equipo-firma__foto-grande"
+                 src="assets/img/equipo/matthew-redekopp.jpg"
+                 alt="Matthew Redekopp"
+                 width="300" height="420" loading="lazy" decoding="async">
+            <div class="d2-equipo-firma__principal-texto">
+              <p class="d2-equipo-firma__lead">
+                Rede is a small team of engineers, project managers, data analysts, and energy
+                efficiency professionals. We work alongside your team rather than delivering a
+                report and moving on.
+              </p>
+              <h3 class="d2-equipo-firma__nombre d2-equipo-firma__nombre--grande">Matthew Redekopp</h3>
+              <p class="d2-equipo-firma__cargo">Founder and CEO</p>
+              <p class="d2-equipo-firma__bio">
+                Matthew founded Rede in 2008 to serve communities and organizations that
+                larger engineering firms were not reaching. Nearly two decades later, he
+                leads a team helping organizations across Western Canada reduce energy costs
+                and manage buildings more effectively.
+              </p>
+            </div>
+          </article>
+
+          <!-- El resto, en fila vertical. Retrato pequeño y bio completa:
+               el copy va literal, no se recorta para que quepa. -->
+          <ul class="d2-equipo-firma__resto">
+
+            <li class="d2-equipo-firma__mini">
+              <img class="d2-equipo-firma__foto-mini"
+                   src="assets/img/equipo/marco-bieri.jpg"
+                   alt="Marco Bieri"
+                   width="300" height="420" loading="lazy" decoding="async">
+              <div>
+                <h3 class="d2-equipo-firma__nombre">Marco Bieri</h3>
+                <p class="d2-equipo-firma__cargo">Energy Efficiency Engineer</p>
+                <p class="d2-equipo-firma__bio">
+                  Marco brings deep expertise in recommissioning, energy auditing, and building
+                  performance diagnostics, along with a rigorous approach to data analysis and
+                  measurement verification.
+                </p>
+              </div>
+            </li>
+
+            <li class="d2-equipo-firma__mini">
+              <img class="d2-equipo-firma__foto-mini"
+                   src="assets/img/equipo/erica-letchford.jpg"
+                   alt="Erica Letchford"
+                   width="298" height="417" loading="lazy" decoding="async">
+              <div>
+                <h3 class="d2-equipo-firma__nombre">Erica Letchford</h3>
+                <p class="d2-equipo-firma__cargo">Director of Operations</p>
+                <p class="d2-equipo-firma__bio">
+                  Erica has spent nearly two decades working to reduce energy consumption and
+                  operating costs in residential, commercial, and institutional facilities. She
+                  brings a project manager's instinct for keeping the big picture in view while
+                  managing the details.
+                </p>
+              </div>
+            </li>
+
+            <!-- PENDIENTE DE ERICK — cuarta persona.
+                 Va aqui, como un <li> mas de esta columna. La columna crece
+                 hacia abajo sin tocar el destacado de la izquierda, asi que
+                 es la variante que mejor absorbe a la cuarta persona.
+                 Sus siglas hay que anadirlas tambien a la linea de
+                 credenciales del pie. -->
+          </ul>
+        </div>
+
+        <!-- La linea de credenciales de la firma.
+             Aqui estan TODAS las siglas de las tres personas, sin perder
+             ninguna, pero atribuidas al equipo y no a cada cara. Es el dato
+             que puntua el evaluador del RFP (SF-330 seccion E, campos 17 y
+             18: registro profesional y otras cualificaciones).
+             role="list" porque list-style:none le quita la semantica de
+             lista a <ul> en Safari con VoiceOver. -->
+        <ul class="d2-equipo-firma__credenciales" role="list"
+            aria-label="Professional credentials held by the Rede team">
+          <li>P.Eng.</li>
+          <li>M.Eng.</li>
+          <li>M.Sc.</li>
+          <li>CEM</li>
+          <li>LEED AP</li>
+          <li>BID</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Minimizar las opciones">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Opcion anterior">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="d2-caru__puntos" role="tablist" aria-label="Version de la seccion">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Ficha</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Dossier</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Firma</small></button>
+    </div>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Opcion siguiente">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- ==========================================================================
+     CTA FINAL — TRES VARIANTES
+
+     El copy es literal del aprobado. Las tres usan EXACTAMENTE las mismas
+     palabras: titular, parrafo, "Check your opportunity" y "Book a call".
+     Lo que cambia no es el texto sino DONDE VIVE LA DECISION.
+
+     El eje real de diferencia (contrato §1):
+
+       1. BALANZA    las dos acciones en el mismo plano, mismo peso.
+                     Decide el usuario, la pagina no opina.
+       2. CONTINUIDAD una accion manda y la otra baja a enlace de texto.
+                     La pagina ya decidio; el cierre reanuda la calculadora.
+       3. DOS CARRILES el bloque se parte por PERSONA, no por accion:
+                     quien actua hoy / quien tiene que pasarlo a otros.
+
+     Si esto sonara a "esta tiene las cajas mas juntas" estaria mal. No:
+     en la 1 hay dos opciones, en la 2 hay una, y en la 3 hay dos publicos.
+
+     NOTA SOBRE LA EVIDENCIA (contrato §8): NO se ha usado la "ley de Hick"
+     para justificar reducir opciones. Liu, Gori, Rioul, Beaudouin-Lafon y
+     Guiard (CHI 2020, "How Relevant is Hick's Law for HCI?") concluyen que
+     la ley de Hick habla EN CONTRA, no a favor, del principio "menos es
+     mejor", y que el paradigma estimulo-respuesta rara vez es relevante en
+     tareas de interfaz. Elegir entre dos botones leidos no es una tarea de
+     tiempo de reaccion. Por eso la variante 2 no se justifica con Hick sino
+     con una razon concreta de esta pagina, anotada en su bloque.
+     ========================================================================== -->
+
+<div class="d2-caru" id="caru-cta" data-caru>
+
+  <!-- ======================================================================
+       OPCION 1 — BALANZA
+
+       Las dos acciones en el mismo plano y con la misma caja: dos entradas
+       distintas al mismo sitio, no una principal y una de repuesto.
+
+       Por que existe: el comprador de sector publico no es uno solo. El
+       jefe de mantenimiento quiere el numero; el administrador que firma
+       quiere hablar con alguien. Poner una por encima obliga a la mitad de
+       la sala a leer su camino como el secundario.
+
+       Es la variante conservadora y la unica que no toca la jerarquia
+       aprobada del marcado original.
+       ====================================================================== -->
+  <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Opcion 1: Balanza">
+
+    <section class="d2-cta-bal d2-entra">
+      <div class="d2-cta-bal__inner">
+
+        <div class="d2-cta-bal__texto">
+          <h2 class="d2-cta-bal__titulo">
+            Find out what your buildings are actually costing you.
+          </h2>
+          <p class="d2-cta-bal__parrafo">
+            Start with a clear, specific picture of the unnecessary energy costs in your
+            building or portfolio. One set of inputs. A practical recommendation. No lock-in.
+          </p>
+        </div>
+
+        <!-- ul y no ol: las dos vias son alternativas, no pasos. El orden
+             no significa nada y un lector de pantalla no debe sugerirlo. -->
+        <ul class="d2-cta-bal__acciones">
+          <li class="d2-cta-bal__accion">
+            <a href="#calculator" class="d2-btn d2-btn--solido d2-cta-bal__btn">
+              Check your opportunity
+              <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+          <li class="d2-cta-bal__accion">
+            <a href="contact.html" class="d2-btn d2-btn--linea d2-cta-bal__btn">
+              Book a call
+              <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+    </section>
 
   </div>
+
+
+  <!-- ======================================================================
+       OPCION 2 — CONTINUIDAD
+
+       Cambia QUE SE AGRUPA CON QUE: la accion primaria deja de ser un boton
+       suelto y se presenta como la reanudacion de la calculadora que ya
+       aparece mas arriba en la pagina. "Book a call" baja a enlace de texto.
+
+       Por que, y contra la intuicion de dar dos botones iguales:
+       "Check your opportunity" NO es una oferta nueva. Es literalmente la
+       misma que ya hizo la calculadora en mitad de la pagina. Repetir un
+       boton identico sin decir que es el mismo destino hace que el lector
+       que ya lo vio (y no lo uso) lo lea como ruido, y el que no lo vio no
+       sabe que hay una herramienta esperandole. La etiqueta de arriba
+       resuelve las dos cosas: nombra el destino.
+
+       Esto NO se apoya en la ley de Hick (ver nota de cabecera). Se apoya
+       en algo verificable de esta pagina: el destino #calculator ya existe
+       y ya se ofrecio antes. Marcarlo como continuacion es describir la
+       pagina con precision, no una tesis de conversion.
+
+       El techo de cifras (40px) no aplica: aqui no hay cifra. Deliberado —
+       inventar una para llenar el hueco esta prohibido (contrato §0).
+       ====================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 2: Continuidad" hidden>
+
+    <section class="d2-cta-con d2-entra">
+      <div class="d2-cta-con__inner">
+
+        <p class="d2-cta-con__etiqueta">The calculator, from the top of this page</p>
+
+        <h2 class="d2-cta-con__titulo">
+          Find out what your buildings are actually costing you.
+        </h2>
+
+        <p class="d2-cta-con__parrafo">
+          Start with a clear, specific picture of the unnecessary energy costs in your
+          building or portfolio. One set of inputs. A practical recommendation. No lock-in.
+        </p>
+
+        <div class="d2-cta-con__accion">
+          <a href="#calculator" class="d2-btn d2-btn--solido d2-cta-con__btn">
+            Check your opportunity
+            <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+              <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                    stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <!-- Enlace y no boton: la diferencia de forma es la que dice cual
+               es la via principal. Sigue siendo un destino de primera, no
+               esta escondido — solo desempatado. -->
+          <p class="d2-cta-con__alterna">
+            <a href="contact.html" class="d2-cta-con__enlace">Book a call</a>
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+
+  <!-- ======================================================================
+       OPCION 3 — DOS CARRILES
+
+       El corte no es por accion sino por PERSONA. Un distrito escolar no
+       compra por una firma: el proceso pasa por comite, y el que entra en
+       la web casi nunca es el que aprueba. Asi que el bloque separa a quien
+       puede actuar hoy de quien tiene que llevarselo a otros.
+
+       Sobre esto la evidencia es DESIGUAL y conviene decirlo:
+       - Verificable: los distritos contratan eficiencia energetica por RFP
+         y aprobacion del consejo escolar (NYSED, "Energy Performance
+         Contracts"; Ohio Facilities Construction Commission). El proceso
+         por comite es un hecho documentado, no una opinion de blog.
+       - NO verificable: las cifras que circulan sobre el tamano del comite
+         de compra B2B (los "11 stakeholders" de Gartner, los "6-10") se
+         repiten en blogs sin acceso a metodologia ni muestra. No se usan
+         como justificacion y no aparecen en el diseno.
+
+       Por eso el carril derecho NO promete un PDF ni un "one-pager": ese
+       material no existe todavia (comprobado: no hay ningun .pdf en los
+       archivos de la seccion). Ofrecer una descarga inventada seria
+       inventar una promesa, prohibido por el contrato §0. El carril usa el
+       unico material que hoy es real: el resultado de la calculadora, que
+       es lo que un administrador puede sacar y ensenar.
+
+       PENDIENTE DE ERICK: si existe (o va a existir) un documento que el
+       distrito pueda circular internamente — resumen de una pagina, caso
+       de estudio, hoja de metodologia — este es su sitio natural y el
+       carril derecho lo alojaria sin cambiar la estructura. Hasta que
+       conste, no se nombra.
+       ====================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 3: Dos carriles" hidden>
+
+    <section class="d2-cta-car d2-entra">
+      <div class="d2-cta-car__inner">
+
+        <div class="d2-cta-car__cabecera">
+          <h2 class="d2-cta-car__titulo">
+            Find out what your buildings are actually costing you.
+          </h2>
+          <p class="d2-cta-car__parrafo">
+            Start with a clear, specific picture of the unnecessary energy costs in your
+            building or portfolio. One set of inputs. A practical recommendation. No lock-in.
+          </p>
+        </div>
+
+        <!-- Cada carril es un <li> con su propio marco. Region comun
+             (Palmer 1992, via NN/g): el contorno agrupa mas fuerte que la
+             cercania, y aqui el objetivo es justamente atar cada accion a
+             su lector. -->
+        <ul class="d2-cta-car__lista">
+
+          <li class="d2-cta-car__carril">
+            <p class="d2-cta-car__quien">If you can act on this now</p>
+            <a href="#calculator" class="d2-btn d2-btn--solido d2-cta-car__btn">
+              Check your opportunity
+              <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+
+          <li class="d2-cta-car__carril">
+            <p class="d2-cta-car__quien">If someone else has to sign off</p>
+            <a href="contact.html" class="d2-btn d2-btn--linea d2-cta-car__btn">
+              Book a call
+              <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+    </section>
+
+  </div>
+
+
+  <!-- Los mandos del carrusel: identicos a los de las otras secciones -->
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Minimizar las opciones">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Opcion anterior">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="d2-caru__puntos" role="tablist" aria-label="Version de la seccion">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Balanza</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Continuidad</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Dos carriles</small></button>
+    </div>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Opcion siguiente">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+</div>
+
+
+<!-- ==========================================================================
+     PIE DE PAGINA — TRES VARIANTES
+
+     El copy, los enlaces y los datos de contacto son LITERALES del pie
+     actual (secciones/footer.html). No se ha reescrito ni una linea: lo
+     unico que cambia entre las tres es como se agrupa y donde vive el peso.
+
+     ─── LOS TRES LANDMARKS: el problema y como se resuelve ────────────────
+
+     Un <footer> que cuelga directamente del <body> mapea al landmark ARIA
+     "contentinfo". Tres diapositivas con tres <footer> darian TRES
+     contentinfo en la misma pagina, y ahi hay dos danos reales:
+
+       - El lector de pantalla lista tres "informacion de pie de pagina"
+         identicas y el usuario no sabe cual es la buena.
+       - Las diapositivas ocultas llevan [hidden], asi que fuera del arbol
+         de accesibilidad solo queda una... pero al cambiar de opcion
+         cambia cual, y con el carrusel abierto la ayuda a la navegacion
+         deja de ser fiable.
+
+     Precision sobre el estatus de la regla, para no venderla como lo que
+     no es: "como mucho un contentinfo por pagina" es la regla axe
+     landmark-no-duplicate-contentinfo, impacto Moderate, catalogada por
+     Deque como BEST PRACTICE. NO es un criterio de conformidad WCAG.
+     HTML5 permite varios <footer>; la restriccion viene de ARIA. Aun asi
+     se respeta: el coste de cumplirla aqui es cero.
+
+     La regla normativa que da la solucion (esa si es del W3C, "ARIA in
+     HTML"): <footer> mapea a contentinfo SOLO si NO es descendiente de
+     article, aside, main, nav o section. Dentro de cualquiera de esos
+     mapea a role=generic, es decir, NO expone landmark. El arreglo, por
+     tanto, no es quitar <footer>: es darle un ancestro de seccion.
+     Fuente: https://www.w3.org/TR/html-aria/
+
+     Por eso el carrusel entero va envuelto en <section>. Con ese ancestro
+     los tres <footer> siguen siendo <footer> --se conserva la semantica
+     que pide el encargo-- pero ninguno reclama contentinfo, y la pagina
+     deja de tener landmarks duplicados en vez de tener tres.
+
+     Esto es andamiaje de decision: al elegir una opcion se retira el
+     carrusel y ese <footer> vuelve a colgar del <body>, donde recupera su
+     contentinfo unico y correcto. Que es exactamente lo que debe pasar.
+
+     NO se ha usado role="presentation" en el contenedor: sobre un <div>
+     no cambiaria nada (un div no expone landmark de por si) y sobre la
+     <section> no impediria que los <footer> de dentro expusieran el suyo,
+     porque el mapeo depende del ANIDAMIENTO, no del rol del ancestro.
+     Anidar es lo que de verdad lo apaga.
+
+     ─── PENDIENTE DE ERICK ────────────────────────────────────────────────
+
+     Nada inventado: donde falta un dato, falta. Ninguna variante rellena
+     huecos con texto de relleno ni con cifras.
+
+     1. Los datos de contacto (778.327.6851 / matthew@getrede.ca / 535
+        D'Artisan Lane) vienen de la guia de marca de 2015. El comentario
+        del pie actual ya avisa: "confirmar vigencia". Sin confirmar.
+
+     2. "Privacy policy" y "Terms of use" apuntan a href="#": no existen
+        las paginas. Se dejan enlazados porque el copy aprobado los lleva,
+        pero hoy no van a ninguna parte. PIPEDA (principio 8, Openness)
+        exige que la informacion de privacidad este "readily available" e
+        incluye el CONTACTO del responsable de privacidad, no solo un
+        enlace generico. El sitio web se cita como ejemplo de canal, no
+        como obligacion; aun asi el pie es el sitio convencional.
+        https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/p_principle/principles/p_openness/
+
+     3. Declaracion de accesibilidad: NO se ha anadido ningun enlace,
+        porque anadirlo seria inventar copy y una pagina que no existe.
+        Comprobado que NO es obligatorio para esta empresa:
+          - AODA es legislacion de ONTARIO. Rede es de BC: no le aplica.
+          - Accessible BC Act (2021) aplica a ORGANISMOS PUBLICOS --entre
+            ellos los distritos escolares-- no a empresas privadas.
+          - Accessible Canada Act cubre entidades de regulacion FEDERAL
+            (banca, telecom, transporte interprovincial). Tampoco.
+        El matiz comercial, que es el interesante: la obligacion recae
+        sobre los CLIENTES de Rede, no sobre Rede. La accesibilidad aqui
+        es argumento de venta y requisito probable de procurement, no
+        carga regulatoria propia. Decidir con Erick si conviene exhibirla.
+
+     4. Land acknowledgement: NO se ha anadido. Existe la practica en
+        Canada, pero no encontre ninguna fuente que la establezca como
+        convencion ni como expectativa formal para proveedores privados
+        del sector publico. Ademas la guia es unanime en que debe nombrar
+        Naciones concretas y redactarse consultando a las Naciones
+        locales: uno generico es contraproducente. No es algo que se
+        pueda escribir desde aqui, tiene que venir de Rede.
+     ========================================================================== -->
+
+<section class="d2-pie-caru-marco" aria-label="Opciones de pie de pagina">
+<div class="d2-caru" id="caru-footer" data-caru>
+
+  <!-- ====================================================================
+       OPCION 1 — DIRECTORIO
+
+       El mega-pie clasico: el protagonista es la NAVEGACION. Las tres
+       columnas de enlaces ocupan el ancho util y el contacto es una
+       columna mas, en igualdad con Solutions y Company.
+
+       Es la lectura correcta cuando el pie hace de mapa del sitio: el
+       visitante que llega al fondo sin encontrar lo que buscaba, ve de un
+       golpe todo lo que hay.
+       ==================================================================== -->
+  <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Opcion 1: Directorio">
+
+    <footer class="d2-pie-dir">
+      <div class="d2-pie-dir__inner">
+
+        <div class="d2-pie-dir__marca">
+          <a href="#" class="d2-pie-dir__logo" aria-label="Rede Energy Solutions, home">
+            <img src="assets/Rede-logo.svg" alt="Rede, Building Energy Efficiency"
+                 width="360" height="108">
+          </a>
+          <p class="d2-pie-dir__tagline">
+            Energy management for public sector and multi-site organizations across
+            Western Canada.
+          </p>
+          <p class="d2-pie-dir__pron">
+            Rede rhymes with steady.
+            <button class="d2-pie-pron" type="button" aria-label="Hear how Rede is pronounced">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.8"
+                      stroke-linejoin="round"/>
+                <path d="M15.5 8.5a5 5 0 010 7" stroke="currentColor" stroke-width="1.8"
+                      stroke-linecap="round"/>
+              </svg>
+            </button>
+          </p>
+        </div>
+
+        <nav class="d2-pie-dir__nav" aria-label="Footer">
+          <div class="d2-pie-dir__col">
+            <h2 class="d2-pie-dir__titulo">Solutions</h2>
+            <ul class="d2-pie-dir__lista">
+              <li><a href="energy-gap-analysis.html">Energy Gap Analysis</a></li>
+              <li><a href="#">Site Investigation</a></li>
+              <li><a href="recommissioning.html">Recommissioning</a></li>
+              <li><a href="energy-management.html">Energy Management</a></li>
+              <li><a href="run.html">RUN</a></li>
+            </ul>
+          </div>
+
+          <div class="d2-pie-dir__col">
+            <h2 class="d2-pie-dir__titulo">Company</h2>
+            <ul class="d2-pie-dir__lista">
+              <li><a href="#">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="#calculator">Check your opportunity</a></li>
+            </ul>
+          </div>
+
+          <div class="d2-pie-dir__col">
+            <h2 class="d2-pie-dir__titulo">Get in touch</h2>
+            <ul class="d2-pie-dir__lista">
+              <li><a href="tel:+17783276851">778.327.6851</a></li>
+              <li><a href="mailto:matthew@getrede.ca">matthew@getrede.ca</a></li>
+            </ul>
+            <address class="d2-pie-dir__direccion">
+              535 D&rsquo;Artisan Lane<br>
+              Bowen Island, BC V0N 1G2
+            </address>
+          </div>
+        </nav>
+      </div>
+
+      <div class="d2-pie-dir__base">
+        <div class="d2-pie-dir__base-inner">
+          <p class="d2-pie-dir__legal">&copy; 2026 Rede Energy Solutions Ltd.</p>
+          <ul class="d2-pie-dir__legales">
+            <li><a href="#">Privacy policy</a></li>
+            <li><a href="#">Terms of use</a></li>
+            <li><a href="client-login.html" class="d2-pie-dir__login">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M4.5 20c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              Client Login
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+
+  <!-- ====================================================================
+       OPCION 2 — DESPACHO
+
+       Cambia QUE SE AGRUPA CON QUE. En la opcion 1 el telefono y el correo
+       son dos enlaces en una lista, del mismo tamano que "RUN": el mismo
+       peso para llamar a una persona que para ir a una pagina de servicio.
+
+       Aqui salen de la rejilla y forman un bloque propio, con el telefono
+       y el correo como objetivos grandes y la direccion al lado. El mapa
+       del sitio se comprime a UNA fila de enlaces bajo el bloque.
+
+       El motivo es el comprador: un administrador de distrito escolar que
+       ha llegado al final de la pagina y quiere hablar con alguien. Con
+       este reparto, "hablar con alguien" es lo mayor del pie.
+       ==================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 2: Despacho" hidden>
+
+    <footer class="d2-pie-desp">
+      <div class="d2-pie-desp__inner">
+
+        <div class="d2-pie-desp__marca">
+          <a href="#" class="d2-pie-desp__logo" aria-label="Rede Energy Solutions, home">
+            <img src="assets/Rede-logo.svg" alt="Rede, Building Energy Efficiency"
+                 width="360" height="108">
+          </a>
+          <p class="d2-pie-desp__tagline">
+            Energy management for public sector and multi-site organizations across
+            Western Canada.
+          </p>
+          <p class="d2-pie-desp__pron">
+            Rede rhymes with steady.
+            <button class="d2-pie-pron" type="button" aria-label="Hear how Rede is pronounced">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.8"
+                      stroke-linejoin="round"/>
+                <path d="M15.5 8.5a5 5 0 010 7" stroke="currentColor" stroke-width="1.8"
+                      stroke-linecap="round"/>
+              </svg>
+            </button>
+          </p>
+        </div>
+
+        <!-- El bloque de contacto: el protagonista de esta variante.
+
+             Telefono y correo son dos fichas grandes. Son el unico sitio
+             del pie donde el texto crece por encima del cuerpo, y eso es
+             lo que hace la jerarquia: tamano y contorno, no color. -->
+        <div class="d2-pie-desp__contacto">
+          <h2 class="d2-pie-desp__titulo">Get in touch</h2>
+
+          <ul class="d2-pie-desp__vias">
+            <li>
+              <a href="tel:+17783276851">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6.5 3h3l1.5 4-2 1.5a12 12 0 006.5 6.5L17 13l4 1.5v3a2 2 0 01-2.2 2A16.5 16.5 0 013.5 5.2 2 2 0 015.5 3z"
+                        stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                </svg>
+                <span>778.327.6851</span>
+              </a>
+            </li>
+            <li>
+              <a href="mailto:matthew@getrede.ca">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="2.5" y="5" width="19" height="14" rx="2"
+                        stroke="currentColor" stroke-width="1.7"/>
+                  <path d="M3 6.5l9 6 9-6" stroke="currentColor" stroke-width="1.7"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>matthew@getrede.ca</span>
+              </a>
+            </li>
+          </ul>
+
+          <address class="d2-pie-desp__direccion">
+            535 D&rsquo;Artisan Lane<br>
+            Bowen Island, BC V0N 1G2
+          </address>
+        </div>
+      </div>
+
+      <!-- El mapa del sitio, comprimido. Sigue estando entero --los nueve
+           enlaces de la opcion 1-- pero en una sola fila que se lee de
+           corrido, no en columnas que compiten con el contacto.
+
+           Van dos <nav> con etiquetas distintas y no uno solo: si se
+           juntaran en una lista, "Home" y "Recommissioning" quedarian al
+           mismo nivel y se perderia de que grupo es cada enlace. -->
+      <div class="d2-pie-desp__mapa">
+        <div class="d2-pie-desp__base-inner">
+          <nav class="d2-pie-desp__grupo" aria-label="Solutions">
+            <h2 class="d2-pie-desp__titulo">Solutions</h2>
+            <ul class="d2-pie-desp__fila">
+              <li><a href="energy-gap-analysis.html">Energy Gap Analysis</a></li>
+              <li><a href="#">Site Investigation</a></li>
+              <li><a href="recommissioning.html">Recommissioning</a></li>
+              <li><a href="energy-management.html">Energy Management</a></li>
+              <li><a href="run.html">RUN</a></li>
+            </ul>
+          </nav>
+
+          <nav class="d2-pie-desp__grupo" aria-label="Company">
+            <h2 class="d2-pie-desp__titulo">Company</h2>
+            <ul class="d2-pie-desp__fila">
+              <li><a href="#">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="#calculator">Check your opportunity</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div class="d2-pie-desp__base">
+        <div class="d2-pie-desp__base-inner">
+          <p class="d2-pie-desp__legal">&copy; 2026 Rede Energy Solutions Ltd.</p>
+          <ul class="d2-pie-desp__legales">
+            <li><a href="#">Privacy policy</a></li>
+            <li><a href="#">Terms of use</a></li>
+            <li><a href="client-login.html" class="d2-pie-desp__login">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M4.5 20c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              Client Login
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+
+  <!-- ====================================================================
+       OPCION 3 — CIERRE
+
+       Cambia DONDE VIVE EL PROTAGONISTA: no hay mega-pie. Una sola franja
+       baja, todo en una linea de lectura horizontal, sin columnas.
+
+       Es la antitesis de la opcion 1 y responde a un argumento concreto:
+       la seccion cta-final va justo encima, con "Check your opportunity" y
+       "Book a call". Si el visitante ya ha pasado por ahi, un directorio
+       de nueve enlaces despues es una segunda oportunidad que quiza no
+       hace falta. Esta variante apuesta por cerrar, no por reabrir.
+
+       Lo que se conserva entero: TODOS los enlaces, el telefono, el correo,
+       la direccion y los legales. No se ha quitado ni un dato; se ha
+       quitado la rejilla. El copy es el mismo que en las otras dos.
+       ==================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Opcion 3: Cierre" hidden>
+
+    <footer class="d2-pie-cierre">
+      <div class="d2-pie-cierre__inner">
+
+        <!-- Fila alta: marca a la izquierda, contacto a la derecha.
+             La direccion va en la misma linea que el telefono y el correo,
+             separada por puntos: es un dato de una linea, no un bloque. -->
+        <div class="d2-pie-cierre__alto">
+          <div class="d2-pie-cierre__marca">
+            <a href="#" class="d2-pie-cierre__logo" aria-label="Rede Energy Solutions, home">
+              <img src="assets/Rede-logo.svg" alt="Rede, Building Energy Efficiency"
+                   width="360" height="108">
+            </a>
+            <p class="d2-pie-cierre__pron">
+              Rede rhymes with steady.
+              <button class="d2-pie-pron" type="button" aria-label="Hear how Rede is pronounced">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.8"
+                        stroke-linejoin="round"/>
+                  <path d="M15.5 8.5a5 5 0 010 7" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round"/>
+                </svg>
+              </button>
+            </p>
+          </div>
+
+          <p class="d2-pie-cierre__tagline">
+            Energy management for public sector and multi-site organizations across
+            Western Canada.
+          </p>
+        </div>
+
+        <!-- Fila de contacto: los tres datos en linea. -->
+        <div class="d2-pie-cierre__contacto">
+          <a class="d2-pie-cierre__dato" href="tel:+17783276851">778.327.6851</a>
+          <a class="d2-pie-cierre__dato" href="mailto:matthew@getrede.ca">matthew@getrede.ca</a>
+          <address class="d2-pie-cierre__direccion">
+            535 D&rsquo;Artisan Lane, Bowen Island, BC V0N 1G2
+          </address>
+        </div>
+
+        <!-- Todos los enlaces en una sola fila envolvente. Un unico <nav>
+             porque aqui SI forman una lista plana: sin columnas no hay
+             grupos que distinguir, y agrupar dos veces lo mismo confunde.
+
+             El orden es el de la opcion 1 leido de corrido: primero
+             Solutions, luego Company. -->
+        <nav class="d2-pie-cierre__nav" aria-label="Footer">
+          <ul class="d2-pie-cierre__enlaces">
+            <li><a href="energy-gap-analysis.html">Energy Gap Analysis</a></li>
+            <li><a href="#">Site Investigation</a></li>
+            <li><a href="recommissioning.html">Recommissioning</a></li>
+            <li><a href="energy-management.html">Energy Management</a></li>
+            <li><a href="run.html">RUN</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#calculator">Check your opportunity</a></li>
+          </ul>
+        </nav>
+
+        <!-- Linea de cierre: legales y acceso de cliente. -->
+        <div class="d2-pie-cierre__base">
+          <p class="d2-pie-cierre__legal">&copy; 2026 Rede Energy Solutions Ltd.</p>
+          <ul class="d2-pie-cierre__legales">
+            <li><a href="#">Privacy policy</a></li>
+            <li><a href="#">Terms of use</a></li>
+            <li><a href="client-login.html" class="d2-pie-cierre__login">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M4.5 20c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              Client Login
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Minimizar las opciones">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Opcion anterior">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="d2-caru__puntos" role="tablist" aria-label="Version de la seccion">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Directorio</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Despacho</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Cierre</small></button>
+    </div>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Opcion siguiente">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
 </section>
 
 
+<!-- ==========================================================================
+     SECCIONES AUN OCULTAS
+
+     Reseñas y lo que venga despues. Se publican cuando se aprueben las
+     variantes de arriba.
+
+     PARA DEVOLVERLAS: quitar la apertura y el cierre de este comentario y
+     cambiar los ~~ por guiones dobles (los comentarios HTML no se pueden
+     anidar, por eso se neutralizaron).
+     ========================================================================== -->
+<!--
 <!~~ ==========================================================================
      SECCION 4 — COMPACT CUSTOMER REVIEW
 
@@ -1070,6 +4648,8 @@
 <script src="js/d2-panel.js"></script>
 <script src="js/d2-header.js"></script>
 <script src="js/d2-foco.js"></script>
+<script src="js/d2-calc-vivo.js"></script>
+<script src="js/d2-resenas.js"></script>
 <script src="js/editor-github.js"></script>
 <script src="js/editor.js"></script>
 </body>

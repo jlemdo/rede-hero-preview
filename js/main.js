@@ -180,8 +180,14 @@
 (function () {
   'use strict';
 
-  var seccion = document.querySelector('.calc');
-  if (!seccion) { return; }
+  /* Una instancia por cada .calc: las variantes del carrusel son copias
+     independientes y cada una lleva su propio estado. El codigo de dentro
+     ya buscaba todo con `seccion.querySelector`, asi que basta con
+     envolverlo. */
+  var calculadoras = document.querySelectorAll('.calc');
+  if (!calculadoras.length) { return; }
+
+  Array.prototype.forEach.call(calculadoras, function (seccion) {
 
   /* --- Benchmarks C-Op ---------------------------------------------------- */
 
@@ -232,9 +238,16 @@
 
     if (typeof refrescarPerfil === 'function') { refrescarPerfil(); }
 
-    barra.style.width = (estado.paso / TOTAL * 100) + '%';
-    contador.textContent = estado.paso;
-    barra.parentElement.setAttribute('aria-valuenow', estado.paso);
+    /* Las variantes que muestran los cuatro campos a la vez no llevan barra
+       de progreso ni contador: no hay pasos que contar. Sin esta guarda el
+       modulo se caia ahi y dejaba la calculadora muerta. */
+    if (barra) {
+      barra.style.width = (estado.paso / TOTAL * 100) + '%';
+      if (barra.parentElement) {
+        barra.parentElement.setAttribute('aria-valuenow', estado.paso);
+      }
+    }
+    if (contador) { contador.textContent = estado.paso; }
 
     btnAtras.hidden = estado.paso === 1;
     btnTexto.textContent = estado.paso === TOTAL ? 'Show benchmark result' : 'Next';
@@ -243,6 +256,15 @@
   function siguiente() {
     // El paso 1 necesita una eleccion; si no la hay, se asume portafolio
     if (estado.paso === 1 && !estado.scope) { elegirScope('multi'); }
+
+    /* Si la variante muestra los cuatro campos a la vez no hay pasos que
+       recorrer: el boton calcula directamente. Sin esto pedia cuatro clics
+       para avanzar por pantallas que ya estaban visibles. */
+    if (seccion.querySelector('[data-abierto]')) {
+      estado.paso = TOTAL;
+      calcular();
+      return;
+    }
 
     if (estado.paso < TOTAL) {
       estado.paso += 1;
@@ -305,8 +327,11 @@
       ponerFila('sector', txt);
     }
 
+    /* Basta con que haya tipo elegido. Antes se exigia ademas estar en el
+       paso 3, pero las variantes abiertas no recorren pasos: el tipo se
+       quedaba sin rellenar y el contador atascado en 3 de 4. */
     var clave = selTipo.value;
-    if (clave && estado.paso >= 3) {
+    if (clave) {
       var b = BENCHMARKS[clave];
       ponerFila('tipo', b.label);
 
@@ -322,8 +347,20 @@
     var area = numero($('#c-area').value);
     if (area) { ponerFila('area', milesTxt(area)); }
 
+    /* El perfil recoge TODO lo que el formulario sabe, no solo cuatro
+       campos: sirve de vista rapida completa. ponerFila ya ignora las
+       filas que un diseño no tenga. */
+    var gastoPerfil = numero($('#c-spend').value);
+    if (gastoPerfil) { ponerFila('spend', dinero(gastoPerfil)); }
+
+    var sitiosPerfil = numero($('#c-sites').value);
+    if (sitiosPerfil) {
+      ponerFila('sites', sitiosPerfil === 1 ? '1 site' : sitiosPerfil + ' sites');
+    }
+
     var listas = seccion.querySelectorAll('.perfil__fila.is-lleno').length;
-    $('#etiqueta-progreso').textContent = listas + ' of 4';
+    var totalFilas = seccion.querySelectorAll('.perfil__fila').length;
+    $('#etiqueta-progreso').textContent = listas + ' of ' + totalFilas;
   }
 
 
@@ -339,8 +376,18 @@
 
   seccion.querySelectorAll('.opcion').forEach(function (o) {
     o.addEventListener('click', function () {
+      /* Solo marca la eleccion. Antes saltaba de paso a los 220ms, y eso
+         incumple WCAG 3.2.2: quien recorre las opciones con el teclado
+         cambia la seleccion al pasar por ellas y se encontraba en otra
+         pantalla sin haberlo pedido.
+
+         El flujo no cambia: se avanza con el boton Next, que ya estaba
+         ahi y ahora es el unico camino. */
       elegirScope(o.dataset.scope);
-      window.setTimeout(siguiente, 220);   // avanza solo tras elegir
+
+      /* Sin esto la fila Scope no aparecia hasta tocar otro campo, y daba
+         la sensacion de que el clic no habia hecho nada. */
+      refrescarPerfil();
     });
   });
 
@@ -358,7 +405,7 @@
   });
 
   // Cada cambio en un campo actualiza el panel derecho al momento
-  ['#c-sector', '#c-province', '#c-type', '#c-area'].forEach(function (sel) {
+  ['#c-sector', '#c-province', '#c-type', '#c-area', '#c-spend', '#c-sites'].forEach(function (sel) {
     var el = $(sel);
     if (!el) { return; }
     el.addEventListener('change', refrescarPerfil);
@@ -503,7 +550,7 @@
 
   /* --- Giro de la tarjeta ------------------------------------------------- */
 
-  var flip = document.getElementById('flip');
+  var flip = seccion.querySelector('[data-flip-panel]');
   if (!flip) { return; }
 
   var caraFrente = flip.querySelector('.flip__cara--frente');
@@ -579,6 +626,7 @@
     if (flip) { flip.classList.add('enviado'); }
   });
 
-  pintarPaso();
+    pintarPaso();
+  });
 
 })();

@@ -24,6 +24,17 @@
      4.9:1 estaba equivocada.
 
      Para texto pequeño usar --c-verde-hover (#026F00, 6.41:1). */
+  /* DEUDA CONOCIDA, decidida por el cliente el 2026-09-02:
+
+     Texto blanco sobre este verde da 4.09:1. WCAG AA pide 4.5:1 para
+     texto normal, y el de los botones mide 16px --el umbral de "texto
+     grande" son 18.66px en negrita--, asi que los botones solidos NO
+     cumplen AA. Afecta a los 21 botones del sitio.
+
+     Se mantiene porque es el verde aprobado. Si el cliente necesita
+     cumplir AA (probable en sector publico canadiense; AODA lo exige en
+     Ontario), la solucion mas barata es pintar los botones SOLIDOS con
+     --c-verde-hover (6.41:1) y dejar este verde para el resto. */
   --c-verde:            #2E902B;
   --c-verde-hover:      #026F00;
   --c-verde-claro:      #E8F5E8;

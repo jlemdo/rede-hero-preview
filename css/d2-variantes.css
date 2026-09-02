@@ -61,6 +61,35 @@
   box-shadow: 0 2px 18px rgba(2, 51, 0, .12);
 }
 
+#caru-calc .d2-caru__mandos {
+  top: clamp(44px, 4.8vw, 68px);
+  bottom: auto;
+}
+
+#caru-calc .d2-caru__mandos.esta-minimizado {
+  transform: translateX(calc(max(var(--d2-gutter), calc(50vw - var(--d2-ancho) / 2 + var(--d2-gutter))) + 15px));
+}
+
+#caru-calc .d2-caru__mandos.esta-minimizado:hover {
+  transform: translateX(calc(max(var(--d2-gutter), calc(50vw - var(--d2-ancho) / 2 + var(--d2-gutter))) + 9px));
+}
+
+/* El carrusel del problema es una seccion alta: los mandos van arriba a la
+   derecha, a la altura de la cabecera, donde hay aire libre. Abajo
+   quedarian fuera de la vista al empezar a leer. */
+#caru-problema .d2-caru__mandos {
+  top: clamp(48px, 5.4vw, 76px);
+  bottom: auto;
+}
+
+#caru-problema .d2-caru__mandos.esta-minimizado {
+  transform: translateX(calc(max(var(--d2-gutter), calc(50vw - var(--d2-ancho) / 2 + var(--d2-gutter))) + 15px));
+}
+
+#caru-problema .d2-caru__mandos.esta-minimizado:hover {
+  transform: translateX(calc(max(var(--d2-gutter), calc(50vw - var(--d2-ancho) / 2 + var(--d2-gutter))) + 9px));
+}
+
 /* En el carrusel de logos los mandos van DENTRO de la franja, centrados
    en su alto: colgados por debajo quedaban despegados de la seccion que
    controlan y se leian como si fueran de la siguiente.
@@ -1623,4 +1652,5481 @@ span.d2-panel__filtro:hover {
   /* Se ve en todo el escritorio: el diseño 1 no lo esconde a 1180px, y con
      la separacion amplia hay sitio de sobra. */
   .d2 .header__actions .header__login-btn { display: inline-flex; }
+}
+
+
+/* ==========================================================================
+   SECCION "THE PROBLEM" — TRES VARIANTES
+
+   La version anterior --filas alternas con foto-- medía 2470px: casi tres
+   pantallas para tres ideas. Y tenia un defecto de fondo: los tres puntos
+   son PARALELOS, tres sintomas del mismo problema, pero el zigzag los
+   presenta uno detras de otro, como pasos de un proceso.
+
+   NN/g midio ese layout con eyetracking (2017): los usuarios tropiezan al
+   escanearlo, con fijaciones accidentales y redirecciones. El matiz que
+   importa es que el perjuicio aparece SOLO con imagenes decorativas -- las
+   informativas rinden igual en cualquier layout.
+
+   De ahi las tres variantes: la 1 quita la imagen, la 2 la convierte en
+   informativa, y la 3 cambia el eje de lectura.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Piezas comunes a las tres
+   -------------------------------------------------------------------------- */
+
+.d2-prob-tri,
+.d2-prob-lec,
+.d2-prob-comp {
+  padding-block: clamp(48px, 5.4vw, 76px);
+  background: var(--c-blanco, #fff);
+}
+
+/* La comparativa lleva una fila mas que las otras dos --los encabezados de
+   columna-- asi que se le recorta el aire exterior para que las tres
+   quepan en una pantalla. */
+.d2-prob-comp { padding-block: clamp(40px, 4.4vw, 58px); }
+
+.d2-prob-tri__inner,
+.d2-prob-lec__inner,
+.d2-prob-comp__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+.d2-prob-tri__titulo,
+.d2-prob-lec__titulo,
+.d2-prob-comp__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2-prob-tri__lead,
+.d2-prob-lec__lead,
+.d2-prob-comp__lead {
+  margin: var(--d2-e3) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* ==========================================================================
+   OPCION 1 — TRIPTICO ALINEADO
+
+   Tres columnas de igual ancho. NN/g observo que los cuerpos de texto
+   alineados se recorren "sin esfuerzo", frente al tropiezo del zigzag.
+
+   Y la forma dice la verdad sobre el contenido: en paralelo, sin un orden
+   que seguir.
+   ========================================================================== */
+
+.d2-prob-tri__cabecera {
+  max-width: 62ch;
+}
+
+.d2-prob-tri__lista {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 3vw, 44px);
+  margin: clamp(34px, 4vw, 52px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* El filo superior sustituye a la caja: separa las columnas sin encerrarlas.
+   NN/g aconseja preferir el blanco al contorno cuando el blanco basta, y
+   aqui basta. */
+.d2-prob-tri__lista li {
+  padding-top: var(--d2-e3);
+  border-top: 2px solid var(--c-verde);
+}
+
+/* El numeral se pinta desde CSS, no desde el marcado: es ritmo visual, no
+   estructura. Un lector de pantalla no lo anuncia, asi que no afirma un
+   orden que estos tres puntos no tienen. */
+.d2-prob-tri__lista li::before {
+  content: "0" counter(list-item);
+  display: block;
+  margin-bottom: var(--d2-e2);
+  font-size: .8125rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .06em;
+  color: var(--c-verde-hover);
+}
+
+.d2-prob-tri__lista h3 {
+  margin: 0 0 var(--d2-e1);
+  font-size: clamp(1.0625rem, 1rem + .3vw, 1.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.28;
+  color: var(--c-texto);
+}
+
+.d2-prob-tri__lista p {
+  margin: 0;
+  font-size: .9375rem;
+  line-height: 1.58;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+.d2-prob-tri__cierre {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 28px);
+  flex-wrap: wrap;
+  margin-top: clamp(30px, 3.6vw, 44px);
+  padding-top: clamp(22px, 2.6vw, 30px);
+  border-top: 1px solid rgba(2, 51, 0, .1);
+}
+
+.d2-prob-tri__remate {
+  margin: 0;
+  font-size: clamp(1.0625rem, 1rem + .4vw, 1.375rem);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+/* ==========================================================================
+   OPCION 2 — TRES LECTURAS
+
+   Cada punto lleva su grafico. No son ilustraciones: usan el mismo idioma
+   que el panel del hero --linea de datos, area bajo la curva, puntos de
+   lectura, leyenda-- que es como esta pagina habla de energia.
+
+   El intento anterior era un edificio dibujado con lineas sueltas alrededor
+   y no se entendia: un numero dentro de una caja vacia, unas curvas sin
+   origen visible y una linea flotando. El dibujo no decia lo que yo creia
+   que decia.
+
+   Los trazos se dibujan al entrar en pantalla con la tecnica que ya usa el
+   panel del hero: stroke-dasharray igual al largo del trazo y
+   stroke-dashoffset animado hasta cero. No hay movimiento continuo: una
+   pasada y quietos.
+   ========================================================================== */
+
+.d2-prob-lec {
+  padding-block: clamp(38px, 4.2vw, 54px);
+  background: var(--c-blanco, #fff);
+}
+
+.d2-prob-lec__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+.d2-prob-lec__cabecera { max-width: 62ch; }
+
+.d2-prob-lec__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2-prob-lec__lead {
+  margin: var(--d2-e3) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+.d2-prob-lec__lista {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.6vw, 36px);
+  margin: clamp(28px, 3.2vw, 40px) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: lectura;
+}
+
+/* Cada bloque es una tarjeta: el grafico y su texto forman una unidad, y
+   el contorno lo dice sin necesidad de una linea separadora. */
+.d2-prob-lec__lista li {
+  padding: var(--d2-e3);
+  background: var(--d2-tinta);
+  border-radius: var(--d2-radio-md);
+  counter-increment: lectura;
+}
+
+.d2-prob-lec__lista h3 {
+  margin: var(--d2-e3) 0 var(--d2-e1);
+  font-size: clamp(1rem, .96rem + .2vw, 1.125rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.28;
+  color: var(--c-texto);
+}
+
+/* El numeral se genera aqui: es ritmo visual, no estructura. Un lector de
+   pantalla no lo anuncia, asi que no afirma un orden que estos tres puntos
+   no tienen. */
+.d2-prob-lec__lista h3::before {
+  content: "0" counter(lectura) "  ";
+  color: var(--c-verde-hover);
+  font-size: .8125rem;
+  letter-spacing: .06em;
+}
+
+.d2-prob-lec__lista > li > p {
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.56;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* --------------------------------------------------------------------------
+   Los graficos
+   -------------------------------------------------------------------------- */
+
+.d2-lec__grafico {
+  padding: var(--d2-e2);
+  background: var(--c-blanco, #fff);
+  border-radius: var(--d2-radio-sm);
+}
+
+.d2-lec__grafico svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.d2-lec__rejilla line {
+  stroke: rgba(2, 51, 0, .09);
+  stroke-width: 1;
+}
+
+/* Los trazos comparten tratamiento; lo que cambia es que dicen */
+.d2-lec__sube,
+.d2-lec__baja,
+.d2-lec__hueco,
+.d2-lec__pagado,
+.d2-lec__esperado {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Lo que sube: el problema */
+.d2-lec__sube,
+.d2-lec__pagado {
+  stroke: var(--c-verde);
+  stroke-width: 2.4;
+}
+
+/* Lo que baja o se queda plano: la referencia, en gris para no competir */
+.d2-lec__baja,
+.d2-lec__esperado {
+  stroke: #C9C9C9;
+  stroke-width: 2;
+}
+
+.d2-lec__esperado { stroke-dasharray: 5 5; }
+
+/* La linea que no llega a unir las fuentes: discontinua a proposito */
+.d2-lec__hueco {
+  stroke: #C9C9C9;
+  stroke-width: 1.6;
+  stroke-dasharray: 3 6;
+}
+
+.d2-lec__barras rect {
+  fill: var(--c-verde);
+  fill-opacity: .34;
+}
+
+.d2-lec__brecha {
+  fill: var(--c-verde);
+  fill-opacity: .09;
+}
+
+.d2-lec__puntos circle {
+  fill: #fff;
+  stroke: var(--c-verde);
+  stroke-width: 2;
+}
+
+/* --- La leyenda: sin ella los colores no significan nada --- */
+
+.d2-lec__leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px var(--d2-e2);
+  margin: var(--d2-e2) 0 0;
+  font-size: .6875rem;
+  line-height: 1.3;
+  color: var(--c-texto-suave);
+}
+
+.d2-lec__leyenda span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.d2-lec__llave {
+  flex: none;
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--c-verde);
+}
+
+.d2-lec__llave--baja { background: #C9C9C9; }
+
+.d2-lec__llave--plano {
+  background: repeating-linear-gradient(90deg,
+    #C9C9C9 0 4px, transparent 4px 7px);
+}
+
+.d2-lec__llave--barra {
+  height: 10px;
+  width: 8px;
+  border-radius: 2px;
+  background: rgba(46, 144, 43, .34);
+}
+
+/* --------------------------------------------------------------------------
+   EL RESPLANDOR
+
+   Tomado del diseño 3, donde el mapa usa drop-shadow para que los trazos se
+   lean como instrumento encendido y no como dibujo impreso. Es lo que da
+   ese aire de "esto esta midiendo algo".
+
+   Los VALORES no se copian. Alli el fondo es oscuro (#0b1410) y el
+   resplandor va al 12% de opacidad: sobre blanco, a esa intensidad, no se
+   ve nada. Se sube y se cierra el radio, que es lo que hace falta para que
+   funcione sobre claro.
+
+   Solo lo llevan las lineas que representan el problema --lo que sube, lo
+   que se paga-- porque el resplandor dirige la mirada y ahi es donde debe
+   ir. Las lineas grises de referencia se quedan planas a proposito: son el
+   suelo contra el que se compara, no el dato.
+
+   No va en las otras dos variantes. El triptico se apoya en texto alineado
+   y la comparativa en el emparejamiento horizontal; ahi el resplandor
+   seria adorno sin funcion.
+   -------------------------------------------------------------------------- */
+
+.d2-lec__sube,
+.d2-lec__pagado {
+  filter: drop-shadow(0 0 5px rgba(46, 144, 43, .34));
+}
+
+/* Los puntos marcan el final del recorrido: llevan algo mas de intensidad
+   para que se lean como una lectura tomada, no como un adorno del trazo. */
+.d2-lec__puntos circle {
+  filter: drop-shadow(0 0 4px rgba(46, 144, 43, .42));
+}
+
+/* --------------------------------------------------------------------------
+   La tarjeta responde al raton
+
+   Del mismo sitio: en el mapa del diseño 3 las burbujas cambian de relleno,
+   trazo y resplandor en .18s al señalarlas. Aqui el gesto es el mismo pero
+   sobre la tarjeta entera, porque lo que se mira es el grafico con su
+   texto, no un punto suelto.
+
+   El grafico sube de intensidad y la tarjeta se aclara. Nada se mueve de
+   sitio: en una fila de tres, desplazar una descoloca la lectura de las
+   otras dos.
+   -------------------------------------------------------------------------- */
+
+.d2-prob-lec__lista li {
+  transition: background-color .18s ease;
+}
+
+.d2-prob-lec__lista li:hover {
+  background: #EDF6ED;
+}
+
+.d2-lec__sube,
+.d2-lec__pagado,
+.d2-lec__puntos circle,
+.d2-lec__barras rect,
+.d2-lec__brecha {
+  transition: filter .18s ease, fill-opacity .18s ease;
+}
+
+.d2-prob-lec__lista li:hover .d2-lec__sube,
+.d2-prob-lec__lista li:hover .d2-lec__pagado {
+  filter: drop-shadow(0 0 8px rgba(46, 144, 43, .5));
+}
+
+.d2-prob-lec__lista li:hover .d2-lec__puntos circle {
+  filter: drop-shadow(0 0 7px rgba(46, 144, 43, .58));
+}
+
+/* Las barras y el area suben de cuerpo sin cambiar de color: el dato es el
+   mismo, solo se mira mas de cerca. */
+.d2-prob-lec__lista li:hover .d2-lec__barras rect { fill-opacity: .46; }
+.d2-prob-lec__lista li:hover .d2-lec__brecha { fill-opacity: .14; }
+
+/* Sin movimiento: el resplandor se queda fijo --es materia, no animacion--
+   pero las transiciones se cortan. */
+@media (prefers-reduced-motion: reduce) {
+  .d2-prob-lec__lista li,
+  .d2-lec__sube,
+  .d2-lec__pagado,
+  .d2-lec__puntos circle,
+  .d2-lec__barras rect,
+  .d2-lec__brecha {
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   El trazado
+
+   Cada trazo se dibuja de un extremo al otro. El largo se declara aqui y no
+   se mide con JavaScript: son trazos fijos, y hacerlo en CSS mantiene la
+   seccion funcionando con el script desactivado.
+
+   Los valores estan por encima del largo real de cada camino; sobrar no se
+   nota, quedarse corto dejaria el trazo sin terminar.
+   -------------------------------------------------------------------------- */
+
+@keyframes d2-lec-trazar {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes d2-lec-aparecer {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes d2-lec-crecer {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+.d2-lec__sube,
+.d2-lec__baja,
+.d2-lec__pagado,
+.d2-lec__esperado,
+.d2-lec__hueco {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: d2-lec-trazar 1.25s cubic-bezier(.33, 1, .68, 1) .25s forwards;
+}
+
+/* La linea gris de referencia entra antes: primero el suelo, luego el dato
+   que se compara con el. */
+.d2-lec__baja,
+.d2-lec__esperado { animation-delay: .1s; }
+
+.d2-lec__hueco { animation-delay: .5s; }
+
+/* Las barras crecen desde su base */
+.d2-lec__barras rect {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: d2-lec-crecer .6s cubic-bezier(.33, 1, .68, 1) both;
+}
+
+.d2-lec__barras rect:nth-child(1) { animation-delay: .16s; }
+.d2-lec__barras rect:nth-child(2) { animation-delay: .24s; }
+.d2-lec__barras rect:nth-child(3) { animation-delay: .32s; }
+.d2-lec__barras rect:nth-child(4) { animation-delay: .40s; }
+.d2-lec__barras rect:nth-child(5) { animation-delay: .48s; }
+
+/* El area y los puntos entran cuando la linea ya llego: marcan el final del
+   recorrido, no lo acompañan. */
+.d2-lec__brecha {
+  animation: d2-lec-aparecer .7s ease 1.15s both;
+}
+
+.d2-lec__puntos circle {
+  animation: d2-lec-aparecer .45s ease both;
+}
+
+.d2-lec__puntos circle:nth-child(1) { animation-delay: 1.3s; }
+.d2-lec__puntos circle:nth-child(2) { animation-delay: 1.42s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .d2-lec__sube,
+  .d2-lec__baja,
+  .d2-lec__pagado,
+  .d2-lec__esperado,
+  .d2-lec__hueco {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .d2-lec__barras rect,
+  .d2-lec__brecha,
+  .d2-lec__puntos circle {
+    transform: none;
+    opacity: 1;
+    animation: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   El cierre
+   -------------------------------------------------------------------------- */
+
+.d2-prob-lec__cierre {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 28px);
+  flex-wrap: wrap;
+  margin-top: clamp(24px, 2.8vw, 34px);
+  padding-top: clamp(20px, 2.4vw, 28px);
+  border-top: 1px solid rgba(2, 51, 0, .1);
+}
+
+.d2-prob-lec__remate {
+  margin: 0;
+  font-size: clamp(1.0625rem, 1rem + .4vw, 1.375rem);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .d2-prob-lec__lista { grid-template-columns: 1fr; }
+
+  /* En una columna la tarjeta se lee mejor con el grafico al lado del
+     texto que encima: ocupa la mitad de alto. */
+  .d2-prob-lec__lista li {
+    display: grid;
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1fr);
+    grid-template-areas:
+      "grafico titulo"
+      "grafico texto";
+    column-gap: var(--d2-e3);
+    align-items: start;
+  }
+
+  .d2-lec__grafico { grid-area: grafico; }
+  .d2-prob-lec__lista h3 { grid-area: titulo; margin-top: 0; }
+  .d2-prob-lec__lista > li > p { grid-area: texto; }
+}
+
+@media (max-width: 560px) {
+  /* Ya no cabe al lado: vuelve a apilarse */
+  .d2-prob-lec__lista li {
+    grid-template-columns: 1fr;
+    grid-template-areas: "grafico" "titulo" "texto";
+  }
+
+  .d2-prob-lec__lista h3 { margin-top: var(--d2-e3); }
+}
+
+/* ==========================================================================
+   OPCION 3 — HOY / CON REDE
+
+   Eje de lectura distinto: se comparan dos columnas de lado a lado en vez
+   de recorrer tres puntos hacia abajo.
+
+   La columna derecha describe, no amenaza. El encuadre de perdida no aporta
+   --219 estudios, r = .01-- y con quien gasta un presupuesto ajeno es aun
+   mas debil, asi que no hay nada que ganar dramatizando el coste.
+   ========================================================================== */
+
+.d2-prob-comp__cabecera {
+  max-width: 62ch;
+}
+
+.d2-prob-comp__tabla {
+  margin-top: clamp(24px, 2.8vw, 34px);
+}
+
+.d2-prob-comp__encabezados {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .9fr);
+  gap: clamp(20px, 2.6vw, 40px);
+  padding-bottom: var(--d2-e2);
+  border-bottom: 1px solid rgba(2, 51, 0, .12);
+}
+
+.d2-prob-comp__eti {
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+.d2-prob-comp__eti--rede { color: var(--c-verde-hover); }
+
+.d2-prob-comp__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2-prob-comp__lista li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .9fr);
+  gap: clamp(20px, 2.6vw, 40px);
+  align-items: start;
+  padding-block: clamp(14px, 1.7vw, 20px);
+  border-bottom: 1px solid rgba(2, 51, 0, .08);
+}
+
+.d2-prob-comp__hoy h3 {
+  margin: 0 0 6px;
+  font-size: 1.0625rem;
+  font-weight: var(--fw-extrabold);
+  line-height: 1.26;
+  color: var(--c-texto);
+}
+
+.d2-prob-comp__hoy p {
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.56;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* La columna de Rede va sobre tinta: la separa sin necesidad de una linea
+   vertical, que en una tabla de tres filas se lee como reja. */
+.d2-prob-comp__rede {
+  align-self: stretch;
+  padding: var(--d2-e2) var(--d2-e3);
+  background: var(--d2-tinta);
+  border-radius: var(--d2-radio-md);
+}
+
+.d2-prob-comp__rede p {
+  display: flex;
+  gap: var(--d2-e2);
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.5;
+  color: var(--c-texto);
+}
+
+/* La marca de verificacion se dibuja con dos bordes girados: no hace falta
+   un SVG por fila para un gesto de 10px. */
+.d2-prob-comp__marca {
+  flex: none;
+  width: 11px;
+  height: 6px;
+  margin-top: 5px;
+  border-left: 2px solid var(--c-verde);
+  border-bottom: 2px solid var(--c-verde);
+  transform: rotate(-45deg);
+}
+
+.d2-prob-comp__cierre {
+  margin-top: clamp(20px, 2.4vw, 28px);
+}
+
+/* ==========================================================================
+   ENTRADA
+
+   Una sola pasada al aparecer, y despues quietas. Sin movimiento continuo:
+   nada que obligue a un control de pausa ni que compita con la lectura.
+   ========================================================================== */
+
+@keyframes d2-prob-entra {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.d2-prob-tri__cabecera,
+.d2-prob-tri__lista li,
+.d2-prob-tri__cierre,
+.d2-prob-lec__cabecera,
+.d2-prob-lec__lista li,
+.d2-prob-comp__cabecera,
+.d2-prob-comp__tabla,
+.d2-prob-comp__cierre {
+  animation: d2-prob-entra .55s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+/* Las columnas entran escalonadas, para que se lean una detras de otra en
+   vez de aparecer las tres de golpe. */
+.d2-prob-tri__lista li:nth-child(1) { animation-delay: .06s; }
+.d2-prob-tri__lista li:nth-child(2) { animation-delay: .13s; }
+.d2-prob-tri__lista li:nth-child(3) { animation-delay: .20s; }
+.d2-prob-tri__cierre { animation-delay: .28s; }
+
+.d2-prob-lec__lista li:nth-child(1) { animation-delay: .06s; }
+.d2-prob-lec__lista li:nth-child(2) { animation-delay: .13s; }
+.d2-prob-lec__lista li:nth-child(3) { animation-delay: .20s; }
+.d2-prob-comp__tabla { animation-delay: .08s; }
+.d2-prob-comp__cierre { animation-delay: .16s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .d2-prob-tri__cabecera,
+  .d2-prob-tri__lista li,
+  .d2-prob-tri__cierre,
+  .d2-prob-lec__cabecera,
+  .d2-prob-lec__lista li,
+  .d2-prob-comp__cabecera,
+  .d2-prob-comp__tabla,
+  .d2-prob-comp__cierre {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 980px) {
+}
+
+@media (max-width: 860px) {
+  .d2-prob-tri__lista { grid-template-columns: 1fr; gap: var(--d2-e4); }
+
+  /* Los encabezados de columna dejan de tener sentido cuando las dos
+     columnas se apilan. */
+  .d2-prob-comp__encabezados { display: none; }
+
+  .d2-prob-comp__lista li {
+    grid-template-columns: 1fr;
+    gap: var(--d2-e3);
+  }
+}
+
+
+/* ==========================================================================
+   LA CALCULADORA — TRES VARIANTES
+
+   La logica no cambia en ninguna: los trece benchmarks de BC Hydro, la
+   formula y los campos son los mismos. Lo que cambia es CUANDO Y DONDE
+   aparece el numero, que es lo unico que de verdad distingue una forma de
+   otra en una herramienta como esta.
+
+     1  Panel unico      todos los campos a la vista, resultado al lado
+     2  Pantalla partida campos a la izquierda, resultado fijo a la derecha
+     3  Asistente        la actual, una pregunta por pantalla
+
+   El copy es el aprobado, literal, en las tres.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Comun a las tres
+   -------------------------------------------------------------------------- */
+
+.d2 .calc {
+  padding-block: clamp(38px, 4.2vw, 56px);
+  background: var(--d2-tinta);
+  border-block: 1px solid rgba(2, 51, 0, .07);
+}
+
+.d2 .calc__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+.d2 .calc__intro { max-width: 62ch; }
+
+.d2 .calc__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2 .calc__lead {
+  margin: var(--d2-e3) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* El panel de campos y el de resultado, con el tratamiento del diseño 2:
+   superficie blanca sobre la tinta, esquinas del sistema. */
+.d2 .calc__panel {
+  display: grid;
+  gap: clamp(16px, 2vw, 28px);
+  margin-top: clamp(26px, 3vw, 38px);
+}
+
+/* El panel interior se queda OSCURO, como en el diseño 1.
+
+   No es una eleccion estetica: todo el texto de dentro --titulos de paso,
+   etiquetas, campos, bordes-- esta declarado en blanco porque asume ese
+   fondo. Poner una superficie clara aqui dejaba texto blanco sobre blanco
+   y la calculadora se veia vacia.
+
+   Repintar las treinta reglas de texto seria reescribir el componente. Se
+   conserva su fondo, que ademas es su identidad: el panel oscuro sobre la
+   seccion clara es lo que lo separa del resto de la pagina. */
+.d2 .calc__panel {
+  padding: clamp(18px, 2.4vw, 30px);
+  background: var(--c-superficie-oscura);
+  border-radius: var(--d2-radio-lg);
+}
+
+/* --------------------------------------------------------------------------
+   Los campos abiertos (variantes 1 y 2)
+
+   style.css oculta los pasos inactivos con display:none, que es correcto
+   para el asistente. Aqui se muestran los cuatro, asi que se revierte solo
+   dentro de las variantes que lo piden.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc--unico .paso-calc,
+.d2 .calc--partido .paso-calc {
+  display: block;
+}
+
+.d2 .calc__campos {
+  display: grid;
+  gap: clamp(16px, 2vw, 24px);
+}
+
+/* En dos columnas: apiladas, las cuatro preguntas daban casi 1900px de
+   alto. Son preguntas cortas, no un formulario largo. */
+@media (min-width: 901px) {
+  .d2 .calc--unico .calc__campos,
+  .d2 .calc--partido .calc__campos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(18px, 2.2vw, 28px);
+  }
+
+  /* El filo separador vuelve a ser horizontal solo entre filas: con dos
+     columnas, un borde superior en cada campo dibujaba una reja. */
+  .d2 .calc--unico .calc__campos > .paso-calc + .paso-calc,
+  .d2 .calc--partido .calc__campos > .paso-calc + .paso-calc {
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+
+/* Cada pregunta se separa de la siguiente con un filo, no con una caja:
+   son partes de un mismo formulario, no cuatro bloques sueltos. */
+.d2 .calc__campos > .paso-calc + .paso-calc {
+  padding-top: clamp(16px, 2vw, 24px);
+  border-top: 1px solid rgba(2, 51, 0, .08);
+}
+
+/* Con los cuatro a la vista, el titulo de cada pregunta baja de rango: ya
+   no encabeza una pantalla, encabeza un campo. */
+.d2 .calc--unico .paso-calc__titulo,
+.d2 .calc--partido .paso-calc__titulo {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.d2 .calc--unico .paso-calc__ayuda,
+.d2 .calc--partido .paso-calc__ayuda {
+  font-size: .8125rem;
+  line-height: 1.5;
+}
+
+/* El boton Atras no tiene sentido sin pasos; el de avanzar se queda porque
+   es el que dispara el calculo. */
+.d2 .calc--unico #btn-atras,
+.d2 .calc--partido #btn-atras {
+  display: none;
+}
+
+/* ==========================================================================
+   OPCION 1 — PANEL UNICO
+
+   Campos y resultado uno al lado del otro, ambos en el flujo.
+
+   Es la disposicion mejor respaldada por la evidencia: en el estudio de
+   Iftikhar et al. (60 pruebas contrabalanceadas) la pagina unica gano al
+   multipagina en usabilidad -76 frente a 67- y en errores -21 frente a 35-.
+   Y Baymard: "el numero de campos afecta a la usabilidad mucho mas que el
+   numero de pasos".
+
+   Sin animacion mas alla de la entrada: el numero esta siempre presente, no
+   hay nada que revelar.
+   ========================================================================== */
+
+@media (min-width: 901px) {
+  .d2 .calc--unico .calc__panel {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+    align-items: start;
+  }
+}
+
+/* ==========================================================================
+   OPCION 2 — PANTALLA PARTIDA
+
+   Igual reparto, pero el resultado queda fijo mientras se rellena: acompaña
+   en vez de esperar al final.
+
+   Es la unica de las tres donde el numero se ve cambiar, y por eso es la que
+   lleva animacion.
+   ========================================================================== */
+
+/* (el reparto de columnas de la V2 se sustituyo por el tablero: ver el
+   bloque VARIANTE 2 — EL TABLERO mas abajo) */
+
+/* La cifra cambia con una transicion cruzada, no con un contador
+   ascendente: un contador teatraliza un numero que se esta presentando
+   como benchmark y no como garantia. */
+.d2 .calc--partido #cifra {
+  transition: opacity .3s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .calc--partido #cifra.es-incompleto {
+  opacity: .55;
+}
+
+/* --------------------------------------------------------------------------
+   El resplandor del resultado
+
+   Mismo recurso que los graficos de la seccion del problema, tomado del
+   mapa del diseño 3: el dato se lee como algo encendido y no como texto
+   impreso. Solo en esta variante, que es donde el numero es el centro de
+   atencion mientras se rellena.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc--partido .resultado__cifra {
+  text-shadow: 0 0 18px rgba(46, 144, 43, .18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .calc--partido #cifra { transition: none; }
+}
+
+/* ==========================================================================
+   OPCION 3 — ASISTENTE POR PASOS
+
+   La que ya existe, sin cambios de estructura. Solo se le da el envoltorio
+   del diseño 2 para que compare en igualdad con las otras dos.
+
+   Su inconveniente es real y conviene tenerlo presente al elegir: el numero
+   queda oculto hasta el final, que es la peor posicion para una herramienta
+   cuyo valor ES el numero.
+   ========================================================================== */
+
+@media (min-width: 901px) {
+  .d2 .calc--pasos .calc__panel {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+    align-items: start;
+  }
+}
+
+/* La barra de progreso no se anima en bucle: una barra en movimiento
+   continuo es una exposicion de nivel A bajo WCAG 2.2.2. Aqui solo cambia
+   de ancho cuando cambia el paso. */
+.d2 .calc--pasos .barra__fill {
+  transition: width .4s cubic-bezier(.32, .72, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .calc--pasos .barra__fill { transition: none; }
+}
+
+/* ==========================================================================
+   ENTRADA
+
+   Una pasada al aparecer y despues quietas, como el resto de la pagina.
+   ========================================================================== */
+
+@keyframes d2-calc-entra {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.d2 .calc__intro,
+.d2 .calc .pasos,
+.d2 .calc .flip {
+  animation: d2-calc-entra .55s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .calc .pasos { animation-delay: .08s; }
+.d2 .calc .flip  { animation-delay: .16s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .calc__intro,
+  .d2 .calc .pasos,
+  .d2 .calc .flip {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  /* En una columna el resultado va debajo, que es el orden de lectura
+     natural: primero se rellena, luego se mira. */
+  .d2 .calc__panel { grid-template-columns: 1fr; }
+
+  /* El sticky no aporta nada cuando el carril ocupa todo el ancho */
+  .d2 .calc--partido .flip { position: static; }
+}
+
+/* --------------------------------------------------------------------------
+   RITMO: TAMAÑOS COHERENTES Y AIRE
+
+   Tres cosas medidas que habia que arreglar:
+
+     1. Siete anchos distintos de campo (229 a 366px) en la misma columna.
+        La causa: los campos viven en contenedores flex y se encogian a su
+        contenido, asi que el sufijo "sq ft" o el prefijo "$" les robaban
+        ancho. Ahora todos ocupan su columna entera.
+
+     2. Seis alturas distintas (51 a 89px), por la misma razon: el relleno
+        variaba segun el campo. Se unifica con una altura minima comun.
+
+     3. El boton pegado al ultimo campo, sin separacion (0px medidos). En el
+        asistente se nota menos porque hay un hueco grande, pero en las
+        variantes abiertas quedaba encima.
+   -------------------------------------------------------------------------- */
+
+/* Los campos llenan su columna. `min-width: 0` es lo que permite que un
+   elemento flex se encoja por debajo de su contenido; sin el, un desplegable
+   con una opcion larga empuja y desborda. */
+.d2 .calc .campo__wrap {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.d2 .calc .campo__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+}
+
+/* Altura comun para todos: campos, desplegables y el selector de region.
+   48px cumple ademas el tamaño minimo de objetivo tactil (WCAG 2.5.8, que
+   pide 24x24 como minimo absoluto y recomienda mas). */
+.d2 .calc .campo__input,
+.d2 .calc select.campo__input,
+.d2 .calc .duo__btn {
+  min-height: 52px;
+  padding-block: 0;
+}
+
+/* El desplegable necesita sitio para su flecha; sin este relleno el texto
+   quedaba debajo de ella. */
+.d2 .calc select.campo__input {
+  padding-right: 44px;
+}
+
+/* Prefijo y sufijo dejan de robar ancho al campo: se superponen. Antes el
+   "sq ft" empujaba el input a 229px mientras un desplegable media 366. */
+.d2 .calc .campo__wrap:has(.campo__prefijo) .campo__input { padding-left: 30px; }
+.d2 .calc .campo__wrap:has(.campo__sufijo) .campo__input { padding-right: 58px; }
+
+.d2 .calc .campo__prefijo,
+.d2 .calc .campo__sufijo {
+  position: absolute;
+  pointer-events: none;
+}
+
+.d2 .calc .campo__wrap { position: relative; }
+.d2 .calc .campo__prefijo { left: 16px; }
+.d2 .calc .campo__sufijo { right: 16px; }
+
+/* Respaldo para navegadores sin :has(): el campo sigue ocupando todo y el
+   texto no se solapa porque el relleno base ya reserva sitio. */
+@supports not selector(:has(*)) {
+  .d2 .calc .campo__prefijo,
+  .d2 .calc .campo__sufijo { position: static; }
+  .d2 .calc .campo__input { padding-inline: 16px; }
+}
+
+/* --- Aire entre elementos ------------------------------------------------ */
+
+/* Separacion constante entre etiqueta y campo, y entre campos. */
+.d2 .calc .campo {
+  display: grid;
+  gap: 6px;
+}
+
+.d2 .calc .campo + .campo {
+  margin-top: var(--d2-e3);
+}
+
+/* El bloque de opciones respira del texto de ayuda que lo precede. Los
+   13px extra igualan su arranque con el del selector vecino, que lleva
+   etiqueta encima (19px + 6 de hueco - 12 que la ayuda ya deja). */
+.d2 .calc .opciones {
+  display: grid;
+  gap: var(--d2-e2);
+  margin-top: calc(var(--d2-e3) + 13px);
+}
+
+/* Las dos tarjetas de eleccion, con la misma altura */
+.d2 .calc .opcion {
+  min-height: 76px;
+  padding: var(--d2-e3);
+}
+
+/* El selector de region: dos botones que comparten ancho */
+.d2 .calc .duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  width: 100%;
+}
+
+/* --- El boton, separado del ultimo campo --------------------------------- */
+
+.d2 .calc .pasos__nav {
+  margin-top: clamp(20px, 2.4vw, 28px);
+}
+
+/* En las variantes abiertas el boton cierra las dos columnas, asi que se le
+   da un filo que lo separa del formulario. */
+/* .pasos es flex en columna: los campos, el boton y la nota se apilan.
+   El nav NO esta dentro de la rejilla de campos, asi que grid-column no le
+   afecta -- por eso una version anterior lo dejaba solapado. */
+.d2 .calc--unico .pasos,
+.d2 .calc--partido .pasos {
+  display: flex;
+  flex-direction: column;
+}
+
+/* El boton y la nota estan en position:absolute, anclados al fondo del
+   panel. Tiene sentido en el asistente --todos los pasos ocupan el mismo
+   alto y el boton queda siempre en el mismo sitio-- pero con los cuatro
+   campos abiertos el panel crece y el boton se quedaba encima del ultimo
+   campo, solapado 25px.
+
+   Aqui vuelven al flujo, debajo de los campos. */
+.d2 .calc--unico .pasos__nav,
+.d2 .calc--partido .pasos__nav,
+.d2 .calc--unico .calc__nota,
+.d2 .calc--partido .calc__nota {
+  position: static;
+}
+
+.d2 .calc--unico .pasos__nav,
+.d2 .calc--partido .pasos__nav {
+  margin-top: clamp(20px, 2.4vw, 28px);
+  padding-top: clamp(18px, 2.2vw, 24px);
+  border-top: 1px solid rgba(255, 255, 255, .1);
+}
+
+/* El relleno inferior reservaba sitio para el boton absoluto; sin el
+   sobra un hueco grande al final. */
+.d2 .calc--unico .pasos,
+.d2 .calc--partido .pasos {
+  padding-bottom: 0;
+}
+
+/* --- El asistente ---
+
+   Aqui el boton SI se queda anclado abajo: es lo que hace que no salte de
+   sitio al cambiar de paso. Pero en el paso 1 las dos opciones llegan
+   justo hasta el, sin separacion --0px medidos-- y se leian pegadas.
+
+   El paso reserva por dentro el alto del boton mas su aire, asi que el
+   contenido nunca puede llegar a tocarlo. */
+.d2 .calc--pasos .paso-calc {
+  padding-bottom: 24px;
+}
+
+/* Las dos tarjetas de eleccion, algo mas separadas entre si */
+.d2 .calc--pasos .opciones {
+  gap: var(--d2-e3);
+}
+
+/* La nota legal, separada del boton */
+.d2 .calc .calc__nota {
+  margin-top: var(--d2-e3);
+}
+
+/* --- Los campos, dentro de la rejilla de dos columnas -------------------- */
+
+@media (min-width: 901px) {
+  /* Cada pregunta ocupa su celda entera y las cuatro se alinean arriba, de
+     modo que sus campos caen a la misma altura aunque el texto de ayuda
+     tenga distinto numero de lineas. */
+  .d2 .calc--unico .calc__campos,
+  .d2 .calc--partido .calc__campos {
+    align-items: start;
+  }
+
+  .d2 .calc--unico .paso-calc,
+  .d2 .calc--partido .paso-calc {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* La cabecera de cada pregunta (titulo + ayuda) reserva su altura: asi
+     los campos de una misma fila arrancan exactamente en el mismo punto,
+     tenga la ayuda dos lineas o tres. Empujarlos al fondo con flex los
+     alineaba por abajo, y arriba quedaban dentados hasta 19px. */
+  .d2 .calc--unico .paso-calc__titulo {
+    min-height: 1.4em;
+  }
+
+  .d2 .calc--unico .paso-calc__ayuda {
+    flex: none;
+    min-height: 4.6em;   /* tres lineas al ancho de media rejilla */
+    margin-bottom: var(--d2-e2);
+  }
+}
+
+/* ==========================================================================
+   VARIANTE 2 — LO QUE DE VERDAD LA DISTINGUE
+
+   Una version anterior solo cambiaba el reparto de columnas y añadia
+   position:sticky. Medido al lado de la variante 1, era practicamente la
+   misma pantalla: la unica diferencia solo se apreciaba al desplazarse.
+
+   Lo que la distingue ahora es que el resultado RESPONDE mientras se
+   rellena. Con cuatro preguntas sin responder, lo honesto no es "$0" sino
+   reconocer que el margen es enorme; a medida que llegan datos, se cierra.
+
+   Kerr, van der Bles y Spiegelhalter (Royal Society Open Science, 2023,
+   n=10.519) midieron que mostrar la incertidumbre con una cuantificacion
+   apenas baja la confianza en el numero y no daña la confianza en la
+   fuente, mientras que cubrirse solo con palabras hace mas daño.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   El indicador de confianza
+   -------------------------------------------------------------------------- */
+
+.d2 .calc--partido .d2-margen {
+  margin: var(--d2-e3) 0;
+  padding: var(--d2-e3);
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: var(--d2-radio-sm);
+  transition: border-color .4s cubic-bezier(.32, .72, 0, 1),
+              background-color .4s cubic-bezier(.32, .72, 0, 1);
+}
+
+/* Completo, la caja se tiñe de verde: es la señal de que ya no falta nada */
+.d2 .calc--partido .d2-margen.esta-completo {
+  background: rgba(46, 144, 43, .1);
+  border-color: rgba(46, 144, 43, .38);
+}
+
+.d2 .calc--partido .d2-margen__cab {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--d2-e2);
+  margin-bottom: var(--d2-e2);
+}
+
+.d2 .calc--partido .d2-margen__eti {
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .62);
+}
+
+.d2 .calc--partido .d2-margen__pct {
+  font-size: .9375rem;
+  font-weight: var(--fw-extrabold);
+  color: #fff;
+  font-variant-numeric: tabular-nums;   /* el ancho no baila al cambiar */
+}
+
+.d2 .calc--partido .d2-margen.esta-completo .d2-margen__pct {
+  color: #7BD877;   /* verde claro: sobre fondo oscuro el de interfaz no llega */
+}
+
+/* --- La barra --- */
+
+.d2 .calc--partido .d2-margen__via {
+  height: 5px;
+  background: rgba(255, 255, 255, .12);
+  border-radius: var(--d2-radio-full);
+  overflow: hidden;
+}
+
+/* Se anima transform y no width: el navegador lo resuelve sin recalcular
+   el diseño en cada fotograma. */
+.d2 .calc--partido .d2-margen__lleno {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(123, 216, 119, .55), #7BD877);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .62s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .calc--partido .d2-margen__nota {
+  margin: var(--d2-e2) 0 0;
+  font-size: .75rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, .62);
+}
+
+/* --------------------------------------------------------------------------
+   La cifra
+
+   Mientras faltan datos se atenua: sigue leyendose, pero dice por si misma
+   que aun no esta asentada. Es preferible a ocultarla -- gatear el numero
+   crea desconfianza (NN/g) -- y a fingir que ya es definitiva.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc--partido .resultado__cifra {
+  transition: opacity .4s cubic-bezier(.32, .72, 0, 1),
+              text-shadow .4s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .calc--partido .resultado.es-provisional .resultado__cifra {
+  opacity: .68;
+  text-shadow: none;
+}
+
+/* Con las cuatro respuestas, la cifra se enciende. Es el mismo recurso que
+   los graficos de la seccion del problema, tomado del mapa del diseño 3:
+   el dato se lee como algo vivo y no como texto impreso. */
+.d2 .calc--partido .resultado:not(.es-provisional) .resultado__cifra {
+  opacity: 1;
+  text-shadow: 0 0 22px rgba(123, 216, 119, .32);
+}
+
+/* La transicion cruzada al cambiar de valor. Sin contador ascendente: un
+   contador teatraliza una cifra que se presenta como benchmark. */
+@keyframes d2-cifra-cambia {
+  0%   { opacity: .25; transform: translateY(4px); }
+  100% { opacity: 1;   transform: none; }
+}
+
+.d2 .calc--partido .resultado__cifra.esta-cambiando {
+  animation: d2-cifra-cambia .42s cubic-bezier(.32, .72, 0, 1);
+}
+
+/* --------------------------------------------------------------------------
+   El carril
+
+   Ademas de quedarse fijo al desplazarse, se separa visualmente del
+   formulario: superficie propia y un filo verde a la izquierda que lo marca
+   como la zona de lectura, no de entrada.
+   -------------------------------------------------------------------------- */
+
+/* (el filo verde a la izquierda se elimino: una barra lateral de acento
+   es un cliche que abarata el panel, y el tablero ya separa el resultado
+   por posicion, no por adorno) */
+
+/* --------------------------------------------------------------------------
+   Las filas del perfil se marcan al llegar
+
+   Cada respuesta enciende su fila. Es el mismo gesto que el relevo de logos:
+   lo que cambia se señala solo, sin que haya que buscarlo.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc--partido .perfil__fila {
+  transition: opacity .34s cubic-bezier(.32, .72, 0, 1);
+  opacity: .5;
+}
+
+.d2 .calc--partido .perfil__fila.is-lleno {
+  opacity: 1;
+}
+
+.d2 .calc--partido .perfil__punto {
+  transition: background-color .34s ease, box-shadow .34s ease;
+}
+
+.d2 .calc--partido .perfil__fila.is-lleno .perfil__punto {
+  background: #7BD877;
+  box-shadow: 0 0 8px rgba(123, 216, 119, .5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .calc--partido .d2-margen,
+  .d2 .calc--partido .d2-margen__lleno,
+  .d2 .calc--partido .resultado__cifra,
+  .d2 .calc--partido .perfil__fila,
+  .d2 .calc--partido .perfil__punto {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   LA CALCULADORA — PULIDO Y EL TABLERO
+
+   Correcciones medidas sobre las tres variantes, y el rediseño de la
+   segunda, que hasta ahora solo se distinguia de la primera por un sticky
+   invisible sin desplazarse.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. LA TARJETA QUE GIRA YA NO RECORTA SU REVERSO
+
+   Las dos caras iban superpuestas con el dorso en absoluto, y el contenedor
+   tomaba la altura SOLO del frente. El formulario del reverso es mas alto:
+   el boton de enviar y la nota legal se salian de la caja.
+
+   Con las dos caras apiladas en la misma celda de una rejilla, el
+   contenedor mide lo que la cara mas alta, y el giro (que es de opacidad y
+   transform) sigue funcionando igual.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc .flip {
+  display: grid;
+  height: auto;
+}
+
+/* Solo la cara VISIBLE esta en flujo y decide la altura. La oculta va en
+   absoluto y recortada: si las dos contaran, el formulario del reverso
+   --que es mas alto-- inflaria la tarjeta antes de girarla. */
+.d2 .calc .flip__cara {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.d2 .calc .flip__cara--frente { position: static; }
+.d2 .calc .flip__cara--dorso  { position: absolute; inset: 0; overflow: hidden; }
+
+.d2 .calc .flip.girada .flip__cara--frente { position: absolute; inset: 0; overflow: hidden; }
+.d2 .calc .flip.girada .flip__cara--dorso  { position: static; overflow: visible; }
+
+.d2 .calc .resultado {
+  height: auto;
+}
+
+/* La nota legal y el boton del resultado estaban en absoluto, anclados a un
+   fondo que ya no existe con la altura automatica: vuelven al flujo. */
+.d2 .calc .resultado__legal,
+.d2 .calc .salida .resultado__cta {
+  position: static;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  margin-top: var(--d2-e3);
+}
+
+.d2 .calc .flip__cara--frente .resultado {
+  padding-bottom: var(--d2-e4);
+}
+
+/* --------------------------------------------------------------------------
+   2. LA COLUMNA DEL PERFIL YA NO TIENE HUECOS MUERTOS
+
+   La prueba social ($2.94M) llevaba margin-top:auto: se iba al fondo de la
+   columna y dejaba 441px de vacio entre el perfil y ella. El contenido
+   ahora fluye desde arriba con aire constante, y la tarjeta termina donde
+   termina su contenido.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc .espera {
+  gap: var(--d2-e4);
+}
+
+.d2 .calc .prueba {
+  margin-top: 0;
+}
+
+/* En el panel unico la columna del resultado no se estira hasta igualar al
+   formulario: es una tarjeta compacta que acompaña, no una columna que hay
+   que rellenar. */
+@media (min-width: 901px) {
+  .d2 .calc--unico .flip {
+    align-self: start;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. FUERA LA BARRA VERDE DE LA RECOMENDACION
+
+   El acento lateral es un cliche que abarata el bloque. La recomendacion se
+   distingue por su fondo, no por una raya.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc .cierre__recomienda {
+  border-left: 0;
+  background: rgba(123, 216, 119, .1);
+  border-radius: var(--d2-radio-sm);
+}
+
+/* --------------------------------------------------------------------------
+   4. EL PUNTO DEL PASO PENDIENTE LATE
+
+   El primer punto sin rellenar del perfil respira: dice "esto es lo que
+   toca" sin que haya que buscarlo. Se apaga en cuanto la fila se llena.
+
+   El selector coge la primera fila vacia: la primera de todas si no hay
+   nada relleno, o la que sigue a la ultima llena.
+   -------------------------------------------------------------------------- */
+
+@keyframes d2-latido {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(123, 216, 119, .45); opacity: .7; }
+  50%      { box-shadow: 0 0 0 5px rgba(123, 216, 119, 0); opacity: 1; }
+}
+
+.d2 .calc .perfil__fila:not(.is-lleno):first-child .perfil__punto,
+.d2 .calc .perfil__fila.is-lleno + .perfil__fila:not(.is-lleno) .perfil__punto {
+  background: #7BD877;
+  animation: d2-latido 1.8s cubic-bezier(.4, 0, .2, 1) infinite;
+}
+
+/* --------------------------------------------------------------------------
+   5. TODO CAMBIO ES SUAVE
+
+   Cada estado que cambia dentro de la calculadora transita: las tarjetas de
+   eleccion, el foco de los campos, los valores del perfil, y los bloques
+   que aparecen (el adelanto, el resultado, el cierre).
+   -------------------------------------------------------------------------- */
+
+.d2 .calc .opcion {
+  transition: border-color .3s cubic-bezier(.32, .72, 0, 1),
+              background-color .3s cubic-bezier(.32, .72, 0, 1),
+              transform .3s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .calc .opcion:hover {
+  transform: translateY(-1px);
+}
+
+.d2 .calc .opcion.is-elegida {
+  border-color: #7BD877;
+  background: rgba(123, 216, 119, .08);
+}
+
+.d2 .calc .campo__input {
+  transition: border-color .25s ease,
+              box-shadow .25s ease,
+              background-color .25s ease;
+}
+
+.d2 .calc .campo__input:focus {
+  border-color: #7BD877;
+  box-shadow: 0 0 0 3px rgba(123, 216, 119, .18);
+  outline: none;
+}
+
+.d2 .calc .perfil__valor,
+.d2 .calc .perfil__texto {
+  transition: color .3s ease, opacity .3s ease;
+}
+
+/* Los bloques que aparecen entran con la misma curva del resto de la web,
+   no de golpe. El atributo hidden los saca del todo; al quitarse, animan. */
+@keyframes d2-calc-aparece {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.d2 .calc .adelanto:not([hidden]),
+.d2 .calc .salida:not([hidden]),
+.d2 .calc .cierre:not([hidden]),
+.d2 .calc .tras-envio:not([hidden]) {
+  animation: d2-calc-aparece .5s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+/* La cifra del cierre --la que de verdad se ve al calcular-- se enciende
+   como los graficos de la seccion del problema. */
+.d2 .calc .cierre__cifra {
+  color: #7BD877;
+  text-shadow: 0 0 22px rgba(123, 216, 119, .3);
+}
+
+/* ==========================================================================
+   VARIANTE 2 — EL TABLERO
+
+   Rediseñada de arriba a abajo. Antes era la variante 1 con un sticky; la
+   critica era justa.
+
+   La estructura ahora es OTRA: el estado vive en una banda horizontal
+   ARRIBA --las cuatro respuestas como fichas, la barra de confianza, el
+   adelanto del benchmark-- y las preguntas debajo, en una fila de cuatro.
+   Al calcular, el resultado ocupa la banda como protagonista, centrado y
+   encendido, con el formulario de contacto bajo el.
+
+   Los tres diseños se distinguen por DONDE vive el numero:
+     1  en un carril lateral que acompaña
+     2  en una banda protagonista arriba
+     3  oculto hasta el final del asistente
+   ========================================================================== */
+
+@media (min-width: 901px) {
+
+  .d2 .calc--partido .calc__panel {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(14px, 1.8vw, 20px);
+  }
+
+  /* La banda respira menos que una columna: es un estado, no una lectura */
+  .d2 .calc--partido .espera { gap: var(--d2-e3); }
+  .d2 .calc--partido .resultado { padding: clamp(14px, 1.8vw, 20px) clamp(16px, 2vw, 24px); }
+
+  /* Los campos arriba y la banda de estado debajo, siguiendo el orden del
+     documento. Al calcular, el resultado ocupa el sitio de los campos y
+     la banda girada (el formulario de contacto) queda bajo el. */
+
+  /* Las cuatro preguntas en fila. La ayuda se compacta: en formato ficha
+     el titulo ya dice lo que hay que hacer. */
+  .d2 .calc--partido .calc__campos {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: clamp(14px, 1.6vw, 22px);
+  }
+
+  .d2 .calc--partido .paso-calc__ayuda {
+    font-size: .75rem;
+    line-height: 1.45;
+    flex: none;
+    min-height: 5.4em;   /* cuatro lineas a este ancho de columna */
+    margin-bottom: var(--d2-e2);
+  }
+
+  .d2 .calc--partido .paso-calc__titulo {
+    min-height: 2.6em;
+  }
+
+  /* El desfase del nudge de las opciones es distinto a este ancho de
+     columna: 8px en vez de 13. */
+  .d2 .calc--partido .opciones {
+    margin-top: calc(var(--d2-e3) + 8px);
+  }
+
+  /* --- La banda: el perfil como cuatro fichas --------------------------- */
+
+  .d2 .calc--partido .perfil {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--d2-e2);
+  }
+
+  .d2 .calc--partido .perfil__fila {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "punto texto"
+      "valor valor";
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 4px;
+    padding: var(--d2-e2) var(--d2-e3);
+    background: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: var(--d2-radio-sm);
+    transition: border-color .35s cubic-bezier(.32, .72, 0, 1),
+                background-color .35s cubic-bezier(.32, .72, 0, 1);
+  }
+
+  /* La ficha rellena se enciende: borde y fondo suben un punto */
+  .d2 .calc--partido .perfil__fila.is-lleno {
+    border-color: rgba(123, 216, 119, .4);
+    background: rgba(123, 216, 119, .07);
+  }
+
+  .d2 .calc--partido .perfil__punto { grid-area: punto; }
+  .d2 .calc--partido .perfil__texto { grid-area: texto; }
+
+  .d2 .calc--partido .perfil__valor {
+    grid-area: valor;
+    font-weight: var(--fw-bold);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* El adelanto del benchmark, como franja bajo las fichas */
+  .d2 .calc--partido .adelanto {
+    display: flex;
+    align-items: baseline;
+    gap: var(--d2-e2);
+  }
+
+  /* La prueba social no cabe en la banda sin competir con el dato propio:
+     esta variante la cede a las otras dos, que si la muestran. */
+  .d2 .calc--partido .prueba {
+    display: none;
+  }
+
+  /* --- El resultado final, centrado y protagonista ---------------------- */
+
+  .d2 .calc--partido .cierre {
+    text-align: center;
+  }
+
+  .d2 .calc--partido .cierre__cifra {
+    font-size: 40px;   /* el techo del sistema para cifras */
+  }
+
+  .d2 .calc--partido .cierre .desglose,
+  .d2 .calc--partido .cierre__desglose {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--d2-e3);
+    justify-items: center;
+    margin-inline: auto;
+    max-width: 720px;
+  }
+
+  .d2 .calc--partido .cierre__recomienda {
+    max-width: 640px;
+    margin-inline: auto;
+  }
+}
+
+/* ==========================================================================
+   SIN MOVIMIENTO
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .calc .perfil__punto,
+  .d2 .calc .opcion,
+  .d2 .calc .campo__input,
+  .d2 .calc .perfil__valor,
+  .d2 .calc .perfil__texto,
+  .d2 .calc .adelanto:not([hidden]),
+  .d2 .calc .salida:not([hidden]),
+  .d2 .calc .cierre:not([hidden]),
+  .d2 .calc .tras-envio:not([hidden]),
+  .d2 .calc--partido .perfil__fila {
+    animation: none;
+    transition: none;
+  }
+}
+
+
+/* ==========================================================================
+   LA CALCULADORA — DESPLEGABLES, VOLTEO Y PERFIL COMPLETO
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. LOS DESPLEGABLES HABLAN EL IDIOMA DE LA WEB
+
+   El panel de opciones de un <select> lo pinta el sistema operativo: fondo
+   claro, seleccion azul, nada que ver con este diseño.
+
+   Los navegadores modernos permiten adoptarlo con appearance: base-select
+   y estilar cada opcion. Donde no exista soporte se queda el panel nativo,
+   que es feo pero funciona: mejor eso que un widget propio que rompa el
+   teclado o el lector de pantalla.
+   -------------------------------------------------------------------------- */
+
+@supports (appearance: base-select) {
+  .d2 .calc select.campo__input,
+  .d2 .calc select.campo__input::picker(select) {
+    appearance: base-select;
+  }
+
+  .d2 .calc select.campo__input::picker(select) {
+    background: #1F1F1F;
+    border: 1px solid rgba(255, 255, 255, .14);
+    border-radius: var(--d2-radio-sm);
+    padding: 6px;
+    margin-top: 6px;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, .5);
+
+    /* El panel se abre con la misma curva que todo lo demas */
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity .22s cubic-bezier(.32, .72, 0, 1),
+                transform .22s cubic-bezier(.32, .72, 0, 1),
+                overlay .22s allow-discrete,
+                display .22s allow-discrete;
+  }
+
+  .d2 .calc select.campo__input:open::picker(select) {
+    opacity: 1;
+    transform: none;
+  }
+
+  .d2 .calc select.campo__input option {
+    padding: 10px 14px;
+    border-radius: calc(var(--d2-radio-sm) - 4px);
+    background: transparent;
+    color: rgba(255, 255, 255, .88);
+    font-size: .9375rem;
+    transition: background-color .15s ease, color .15s ease;
+  }
+
+  .d2 .calc select.campo__input option:hover,
+  .d2 .calc select.campo__input option:focus {
+    background: rgba(123, 216, 119, .12);
+  }
+
+  .d2 .calc select.campo__input option:checked {
+    background: rgba(123, 216, 119, .16);
+    color: #7BD877;
+    font-weight: var(--fw-bold);
+  }
+
+  /* La marca de la opcion elegida, con el estilo de la web y no el tic del
+     sistema */
+  .d2 .calc select.campo__input option::checkmark {
+    color: #7BD877;
+    margin-right: 8px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. EL VOLTEO DEL RESULTADO
+
+   Al calcular, el formulario se retira con un giro corto y el resultado
+   entra desde el angulo contrario: la tarjeta parece darse la vuelta y el
+   resultado haber estado siempre detras.
+
+   Es el mismo lenguaje del giro que ya tiene la tarjeta derecha (rotateY
+   corto + desvanecimiento), aplicado a la columna izquierda. El JS de
+   d2-calc-vivo reabre el formulario un instante para que este giro pueda
+   verse: `hidden` a secas es un corte.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc .calc__panel {
+  perspective: 1600px;
+}
+
+@keyframes d2-cara-sale {
+  to { opacity: 0; transform: rotateY(10deg) scale(.97); }
+}
+
+@keyframes d2-cara-entra {
+  from { opacity: 0; transform: rotateY(-10deg) scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+.d2 .calc .pasos.se-va {
+  animation: d2-cara-sale .42s cubic-bezier(.32, .72, 0, 1) both;
+  pointer-events: none;
+}
+
+/* El resultado entra cuando el formulario va por la mitad de su salida:
+   las dos mitades se solapan y se lee como UN giro, no como dos fundidos. */
+.d2 .calc .cierre:not([hidden]) {
+  animation: d2-cara-entra .55s cubic-bezier(.32, .72, 0, 1) .18s both;
+}
+
+/* Formulario saliente y resultado entrante comparten celda en las rejillas
+   de dos columnas: el cruce ocurre en el mismo sitio, al nivel del
+   formulario de contacto, no debajo. */
+@media (min-width: 901px) {
+  .d2 .calc--unico .pasos,
+  .d2 .calc--unico .cierre,
+  .d2 .calc--pasos .pasos,
+  .d2 .calc--pasos .cierre {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
+/* En el tablero (columna flexible) el saliente se despega del flujo durante
+   el giro: si empujara, la banda de abajo daria un salto. */
+.d2 .calc--partido .calc__panel { position: relative; }
+
+.d2 .calc--partido .pasos.se-va {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   3. EL PERFIL COMPLETO EN EL TABLERO: SEIS FICHAS EN DOS FILAS
+
+   Con seis datos, una sola fila los aplasta. Tres por fila respiran y la
+   banda sigue siendo una banda.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 901px) {
+  .d2 .calc--partido .perfil {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .calc .pasos.se-va,
+  .d2 .calc .cierre:not([hidden]) {
+    animation: none;
+  }
+
+  .d2 .calc select.campo__input::picker(select) {
+    transition: none;
+  }
+}
+
+
+/* ==========================================================================
+   LA CALCULADORA — TRES CORRECCIONES MEDIDAS
+
+   1. `hidden` vuelve a mandar. Mis reglas de display sobre .pasos y
+      .adelanto tenian mas especificidad que [hidden], asi que el
+      formulario NUNCA se escondia de verdad al calcular en las variantes
+      abiertas: el atributo estaba puesto, pero el display lo pisaba. Este
+      blindaje corta el problema de raiz para todo el componente.
+
+   2. El indicador de confianza y las fichas viven en la tarjeta BLANCA del
+      perfil, y yo los pinte con texto blanco pensando en el panel oscuro:
+      "Estimate confidence / 100%" era blanco sobre blanco. Todos los
+      colores pasan a la paleta de superficie clara.
+
+   3. El desplegable mostraba dos flechas: la del diseño (el SVG fino del
+      envoltorio) y la que base-select añade por defecto. Se apaga la
+      añadida y se queda la del diseño.
+   ========================================================================== */
+
+/* --- 1. hidden manda --- */
+
+.d2 .calc [hidden] {
+  display: none !important;
+}
+
+/* --- 2. el indicador sobre la tarjeta blanca --- */
+
+.d2 .calc--partido .d2-margen {
+  background: rgba(2, 51, 0, .04);
+  border-color: rgba(2, 51, 0, .12);
+}
+
+.d2 .calc--partido .d2-margen.esta-completo {
+  background: rgba(46, 144, 43, .08);
+  border-color: rgba(46, 144, 43, .38);
+}
+
+.d2 .calc--partido .d2-margen__eti { color: #575757; }
+
+.d2 .calc--partido .d2-margen__pct { color: var(--c-texto, #333); }
+
+.d2 .calc--partido .d2-margen.esta-completo .d2-margen__pct {
+  color: var(--c-verde-hover);   /* 6.41:1 sobre blanco */
+}
+
+.d2 .calc--partido .d2-margen__via { background: rgba(2, 51, 0, .12); }
+
+.d2 .calc--partido .d2-margen__lleno {
+  background: linear-gradient(90deg, rgba(46, 144, 43, .55), var(--c-verde));
+}
+
+.d2 .calc--partido .d2-margen__nota { color: #575757; }
+
+/* Las fichas del tablero, tambien sobre blanco */
+@media (min-width: 901px) {
+  .d2 .calc--partido .perfil__fila {
+    background: rgba(2, 51, 0, .035);
+    border-color: rgba(2, 51, 0, .12);
+  }
+
+  .d2 .calc--partido .perfil__fila.is-lleno {
+    background: rgba(46, 144, 43, .06);
+    border-color: rgba(46, 144, 43, .45);
+  }
+}
+
+/* El punto que late y el punto lleno: verde de interfaz, no el claro, que
+   sobre blanco apenas se ve. */
+.d2 .calc .perfil__fila:not(.is-lleno):first-child .perfil__punto,
+.d2 .calc .perfil__fila.is-lleno + .perfil__fila:not(.is-lleno) .perfil__punto {
+  background: var(--c-verde);
+}
+
+.d2 .calc--partido .perfil__fila.is-lleno .perfil__punto,
+.d2 .calc .perfil__fila.is-lleno .perfil__punto {
+  background: var(--c-verde);
+  box-shadow: 0 0 8px rgba(46, 144, 43, .4);
+}
+
+@keyframes d2-latido {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(46, 144, 43, .45); opacity: .7; }
+  50%      { box-shadow: 0 0 0 5px rgba(46, 144, 43, 0); opacity: 1; }
+}
+
+/* --- 3. una sola flecha en el desplegable --- */
+
+@supports (appearance: base-select) {
+  .d2 .calc select.campo__input::picker-icon {
+    display: none;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   SIN "STEP 1 OF 4" EN LAS VARIANTES ABIERTAS
+
+   El contador y la barra de progreso cuentan un recorrido por pasos que
+   estas dos variantes no tienen: los cuatro campos estan a la vista.
+
+   No se sustituye por otra animacion a proposito: el avance ya lo narran
+   el perfil que se va llenando --con su punto latiendo en lo que toca-- y,
+   en el tablero, la barra de confianza. Un segundo indicador contaria lo
+   mismo dos veces.
+
+   El asistente (variante 3) los conserva: ahi si hay pasos que contar.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc--unico .pasos__cabecera,
+.d2 .calc--partido .pasos__cabecera {
+  display: none;
+}
+
+
+/* ==========================================================================
+   SECCION RUTAS / SOLUTIONS — TRES VARIANTES
+
+   Todo va prefijado .d2 .d2-rutas- para no chocar con las clases genericas
+   .rutas / .ruta del marcado original ni con otras secciones.
+
+   Ni un color a mano: solo tokens de d2.css y tokens.css. Verde #2E902B da
+   4.09:1 sobre blanco, asi que NO se usa en texto pequeno; para eso va
+   --c-verde-hover (#026F00, 6.41:1). Esa regla decide casi todos los
+   colores de texto de este archivo.
+
+   La curva de movimiento es la del header, cubic-bezier(.32,.72,0,1). No se
+   usa --d2-curva porque esa es la de la referencia (.77,0,.175,1) y el
+   contrato fija la otra para las secciones nuevas.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   COMUN A LAS TRES
+
+   Las cabeceras comparten medidas para que al pasar de una variante a otra
+   en el carrusel el titular no salte de sitio. Solo cambia lo que hay
+   debajo, que es lo que se esta comparando.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-rutas-sel,
+.d2 .d2-rutas-esc,
+.d2 .d2-rutas-cmp {
+  padding-block: clamp(38px, 4.2vw, 54px);
+  background: var(--c-blanco, #fff);
+}
+
+.d2 .d2-rutas-sel__inner,
+.d2 .d2-rutas-esc__inner,
+.d2 .d2-rutas-cmp__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+/* 62ch: el lead se corta antes de volverse una linea larga de leer, aunque
+   el contenedor mida 1280. */
+.d2 .d2-rutas-sel__cabecera,
+.d2 .d2-rutas-esc__cabecera,
+.d2 .d2-rutas-cmp__cabecera {
+  max-width: 62ch;
+}
+
+.d2 .d2-rutas-sel__eyebrow,
+.d2 .d2-rutas-esc__eyebrow,
+.d2 .d2-rutas-cmp__eyebrow {
+  margin: 0;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  /* verde oscuro y no --c-verde: a 11px el 4.09:1 del verde claro no pasa */
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-rutas-sel__titulo,
+.d2 .d2-rutas-esc__titulo,
+.d2 .d2-rutas-cmp__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-rutas-sel__lead,
+.d2 .d2-rutas-esc__lead,
+.d2 .d2-rutas-cmp__lead {
+  margin: var(--d2-e3) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* --- El enlace de cada ruta ------------------------------------------------
+   Mismo gesto en las tres: la flecha avanza 3px al pasar el raton, igual
+   que .d2-btn. Es el idioma de movimiento que la pagina ya tiene; inventar
+   otro solo para esta seccion la haria sonar distinta sin motivo. */
+
+.d2 .d2-rutas-sel__link,
+.d2 .d2-rutas-esc__link,
+.d2 .d2-rutas-cmp__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--d2-e1);
+  font-size: .875rem;
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+  color: var(--c-verde-hover);
+  transition: color .18s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .d2-rutas-sel__link svg,
+.d2 .d2-rutas-esc__link svg,
+.d2 .d2-rutas-cmp__link svg {
+  flex: none;
+  transition: transform .18s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .d2-rutas-sel__link:hover svg,
+.d2 .d2-rutas-esc__link:hover svg,
+.d2 .d2-rutas-cmp__link:hover svg {
+  transform: translateX(3px);
+}
+
+.d2 .d2-rutas-sel__link:hover,
+.d2 .d2-rutas-esc__link:hover,
+.d2 .d2-rutas-cmp__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* El foco visible no se hereda del reset: se declara. Va con outline y no
+   con sombra para que sobreviva al modo de alto contraste de Windows. */
+.d2 .d2-rutas-sel__link:focus-visible,
+.d2 .d2-rutas-esc__link:focus-visible,
+.d2 .d2-rutas-cmp__link:focus-visible,
+.d2 .d2-rutas-sel__ruta:focus-within {
+  outline: 2px solid var(--c-verde-hover);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   OPCION 1 — AUTOSELECCION POR SITUACION
+
+   Tres columnas iguales, pero lo que manda no es la tarjeta: es el rotulo
+   de situacion que la encabeza. El lector busca SU caso, no compara
+   servicios.
+
+   Fundamento: NN/g (Taylor Dykes, 23-08-2024, "Explicitly State the
+   Difference Between Options") observa que cuando la diferencia entre
+   opciones queda implicita, el usuario o asume que son iguales o se
+   atasca en distinciones menores. El rotulo hace explicito el eje.
+   ========================================================================== */
+
+.d2 .d2-rutas-sel__lista {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.6vw, 36px);
+  margin: clamp(28px, 3.4vw, 44px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Rejilla interna de filas fijas: el tag, el titulo y el enlace de las tres
+   columnas arrancan a la misma altura aunque un titulo ocupe dos lineas y
+   otro una. Sin esto los enlaces quedan a alturas distintas y la fila se
+   ve rota. El contrato lo pide explicitamente. */
+.d2 .d2-rutas-sel__ruta {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  padding: var(--d2-e4) var(--d2-e3) var(--d2-e3);
+  background: var(--d2-tinta);
+  border-radius: var(--d2-radio-md);
+  /* El filo superior verde marca la entrada de cada ruta sin encerrarla en
+     una caja de contorno completo. */
+  border-top: 2px solid var(--c-verde);
+  transition: box-shadow .22s cubic-bezier(.32, .72, 0, 1),
+              transform .22s cubic-bezier(.32, .72, 0, 1);
+}
+
+/* Se eleva 2px al pasar el raton, el mismo gesto del boton. Solo en
+   dispositivos con puntero real: en tactil un :hover pegajoso deja la
+   tarjeta levantada despues de tocarla. */
+@media (hover: hover) {
+  .d2 .d2-rutas-sel__ruta:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--d2-sombra-md);
+  }
+}
+
+/* El rotulo se estira hasta la linea divisoria en vez de reservar dos lineas
+   con min-height. Medido en Chromium: con min-height, el rotulo corto de la
+   primera columna dejaba un hueco muerto visible sobre su linea. Con la
+   rejilla de filas del <li>, la fila 1 ya iguala altura entre columnas, asi
+   que basta empujar el borde al fondo con margin-top:auto en el contenido
+   restante. Aqui se resuelve al reves: el div ocupa su fila completa y la
+   linea se pinta abajo. */
+.d2 .d2-rutas-sel__caso {
+  display: flex;
+  align-items: flex-start;
+  margin: 0 0 var(--d2-e2);
+  padding-bottom: var(--d2-e2);
+  border-bottom: 1px solid rgba(2, 51, 0, .12);
+  font-size: .9375rem;
+  font-weight: var(--fw-extrabold);
+  line-height: 1.35;
+  letter-spacing: -.01em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-rutas-sel__tag {
+  margin: 0 0 6px;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-rutas-sel__titulo-ruta {
+  margin: 0 0 var(--d2-e1);
+  font-size: clamp(1rem, .96rem + .2vw, 1.125rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.28;
+  color: var(--c-texto);
+}
+
+.d2 .d2-rutas-sel__texto {
+  margin: 0 0 var(--d2-e3);
+  font-size: .875rem;
+  line-height: 1.56;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* ==========================================================================
+   OPCION 2 — ESCALERA DE COMPROMISO
+
+   Un solo eje horizontal. Las tres rutas son tramos de una linea, no tres
+   cajas: cambia que se agrupa con que.
+
+   El rail es una linea SVG que se dibuja de izquierda a derecha al entrar
+   en pantalla --stroke-dasharray al largo, stroke-dashoffset a cero-- y se
+   queda quieta. Una sola pasada: ningun bucle, nada que obligue a un
+   control de pausa (WCAG 2.2.2).
+   ========================================================================== */
+
+.d2 .d2-rutas-esc__eje {
+  position: relative;
+  margin-top: clamp(34px, 4vw, 52px);
+}
+
+.d2 .d2-rutas-esc__rail {
+  display: block;
+  width: 100%;
+  height: 8px;
+  overflow: visible;
+}
+
+.d2 .d2-rutas-esc__rail-linea {
+  fill: none;
+  stroke: var(--c-verde);
+  stroke-width: 2;
+  stroke-linecap: round;
+  /* 1200 es el ancho del viewBox; preserveAspectRatio="none" lo estira, asi
+     que el dasharray se calcula en unidades del viewBox y no en pixeles
+     reales. Por eso el valor es fijo y no hace falta medirlo con JS. */
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: d2-rutas-traza 1.1s cubic-bezier(.32, .72, 0, 1) .1s both;
+}
+
+@keyframes d2-rutas-traza {
+  to { stroke-dashoffset: 0; }
+}
+
+.d2 .d2-rutas-esc__lista {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.6vw, 36px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Rejilla de filas igual que en la opcion 1, y por el mismo motivo: que los
+   tres enlaces caigan a la misma altura. */
+.d2 .d2-rutas-esc__peldano {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  padding-top: var(--d2-e4);
+}
+
+/* El nodo se monta sobre el rail. -22px lo sube hasta la linea: el rail
+   mide 8px de alto y el peldano tiene 24px de padding superior. */
+.d2 .d2-rutas-esc__nodo {
+  position: absolute;
+  top: -22px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--d2-radio-full);
+  background: var(--c-blanco, #fff);
+  border: 2px solid var(--c-verde);
+  /* Aparece cuando el trazo ya ha pasado por su posicion. Los retardos
+     .35/.65/.95 estan calados sobre la duracion del rail (1.1s) para que
+     cada nodo brote justo detras de la punta de la linea. */
+  animation: d2-rutas-nodo .3s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .d2-rutas-esc__peldano:nth-child(1) .d2-rutas-esc__nodo { animation-delay: .35s; }
+.d2 .d2-rutas-esc__peldano:nth-child(2) .d2-rutas-esc__nodo { animation-delay: .65s; }
+.d2 .d2-rutas-esc__peldano:nth-child(3) .d2-rutas-esc__nodo { animation-delay: .95s; }
+
+@keyframes d2-rutas-nodo {
+  from { opacity: 0; transform: scale(.4); }
+  to   { opacity: 1; transform: none; }
+}
+
+.d2 .d2-rutas-esc__tag {
+  margin: 0 0 6px;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-rutas-esc__titulo-ruta {
+  margin: 0 0 var(--d2-e1);
+  font-size: clamp(1rem, .96rem + .2vw, 1.125rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.28;
+  color: var(--c-texto);
+}
+
+.d2 .d2-rutas-esc__texto {
+  margin: 0 0 var(--d2-e3);
+  font-size: .875rem;
+  line-height: 1.56;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* Los dos extremos rotulan que crece a lo largo del eje. Sin ellos la linea
+   no dice nada. */
+.d2 .d2-rutas-esc__extremos {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--d2-e3);
+  margin: clamp(20px, 2.4vw, 28px) 0 0;
+  padding-top: var(--d2-e2);
+  border-top: 1px solid rgba(2, 51, 0, .1);
+  font-size: .75rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-rutas-esc__extremo:last-child { text-align: right; }
+
+/* ==========================================================================
+   OPCION 3 — COMPARATIVA POR ATRIBUTO
+
+   Se lee por fila. Es una tabla de datos de verdad, no maquetacion con
+   celdas, asi que conserva thead/th/scope y se le pone caption.
+
+   Sin animacion de entrada mas alla de la comun: una tabla que se monta por
+   partes se lee peor mientras se monta, y aqui el valor esta en poder
+   barrer una fila entera de un vistazo. El triptico y la comparativa de la
+   seccion del problema tampoco llevan, por lo mismo.
+   ========================================================================== */
+
+.d2 .d2-rutas-cmp__marco {
+  margin-top: clamp(28px, 3.4vw, 44px);
+  /* El scroll vive aqui, no en el body: en pantallas estrechas la rejilla
+     se desplaza dentro de su marco y la pagina no gana scroll horizontal. */
+  overflow-x: auto;
+  /* Evita que el foco de un enlace interior quede recortado por el overflow */
+  padding: 2px;
+}
+
+.d2 .d2-rutas-cmp__tabla {
+  width: 100%;
+  min-width: 680px;   /* por debajo, las tres columnas de texto se estrangulan */
+  border-collapse: collapse;
+  text-align: left;
+}
+
+/* La caption se oculta a la vista pero NO a los lectores de pantalla: da el
+   contexto de que compara la tabla antes de entrar en ella. No se usa
+   display:none, que la sacaria tambien del arbol de accesibilidad. */
+.d2 .d2-rutas-cmp__caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.d2 .d2-rutas-cmp__esquina {
+  width: 15%;
+  border: 0;
+}
+
+.d2 .d2-rutas-cmp__tabla thead th {
+  width: 28.33%;
+  padding: 0 var(--d2-e3) var(--d2-e2);
+  vertical-align: bottom;
+  border-bottom: 2px solid var(--c-verde);
+}
+
+.d2 .d2-rutas-cmp__tag {
+  display: block;
+  margin-bottom: 4px;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-rutas-cmp__titulo-ruta {
+  display: block;
+  font-size: clamp(1rem, .96rem + .2vw, 1.125rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.28;
+  letter-spacing: -.01em;
+  color: var(--c-texto);
+}
+
+/* La cabecera de fila es el atributo que se compara. Va en gris suave y en
+   versalitas para que no compita con las tres columnas, que son el
+   contenido. */
+.d2 .d2-rutas-cmp__tabla tbody th {
+  padding: clamp(16px, 2vw, 22px) var(--d2-e3) clamp(16px, 2vw, 22px) 0;
+  vertical-align: top;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+  border-bottom: 1px solid rgba(2, 51, 0, .08);
+}
+
+.d2 .d2-rutas-cmp__tabla tbody td {
+  padding: clamp(16px, 2vw, 22px) var(--d2-e3);
+  vertical-align: top;
+  font-size: .875rem;
+  line-height: 1.56;
+  color: var(--c-texto-cuerpo, #333);
+  border-bottom: 1px solid rgba(2, 51, 0, .08);
+}
+
+.d2 .d2-rutas-cmp__tabla tbody tr:last-child th,
+.d2 .d2-rutas-cmp__tabla tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Realce de la columna bajo el raton: en una rejilla de tres columnas el ojo
+   pierde la vertical al cruzar una fila larga. Solo con puntero real. */
+@media (hover: hover) {
+  .d2 .d2-rutas-cmp__tabla tbody td:hover {
+    background: var(--d2-tinta);
+  }
+}
+
+/* ==========================================================================
+   ENTRADA
+
+   Una sola pasada al aparecer y despues quietas, como el resto de secciones.
+   El escalonado de 60ms ordena la lectura sin que se note como espera.
+   ========================================================================== */
+
+@keyframes d2-rutas-entra {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.d2 .d2-rutas-sel__cabecera,
+.d2 .d2-rutas-sel__ruta,
+.d2 .d2-rutas-esc__cabecera,
+.d2 .d2-rutas-esc__peldano,
+.d2 .d2-rutas-esc__extremos,
+.d2 .d2-rutas-cmp__cabecera,
+.d2 .d2-rutas-cmp__marco {
+  animation: d2-rutas-entra .55s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .d2-rutas-sel__ruta:nth-child(1),
+.d2 .d2-rutas-esc__peldano:nth-child(1) { animation-delay: .06s; }
+.d2 .d2-rutas-sel__ruta:nth-child(2),
+.d2 .d2-rutas-esc__peldano:nth-child(2) { animation-delay: .12s; }
+.d2 .d2-rutas-sel__ruta:nth-child(3),
+.d2 .d2-rutas-esc__peldano:nth-child(3) { animation-delay: .18s; }
+.d2 .d2-rutas-esc__extremos { animation-delay: .24s; }
+.d2 .d2-rutas-cmp__marco { animation-delay: .1s; }
+
+/* ==========================================================================
+   RESPONSIVE
+
+   Sin scroll horizontal de 1920 a 390. Las tres columnas caen a una a los
+   860px, que es donde el texto de .875rem empieza a partirse mal.
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  .d2 .d2-rutas-sel__lista,
+  .d2 .d2-rutas-esc__lista {
+    grid-template-columns: 1fr;
+  }
+
+  /* En una columna el rotulo ya no compite con dos vecinos, asi que se
+     libera la altura reservada: en horizontal servia para alinear, en
+     vertical solo dejaria un hueco muerto. */
+  .d2 .d2-rutas-sel__caso {
+    min-height: 0;
+  }
+
+  /* El eje horizontal deja de tener sentido en una sola columna: el rail se
+     retira y cada peldano se apoya en un filo propio. La forma sigue
+     diciendo la verdad sobre el contenido en los dos anchos. */
+  .d2 .d2-rutas-esc__rail {
+    display: none;
+  }
+
+  .d2 .d2-rutas-esc__peldano {
+    padding-top: var(--d2-e3);
+    border-top: 2px solid var(--c-verde);
+  }
+
+  .d2 .d2-rutas-esc__nodo {
+    display: none;
+  }
+
+  .d2 .d2-rutas-esc__extremos {
+    display: none;   /* rotulaban el eje horizontal; sin eje, sobran */
+  }
+}
+
+@media (max-width: 560px) {
+  .d2 .d2-rutas-sel__ruta {
+    padding: var(--d2-e3);
+  }
+}
+
+/* ==========================================================================
+   MOVIMIENTO REDUCIDO
+
+   Estado final inmediato: la linea dibujada, los nodos visibles, todo
+   opaco. Nada de animacion, y ninguna transicion de hover residual.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-rutas-sel__cabecera,
+  .d2 .d2-rutas-sel__ruta,
+  .d2 .d2-rutas-esc__cabecera,
+  .d2 .d2-rutas-esc__peldano,
+  .d2 .d2-rutas-esc__extremos,
+  .d2 .d2-rutas-cmp__cabecera,
+  .d2 .d2-rutas-cmp__marco,
+  .d2 .d2-rutas-esc__nodo {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .d2 .d2-rutas-esc__rail-linea {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .d2 .d2-rutas-sel__ruta,
+  .d2 .d2-rutas-sel__link,
+  .d2 .d2-rutas-esc__link,
+  .d2 .d2-rutas-cmp__link,
+  .d2 .d2-rutas-sel__link svg,
+  .d2 .d2-rutas-esc__link svg,
+  .d2 .d2-rutas-cmp__link svg {
+    transition: none;
+  }
+
+  .d2 .d2-rutas-sel__ruta:hover {
+    transform: none;
+  }
+}
+
+
+/* ==========================================================================
+   PRUEBA SOCIAL / BANDA DE CIFRAS — TRES VARIANTES
+
+   Solo tokens del sistema. Ni un color a mano.
+
+   DECISIONES QUE VALEN PARA LAS TRES
+   ----------------------------------
+
+   1. Las cifras no se animan al entrar como numero que sube.
+      El CONTRATO prohibe contadores en estimaciones. Estas NO son
+      estimaciones --el 9.5% es historico verificado de BC Hydro Continuous
+      Optimization, el $2.94M es un hallazgo real-- asi que esa clausula
+      concreta no aplica. Pero NN/g documenta que no se animen nunca los
+      elementos criticos de una pagina: los usuarios los ignoran por
+      parecerse a publicidad y ademas cuestan de leer en movimiento. La cifra
+      es EL elemento critico aqui. Se queda quieta y solo aparece.
+
+   2. Verde oscuro para todo texto pequeño.
+      --c-verde da 4.09:1 sobre blanco y por debajo de 24px hace falta 4.5:1.
+      --c-verde-hover da 6.41:1. Las etiquetas de fuente y las unidades usan
+      el segundo, no el primero.
+
+   3. Techo de 40px en las cifras, que es el del sistema. Ninguna variante lo
+      pasa: el clamp maximo es 2.5rem = 40px exactos.
+
+   4. Entrada escalonada de una pasada y quietas. Al no llegar a 5 segundos no
+      cuenta como contenido en movimiento para WCAG 2.2.2 y no necesita
+      control de pausa.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   OPCION 1 — REGISTRO
+
+   Dos registros apilados: la banda de cifras arriba, las voces abajo. El
+   lector recibe primero el dato y luego quien lo respalda.
+   ========================================================================== */
+
+.d2 .d2-prueba-reg {
+  padding-block: clamp(40px, 5vw, 72px);
+  background: var(--c-blanco);
+}
+
+.d2 .d2-prueba-reg__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+.d2 .d2-prueba-reg__eyebrow {
+  margin: 0;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+/* Las tres cifras en una fila de columnas iguales. minmax(0,1fr) y no 1fr a
+   secas: sin el minimo en 0 una celda con texto largo se niega a encoger y
+   desborda la rejilla. */
+.d2 .d2-prueba-reg__cifras {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2.4vw, 32px);
+  margin: clamp(20px, 2.4vw, 28px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Region comun: el fondo de tinta ata cifra, pie y fuente en una unidad.
+   Sin el, el pie de una cifra se lee como entrada de la siguiente. */
+.d2 .d2-prueba-reg__cifra-item {
+  display: flex;
+  flex-direction: column;
+  padding: var(--d2-e3);
+  background: var(--d2-tinta);
+  border-radius: var(--d2-radio-md);
+}
+
+/* 2.5rem = 40px, el techo exacto del sistema. */
+.d2 .d2-prueba-reg__cifra {
+  margin: 0;
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1;
+  letter-spacing: -.03em;
+  color: var(--c-texto);
+}
+
+/* El simbolo mas pequeño que el numero: lo que se compara es el 9.5, y a
+   igual tamaño el % le roba ancho sin aportar. */
+.d2 .d2-prueba-reg__unidad {
+  font-size: .62em;
+  letter-spacing: 0;
+}
+
+.d2 .d2-prueba-reg__pie {
+  margin: var(--d2-e2) 0 0;
+  font-size: .875rem;
+  font-weight: var(--fw-medium);
+  line-height: 1.45;
+  color: var(--c-texto);
+}
+
+/* La fuente al fondo de la tarjeta pase lo que pase: con margin-top auto las
+   tres quedan alineadas aunque los pies midan distinto. */
+.d2 .d2-prueba-reg__fuente {
+  margin: var(--d2-e2) 0 0;
+  padding-top: var(--d2-e1);
+  border-top: 1px solid rgba(2, 51, 0, .1);
+  font-size: .75rem;
+  line-height: 1.35;
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-prueba-reg__texto {
+  max-width: 68ch;
+  margin: clamp(20px, 2.4vw, 28px) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo);
+}
+
+.d2 .d2-prueba-reg__citas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2.4vw, 32px);
+  margin: clamp(24px, 3vw, 36px) 0 0;
+  padding: clamp(24px, 3vw, 36px) 0 0;
+  border-top: 1px solid rgba(2, 51, 0, .1);
+  list-style: none;
+}
+
+/* Las citas van sobre blanco y con un filete lateral verde, no en tarjeta:
+   si llevaran el mismo fondo de tinta que las cifras, los dos registros se
+   leerian como seis cosas iguales y se perderia la jerarquia. */
+.d2 .d2-prueba-reg__cita {
+  padding-left: var(--d2-e3);
+  border-left: 2px solid var(--c-verde);
+}
+
+.d2 .d2-prueba-reg__cita-texto {
+  margin: 0;
+  font-size: .9375rem;
+  line-height: 1.55;
+  color: var(--c-texto-cuerpo);
+}
+
+.d2 .d2-prueba-reg__autor {
+  margin: var(--d2-e2) 0 0;
+  font-size: .8125rem;
+  line-height: 1.35;
+}
+
+.d2 .d2-prueba-reg__nombre {
+  display: block;
+  font-weight: var(--fw-bold);
+  color: var(--c-texto);
+}
+
+.d2 .d2-prueba-reg__org {
+  display: block;
+  color: var(--c-texto-suave);
+}
+
+/* --- Entrada: primero las cifras, luego las voces ------------------------
+   El escalonado sigue el orden de lectura. Si entraran a la vez, el ojo no
+   sabria por donde empezar. */
+
+@keyframes d2-prueba-entra {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.d2 .d2-prueba-reg__eyebrow,
+.d2 .d2-prueba-reg__cifra-item,
+.d2 .d2-prueba-reg__texto,
+.d2 .d2-prueba-reg__cita {
+  animation: d2-prueba-entra .5s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .d2-prueba-reg__cifra-item:nth-child(1) { animation-delay: .06s; }
+.d2 .d2-prueba-reg__cifra-item:nth-child(2) { animation-delay: .14s; }
+.d2 .d2-prueba-reg__cifra-item:nth-child(3) { animation-delay: .22s; }
+.d2 .d2-prueba-reg__texto { animation-delay: .28s; }
+.d2 .d2-prueba-reg__cita:nth-child(1) { animation-delay: .34s; }
+.d2 .d2-prueba-reg__cita:nth-child(2) { animation-delay: .40s; }
+.d2 .d2-prueba-reg__cita:nth-child(3) { animation-delay: .46s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-prueba-reg__eyebrow,
+  .d2 .d2-prueba-reg__cifra-item,
+  .d2 .d2-prueba-reg__texto,
+  .d2 .d2-prueba-reg__cita {
+    animation: none;
+  }
+}
+
+/* --- Responsive ---------------------------------------------------------
+   Las cifras aguantan tres columnas mas tiempo que las citas: son cortas.
+   Las citas necesitan ancho para no partirse en tiras de tres palabras. */
+
+@media (max-width: 900px) {
+  .d2 .d2-prueba-reg__citas {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--d2-e4);
+  }
+}
+
+@media (max-width: 640px) {
+  .d2 .d2-prueba-reg__cifras {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--d2-e2);
+  }
+}
+
+
+/* ==========================================================================
+   OPCION 2 — RESPALDADA
+
+   Cada cifra y su cita bajo el mismo marco. El eje de la variante es QUE SE
+   AGRUPA CON QUE: no una banda de numeros y otra de voces, sino tres
+   unidades cerradas de dato + respaldo.
+
+   La cifra manda dentro del marco y la cita va debajo. No al reves: Freling
+   et al. (2020, OBHDP 160, 51-67), meta-analisis de 61 estudios, encuentra
+   que la evidencia estadistica gana a la anecdotica cuando el compromiso
+   emocional es bajo, que es el caso de un administrador publico decidiendo
+   sobre presupuesto ajeno. La cita da cuerpo; el numero decide.
+   ========================================================================== */
+
+.d2 .d2-prueba-resp {
+  padding-block: clamp(40px, 5vw, 72px);
+  background: var(--d2-tinta);
+}
+
+.d2 .d2-prueba-resp__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+.d2 .d2-prueba-resp__cabecera { max-width: 68ch; }
+
+.d2 .d2-prueba-resp__eyebrow {
+  margin: 0;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-prueba-resp__texto {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo);
+}
+
+.d2 .d2-prueba-resp__lista {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2.2vw, 28px);
+  margin: clamp(24px, 3vw, 36px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Tarjeta blanca sobre tinta: el contraste de superficie es lo que ata la
+   cifra con su cita. Es region comun (Palmer 1992, via NN/g): un contorno
+   agrupa mas fuerte que la cercania, y aqui el objetivo es precisamente
+   atar dos cosas que por separado no se sostienen igual. */
+.d2 .d2-prueba-resp__par {
+  display: flex;
+  flex-direction: column;
+  padding: var(--d2-e4);
+  background: var(--c-blanco);
+  border-radius: var(--d2-radio-md);
+  box-shadow: var(--d2-sombra-md);
+}
+
+/* Altura reservada para el bloque del dato: las tres citas arrancan a la
+   misma altura aunque los pies midan distinto. Sin esto, la tarjeta del
+   9.5% --que lleva linea de fuente-- empuja su cita 20px mas abajo que las
+   otras dos y la fila se ve rota. */
+.d2 .d2-prueba-resp__dato {
+  min-height: 132px;
+  padding-bottom: var(--d2-e3);
+  margin-bottom: var(--d2-e3);
+  border-bottom: 1px solid rgba(2, 51, 0, .1);
+}
+
+.d2 .d2-prueba-resp__cifra {
+  margin: 0;
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1;
+  letter-spacing: -.03em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-prueba-resp__unidad {
+  font-size: .62em;
+  letter-spacing: 0;
+}
+
+.d2 .d2-prueba-resp__pie {
+  margin: var(--d2-e2) 0 0;
+  font-size: .875rem;
+  font-weight: var(--fw-medium);
+  line-height: 1.45;
+  color: var(--c-texto);
+}
+
+.d2 .d2-prueba-resp__fuente {
+  margin: 6px 0 0;
+  font-size: .75rem;
+  line-height: 1.35;
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-prueba-resp__cita {
+  flex: 1;
+  margin: 0;
+  font-size: .9375rem;
+  line-height: 1.55;
+  color: var(--c-texto-cuerpo);
+}
+
+.d2 .d2-prueba-resp__autor {
+  margin: var(--d2-e3) 0 0;
+  font-size: .8125rem;
+  line-height: 1.35;
+}
+
+.d2 .d2-prueba-resp__nombre {
+  display: block;
+  font-weight: var(--fw-bold);
+  color: var(--c-texto);
+}
+
+.d2 .d2-prueba-resp__org {
+  display: block;
+  color: var(--c-texto-suave);
+}
+
+/* --- Movimiento ---------------------------------------------------------
+   Solo la entrada. Al pasar el raton la tarjeta se eleva 2px, que es el
+   mismo gesto que ya hacen los botones del sistema: coherencia, no adorno.
+   No cambia nada de color porque no es un elemento accionable y no debe
+   prometer que lo es. */
+
+.d2 .d2-prueba-resp__par {
+  animation: d2-prueba-entra .5s cubic-bezier(.32, .72, 0, 1) both;
+  transition: transform var(--d2-normal) ease,
+              box-shadow var(--d2-normal) ease;
+}
+
+.d2 .d2-prueba-resp__par:nth-child(1) { animation-delay: .06s; }
+.d2 .d2-prueba-resp__par:nth-child(2) { animation-delay: .16s; }
+.d2 .d2-prueba-resp__par:nth-child(3) { animation-delay: .26s; }
+
+.d2 .d2-prueba-resp__par:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--d2-sombra-alta);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-prueba-resp__par {
+    animation: none;
+    transition: none;
+  }
+  .d2 .d2-prueba-resp__par:hover { transform: none; }
+}
+
+/* --- Responsive --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .d2 .d2-prueba-resp__lista {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--d2-e3);
+  }
+
+  /* En una columna cada tarjeta ocupa su ancho y ya no hay fila que alinear:
+     la altura reservada solo dejaria un hueco. */
+  .d2 .d2-prueba-resp__dato { min-height: 0; }
+}
+
+
+/* ==========================================================================
+   OPCION 3 — RECORRIDO
+
+   Cambia EL EJE DE LECTURA: vertical y en orden, frente al horizontal en
+   paralelo de las otras dos. El 2008 deja de ser una cifra suelta y pasa a
+   ser el origen de una linea que explica las otras dos.
+
+   Es la unica variante donde el orden es el argumento, y por eso es la unica
+   que usa <ol>. En las otras dos seria una afirmacion falsa.
+   ========================================================================== */
+
+.d2 .d2-prueba-rec {
+  padding-block: clamp(40px, 5vw, 72px);
+  background: var(--c-blanco);
+}
+
+.d2 .d2-prueba-rec__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+.d2 .d2-prueba-rec__cabecera { max-width: 68ch; }
+
+.d2 .d2-prueba-rec__eyebrow {
+  margin: 0;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-prueba-rec__texto {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo);
+}
+
+.d2 .d2-prueba-rec__linea {
+  margin: clamp(24px, 3vw, 36px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Dos columnas: el carril de la marca y el contenido. El carril lleva ancho
+   fijo para que los tres puntos queden en la misma vertical; con ancho
+   automatico cada uno se colocaria segun su contenido y la linea se torceria. */
+.d2 .d2-prueba-rec__hito {
+  position: relative;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: var(--d2-e3);
+  padding-bottom: clamp(24px, 3vw, 36px);
+}
+
+/* La linea vertical se dibuja con un pseudoelemento del propio hito y no de
+   la lista: asi el ultimo puede cortarla. Una linea que sigue despues del
+   ultimo punto sugiere que falta algo por venir. */
+.d2 .d2-prueba-rec__hito::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  bottom: 0;
+  left: 15px;
+  width: 2px;
+  background: rgba(2, 51, 0, .12);
+}
+
+.d2 .d2-prueba-rec__hito--final::before { display: none; }
+
+/* El punto: circulo hueco relleno de blanco, como los del panel del hero.
+   Es el mismo idioma visual con el que esta pagina marca lecturas. */
+.d2 .d2-prueba-rec__marca {
+  position: relative;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  margin-top: 7px;
+  margin-left: 9px;
+  background: var(--c-blanco);
+  border: 3px solid var(--c-verde);
+  border-radius: var(--d2-radio-full);
+}
+
+.d2 .d2-prueba-rec__cifra {
+  margin: 0;
+  font-size: clamp(1.625rem, 1.25rem + 1.4vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1;
+  letter-spacing: -.03em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-prueba-rec__unidad {
+  font-size: .62em;
+  letter-spacing: 0;
+}
+
+.d2 .d2-prueba-rec__pie {
+  max-width: 62ch;
+  margin: var(--d2-e1) 0 0;
+  font-size: .9375rem;
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
+  color: var(--c-texto);
+}
+
+.d2 .d2-prueba-rec__fuente {
+  margin: 6px 0 0;
+  font-size: .75rem;
+  line-height: 1.35;
+  color: var(--c-verde-hover);
+}
+
+/* El ultimo hito lleva DOS citas. Apiladas median 320px y la seccion se iba
+   a 970px, por encima del limite de ~900px del sistema (medido en Chromium
+   a 1440px). El copy es literal y no se toca, asi que lo que cambia es el
+   reparto: las dos citas van en paralelo en pantallas anchas.
+
+   Se usa una rejilla en el cuerpo del hito final y las citas se colocan en
+   columnas con su autor debajo.
+
+   Las dos columnas se piden con una consulta de medios y NO con auto-fit.
+   Se probo auto-fit + minmax(260px, 1fr) y a 390px mantenia las dos
+   columnas comprimidas a 95px cada una, con 45px de desbordamiento
+   horizontal: dentro de un carril de rejilla ya limitado, el minimo del
+   minmax no cede y el contenido se sale. Con la consulta de medios el
+   apilado a una columna es la regla por defecto y las dos columnas solo
+   aparecen donde hay sitio de sobra. */
+.d2 .d2-prueba-rec__hito--final .d2-prueba-rec__cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0 clamp(16px, 2.2vw, 28px);
+}
+
+@media (min-width: 860px) {
+  .d2 .d2-prueba-rec__hito--final .d2-prueba-rec__cuerpo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* La cifra y su pie ocupan la fila entera: son del hito, no de una cita.
+   Van con fila explicita ademas de columna: el pie esta DESPUES de las citas
+   en el marcado --el orden natural es cifra, pie, citas-- pero al fijar las
+   citas en la fila 2 la colocacion automatica mandaba el pie a la fila 4, es
+   decir por debajo de las citas, y la cifra quedaba sin su explicacion.
+   Medido: el pie del $2.94M aparecia al final del hito. */
+.d2 .d2-prueba-rec__hito--final .d2-prueba-rec__cifra {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.d2 .d2-prueba-rec__hito--final .d2-prueba-rec__pie {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+/* Cita y autor en filas explicitas: las dos citas comparten la fila 2 y los
+   dos autores la fila 3. Asi cada autor queda bajo SU cita y las dos parejas
+   arrancan a la misma altura aunque una cita sea mas larga. Dejandolo al
+   flujo automatico, el autor de la cita corta subiria y se leerian
+   desalineadas.
+
+   Solo dentro de la consulta de medios: apilado en una columna el orden del
+   marcado ya es el correcto, y fijar filas ahi rompería el emparejamiento. */
+@media (min-width: 860px) {
+  .d2 .d2-prueba-rec__hito--final .d2-prueba-rec__cita {
+    grid-row: 3;
+    align-self: start;
+  }
+
+  .d2 .d2-prueba-rec__hito--final .d2-prueba-rec__autor {
+    grid-row: 4;
+    align-self: start;
+  }
+}
+
+/* Las citas van indentadas respecto a la cifra: son anotaciones al hito, no
+   hitos ellas mismas. La sangria lo dice sin necesidad de otro contorno. */
+.d2 .d2-prueba-rec__cita {
+  max-width: 62ch;
+  margin: var(--d2-e3) 0 0;
+  padding-left: var(--d2-e3);
+  border-left: 2px solid rgba(2, 51, 0, .12);
+  font-size: .9375rem;
+  line-height: 1.55;
+  color: var(--c-texto-cuerpo);
+}
+
+.d2 .d2-prueba-rec__autor {
+  margin: 6px 0 0;
+  padding-left: var(--d2-e3);
+  font-size: .8125rem;
+  line-height: 1.35;
+}
+
+.d2 .d2-prueba-rec__nombre {
+  font-weight: var(--fw-bold);
+  color: var(--c-texto);
+}
+
+/* Separador tipografico entre nombre y organizacion. Es decorativo, asi que
+   se genera en CSS: un lector de pantalla lee los dos spans seguidos sin
+   que se cuele un guion suelto. */
+.d2 .d2-prueba-rec__org {
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-prueba-rec__org::before {
+  content: " · ";
+  color: var(--c-texto-suave);
+}
+
+/* --- Movimiento ---------------------------------------------------------
+   Esta es la unica variante que gana algo con movimiento mas alla del
+   aparecer: la linea se traza de arriba abajo y los puntos se encienden al
+   pasar, que es lo que convierte tres bloques apilados en un recorrido.
+
+   Tecnica del panel del hero adaptada a un pseudoelemento: no se puede usar
+   stroke-dashoffset sobre un div, asi que se escala en Y desde el origen
+   superior, que produce el mismo efecto de trazado progresivo.
+
+   Una pasada, ~1.1s en total. Muy por debajo de los 5s de WCAG 2.2.2, asi
+   que no necesita control de pausa. -------------------------------------- */
+
+@keyframes d2-prueba-traza {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+@keyframes d2-prueba-punto {
+  from { opacity: 0; transform: scale(.5); }
+  to   { opacity: 1; transform: none; }
+}
+
+.d2 .d2-prueba-rec__hito::before {
+  transform-origin: top center;
+  animation: d2-prueba-traza .5s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .d2-prueba-rec__marca {
+  animation: d2-prueba-punto .4s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .d2-prueba-rec__cuerpo {
+  animation: d2-prueba-entra .5s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+/* El punto se enciende, luego baja su tramo de linea, luego llega el punto
+   siguiente. Los retardos encadenan ese orden. */
+.d2 .d2-prueba-rec__hito:nth-child(1) .d2-prueba-rec__marca  { animation-delay: .05s; }
+.d2 .d2-prueba-rec__hito:nth-child(1) .d2-prueba-rec__cuerpo { animation-delay: .10s; }
+.d2 .d2-prueba-rec__hito:nth-child(1)::before                { animation-delay: .20s; }
+
+.d2 .d2-prueba-rec__hito:nth-child(2) .d2-prueba-rec__marca  { animation-delay: .45s; }
+.d2 .d2-prueba-rec__hito:nth-child(2) .d2-prueba-rec__cuerpo { animation-delay: .50s; }
+.d2 .d2-prueba-rec__hito:nth-child(2)::before                { animation-delay: .60s; }
+
+.d2 .d2-prueba-rec__hito:nth-child(3) .d2-prueba-rec__marca  { animation-delay: .85s; }
+.d2 .d2-prueba-rec__hito:nth-child(3) .d2-prueba-rec__cuerpo { animation-delay: .90s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-prueba-rec__hito::before,
+  .d2 .d2-prueba-rec__marca,
+  .d2 .d2-prueba-rec__cuerpo {
+    animation: none;
+  }
+}
+
+/* --- Responsive ---------------------------------------------------------
+   El carril se estrecha pero no desaparece: sin el, los tres hitos se leen
+   como una lista cualquiera y se pierde justo lo que distingue a esta
+   variante. */
+
+@media (max-width: 640px) {
+  .d2 .d2-prueba-rec__hito {
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: var(--d2-e2);
+  }
+
+  .d2 .d2-prueba-rec__hito::before { left: 11px; }
+
+  .d2 .d2-prueba-rec__marca {
+    margin-left: 5px;
+  }
+
+  .d2 .d2-prueba-rec__cita,
+  .d2 .d2-prueba-rec__autor {
+    padding-left: var(--d2-e2);
+  }
+}
+
+
+/* ==========================================================================
+   CTA FINAL — TRES VARIANTES
+
+   Todo va prefijado `.d2 .d2-cta-` para no tocar nada del proyecto.
+   Solo tokens ya existentes: ni un color escrito a mano (contrato §2).
+
+   MOVIMIENTO (contrato §3). Decision deliberada: NINGUNA de las tres lleva
+   animacion propia mas alla de la entrada escalonada y los estados de
+   hover que ya trae `.d2-btn`.
+
+   El motivo: este bloque es el ultimo antes del pie y su unico trabajo es
+   que se pulse un boton. Cualquier cosa que se mueva al lado de un boton
+   compite con el boton. El tríptico y la comparativa de la seccion del
+   problema tampoco llevan animacion y es correcto; aqui vale lo mismo.
+
+   La entrada usa la clase `.d2-entra` que ya existe en d2.css (opacidad y
+   10% de desplazamiento, con su propio prefers-reduced-motion). Aqui solo
+   se anade el ESCALONADO de los hijos, que es lo que d2.css no da.
+
+   ---------------------------------------------------------------------------
+   MEDIDO EN NAVEGADOR (contrato §7), Chromium a 1920/1440/860/720/480/390:
+
+   - Sin scroll horizontal en ninguno de los seis anchos
+     (scrollWidth == innerWidth en todos).
+   - Alturas: balanza 337-486px, continuidad 461-625px, carriles 446-583px.
+     Todas por debajo del techo de ~900px.
+   - Botones de una misma fila: mismo alto (52px) y mismo ancho
+     (254/254 en escritorio, 364/364 en carriles) y mismo `top`.
+   - Textos propios de esta seccion: de 5.98:1 a 12.63:1. Todos pasan AA.
+   - prefers-reduced-motion: la seccion llega con opacity:1 y transform:none
+     antes de cualquier clase, o sea estado final inmediato y sin animacion.
+
+   ⚠ HALLAZGO QUE NO ES DE ESTA SECCION, pero conviene que conste:
+   el texto de `.d2-btn` mide 4.09:1 (blanco sobre --c-verde, y --c-verde
+   sobre blanco en el de linea) a 16px, por debajo del 4.5:1 que pide AA.
+   No es un defecto introducido aqui: es el token --c-verde y afecta a
+   TODOS los botones del sitio; tokens.css ya lo documenta en su linea 20.
+   Se deja como esta para no divergir del sistema por una seccion. Si se
+   quiere corregir, es una decision de sistema (pasar los botones solidos a
+   --c-verde-hover da 6.41:1) y hay que tomarla en d2.css, no aqui.
+   --------------------------------------------------------------------------- */
+
+
+/* --------------------------------------------------------------------------
+   ESCALONADO DE ENTRADA — comun a las tres
+
+   transition-delay y no animation: asi hereda el estado final de .d2-entra
+   sin duplicar keyframes, y si el JS del observador no corre, el contenido
+   queda visible igual (contrato §4: debe leerse sin JavaScript).
+
+   Sin will-change ni translateZ: rasterizan y emborronan el texto, y eso ya
+   costo una investigacion en este proyecto.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-cta-bal.es-visible .d2-cta-bal__texto,
+.d2 .d2-cta-con.es-visible .d2-cta-con__titulo,
+.d2 .d2-cta-car.es-visible .d2-cta-car__cabecera {
+  transition-delay: 0ms;
+}
+
+.d2 .d2-cta-bal.es-visible .d2-cta-bal__acciones,
+.d2 .d2-cta-con.es-visible .d2-cta-con__accion,
+.d2 .d2-cta-car.es-visible .d2-cta-car__lista {
+  transition-delay: 90ms;
+}
+
+
+/* ==========================================================================
+   OPCION 1 — BALANZA
+
+   Texto centrado y las dos acciones en fila, mismo peso visual.
+   ========================================================================== */
+
+.d2 .d2-cta-bal {
+  padding-block: clamp(48px, 6.5vw, 88px);
+  background: var(--d2-tinta);
+}
+
+.d2 .d2-cta-bal__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+  text-align: center;
+}
+
+/* 62ch es el limite de linea comodo; centrado necesita ademas margin auto */
+.d2 .d2-cta-bal__texto {
+  max-width: 46ch;
+  margin-inline: auto;
+}
+
+.d2 .d2-cta-bal__titulo {
+  margin: 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
+  letter-spacing: -.03em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-cta-bal__parrafo {
+  margin: var(--d2-e3) 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo);
+}
+
+/* Lista sin viñetas: son botones, el marcador seria ruido visual.
+   Se mantiene <ul> por semantica (contrato §4). */
+/* Rejilla de dos columnas iguales y no flex: `1fr 1fr` reparte el mismo
+   ancho a las dos aunque las etiquetas midan distinto, que es la condicion
+   de la balanza. El ancho se acota con max-width para que en pantallas
+   grandes los botones no se estiren a media pantalla. */
+.d2 .d2-cta-bal__acciones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--d2-e2);
+  max-width: 520px;
+  margin: clamp(24px, 3vw, 36px) auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Contrato §5: los dos botones de una misma fila, misma altura Y mismo
+   ancho. Sin esto "Book a call" sale mucho mas estrecho que "Check your
+   opportunity" y la balanza deja de estar equilibrada, que es justo lo
+   que esta variante quiere decir.
+
+   MEDIDO, no supuesto: con `min-width` en el <a> los anchos salian 270 y
+   244. El min-width solo pone un suelo, y "Check your opportunity" con su
+   padding lo supera; "Book a call" no. Se iguala desde el <li> con
+   1fr/1fr y el boton a width:100%, que fija el ancho en vez de acotarlo. */
+.d2 .d2-cta-bal__accion {
+  display: flex;
+}
+
+.d2 .d2-cta-bal__btn {
+  width: 100%;
+}
+
+
+/* ==========================================================================
+   OPCION 2 — CONTINUIDAD
+
+   Una sola caja centrada sobre fondo blanco. La etiqueta superior nombra
+   el destino; el enlace de texto desempata sin esconder.
+   ========================================================================== */
+
+.d2 .d2-cta-con {
+  padding-block: clamp(48px, 6.5vw, 88px);
+  background: var(--c-blanco);
+}
+
+/* La caja es lo que separa esta variante de un bloque de texto suelto:
+   el contorno dice "esto es una unidad, y su unidad es una accion".
+   Region comun (Palmer 1992, via NN/g): el marco agrupa mas que la
+   cercania. NN/g aconseja preferir el blanco y recurrir al borde solo
+   cuando el blanco no basta; aqui no basta, porque el fondo ya es blanco. */
+.d2 .d2-cta-con__inner {
+  max-width: 720px;
+  margin-inline: auto;
+  padding: clamp(32px, 4.5vw, 56px) clamp(24px, 4vw, 56px);
+  text-align: center;
+  background: var(--d2-tinta);
+  border-radius: var(--d2-radio-lg);
+  box-shadow: var(--d2-sombra-md);
+}
+
+/* Verde oscuro y no el de interfaz: a 12px hace falta 4.5:1 y --c-verde
+   da 4.09 sobre esta tinta. --c-verde-hover da 6.41. */
+.d2 .d2-cta-con__etiqueta {
+  margin: 0 0 var(--d2-e2);
+  font-size: .75rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-cta-con__titulo {
+  margin: 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
+  letter-spacing: -.03em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-cta-con__parrafo {
+  max-width: 46ch;
+  margin: var(--d2-e3) auto 0;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo);
+}
+
+.d2 .d2-cta-con__accion {
+  margin-top: clamp(24px, 3vw, 36px);
+}
+
+.d2 .d2-cta-con__btn {
+  min-width: 244px;
+}
+
+/* 16px de separacion: el minimo del contrato son 12, pero aqui el enlace
+   compite con un boton de 52px de alto y a 12px se leia pegado a el. */
+.d2 .d2-cta-con__alterna {
+  margin: var(--d2-e3) 0 0;
+  font-size: .9375rem;
+  line-height: 1.4;
+  color: var(--c-texto-cuerpo);
+}
+
+/* Subrayado permanente: es la unica pista de que es pulsable, porque ya
+   no tiene forma de boton. Quitarlo lo convertiria en texto muerto. */
+.d2 .d2-cta-con__enlace {
+  color: var(--c-verde-hover);
+  font-weight: var(--fw-bold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color .18s ease;
+}
+
+.d2 .d2-cta-con__enlace:hover { color: var(--c-texto); }
+
+.d2 .d2-cta-con__enlace:focus-visible {
+  outline: 2px solid var(--c-verde);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+
+/* ==========================================================================
+   OPCION 3 — DOS CARRILES
+
+   Cabecera comun arriba y dos marcos abajo, uno por lector.
+   ========================================================================== */
+
+.d2 .d2-cta-car {
+  padding-block: clamp(48px, 6.5vw, 88px);
+  background: var(--d2-tinta);
+}
+
+.d2 .d2-cta-car__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+.d2 .d2-cta-car__cabecera {
+  max-width: 52ch;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.d2 .d2-cta-car__titulo {
+  margin: 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
+  letter-spacing: -.03em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-cta-car__parrafo {
+  margin: var(--d2-e3) 0 0;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo);
+}
+
+/* Dos columnas iguales y un tope de 860px: a todo lo ancho de 1280 los dos
+   carriles quedaban tan separados que dejaban de leerse como pareja. */
+.d2 .d2-cta-car__lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--d2-e3);
+  max-width: 860px;
+  margin: clamp(28px, 3.4vw, 40px) auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Flex en columna con el boton empujado abajo: las etiquetas "If you can
+   act on this now" y "If someone else has to sign off" no ocupan lo mismo,
+   y sin esto los dos botones arrancaban a alturas distintas. Contrato §5:
+   cabeceras con altura reservada para que la fila arranque igual. */
+.d2 .d2-cta-car__carril {
+  display: flex;
+  flex-direction: column;
+  gap: var(--d2-e3);
+  padding: clamp(20px, 2.6vw, 28px);
+  background: var(--c-blanco);
+  border: 1px solid rgba(2, 51, 0, .12);
+  border-radius: var(--d2-radio-md);
+  box-shadow: var(--d2-sombra-sm);
+}
+
+.d2 .d2-cta-car__quien {
+  margin: 0;
+  font-size: .9375rem;
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+  color: var(--c-texto);
+}
+
+/* El boton al fondo del carril y a todo el ancho: asi los dos miden lo
+   mismo sin fijar un min-width que se rompa al traducir el copy. */
+.d2 .d2-cta-car__btn {
+  margin-top: auto;
+  width: 100%;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+
+   Verificado el requisito del contrato §5: sin scroll horizontal de 1920 a
+   390px. Los dos puntos de riesgo eran los min-width de 244px (caben en
+   390 menos gutters = 310) y la rejilla de dos columnas.
+   ========================================================================== */
+
+@media (max-width: 720px) {
+  /* Los carriles se apilan: a dos columnas por debajo de 720 el boton se
+     parte en dos lineas y rompe la altura de 52px. */
+  .d2 .d2-cta-car__lista {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Una columna: a 390px dos botones lado a lado dejan ~145px cada uno y
+     "Check your opportunity" se parte en tres lineas, rompiendo los 52px
+     de alto. Apilados conservan la altura y siguen midiendo lo mismo. */
+  .d2 .d2-cta-bal__acciones {
+    grid-template-columns: 1fr;
+  }
+
+  /* El suelo de 244px se retira: con gutter de 20px el ancho util a 390 es
+     350, asi que el min-width no desborda, pero fijarlo al 100% garantiza
+     que los dos botones midan igual tambien apilados. */
+  .d2 .d2-cta-con__btn {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+
+/* ==========================================================================
+   MOVIMIENTO REDUCIDO
+
+   .d2-entra ya se neutraliza en d2.css. Aqui se anulan los retardos: si no,
+   el contenido aparece escalonado igual aunque no haya transicion, que es
+   exactamente lo que la preferencia pide evitar. Estado final inmediato.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-cta-bal.es-visible .d2-cta-bal__texto,
+  .d2 .d2-cta-bal.es-visible .d2-cta-bal__acciones,
+  .d2 .d2-cta-con.es-visible .d2-cta-con__titulo,
+  .d2 .d2-cta-con.es-visible .d2-cta-con__accion,
+  .d2 .d2-cta-car.es-visible .d2-cta-car__cabecera,
+  .d2 .d2-cta-car.es-visible .d2-cta-car__lista {
+    transition-delay: 0ms;
+  }
+
+  .d2 .d2-cta-con__enlace { transition: none; }
+}
+
+
+/* ==========================================================================
+   PIE DE PAGINA — TRES VARIANTES (DISENO 2)
+
+   Las tres pintan el mismo copy sobre --d2-oscuro (#0E2A12), el color que
+   d2.css reserva justo para esto ("verde muy oscuro, para footer y bandas").
+
+   Lo que cambia entre ellas NO es la piel. Es a que sirve el pie:
+
+     1. DIRECTORIO   el protagonista es la NAVEGACION. Tres columnas de
+                     enlaces mandan; el contacto es una columna mas.
+     2. DESPACHO     cambia QUE se agrupa con QUE. Telefono, correo y
+                     direccion salen de la rejilla de enlaces y se juntan
+                     en un bloque de contacto con objetivos grandes; el
+                     mapa del sitio se comprime a una fila.
+     3. CIERRE       cambia DONDE vive el protagonista. No hay mega-pie:
+                     una franja baja, y el peso se va al dato de contacto
+                     en linea. Es la antitesis de la opcion 1.
+
+   ─── Por que ninguna lleva CTA ───────────────────────────────────────────
+   El patron "pie con CTA integrado" esta descartado a proposito: la seccion
+   cta-final.html va JUSTO encima del pie y ya trae "Check your opportunity"
+   y "Book a call". Meter otra llamada en el pie duplicaria la de arriba a
+   dos dedos de distancia. El pie recoge, no vuelve a pedir.
+
+   ─── Contraste: medido, no supuesto ─────────────────────────────────────
+   Todos los valores calculados contra #0E2A12 (luminancia .0179):
+
+     blanco puro .................. 15.46:1
+     blanco 82% (#d4d9d4) ......... 10.80:1   enlaces
+     blanco 74% (#c0c8c1) .........  9.03:1   cuerpo
+     blanco 62% (#a3aea5) .........  6.74:1   secundario / direccion
+     blanco 55% (#939f94) .........  5.61:1   minimo que uso
+     --c-verde-marca #39B54A ......  5.80:1   PASA AA en pequeno
+     --c-verde #2E902B ............  3.78:1   NO para texto pequeno
+     --c-verde-hover #026F00 ......  2.41:1   inservible sobre oscuro
+
+   Dos consecuencias que van contra la intuicion y conviene no deshacer:
+
+   (a) --c-verde-marca (#39B54A) es el verde que la guia PROHIBE para texto
+       sobre blanco (~2.5:1). Sobre este fondo oscuro da 5.80:1 y si sirve.
+       Aqui es el verde de acento correcto. Al reves, --c-verde-hover, que
+       es el bueno sobre blanco, da 2.41:1 y no vale para nada oscuro.
+
+   (b) El pie anterior (footer.css) pintaba la direccion, el aviso legal y
+       las etiquetas con rgba(255,255,255,.45) = 4.24:1, por debajo del
+       4.5:1 que pide AA. Ninguna variante baja del 55%.
+
+   Los tokens no cambian: se usan tal cual. Las mezclas con blanco son
+   opacidades sobre el token de fondo, no colores nuevos escritos a mano.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   BASE COMPARTIDA
+
+   Lo que las tres tienen en comun se escribe una vez. Las diferencias
+   estructurales viven en cada bloque, no aqui.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-pie-dir,
+.d2 .d2-pie-desp,
+.d2 .d2-pie-cierre {
+  background: var(--d2-oscuro);
+  color: var(--c-blanco);
+}
+
+/* El contenedor de las tres, identico al del resto de secciones del d2 para
+   que el pie alinee con lo que tiene encima. */
+.d2 .d2-pie-dir__inner,
+.d2 .d2-pie-desp__inner,
+.d2 .d2-pie-cierre__inner,
+.d2 .d2-pie-dir__base-inner,
+.d2 .d2-pie-desp__base-inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+/* --- El logo sobre fondo oscuro ---------------------------------------
+   El SVG lleva el verde del logo (#39A935) y DOS grises (#868686 y
+   #C6C6C5) en la bajada "Building Energy Efficiency". Sobre este fondo el
+   gris oscuro se hunde: #868686 contra #0E2A12 da 4.25:1, por debajo del
+   4.5:1 de AA, y a ese tamano la bajada es texto pequeno.
+
+   El pie anterior usaba brightness(1.6). Medido factor por factor, 1.6 es
+   demasiado: satura canales y rompe el color de marca.
+
+     factor   #868686        #C6C6C5          #39A935
+     1.00     4.25:1         9.04:1           5.08:1
+     1.20     5.98:1        13.31:1           7.26:1
+     1.30     6.97:1        15.46:1  CLIP     8.55:1
+     1.60    10.64:1        15.46:1  CLIP    11.69:1  CLIP  -> menta
+
+   Se queda en 1.20: es el ultimo escalon en que el gris oscuro ya pasa AA
+   (5.98:1) y NINGUN canal se satura todavia. A partir de 1.30 el gris
+   claro se aplasta contra el blanco puro y el verde empieza a lavarse;
+   en 1.60 el verde sale #5bff55, un menta fosforito que ya no es la marca.
+
+   No se toca el archivo del logo: es un asset de marca. */
+.d2 .d2-pie-dir__logo img,
+.d2 .d2-pie-desp__logo img,
+.d2 .d2-pie-cierre__logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: brightness(1.2);
+}
+
+/* --- Titulos de columna ----------------------------------------------
+   Versalitas pequenas. A .6875rem el texto es diminuto, asi que va al 74%
+   (9.03:1) y no al 45% del pie anterior, que daba 4.24:1. */
+.d2 .d2-pie-dir__titulo,
+.d2 .d2-pie-desp__titulo {
+  margin: 0 0 var(--d2-e3);
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .74);
+}
+
+/* --- Boton de pronunciacion -------------------------------------------
+   Lo pide el brief. Es un boton real (dispara audio), no un adorno: 32px
+   de caja para que sea alcanzable, y el verde de marca que aqui SI pasa. */
+.d2 .d2-pie-pron {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--c-verde-marca);
+  background: rgba(57, 181, 74, .16);
+  border: 0;
+  border-radius: var(--d2-radio-full);
+  cursor: pointer;
+  transition: background-color var(--trans-media);
+}
+
+.d2 .d2-pie-pron:hover { background: rgba(57, 181, 74, .3); }
+
+/* Foco visible sobre oscuro: el anillo va en verde de marca, que contra
+   #0E2A12 da 5.8:1 y se ve sin ambiguedad. */
+.d2 .d2-pie-dir a:focus-visible,
+.d2 .d2-pie-desp a:focus-visible,
+.d2 .d2-pie-cierre a:focus-visible,
+.d2 .d2-pie-pron:focus-visible {
+  outline: 2px solid var(--c-verde-marca);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+
+/* ==========================================================================
+   OBJETIVOS TACTILES EN ENLACES APILADOS
+
+   Una lista de enlaces en el pie es el caso mas conflictivo de un pie:
+   destinos pequenos, pegados y en vertical. Medido:
+
+     14px x 1.5 de interlineado = 21px de alto real
+     15px x 1.5                 = 22.5px
+
+   WCAG 2.2 introduce el criterio 2.5.8 "Target Size (Minimum)", nivel AA,
+   con un minimo de 24x24 px CSS. Los dos casos de arriba se quedan por
+   debajo SOLO por el alto de la linea.
+
+   Matiz importante y facil de aplicar mal: 2.5.8 exceptua los destinos
+   "in-line". Es tentador acogerse a esa excepcion para una lista de
+   enlaces y ahorrarse el padding, pero NO cubre este caso.
+
+   El texto de la excepcion dice "the target is in a sentence or its size
+   is otherwise constrained by the line-height of non-target text", y el
+   documento Understanding solo la ejemplifica con "links within a
+   paragraph of text". La justifica ademas porque el reflujo del texto
+   impide al autor prever donde caera cada enlace: razonamiento que no
+   aplica a una lista vertical puesta ahi a proposito. En la discusion
+   oficial del grupo de trabajo, un colaborador del W3C WCAG WG lo
+   descarta para paginacion con "it's a different use case".
+
+   Asi que estos enlaces necesitan los 24px. Fuentes:
+     https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html
+     https://github.com/w3c/wcag/discussions/3829
+   (El WG no se ha pronunciado de forma explicita y definitiva sobre listas
+   de pie en concreto; se aplica el criterio estricto por prudencia.)
+
+   La solucion NO es subir el interlineado --eso separa el texto y lo hace
+   ilegible-- sino padding-block. Con 14px/1.5 hacen falta 1.5px por lado
+   para llegar a 24. Aqui se usan 6px por lado (33px total) porque:
+
+     - deja margen sobre el minimo, sin llegar a los 44px de 2.5.5 (AAA),
+       que en una lista de cinco enlaces estiraria el pie sin necesidad
+     - los 12px que quedan entre dos textos consecutivos cumplen tambien
+       la separacion minima que pide el contrato
+
+   El padding va en un <a> puesto a block/inline-flex: sobre un <a> en
+   linea, el padding vertical NO agranda la caja de pulsacion y el enlace
+   sigue midiendo 21px aunque se vea mas alto. Ese es el fallo silencioso
+   que hay que evitar aqui.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   OPCION 1 — DIRECTORIO
+
+   El protagonista es la navegacion. Marca a la izquierda, tres columnas de
+   enlaces ocupando el resto: la rejilla 1fr / 1.6fr da mas sitio a los
+   enlaces que a la marca, que es lo que dice esta variante.
+   ========================================================================== */
+
+.d2 .d2-pie-dir__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: clamp(32px, 4vw, 64px);
+  padding-block: clamp(40px, 4.6vw, 64px);
+}
+
+.d2 .d2-pie-dir__logo {
+  display: block;
+  width: 150px;
+}
+
+.d2 .d2-pie-dir__tagline {
+  max-width: 34ch;
+  margin: var(--d2-e4) 0 0;
+  font-size: .875rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, .74);   /* 9.03:1 */
+}
+
+.d2 .d2-pie-dir__pron {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e2);
+  margin: var(--d2-e3) 0 0;
+  font-size: .8125rem;
+  color: rgba(255, 255, 255, .62);   /* 6.74:1 */
+}
+
+/* Tres columnas iguales. Se reparten el 1.6fr del contenedor. */
+.d2 .d2-pie-dir__nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 2.6vw, 40px);
+}
+
+/* Los enlaces: el -6px de margen superior compensa el padding del primero,
+   para que el bloque siga alineado con el titulo de su columna. Sin esto
+   las tres columnas arrancan 6px mas abajo que la marca. */
+.d2 .d2-pie-dir__lista {
+  margin: -6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-pie-dir__lista a {
+  display: inline-flex;
+  padding-block: 6px;               /* 21 + 12 = 33px de alto real */
+  font-size: .875rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .82);  /* 10.80:1 */
+  text-decoration: none;
+  transition: color var(--trans-media);
+}
+
+.d2 .d2-pie-dir__lista a:hover {
+  color: var(--c-verde-marca);       /* 5.80:1 sobre el fondo: pasa AA */
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.d2 .d2-pie-dir__direccion {
+  margin: var(--d2-e3) 0 0;
+  font-size: .8125rem;
+  font-style: normal;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, .62);   /* 6.74:1, no el 4.24:1 de antes */
+}
+
+/* --- Franja inferior --- */
+
+.d2 .d2-pie-dir__base { border-top: 1px solid rgba(255, 255, 255, .16); }
+
+.d2 .d2-pie-dir__base-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--d2-e3) var(--d2-e4);
+  padding-block: var(--d2-e2);
+}
+
+.d2 .d2-pie-dir__legal {
+  margin: 0;
+  font-size: .75rem;
+  color: rgba(255, 255, 255, .62);
+}
+
+.d2 .d2-pie-dir__legales {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--d2-e4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-pie-dir__legales a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--d2-e1);
+  min-height: 32px;
+  font-size: .75rem;
+  color: rgba(255, 255, 255, .74);
+  text-decoration: none;
+  transition: color var(--trans-media);
+}
+
+.d2 .d2-pie-dir__legales a:hover {
+  color: var(--c-blanco);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Client Login se separa con una linea: es de otra naturaleza que los dos
+   avisos legales --es una puerta, no un documento-- y el separador lo dice
+   sin necesidad de otro color. */
+.d2 .d2-pie-dir__login {
+  padding-left: var(--d2-e4);
+  border-left: 1px solid rgba(255, 255, 255, .16);
+  color: rgba(255, 255, 255, .82);
+}
+
+
+/* ==========================================================================
+   OPCION 2 — DESPACHO
+
+   Cambia que se agrupa con que. Arriba, marca y bloque de contacto en dos
+   columnas; debajo, el mapa del sitio comprimido en filas.
+
+   El reparto 1fr / 1fr --y no el 1fr/1.6fr de la opcion 1-- es deliberado:
+   aqui el contacto no es una columna de servicio, es la mitad del pie.
+   ========================================================================== */
+
+.d2 .d2-pie-desp__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 4vw, 64px);
+  align-items: start;
+  padding-block: clamp(40px, 4.6vw, 56px);
+}
+
+.d2 .d2-pie-desp__logo {
+  display: block;
+  width: 150px;
+}
+
+.d2 .d2-pie-desp__tagline {
+  max-width: 34ch;
+  margin: var(--d2-e4) 0 0;
+  font-size: .875rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, .74);
+}
+
+.d2 .d2-pie-desp__pron {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e2);
+  margin: var(--d2-e3) 0 0;
+  font-size: .8125rem;
+  color: rgba(255, 255, 255, .62);
+}
+
+/* --- El bloque de contacto: el protagonista -------------------------- */
+
+/* Las dos fichas no se estiran a la columna entera: medido a 1440px daban
+   610px de ancho para un numero de telefono, y la ficha se leia como una
+   barra vacia con el dato pegado a la izquierda.
+
+   Con un tope de 34ch la ficha se ajusta al dato mas largo (el correo) y
+   las dos siguen midiendo IGUAL entre si, que es lo que pide la geometria
+   del contrato: misma altura y mismo ancho en la misma fila. */
+.d2 .d2-pie-desp__vias {
+  display: grid;
+  gap: var(--d2-e2);
+  max-width: 34ch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Fichas con contorno. Es region comun: el marco ata el icono al dato y
+   separa "una via de contacto" de "un enlace de navegacion", que es
+   justamente la distincion que esta variante quiere hacer.
+
+   Ocupan el ancho de su columna para que las dos midan igual --requisito
+   de geometria del contrato-- y no se ajusten al largo del texto, que
+   dejaria el correo mucho mas ancho que el telefono. */
+.d2 .d2-pie-desp__vias a {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e2);
+  min-height: 52px;
+  padding: var(--d2-e2) var(--d2-e3);
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--c-blanco);            /* 15.46:1 */
+  text-decoration: none;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: var(--d2-radio-sm);
+  transition: background-color var(--trans-media),
+              border-color var(--trans-media);
+}
+
+/* El correo puede ser largo: se parte antes que desbordar la ficha. A
+   390px "matthew@getrede.ca" cabe, pero si Erick cambia el dato por uno
+   mas largo esto evita el scroll horizontal. */
+.d2 .d2-pie-desp__vias a span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.d2 .d2-pie-desp__vias svg {
+  flex: none;
+  color: var(--c-verde-marca);
+}
+
+.d2 .d2-pie-desp__vias a:hover {
+  background: rgba(255, 255, 255, .1);
+  border-color: rgba(57, 181, 74, .55);
+}
+
+.d2 .d2-pie-desp__direccion {
+  margin: var(--d2-e3) 0 0;
+  font-size: .8125rem;
+  font-style: normal;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, .62);
+}
+
+/* --- El mapa del sitio, comprimido ------------------------------------
+   Dos grupos en dos columnas; dentro de cada uno, los enlaces fluyen en
+   fila y saltan de linea solos. Asi los nueve enlaces siguen enteros pero
+   ocupan una franja, no media pantalla. */
+
+.d2 .d2-pie-desp__mapa { border-top: 1px solid rgba(255, 255, 255, .16); }
+
+.d2 .d2-pie-desp__mapa .d2-pie-desp__base-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--d2-e4) clamp(24px, 3vw, 48px);
+  padding-block: var(--d2-e4);
+}
+
+.d2 .d2-pie-desp__grupo .d2-pie-desp__titulo { margin-bottom: var(--d2-e1); }
+
+/* El gap horizontal de 20px hace de separador entre enlaces contiguos:
+   sin el, dos enlaces seguidos en la misma linea se leen como uno solo.
+   El vertical es 0 porque el padding del propio enlace ya separa. */
+.d2 .d2-pie-desp__fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-pie-desp__fila a {
+  display: inline-flex;
+  padding-block: 6px;                /* mismo calculo de 24px que la op.1 */
+  font-size: .875rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .82);
+  text-decoration: none;
+  transition: color var(--trans-media);
+}
+
+.d2 .d2-pie-desp__fila a:hover {
+  color: var(--c-verde-marca);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* --- Franja inferior (igual reparto que la opcion 1) --- */
+
+.d2 .d2-pie-desp__base { border-top: 1px solid rgba(255, 255, 255, .16); }
+
+.d2 .d2-pie-desp__base .d2-pie-desp__base-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--d2-e3) var(--d2-e4);
+  padding-block: var(--d2-e2);
+}
+
+.d2 .d2-pie-desp__legal {
+  margin: 0;
+  font-size: .75rem;
+  color: rgba(255, 255, 255, .62);
+}
+
+.d2 .d2-pie-desp__legales {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--d2-e4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-pie-desp__legales a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--d2-e1);
+  min-height: 32px;
+  font-size: .75rem;
+  color: rgba(255, 255, 255, .74);
+  text-decoration: none;
+  transition: color var(--trans-media);
+}
+
+.d2 .d2-pie-desp__legales a:hover {
+  color: var(--c-blanco);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.d2 .d2-pie-desp__login {
+  padding-left: var(--d2-e4);
+  border-left: 1px solid rgba(255, 255, 255, .16);
+  color: rgba(255, 255, 255, .82);
+}
+
+
+/* ==========================================================================
+   OPCION 3 — CIERRE
+
+   Sin columnas. Cuatro franjas apiladas que se leen de arriba abajo:
+   marca+tagline / contacto / enlaces / legales.
+
+   El eje de lectura es horizontal en cada franja, no vertical en columnas.
+   Por eso los enlaces van en una fila envolvente y la direccion en una
+   sola linea: es la misma informacion de la opcion 1 girada 90 grados.
+
+   Aviso sobre el patron: NN/g documenta que los "utility links" --contacto,
+   privacidad, acceso-- son el unico grupo que recomienda incluir SIEMPRE en
+   el pie, porque es donde el usuario los busca a proposito. Por eso esta
+   variante adelgaza el mapa del sitio pero NO toca ese grupo: telefono,
+   correo, direccion, legales y Client Login siguen enteros y visibles.
+   ("Web Page Footers 101" y "Utility Navigation", NN/g.)
+   ========================================================================== */
+
+.d2 .d2-pie-cierre__inner {
+  padding-block: clamp(28px, 3.2vw, 40px);
+}
+
+/* --- Franja 1: marca y tagline --- */
+
+.d2 .d2-pie-cierre__alto {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--d2-e4);
+}
+
+.d2 .d2-pie-cierre__logo {
+  display: block;
+  width: 132px;
+}
+
+.d2 .d2-pie-cierre__pron {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e2);
+  margin: var(--d2-e2) 0 0;
+  font-size: .8125rem;
+  color: rgba(255, 255, 255, .62);
+}
+
+.d2 .d2-pie-cierre__tagline {
+  flex: 1 1 26ch;
+  max-width: 46ch;
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .74);
+}
+
+/* --- Franja 2: los tres datos de contacto en linea ---------------------
+   Telefono y correo son enlaces y crecen a 1rem; la direccion no es
+   enlace --no hay a donde ir-- y se queda en el tamano del cuerpo.
+   Esa diferencia de tamano es la que dice cual se puede pulsar. */
+
+.d2 .d2-pie-cierre__contacto {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--d2-e2) var(--d2-e4);
+  margin-top: var(--d2-e4);
+  padding-top: var(--d2-e4);
+  border-top: 1px solid rgba(255, 255, 255, .16);
+}
+
+.d2 .d2-pie-cierre__dato {
+  display: inline-flex;
+  padding-block: 5px;
+  font-size: 1rem;
+  font-weight: var(--fw-medium);
+  line-height: 1.4;
+  color: var(--c-blanco);
+  text-decoration: none;
+  transition: color var(--trans-media);
+}
+
+.d2 .d2-pie-cierre__dato:hover {
+  color: var(--c-verde-marca);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.d2 .d2-pie-cierre__direccion {
+  margin: 0;
+  font-size: .8125rem;
+  font-style: normal;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .62);
+}
+
+/* --- Franja 3: todos los enlaces en fila envolvente --------------------
+   El separador es un punto generado por CSS, sin texto: no llega al arbol
+   de accesibilidad, asi que el lector de pantalla lee la lista limpia.
+
+   MEDIDO Y CORREGIDO: el punto iba primero en ::before de "li + li", que
+   es lo natural de escribir. A 390px la fila envuelve en cuatro lineas y
+   CADA LINEA NUEVA ABRIA CON UN PUNTO SUELTO, porque el separador de un
+   elemento cae al principio del renglon cuando el elemento salta de linea.
+
+   La solucion es ponerlo DETRAS de cada enlace --::after en todos menos
+   el ultimo-- y no delante: asi el punto viaja pegado al enlace anterior
+   y al envolver se queda al final del renglon, que es donde no molesta.
+   Es un caso en que lo intuitivo falla solo al envolver, por eso se anota. */
+
+.d2 .d2-pie-cierre__nav {
+  margin-top: var(--d2-e3);
+  padding-top: var(--d2-e3);
+  border-top: 1px solid rgba(255, 255, 255, .16);
+}
+
+.d2 .d2-pie-cierre__enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--d2-e3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-pie-cierre__enlaces li {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e3);
+}
+
+.d2 .d2-pie-cierre__enlaces li:not(:last-child)::after {
+  content: "";
+  flex: none;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .32);
+}
+
+.d2 .d2-pie-cierre__enlaces a {
+  display: inline-flex;
+  padding-block: 6px;
+  font-size: .875rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .82);
+  text-decoration: none;
+  transition: color var(--trans-media);
+}
+
+.d2 .d2-pie-cierre__enlaces a:hover {
+  color: var(--c-verde-marca);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* --- Franja 4: legales --- */
+
+.d2 .d2-pie-cierre__base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--d2-e2) var(--d2-e4);
+  margin-top: var(--d2-e3);
+  padding-top: var(--d2-e3);
+  border-top: 1px solid rgba(255, 255, 255, .16);
+}
+
+.d2 .d2-pie-cierre__legal {
+  margin: 0;
+  font-size: .75rem;
+  color: rgba(255, 255, 255, .62);
+}
+
+.d2 .d2-pie-cierre__legales {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--d2-e4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-pie-cierre__legales a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--d2-e1);
+  min-height: 32px;
+  font-size: .75rem;
+  color: rgba(255, 255, 255, .74);
+  text-decoration: none;
+  transition: color var(--trans-media);
+}
+
+.d2 .d2-pie-cierre__legales a:hover {
+  color: var(--c-blanco);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.d2 .d2-pie-cierre__login {
+  padding-left: var(--d2-e4);
+  border-left: 1px solid rgba(255, 255, 255, .16);
+  color: rgba(255, 255, 255, .82);
+}
+
+
+/* ==========================================================================
+   EL MARCO DEL CARRUSEL
+
+   La <section> que envuelve el carrusel existe por accesibilidad (apaga los
+   tres landmarks contentinfo, ver el comentario del HTML), no por diseno.
+   No debe pintar nada ni ocupar nada.
+   ========================================================================== */
+
+.d2 .d2-pie-caru-marco {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ==========================================================================
+   MOVIMIENTO
+
+   El pie NO lleva entrada escalonada, y es una decision, no un olvido.
+
+   Un pie aparece cuando el usuario ya ha llegado al final. Animar la
+   entrada de cuatro bloques ahi retrasa justo lo que ha venido a buscar
+   --el telefono, el correo, el aviso legal-- y NN/g documenta que esos
+   "utility links" son un destino deliberado, no un descubrimiento. Hacerle
+   esperar una animacion para leer un numero de telefono es coste sin
+   beneficio.
+
+   El contrato ya admite este caso: "Si una variante no gana nada con
+   movimiento, se queda quieta", como el triptico y la comparativa de la
+   seccion del problema.
+
+   Lo unico que se mueve es el estado al pasar el raton: color y fondo, a
+   250ms (--trans-media), dentro del rango .18-.3s que fija el contrato.
+   Ningun transform, ninguna sombra, ningun will-change: sobre texto claro
+   en fondo oscuro, rasterizar emborrona los palos finos de Open Sans.
+
+   Tampoco hay subrayado permanente: aparece al pasar el raton y al recibir
+   foco. El color por si solo no debe ser el unico indicador, pero aqui el
+   contexto de lista de navegacion ya identifica los enlaces; el subrayado
+   en hover/focus refuerza sin ensuciar la lectura en reposo.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-pie-dir a,
+  .d2 .d2-pie-desp a,
+  .d2 .d2-pie-cierre a,
+  .d2 .d2-pie-desp__vias a,
+  .d2 .d2-pie-pron {
+    transition: none;
+  }
+}
+
+
+/* ==========================================================================
+   ADAPTACION
+
+   Tres cortes, los mismos para las tres variantes para que se comparen en
+   igualdad. Verificado de 1920 a 390px sin scroll horizontal.
+   ========================================================================== */
+
+/* --- Tableta: la marca deja de compartir fila con los enlaces --------- */
+@media (max-width: 900px) {
+
+  .d2 .d2-pie-dir__inner,
+  .d2 .d2-pie-desp__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--d2-e5);
+  }
+
+  /* Las tres columnas de la opcion 1 pasan a dos: a tres, "Energy Gap
+     Analysis" parte en tres lineas y la columna se hace mas alta que la
+     de la marca. */
+  .d2 .d2-pie-dir__nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* --- Movil ------------------------------------------------------------ */
+@media (max-width: 560px) {
+
+  .d2 .d2-pie-dir__nav,
+  .d2 .d2-pie-desp__mapa .d2-pie-desp__base-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Los legales se apilan y el separador vertical del login sobra: en
+     columna, una linea a la izquierda no separa nada, solo estorba. */
+  .d2 .d2-pie-dir__base-inner,
+  .d2 .d2-pie-desp__base .d2-pie-desp__base-inner,
+  .d2 .d2-pie-cierre__base {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--d2-e2);
+  }
+
+  .d2 .d2-pie-dir__legales,
+  .d2 .d2-pie-desp__legales,
+  .d2 .d2-pie-cierre__legales {
+    gap: var(--d2-e3);
+  }
+
+  .d2 .d2-pie-dir__login,
+  .d2 .d2-pie-desp__login,
+  .d2 .d2-pie-cierre__login {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  /* En la opcion 3 la direccion baja a su propia linea: en fila con el
+     correo, a 390px se parte por la mitad y se lee peor que suelta. */
+  .d2 .d2-pie-cierre__contacto { gap: var(--d2-e1) var(--d2-e4); }
+  .d2 .d2-pie-cierre__direccion { flex: 1 0 100%; }
+}
+
+
+/* ==========================================================================
+   SECCION EQUIPO — TRES VARIANTES
+
+   El titular es "More than engineers.", asi que el eje de las tres es que
+   se enseña primero: el rostro, la credencial o la persona que firma.
+
+     1  Ficha    tres retratos iguales, la credencial sobre la foto
+     2  Dosier   sin retratos en la lista: manda la credencial en una
+                 rejilla legible, con un solo retrato de apoyo
+     3  Firma    uno grande --el fundador-- y los demas en miniatura
+
+   Difieren en QUE se enseña primero, no en el acabado.
+
+   Solo hay tres fotos en assets/img/equipo. El marcado y estas reglas
+   funcionan con tres; si llega la cuarta, entra sin tocar el CSS porque
+   las rejillas son por columnas automaticas, no por numero fijo.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Comun a las tres
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-equipo-ficha,
+.d2 .d2-equipo-dosier,
+.d2 .d2-equipo-firma {
+  padding-block: clamp(48px, 5.4vw, 76px);
+  background: var(--c-blanco, #fff);
+}
+
+.d2 .d2-equipo-ficha__inner,
+.d2 .d2-equipo-dosier__inner,
+.d2 .d2-equipo-firma__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+.d2 .d2-equipo-ficha__intro,
+.d2 .d2-equipo-dosier__intro,
+.d2 .d2-equipo-firma__intro {
+  max-width: 62ch;
+  margin-bottom: clamp(28px, 3.4vw, 44px);
+}
+
+.d2 .d2-equipo-ficha__eyebrow,
+.d2 .d2-equipo-dosier__eyebrow,
+.d2 .d2-equipo-firma__eyebrow {
+  margin: 0;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-equipo-ficha__titulo,
+.d2 .d2-equipo-dosier__titulo,
+.d2 .d2-equipo-firma__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-equipo-ficha__lead,
+.d2 .d2-equipo-dosier__lead,
+.d2 .d2-equipo-firma__lead {
+  margin: var(--d2-e3) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* Las fotos son retratos verticales: la proporcion se declara para que la
+   pagina no salte mientras cargan. */
+.d2 .d2-equipo-ficha__foto,
+.d2 .d2-equipo-firma__foto-grande,
+.d2 .d2-equipo-firma__foto-mini {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* ==========================================================================
+   OPCION 1 — FICHA
+
+   Tres retratos del mismo tamaño. La credencial se apoya sobre la foto:
+   ata el rostro a la licencia sin gastar una linea del cuerpo.
+   ========================================================================== */
+
+.d2 .d2-equipo-ficha__lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(20px, 2.6vw, 34px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-equipo-ficha__persona {
+  min-width: 0;
+}
+
+.d2 .d2-equipo-ficha__marco {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--d2-radio-md);
+  background: var(--d2-tinta);
+}
+
+/* La banda de credencial cubre el pie de la foto. El degradado por debajo
+   garantiza el contraste sin depender de como sea la imagen. */
+.d2 .d2-equipo-ficha__cred {
+  position: absolute;
+  inset: auto 0 0 0;
+  margin: 0;
+  padding: 26px var(--d2-e3) var(--d2-e2);
+  font-size: .75rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .04em;
+  color: #fff;
+  background: linear-gradient(to top, rgba(14, 42, 18, .92), rgba(14, 42, 18, 0));
+}
+
+.d2 .d2-equipo-ficha__nombre {
+  margin: var(--d2-e3) 0 2px;
+  font-size: 1.0625rem;
+  font-weight: var(--fw-extrabold);
+  line-height: 1.26;
+  color: var(--c-texto);
+}
+
+.d2 .d2-equipo-ficha__cargo {
+  margin: 0 0 var(--d2-e2);
+  font-size: .875rem;
+  color: var(--c-verde-hover);   /* 6.41:1 sobre blanco */
+}
+
+.d2 .d2-equipo-ficha__bio {
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.56;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* ==========================================================================
+   OPCION 2 — DOSIER
+
+   Aqui NO manda el rostro sino la credencial. La lista es una rejilla de
+   tres columnas --nombre, licencia, trayectoria-- que se barre de un
+   vistazo, y el unico retrato sirve de apoyo, no de protagonista.
+
+   Es la variante para un comprador institucional que evalua por titulacion
+   antes que por simpatia.
+   ========================================================================== */
+
+/* La banda es una tira de TRES retratos sobre la lista, no una columna de
+   apoyo: son apaisados y anchos, para que el peso lo siga llevando la
+   rejilla de credenciales de abajo. Va marcada aria-hidden en el marcado
+   porque los nombres ya estan en la lista. */
+.d2 .d2-equipo-dosier__banda {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(12px, 1.6vw, 20px);
+  margin-bottom: clamp(24px, 3vw, 36px);
+}
+
+/* Recorte apaisado: un retrato completo aqui competiria con la lista, que
+   es lo que esta variante quiere que se lea. */
+.d2 .d2-equipo-dosier__retrato {
+  display: block;
+  width: 100%;
+  height: auto;   /* sin esto el atributo height="420" gana al aspect-ratio */
+  /* 4/3 en vez de 16/9: apaisado recortaba las caras por la frente y la
+     barbilla. El encuadre sube al 18% para dejar aire sobre la cabeza. */
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: var(--d2-radio-md);
+  background: var(--d2-tinta);
+}
+
+.d2 .d2-equipo-dosier__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Tres columnas por fila: identidad, credencial y trayectoria. Se lee por
+   columna --todas las licencias juntas-- que es lo que permite comparar. */
+.d2 .d2-equipo-dosier__fila {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, .6fr) minmax(0, 1.4fr);
+  gap: clamp(14px, 1.8vw, 26px);
+  align-items: start;
+  padding-block: clamp(16px, 2vw, 22px);
+  border-bottom: 1px solid rgba(2, 51, 0, .1);
+}
+
+.d2 .d2-equipo-dosier__fila:first-child {
+  border-top: 1px solid rgba(2, 51, 0, .1);
+}
+
+.d2 .d2-equipo-dosier__id { min-width: 0; }
+
+.d2 .d2-equipo-dosier__nombre {
+  margin: 0 0 2px;
+  font-size: 1rem;
+  font-weight: var(--fw-extrabold);
+  line-height: 1.26;
+  color: var(--c-texto);
+}
+
+.d2 .d2-equipo-dosier__cargo {
+  margin: 0;
+  font-size: .8125rem;
+  color: var(--c-texto-suave);
+}
+
+/* La credencial en verde oscuro: es el dato que esta variante destaca */
+.d2 .d2-equipo-dosier__cred {
+  margin: 0;
+  font-size: .8125rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .03em;
+  line-height: 1.4;
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-equipo-dosier__bio {
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.55;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* ==========================================================================
+   OPCION 3 — FIRMA
+
+   Uno grande y los demas en miniatura. El titular dice "More than
+   engineers": esta variante lo cuenta enseñando a quien firma la empresa y
+   dejando al equipo alrededor.
+
+   Es la unica de las tres con jerarquia interna: cambia quien es el
+   protagonista, no como se ordenan los iguales.
+   ========================================================================== */
+
+.d2 .d2-equipo-firma__cuerpo {
+  display: grid;
+  gap: clamp(26px, 3.2vw, 44px);
+}
+
+.d2 .d2-equipo-firma__principal {
+  display: grid;
+  grid-template-columns: minmax(0, .42fr) minmax(0, 1fr);
+  gap: clamp(20px, 2.6vw, 36px);
+  align-items: center;
+}
+
+/* El retrato es un <img> directo dentro de la rejilla, no va envuelto:
+   una version anterior lo estilaba como contenedor y quedaba sin recorte. */
+.d2 .d2-equipo-firma__foto-grande {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: var(--d2-radio-md);
+  background: var(--d2-tinta);
+}
+
+.d2 .d2-equipo-firma__nombre--grande {
+  margin: 0 0 2px;
+  font-size: clamp(1.25rem, 1.1rem + .6vw, 1.625rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-equipo-firma__cargo {
+  margin: 0 0 var(--d2-e2);
+  font-size: .9375rem;
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-equipo-firma__bio {
+  margin: 0;
+  font-size: .9375rem;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* Es un <ul> de seis credenciales, no un parrafo: una version anterior lo
+   estilaba como texto y los <li> caian apilados en vertical, con vista de
+   lista suelta al pie de la seccion.
+
+   Van en fila, como pastillas: son el respaldo colectivo del equipo, no
+   una enumeracion que haya que recorrer. */
+.d2 .d2-equipo-firma__credenciales {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--d2-e1) var(--d2-e2);
+  margin: clamp(20px, 2.6vw, 30px) 0 0;
+  padding: clamp(16px, 2vw, 22px) 0 0;
+  border-top: 1px solid rgba(2, 51, 0, .1);
+  list-style: none;
+}
+
+.d2 .d2-equipo-firma__credenciales li {
+  padding: 5px var(--d2-e2);
+  font-size: .75rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .04em;
+  color: var(--c-verde-hover);
+  background: var(--d2-tinta);
+  border-radius: var(--d2-radio-full);
+}
+
+/* El resto del equipo: fila de miniaturas bajo el principal */
+.d2 .d2-equipo-firma__resto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(18px, 2.2vw, 28px);
+  margin: 0;
+  padding-top: clamp(20px, 2.6vw, 30px);
+  border-top: 1px solid rgba(2, 51, 0, .1);
+  list-style: none;
+}
+
+/* Cuatro elementos --foto, nombre, cargo y bio-- en dos columnas. Sin
+   areas explicitas el cargo y la bio caian bajo la foto, en una columna de
+   64px, y el texto se rompia letra a letra. */
+.d2 .d2-equipo-firma__mini {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  grid-template-areas:
+    "foto nombre"
+    "foto cargo"
+    "bio  bio";
+  column-gap: var(--d2-e3);
+  row-gap: 2px;
+  align-items: center;
+}
+
+.d2 .d2-equipo-firma__mini .d2-equipo-firma__foto-mini { grid-area: foto; }
+.d2 .d2-equipo-firma__mini .d2-equipo-firma__nombre { grid-area: nombre; align-self: end; }
+.d2 .d2-equipo-firma__mini .d2-equipo-firma__cargo {
+  grid-area: cargo;
+  align-self: start;
+  margin: 0;
+  font-size: .8125rem;
+}
+
+.d2 .d2-equipo-firma__mini .d2-equipo-firma__bio {
+  grid-area: bio;
+  margin-top: var(--d2-e2);
+  font-size: .875rem;
+}
+
+.d2 .d2-equipo-firma__mini .d2-equipo-firma__foto-mini {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--d2-radio-full);
+  background: var(--d2-tinta);
+}
+
+.d2 .d2-equipo-firma__mini .d2-equipo-firma__nombre {
+  margin: 0;
+  font-size: .9375rem;
+  font-weight: var(--fw-extrabold);
+  line-height: 1.25;
+  color: var(--c-texto);
+}
+
+/* ==========================================================================
+   ENTRADA
+
+   Una pasada al aparecer y despues quietas. Las tres llevan solo esto: un
+   equipo no gana nada con movimiento continuo, y los rostros en movimiento
+   se leen peor.
+   ========================================================================== */
+
+@keyframes d2-equipo-entra {
+  from { opacity: 0; transform: translateY(9px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.d2 .d2-equipo-ficha__intro,
+.d2 .d2-equipo-ficha__persona,
+.d2 .d2-equipo-dosier__intro,
+.d2 .d2-equipo-dosier__banda,
+.d2 .d2-equipo-firma__intro,
+.d2 .d2-equipo-firma__principal,
+.d2 .d2-equipo-firma__resto {
+  animation: d2-equipo-entra .55s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .d2-equipo-ficha__persona:nth-child(1) { animation-delay: .06s; }
+.d2 .d2-equipo-ficha__persona:nth-child(2) { animation-delay: .13s; }
+.d2 .d2-equipo-ficha__persona:nth-child(3) { animation-delay: .20s; }
+.d2 .d2-equipo-ficha__persona:nth-child(4) { animation-delay: .27s; }
+
+.d2 .d2-equipo-dosier__banda { animation-delay: .08s; }
+.d2 .d2-equipo-firma__principal { animation-delay: .08s; }
+.d2 .d2-equipo-firma__resto { animation-delay: .16s; }
+
+/* El retrato responde al raton con el mismo gesto que las tarjetas del
+   resto de la pagina: sube 2px, sin sombra ni escala. */
+.d2 .d2-equipo-ficha__marco,
+.d2 .d2-equipo-dosier__retrato {
+  transition: transform .3s cubic-bezier(.32, .72, 0, 1);
+}
+
+@media (hover: hover) {
+  .d2 .d2-equipo-ficha__persona:hover .d2-equipo-ficha__marco {
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-equipo-ficha__intro,
+  .d2 .d2-equipo-ficha__persona,
+  .d2 .d2-equipo-ficha__marco,
+  .d2 .d2-equipo-dosier__intro,
+  .d2 .d2-equipo-dosier__banda,
+  .d2 .d2-equipo-dosier__retrato,
+  .d2 .d2-equipo-firma__intro,
+  .d2 .d2-equipo-firma__principal,
+  .d2 .d2-equipo-firma__resto {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  /* El dosier pierde el retrato de apoyo: en una columna compite con la
+     lista, que es lo que esta variante quiere que se lea. */
+  .d2 .d2-equipo-dosier__banda { grid-template-columns: 1fr; }
+  .d2 .d2-equipo-dosier__retrato { display: none; }
+
+  /* La rejilla de tres columnas se apila: a este ancho, comparar licencias
+     en columna ya no es posible y partirlas empeora la lectura. */
+  .d2 .d2-equipo-dosier__fila {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .d2 .d2-equipo-firma__principal { grid-template-columns: 1fr; }
+
+  .d2 .d2-equipo-firma__foto-grande { max-width: 260px; }
+}
+
+@media (max-width: 560px) {
+  .d2 .d2-equipo-ficha__lista { grid-template-columns: 1fr; }
+  .d2 .d2-equipo-ficha__marco { max-width: 300px; }
+}
+
+
+/* ==========================================================================
+   SECCION RESEÑAS — DOS VARIANTES
+
+     1  Tres a la vez   las tres citas en paralelo, sin controles
+     2  Editorial       el componente que pidio el cliente
+
+   La 2 reproduce un componente React con Tailwind. Aqui no hay compilacion,
+   asi que las clases de utilidad se traducen a reglas con los tokens de
+   esta web: el equivalente de `text-foreground/10` es nuestro verde oscuro
+   al 10%, y el de `text-muted-foreground` es --c-texto-suave.
+   ========================================================================== */
+
+/* Titular solo para lectores de pantalla: la variante editorial no lleva
+   encabezado visible --el componente original tampoco-- pero la seccion
+   necesita uno para no romper el esquema de la pagina. */
+.d2 .u-oculto-visual {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Comun
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-res-tres,
+.d2 .d2-res-ed {
+  padding-block: clamp(48px, 5.4vw, 76px);
+  background: var(--d2-tinta);
+  border-block: 1px solid rgba(2, 51, 0, .07);
+}
+
+.d2 .d2-res-tres__inner,
+.d2 .d2-res-ed__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+/* ==========================================================================
+   OPCION 1 — TRES A LA VEZ
+
+   Tres citas cortas caben en paralelo, y mostrarlas cuesta menos que
+   esconderlas tras un control que hay que descubrir y pulsar.
+   ========================================================================== */
+
+.d2 .d2-res-tres__intro {
+  max-width: 62ch;
+  margin-bottom: clamp(28px, 3.4vw, 42px);
+}
+
+.d2 .d2-res-tres__eyebrow {
+  margin: 0;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-res-tres__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-res-tres__lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(18px, 2.4vw, 30px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cada cita en su tarjeta blanca: el contorno agrupa la voz con su firma,
+   que es lo que hace que la atribucion se lea como parte de la cita. */
+.d2 .d2-res-tres__item {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 2.4vw, 28px);
+  background: var(--c-blanco, #fff);
+  border: 1px solid rgba(2, 51, 0, .08);
+  border-radius: var(--d2-radio-md);
+}
+
+.d2 .d2-res-tres__cita {
+  flex: 1;
+  margin: 0 0 var(--d2-e4);
+  font-size: .9375rem;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+.d2 .d2-res-tres__pie {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e3);
+  padding-top: var(--d2-e3);
+  border-top: 1px solid rgba(2, 51, 0, .08);
+}
+
+/* El logo apagado: acompaña a la firma, no compite con la cita */
+.d2 .d2-res-tres__logo {
+  flex: none;
+  width: auto;
+  max-width: 74px;
+  height: 30px;
+  object-fit: contain;
+  object-position: left center;
+  opacity: .5;
+  filter: grayscale(100%);
+  transition: opacity var(--d2-normal) ease, filter var(--d2-normal) ease;
+}
+
+.d2 .d2-res-tres__item:hover .d2-res-tres__logo {
+  opacity: 1;
+  filter: grayscale(0);
+}
+
+.d2 .d2-res-tres__nombre {
+  margin: 0;
+  font-size: .875rem;
+  font-weight: var(--fw-extrabold);
+  line-height: 1.3;
+  color: var(--c-texto);
+}
+
+.d2 .d2-res-tres__org {
+  margin: 1px 0 0;
+  font-size: .8125rem;
+  line-height: 1.3;
+  color: var(--c-texto-suave);
+}
+
+/* ==========================================================================
+   OPCION 2 — EDITORIAL
+
+   El componente del cliente. Las equivalencias con el original:
+
+     text-[120px] font-light          -> el numeral, peso 300
+     text-foreground/10               -> verde oscuro al 10%
+     text-2xl md:text-3xl font-light  -> la cita, peso 300 y trazo fino
+     grayscale group-hover:grayscale-0-> el logo toma color al pasar
+     ring-2 ring-foreground/10        -> el aro del marco
+     h-px w-12 / w-6                  -> las lineas del selector
+     tracking-widest uppercase        -> el contador 01 / 03
+   ========================================================================== */
+
+.d2 .d2-res-ed__inner {
+  max-width: 760px;   /* el original va estrecho: max-w-2xl */
+}
+
+.d2 .d2-res-ed__fila {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(18px, 2.6vw, 34px);
+}
+
+/* El numeral gigante. Peso ligero y casi transparente: es textura, no
+   informacion --el contador de abajo es quien lo dice--, por eso va
+   marcado aria-hidden en el marcado.
+
+   font-variant-numeric: tabular-nums es el equivalente del
+   fontFeatureSettings:'tnum' del original: sin el, el 1 es mas estrecho
+   que el 2 y el numeral bailaria al cambiar de cita. */
+.d2 .d2-res-ed__num {
+  flex: none;
+  font-size: clamp(64px, 9vw, 120px);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -.02em;
+  color: rgba(14, 42, 18, .12);
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+  transition: color .5s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .d2-res-ed__cuerpo {
+  flex: 1;
+  min-width: 0;
+  padding-top: clamp(6px, 1vw, 16px);
+}
+
+/* La cita: grande y de trazo FINO. Es lo que le da el aire editorial --una
+   cita en negrita se lee como un titular, no como una voz. */
+.d2 .d2-res-ed__cita {
+  margin: 0;
+  font-size: clamp(1.25rem, 1.05rem + .9vw, 1.75rem);
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: -.015em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-res-ed__autor {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e3);
+  margin-top: clamp(24px, 3vw, 40px);
+}
+
+/* El marco redondo del retrato del original. Aqui contiene el logo del
+   distrito, que en este hueco dice mas que una foto: el lector reconoce el
+   suyo. */
+.d2 .d2-res-ed__marco {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  padding: 9px;
+  overflow: hidden;
+  background: var(--c-blanco, #fff);
+  border-radius: var(--d2-radio-full);
+  box-shadow: inset 0 0 0 2px rgba(14, 42, 18, .12);
+  transition: box-shadow .3s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .d2-res-ed__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: .72;
+  transition: filter .5s cubic-bezier(.32, .72, 0, 1),
+              opacity .5s cubic-bezier(.32, .72, 0, 1);
+}
+
+/* El group-hover del original: el aro se marca y el logo toma color */
+.d2 .d2-res-ed__autor:hover .d2-res-ed__marco {
+  box-shadow: inset 0 0 0 2px rgba(14, 42, 18, .3);
+}
+
+.d2 .d2-res-ed__autor:hover .d2-res-ed__logo {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+.d2 .d2-res-ed__nombre {
+  display: block;
+  font-size: .9375rem;
+  font-weight: var(--fw-semibold, 600);
+  line-height: 1.35;
+  color: var(--c-texto);
+}
+
+.d2 .d2-res-ed__meta {
+  display: block;
+  font-size: .8125rem;
+  line-height: 1.35;
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-res-ed__barra {
+  margin-inline: 8px;
+  color: rgba(14, 42, 18, .25);
+}
+
+.d2 .d2-res-ed__org {
+  transition: color .3s ease;
+}
+
+.d2 .d2-res-ed__autor:hover .d2-res-ed__org {
+  color: var(--c-texto);
+}
+
+/* --------------------------------------------------------------------------
+   El cruce
+
+   Sale desplazandose a la derecha, se cambia el texto sin que se vea, y
+   entra desde la izquierda. Los 300ms del original.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-res-ed__cita,
+.d2 .d2-res-ed__autor {
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+.d2 .d2-res-ed__autor { transition-delay: .1s; }
+
+.d2 [data-res-ed].esta-cambiando .d2-res-ed__cita {
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.d2 [data-res-ed].esta-cambiando .d2-res-ed__autor {
+  opacity: 0;
+}
+
+/* El estado de partida de la entrada, sin transicion para que se aplique
+   de golpe y el recorrido se vea entero */
+.d2 [data-res-ed].esta-entrando .d2-res-ed__cita {
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: none;
+}
+
+.d2 [data-res-ed].esta-entrando .d2-res-ed__autor {
+  opacity: 0;
+  transition: none;
+}
+
+/* --------------------------------------------------------------------------
+   Los mandos
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-res-ed__mandos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--d2-e3);
+  margin-top: clamp(36px, 4.4vw, 64px);
+}
+
+.d2 .d2-res-ed__izq {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 24px);
+}
+
+.d2 .d2-res-ed__lineas {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e2);
+}
+
+/* Las lineas del original. El area de pulsacion es de 44px de alto aunque
+   el trazo mida 1px: un objetivo tactil de un pixel seria inalcanzable
+   (WCAG 2.5.8 pide 24x24 como minimo). */
+.d2 .d2-res-ed__linea {
+  display: grid;
+  place-items: center;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.d2 .d2-res-ed__linea span {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: rgba(14, 42, 18, .25);
+  transition: width .5s cubic-bezier(.16, 1, .3, 1),
+              background-color .5s cubic-bezier(.16, 1, .3, 1);
+}
+
+.d2 .d2-res-ed__linea:hover span {
+  width: 32px;
+  background: rgba(14, 42, 18, .45);
+}
+
+/* La activa se alarga al doble y se pinta solida: es el gesto que define
+   al componente. */
+.d2 .d2-res-ed__linea.es-activa span {
+  width: 48px;
+  background: var(--c-texto);
+}
+
+.d2 .d2-res-ed__linea:focus-visible {
+  outline: 2px solid var(--c-verde);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.d2 .d2-res-ed__contador {
+  font-size: .6875rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+.d2 .d2-res-ed__flechas {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.d2 .d2-res-ed__flecha {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: var(--d2-radio-full);
+  background: none;
+  color: rgba(14, 42, 18, .45);
+  cursor: pointer;
+  transition: color .3s ease, background-color .3s ease;
+}
+
+.d2 .d2-res-ed__flecha:hover {
+  color: var(--c-texto);
+  background: rgba(14, 42, 18, .06);
+}
+
+.d2 .d2-res-ed__flecha:focus-visible {
+  outline: 2px solid var(--c-verde);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Sin movimiento
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-res-ed__cita,
+  .d2 .d2-res-ed__autor,
+  .d2 .d2-res-ed__num,
+  .d2 .d2-res-ed__logo,
+  .d2 .d2-res-ed__marco,
+  .d2 .d2-res-ed__linea span,
+  .d2 .d2-res-ed__flecha,
+  .d2 .d2-res-tres__logo {
+    transition: none;
+  }
+
+  .d2 [data-res-ed].esta-cambiando .d2-res-ed__cita,
+  .d2 [data-res-ed].esta-cambiando .d2-res-ed__autor,
+  .d2 [data-res-ed].esta-entrando .d2-res-ed__cita,
+  .d2 [data-res-ed].esta-entrando .d2-res-ed__autor {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 620px) {
+  /* El numeral pasa encima: al lado se come el ancho de la cita, que es lo
+     que hay que leer. */
+  .d2 .d2-res-ed__fila {
+    flex-direction: column;
+    gap: var(--d2-e2);
+  }
+
+  .d2 .d2-res-ed__cuerpo { padding-top: 0; }
+
+  .d2 .d2-res-ed__mandos {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--d2-e2);
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   LA CABECERA DE LA VARIANTE EDITORIAL
+
+   El componente original no llevaba titulo: vivia suelto en una pagina de
+   demostracion. Aqui es una seccion mas de la home y necesita presentarse,
+   como el resto.
+
+   Va alineada con la cita, no centrada: el bloque entero se lee por la
+   izquierda y centrar la cabecera romperia esa columna.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-res-ed__cabecera {
+  max-width: 52ch;
+  margin-bottom: clamp(30px, 3.6vw, 48px);
+}
+
+.d2 .d2-res-ed__eyebrow {
+  margin: 0;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-res-ed__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+/* El subtitulo en peso ligero, como la cita: es la voz de la seccion, no
+   otro titular compitiendo con el de arriba. */
+.d2 .d2-res-ed__sub {
+  margin: var(--d2-e3) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo, #333);
 }
