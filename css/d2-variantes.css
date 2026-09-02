@@ -7100,7 +7100,9 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-res-ed__cabecera {
   max-width: 52ch;
+  margin-inline: auto;
   margin-bottom: clamp(30px, 3.6vw, 48px);
+  text-align: center;
 }
 
 .d2 .d2-res-ed__eyebrow {
