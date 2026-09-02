@@ -519,3 +519,225 @@ span.d2-panel__filtro:hover {
   .d2-panel .d2-metrica__delta,
   .d2-grafico__meses span { opacity: 1; transform: none; animation: none; }
 }
+
+
+/* ==========================================================================
+   EL HEADER
+
+   Cuatro cambios pedidos, mas la animacion del desplegable.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. LA NAVEGACION SE VA A LA DERECHA
+
+   Estaba centrada con `margin-inline: auto`, que reparte el hueco a los dos
+   lados. Ahora todo el hueco se va a la izquierda, asi que el bloque
+   nav + botones queda agrupado a la derecha y el logo respira.
+   -------------------------------------------------------------------------- */
+
+.d2 .header__inner .nav {
+  margin-inline: auto 0;
+}
+
+/* Un poco de aire entre la navegacion y los botones, para que no se lean
+   como una sola fila de cosas pulsables */
+.d2 .header__inner .header__actions {
+  margin-inline-start: clamp(var(--sp-4), 2.5vw, var(--sp-7));
+}
+
+
+/* --------------------------------------------------------------------------
+   2. CLIENT LOGIN, AHORA BOTON
+
+   Sube de la barra superior al header. Va en version linea, no solido: dos
+   botones solidos se disputarian la atencion y la llamada principal es
+   "Book a Call".
+   -------------------------------------------------------------------------- */
+
+.d2 .header__actions {
+  /* Sin `display`: por debajo de 400px d2.css oculta este bloque a
+     proposito y no hay que revivirlo. Poniendo flex aqui, el boton de
+     Client Login empujaba el burger fuera de la pantalla. */
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.d2 .header__login-btn {
+  gap: 7px;
+}
+
+.d2 .header__login-btn svg {
+  /* El icono acompaña al texto, no lo encabeza: mismo peso visual */
+  opacity: .75;
+}
+
+/* Por debajo de cierto ancho el header no da para dos botones: se queda el
+   principal. Client Login sigue en el menu movil. */
+@media (max-width: 1180px) {
+  .d2 .header__actions .header__login-btn { display: none; }
+}
+
+
+/* --------------------------------------------------------------------------
+   3. EL DESPLEGABLE, CON EL MOVIMIENTO DE APPLE
+
+   La curva es la que usa Apple en sus menus: arranca decidido y frena muy
+   suave al final, sin rebote. Es lo que hace que se sienta "caro" en vez de
+   brusco.
+
+   Se anima opacity y transform, que el navegador resuelve en la GPU. Animar
+   height o display provoca saltos.
+   -------------------------------------------------------------------------- */
+
+.d2 .nav__drop {
+  /* La animacion vieja era un fundido plano */
+  animation: none;
+
+  /* Nace un poco arriba y encogido, como si se desplegara desde el boton */
+  transform-origin: top center;
+  opacity: 0;
+  transform: translate(-50%, -8px) scale(.97);
+  transition:
+    opacity   .28s cubic-bezier(.32, .72, 0, 1),
+    transform .38s cubic-bezier(.32, .72, 0, 1),
+    visibility 0s linear .38s;
+  visibility: hidden;
+
+  /* translate propio del original: se anula para manejarlo todo en transform */
+  translate: none;
+  left: 50%;
+}
+
+.d2 .nav__drop.esta-abierto {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+  visibility: visible;
+  transition:
+    opacity   .3s  cubic-bezier(.32, .72, 0, 1),
+    transform .42s cubic-bezier(.32, .72, 0, 1),
+    visibility 0s;
+}
+
+/* Las filas entran escalonadas detras del panel: es el detalle que separa
+   un menu que "aparece" de uno que "se despliega". */
+.d2 .nav__drop__lista > li {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity   .3s cubic-bezier(.32, .72, 0, 1),
+    transform .3s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .nav__drop.esta-abierto .nav__drop__lista > li { opacity: 1; transform: none; }
+
+.d2 .nav__drop.esta-abierto .nav__drop__lista > li:nth-child(1) { transition-delay: .04s; }
+.d2 .nav__drop.esta-abierto .nav__drop__lista > li:nth-child(2) { transition-delay: .07s; }
+.d2 .nav__drop.esta-abierto .nav__drop__lista > li:nth-child(3) { transition-delay: .10s; }
+.d2 .nav__drop.esta-abierto .nav__drop__lista > li:nth-child(4) { transition-delay: .13s; }
+
+.d2 .nav__drop__destacado {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity   .32s cubic-bezier(.32, .72, 0, 1) .14s,
+    transform .32s cubic-bezier(.32, .72, 0, 1) .14s;
+}
+
+.d2 .nav__drop.esta-abierto .nav__drop__destacado { opacity: 1; transform: none; }
+
+/* La flechita del boton gira mientras el panel se abre */
+.d2 .nav__caret {
+  transition: transform .38s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .nav__toggle[aria-expanded="true"] .nav__caret {
+  transform: rotate(180deg);
+}
+
+
+/* --------------------------------------------------------------------------
+   4. EL MENU MOVIL, CON EL MISMO MOVIMIENTO
+   -------------------------------------------------------------------------- */
+
+.d2 .mobile-menu {
+  opacity: 0;
+  transform: translateY(-10px);
+  visibility: hidden;
+  transition:
+    opacity   .3s  cubic-bezier(.32, .72, 0, 1),
+    transform .42s cubic-bezier(.32, .72, 0, 1),
+    visibility 0s linear .42s;
+}
+
+.d2 .mobile-menu.esta-abierto {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  transition:
+    opacity   .32s cubic-bezier(.32, .72, 0, 1),
+    transform .45s cubic-bezier(.32, .72, 0, 1),
+    visibility 0s;
+}
+
+/* Los enlaces entran en cascada, de arriba abajo */
+.d2 .mobile-menu nav > *,
+.d2 .mobile-menu__sub > * {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity   .3s cubic-bezier(.32, .72, 0, 1),
+    transform .34s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .mobile-menu.esta-abierto nav > *,
+.d2 .mobile-menu.esta-abierto .mobile-menu__sub > * {
+  opacity: 1;
+  transform: none;
+}
+
+.d2 .mobile-menu.esta-abierto nav > *:nth-child(1) { transition-delay: .05s; }
+.d2 .mobile-menu.esta-abierto nav > *:nth-child(2) { transition-delay: .08s; }
+.d2 .mobile-menu.esta-abierto nav > *:nth-child(3) { transition-delay: .11s; }
+.d2 .mobile-menu.esta-abierto nav > *:nth-child(4) { transition-delay: .14s; }
+.d2 .mobile-menu.esta-abierto nav > *:nth-child(5) { transition-delay: .17s; }
+.d2 .mobile-menu.esta-abierto nav > *:nth-child(6) { transition-delay: .20s; }
+
+
+/* --------------------------------------------------------------------------
+   5. "CHECK YOUR OPPORTUNITY": TEXTO Y FLECHA ALINEADOS
+
+   La flecha caia 20px por debajo de la linea del texto porque el SVG se
+   apoyaba en la linea base. Con flex y align-items se centran de verdad.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.d2 .d2-btn svg {
+  flex: none;
+  /* El SVG es una caja en linea: sin esto se apoya en la linea base del
+     texto y queda unos pixeles mas abajo. */
+  display: block;
+}
+
+
+/* --------------------------------------------------------------------------
+   MENOS MOVIMIENTO
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .nav__drop,
+  .d2 .nav__drop__lista > li,
+  .d2 .nav__drop__destacado,
+  .d2 .mobile-menu,
+  .d2 .mobile-menu nav > *,
+  .d2 .mobile-menu__sub > *,
+  .d2 .nav__caret {
+    transition: none;
+    transform: none;
+  }
+  .d2 .nav__drop { transform: translate(-50%, 0); }
+}
