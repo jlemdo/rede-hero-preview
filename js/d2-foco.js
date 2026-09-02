@@ -165,10 +165,25 @@
 
   document.addEventListener('click', function (e) {
     if (!e.target.closest('[data-caru-a], [data-caru-ir]')) { return; }
+
     setTimeout(function () {
-      var visible = !!seccion.closest('.d2-caru__diapo:not([hidden])');
-      enMarcha = visible;
-      if (visible && !detenido) { arrancar(); } else { parar(); }
+      var enDiapo = seccion.closest('.d2-caru__diapo');
+      if (enDiapo && enDiapo.hasAttribute('hidden')) {
+        enMarcha = false;
+        parar();
+        return;
+      }
+
+      /* Recien mostrada, el observador aun no ha reevaluado: se mira la
+         posicion directamente. */
+      var caja = seccion.getBoundingClientRect();
+      var alto = window.innerHeight || document.documentElement.clientHeight;
+      enMarcha = caja.top < alto && caja.bottom > 0;
+
+      /* Si el raton quedo encima al pulsar el boton,  es cierto
+         y no arranca hasta que se aparte. Es el comportamiento correcto:
+         la pausa existe para poder leer un logo. */
+      if (enMarcha && !detenido) { arrancar(); }
     }, 60);
   });
 })();
