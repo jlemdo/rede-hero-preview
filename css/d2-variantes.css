@@ -7108,11 +7108,22 @@ span.d2-panel__filtro:hover {
    izquierda y centrar la cabecera romperia esa columna.
    -------------------------------------------------------------------------- */
 
+/* La cabecera va al MISMO EJE que la cita, no centrada.
+
+   Antes iba centrada mientras la cita, la firma y los mandos se alineaban
+   a la izquierda: dos ejes de lectura en la misma seccion. Los margenes
+   eran simetricos --380px a cada lado, medido-- pero la mezcla se percibia
+   como desequilibrio.
+
+   Se alinea a la izquierda y no al reves por tres motivos: la cita mide
+   cuatro lineas y centrada cuesta mas de leer; la firma con logo flota sin
+   apoyo si se centra; y esta variante se llama editorial precisamente por
+   el eje unico. Ademas, centrarla la acercaria demasiado a la opcion 3,
+   que ya es la centrada. */
 .d2 .d2-res-ed__cabecera {
   max-width: 52ch;
-  margin-inline: auto;
   margin-bottom: clamp(30px, 3.6vw, 48px);
-  text-align: center;
+  text-align: left;
 }
 
 .d2 .d2-res-ed__eyebrow {
@@ -7305,7 +7316,18 @@ span.d2-panel__filtro:hover {
 /* ==========================================================================
    EL SELECTOR DE FONDO
 
-   El fondo tenue de once secciones era #F2F9F2, un verde palido que no sale
+   CORRECCION: aqui decia que #F2F9F2 "no sale del manual". Es FALSO, y
+   conviene dejarlo escrito para que nadie repita el error. Medido: es el
+   verde de marca #39B54A al 7% sobre blanco --diferencia de 2 sobre 765
+   puntos posibles--, asi que es tan valido como cualquier otra opacidad
+   de la escala. Se usa como relleno de tarjetas en toda la web y esta
+   bien usado.
+
+   Lo que si era discutible es otra cosa: que ONCE SECCIONES enteras
+   compartieran ese mismo tono de fondo. No por el color, sino porque
+   entonces el fondo no distinguia nada.
+
+   El fondo tenue de once secciones era #F2F9F2, un verde palido
    del manual. Esta barra permite comparar las alternativas que si salen de
    el y quedarse con una.
 
