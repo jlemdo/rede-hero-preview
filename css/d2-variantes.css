@@ -7121,10 +7121,22 @@ span.d2-panel__filtro:hover {
    el eje unico. Ademas, centrarla la acercaria demasiado a la opcion 3,
    que ya es la centrada. */
 .d2 .d2-res-ed__cabecera {
+  /* Alineada a la izquierda, pero DENTRO del contenedor.
+
+     Al quitar margin-inline: auto se fue al borde de la ventana, porque
+     la cabecera cuelga del inner mientras la cita vive en __fila, que si
+     respeta el ancho. El max-width la mantiene en el mismo eje que el
+     resto sin empujarla al filo. */
+  /* La cabecera es hermana de section, FUERA del __inner que da el ancho
+     y el margen lateral. Antes se centraba con margin auto y eso disimulaba
+     que no tenia contenedor; al alinearla a la izquierda se fue al filo de
+     la ventana. Aqui se le da el mismo ancho y el mismo padding que al
+     inner, asi cae en el mismo eje que la cita. */
   max-width: 52ch;
   margin-bottom: clamp(30px, 3.6vw, 48px);
   text-align: left;
 }
+
 
 .d2 .d2-res-ed__eyebrow {
   margin: 0;
