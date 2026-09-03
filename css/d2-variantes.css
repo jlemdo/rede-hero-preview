@@ -11144,6 +11144,16 @@ span.d2-panel__filtro:hover {
    ========================================================================== */
 
 .d2 .calc {
+  /* Sin borde. La regla original de la seccion --linea 2429-- lleva
+     border-block: 1px solid rgba(2,51,0,.07), pensada cuando el fondo era
+     claro y el filete apenas se notaba. Con la cabecera en negro ese borde
+     se ve como una linea oscura de lado a lado justo donde acaba la
+     seccion, que es lo que se veia entre la calculadora y Solutions.
+
+     Localizado barriendo la pagina entera fila a fila y buscando lineas
+     oscuras con claro arriba y abajo: aparecia en y=3169, exactamente
+     donde .calc termina y .d2-rutas-sec empieza. */
+  border: 0;
   position: relative;
   /* Negro arriba, el fondo de la composicion abajo. El corte cae a 420px,
      justo donde arranca la tarjeta de la calculadora. */
