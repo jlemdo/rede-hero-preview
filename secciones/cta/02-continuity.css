@@ -1,0 +1,335 @@
+/* Call to action / Continuity
+   Reglas cuyo selector menciona .d2-cta-con, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   CTA FINAL — TRES VARIANTES
+
+   Todo va prefijado `.d2 .d2-cta-` para no tocar nada del proyecto.
+   Solo tokens ya existentes: ni un color escrito a mano (contrato §2).
+
+   MOVIMIENTO (contrato §3). Decision deliberada: NINGUNA de las tres lleva
+   animacion propia mas alla de la entrada escalonada y los estados de
+   hover que ya trae `.d2-btn`.
+
+   El motivo: este bloque es el ultimo antes del pie y su unico trabajo es
+   que se pulse un boton. Cualquier cosa que se mueva al lado de un boton
+   compite con el boton. El tríptico y la comparativa de la seccion del
+   problema tampoco llevan animacion y es correcto; aqui vale lo mismo.
+
+   La entrada usa la clase `.d2-entra` que ya existe en d2.css (opacidad y
+   10% de desplazamiento, con su propio prefers-reduced-motion). Aqui solo
+   se anade el ESCALONADO de los hijos, que es lo que d2.css no da.
+
+   ---------------------------------------------------------------------------
+   MEDIDO EN NAVEGADOR (contrato §7), Chromium a 1920/1440/860/720/480/390:
+
+   - Sin scroll horizontal en ninguno de los seis anchos
+     (scrollWidth == innerWidth en todos).
+   - Alturas: balanza 337-486px, continuidad 461-625px, carriles 446-583px.
+     Todas por debajo del techo de ~900px.
+   - Botones de una misma fila: mismo alto (52px) y mismo ancho
+     (254/254 en escritorio, 364/364 en carriles) y mismo `top`.
+   - Textos propios de esta seccion: de 5.98:1 a 12.63:1. Todos pasan AA.
+   - prefers-reduced-motion: la seccion llega con opacity:1 y transform:none
+     antes de cualquier clase, o sea estado final inmediato y sin animacion.
+
+   ⚠ HALLAZGO QUE NO ES DE ESTA SECCION, pero conviene que conste:
+   el texto de `.d2-btn` mide 4.09:1 (blanco sobre --c-verde, y --c-verde
+   sobre blanco en el de linea) a 16px, por debajo del 4.5:1 que pide AA.
+   No es un defecto introducido aqui: es el token --c-verde y afecta a
+   TODOS los botones del sitio; tokens.css ya lo documenta en su linea 20.
+   Se deja como esta para no divergir del sistema por una seccion. Si se
+   quiere corregir, es una decision de sistema (pasar los botones solidos a
+   --c-verde-hover da 6.41:1) y hay que tomarla en d2.css, no aqui.
+   --------------------------------------------------------------------------- */
+
+
+/* --------------------------------------------------------------------------
+   ESCALONADO DE ENTRADA — comun a las tres
+
+   transition-delay y no animation: asi hereda el estado final de .d2-entra
+   sin duplicar keyframes, y si el JS del observador no corre, el contenido
+   queda visible igual (contrato §4: debe leerse sin JavaScript).
+
+   Sin will-change ni translateZ: rasterizan y emborronan el texto, y eso ya
+   costo una investigacion en este proyecto.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-cta-bal.es-visible .d2-cta-bal__texto,
+.d2 .d2-cta-con.es-visible .d2-cta-con__titulo,
+.d2 .d2-cta-car.es-visible .d2-cta-car__cabecera {
+  transition-delay: 0ms;
+}
+
+.d2 .d2-cta-bal.es-visible .d2-cta-bal__acciones,
+.d2 .d2-cta-con.es-visible .d2-cta-con__accion,
+.d2 .d2-cta-car.es-visible .d2-cta-car__lista {
+  transition-delay: 90ms;
+}
+
+/* ==========================================================================
+   OPCION 2 — CONTINUIDAD
+
+   Una sola caja centrada sobre fondo blanco. La etiqueta superior nombra
+   el destino; el enlace de texto desempata sin esconder.
+   ========================================================================== */
+
+.d2 .d2-cta-con {
+  padding-block: clamp(48px, 6.5vw, 88px);
+  background: var(--c-blanco);
+}
+
+/* La caja es lo que separa esta variante de un bloque de texto suelto:
+   el contorno dice "esto es una unidad, y su unidad es una accion".
+   Region comun (Palmer 1992, via NN/g): el marco agrupa mas que la
+   cercania. NN/g aconseja preferir el blanco y recurrir al borde solo
+   cuando el blanco no basta; aqui no basta, porque el fondo ya es blanco. */
+.d2 .d2-cta-con__inner {
+  max-width: 720px;
+  margin-inline: auto;
+  padding: clamp(32px, 4.5vw, 56px) clamp(24px, 4vw, 56px);
+  text-align: center;
+  background: var(--d2-relleno);
+  border-radius: var(--d2-radio-lg);
+  box-shadow: var(--d2-sombra-md);
+}
+
+/* Verde oscuro y no el de interfaz: a 12px hace falta 4.5:1 y --c-verde
+   da 4.09 sobre esta tinta. --c-verde-hover da 6.41. */
+.d2 .d2-cta-con__etiqueta {
+  margin: 0 0 var(--d2-e2);
+  font-size: .75rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-cta-con__titulo {
+  margin: 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
+  letter-spacing: -.03em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-cta-con__parrafo {
+  max-width: 46ch;
+  margin: var(--d2-e3) auto 0;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo);
+}
+
+.d2 .d2-cta-con__accion {
+  margin-top: clamp(24px, 3vw, 36px);
+}
+
+.d2 .d2-cta-con__btn {
+  min-width: 244px;
+}
+
+/* 16px de separacion: el minimo del contrato son 12, pero aqui el enlace
+   compite con un boton de 52px de alto y a 12px se leia pegado a el. */
+.d2 .d2-cta-con__alterna {
+  margin: var(--d2-e3) 0 0;
+  font-size: .9375rem;
+  line-height: 1.4;
+  color: var(--c-texto-cuerpo);
+}
+
+/* Subrayado permanente: es la unica pista de que es pulsable, porque ya
+   no tiene forma de boton. Quitarlo lo convertiria en texto muerto. */
+.d2 .d2-cta-con__enlace {
+  color: var(--c-verde-hover);
+  font-weight: var(--fw-bold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color .18s ease;
+}
+
+.d2 .d2-cta-con__enlace:hover { color: var(--c-texto); }
+
+.d2 .d2-cta-con__enlace:focus-visible {
+  outline: 2px solid var(--c-verde);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (max-width: 480px) {
+/* El suelo de 244px se retira: con gutter de 20px el ancho util a 390 es
+     350, asi que el min-width no desborda, pero fijarlo al 100% garantiza
+     que los dos botones midan igual tambien apilados. */
+  .d2 .d2-cta-con__btn {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .d2-cta-bal.es-visible .d2-cta-bal__texto,
+  .d2 .d2-cta-bal.es-visible .d2-cta-bal__acciones,
+  .d2 .d2-cta-con.es-visible .d2-cta-con__titulo,
+  .d2 .d2-cta-con.es-visible .d2-cta-con__accion,
+  .d2 .d2-cta-car.es-visible .d2-cta-car__cabecera,
+  .d2 .d2-cta-car.es-visible .d2-cta-car__lista {
+    transition-delay: 0ms;
+  }
+.d2 .d2-cta-con__enlace { transition: none; }
+}
+
+.d2 .d2-cta-bal, .d2 .d2-cta-con, .d2 .d2-cta-car        { background: var(--comp-cta); }
+
+/* ==========================================================================
+   CONTRASTE: LAS NUEVE CAUSAS
+
+   Auditadas 2165 combinaciones --30 variantes x 4 composiciones-- midiendo
+   cada texto contra el fondo que de verdad tiene detras, subiendo por los
+   ancestros hasta encontrar quien pinta.
+
+   Salieron 210 fallos, pero son NUEVE defectos repetidos. Se arreglan por
+   la causa, no uno a uno: asi no vuelven a aparecer en la siguiente
+   variante que se escriba.
+
+   Todos los valores medidos, no estimados.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. EL VERDE OSCURO SOBRE FONDO CLARO — 107 fallos, el mas extendido
+
+   #2A8438 daba 4.40:1 sobre el tinte y 4.25:1 sobre el gris. El minimo son
+   4.5 y estos textos miden 11-15px, muy por debajo del umbral de 18.66px
+   que permitiria 3:1.
+
+   Se sustituye por #026F00, que ya existe en el sistema como
+   --c-verde-hover y da 6.41:1 sobre blanco y 5.78:1 sobre gris. Es el
+   mismo verde que ya usan los enlaces del cuerpo.
+   -------------------------------------------------------------------------- */
+
+.d2 :is(.d2-rutas-sel__eyebrow, .d2-rutas-esc__eyebrow, .d2-rutas-cmp__eyebrow,
+        .d2-rutas-sel__tag, .d2-rutas-esc__tag, .d2-rutas-cmp__tag,
+        .d2-rutas-sel__link, .d2-rutas-esc__link, .d2-rutas-cmp__link,
+        .d2-prob-comp__eti--rede, .d2-prueba-reg__fuente,
+        .d2-cta-con__etiqueta, .d2-cta-con__enlace,
+        .d2-equipo-firma__credenciales li, .d2-equipo-dosier__cred) {
+  color: #026F00;
+}
+
+/* --------------------------------------------------------------------------
+   3. TEXTO BLANCO SOBRE FONDO CLARO — 20 fallos, 1.07:1
+
+   Credenciales del equipo y titulo del CTA "conectado". Estaban escritos en
+   blanco porque esas piezas nacieron sobre fondo oscuro; al pasar la
+   seccion a claro se quedaron invisibles.
+
+   No se fija un color: se les da el token, que ya sabe adaptarse segun el
+   tono de la seccion.
+   -------------------------------------------------------------------------- */
+
+.d2 :is(.d2-equipo-ficha__cred, .d2-cta-con__titulo) {
+  color: var(--c-texto, #333333);
+}
+
+.d2 .d2-cta-con__parrafo {
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+/* ==========================================================================
+   LAS ISLAS CLARAS DENTRO DE UNA SECCION OSCURA
+
+   El fallo que esto corrige: cuando una seccion pasa a negro, su texto se
+   invierte a blanco. Pero muchas secciones contienen TARJETAS con fondo
+   claro propio --items de lista, marcos de foto, paneles-- y ahi el texto
+   blanco quedaba sobre fondo casi blanco: 1.07:1, invisible.
+
+   Ya paso una vez y lo resolvi nombrando las cinco tarjetas que conocia.
+   Volvio a pasar en cuanto aparecieron variantes nuevas, porque la lista
+   hay que mantenerla a mano y nadie se acuerda.
+
+   Aqui se invierte el enfoque: en lugar de enumerar que tarjetas hay, se
+   declara que CUALQUIER superficie clara restaura los valores oscuros. Se
+   listan por su clase --no hay selector CSS para "elemento con fondo
+   claro"-- pero el criterio salio de barrer el DOM y preguntar por el color
+   real de cada elemento, no de la memoria.
+
+   Las 51 superficies claras detectadas, menos las que son la propia
+   seccion.
+   ========================================================================== */
+
+.d2 [data-comp-tono="oscuro"] :is(
+  /* Tarjetas e items de lista */
+  .d2-prob-lec__lista > li,
+  .d2-prob-comp__rede,
+  .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item,
+  .d2-prueba-resp__par,
+  .d2-prueba-rec__marca,
+  .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo,
+  .d2-equipo-firma__credenciales > li,
+  .d2-foco__prueba,
+  .d2-cta-bal__accion,
+  .d2-cta-car__carril,
+  .d2-cta-con__inner,
+  .d2-prob-mapa__ficha,
+  /* Marcos de imagen */
+  .d2-equipo-ficha__marco,
+  .d2-equipo-dosier__retrato,
+  .d2-equipo-firma__foto-grande,
+  .d2-equipo-firma__foto-mini,
+  .d2-res-ed__marco,
+  .d2-lec__grafico,
+  /* Paneles y piezas de la calculadora */
+  .d2-panel,
+  .d2-panel__filtro,
+  .calc,
+  .campo__wrap,
+  .resultado,
+  .adelanto,
+  .recomienda,
+  .prueba,
+  .perfil__punto,
+  .pastilla,
+  .contacto,
+  .contacto__icono
+) {
+  --c-texto:        #333333;
+  --c-texto-cuerpo: #333333;
+  --c-texto-suave:  #6B6B6B;
+  --c-linea:        rgba(0, 0, 0, .12);
+  color: var(--c-texto);
+}
+
+/* Los titulares y parrafos dentro de esas islas. Van nombrados porque
+   muchos traen color propio de su regla original, que gana a la herencia. */
+.d2 [data-comp-tono="oscuro"] :is(
+  .d2-prob-lec__lista > li, .d2-prob-comp__rede, .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item, .d2-prueba-resp__par, .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo, .d2-foco__prueba, .d2-cta-bal__accion,
+  .d2-cta-car__carril, .d2-cta-con__inner, .calc, .d2-panel
+) :is(h1, h2, h3, h4, h5, p, span, li, td, th, strong, b, small, dt, dd) {
+  color: var(--c-texto);
+}
+
+/* 4. EL ENLACE DEL CTA CONECTADO — 1.37:1
+
+   Se le aplico el verde claro pensando que la seccion seria oscura, pero
+   esta pieza tiene fondo claro propio (.d2-cta-con__inner es una isla).
+   Vuelve al verde oscuro, y solo se aclara si la isla desaparece. */
+.d2 .d2-cta-con__inner .d2-cta-con__enlace,
+.d2 .d2-cta-con__inner .d2-cta-con__etiqueta {
+  color: #026F00;
+}
+
+/* 2. EL ENLACE DEL CTA CONECTADO — 1.37:1
+
+   Estaba fuera de .d2-cta-con__inner, asi que el selector anterior no lo
+   alcanzaba. Se nombra directamente. */
+.d2 .d2-cta-con__enlace,
+.d2 .d2-cta-con__etiqueta {
+  color: #026F00;
+}

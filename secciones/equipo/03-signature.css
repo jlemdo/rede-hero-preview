@@ -1,0 +1,389 @@
+/* Team / Signature
+   Reglas cuyo selector menciona .d2-equipo-firma, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   SECCION EQUIPO — TRES VARIANTES
+
+   El titular es "More than engineers.", asi que el eje de las tres es que
+   se enseña primero: el rostro, la credencial o la persona que firma.
+
+     1  Ficha    tres retratos iguales, la credencial sobre la foto
+     2  Dosier   sin retratos en la lista: manda la credencial en una
+                 rejilla legible, con un solo retrato de apoyo
+     3  Firma    uno grande --el fundador-- y los demas en miniatura
+
+   Difieren en QUE se enseña primero, no en el acabado.
+
+   Solo hay tres fotos en assets/img/equipo. El marcado y estas reglas
+   funcionan con tres; si llega la cuarta, entra sin tocar el CSS porque
+   las rejillas son por columnas automaticas, no por numero fijo.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Comun a las tres
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-equipo-ficha,
+.d2 .d2-equipo-dosier,
+.d2 .d2-equipo-firma {
+  padding-block: clamp(48px, 5.4vw, 76px);
+  background: var(--c-blanco, #fff);
+}
+
+.d2 .d2-equipo-ficha__inner,
+.d2 .d2-equipo-dosier__inner,
+.d2 .d2-equipo-firma__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+.d2 .d2-equipo-ficha__intro,
+.d2 .d2-equipo-dosier__intro,
+.d2 .d2-equipo-firma__intro {
+  max-width: 62ch;
+  margin-bottom: clamp(28px, 3.4vw, 44px);
+}
+
+.d2 .d2-equipo-ficha__eyebrow,
+.d2 .d2-equipo-dosier__eyebrow,
+.d2 .d2-equipo-firma__eyebrow {
+  margin: 0;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-equipo-ficha__titulo,
+.d2 .d2-equipo-dosier__titulo,
+.d2 .d2-equipo-firma__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-equipo-ficha__lead,
+.d2 .d2-equipo-dosier__lead,
+.d2 .d2-equipo-firma__lead {
+  margin: var(--d2-e3) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* Las fotos son retratos verticales: la proporcion se declara para que la
+   pagina no salte mientras cargan. */
+.d2 .d2-equipo-ficha__foto,
+.d2 .d2-equipo-firma__foto-grande,
+.d2 .d2-equipo-firma__foto-mini {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* ==========================================================================
+   OPCION 3 — FIRMA
+
+   Uno grande y los demas en miniatura. El titular dice "More than
+   engineers": esta variante lo cuenta enseñando a quien firma la empresa y
+   dejando al equipo alrededor.
+
+   Es la unica de las tres con jerarquia interna: cambia quien es el
+   protagonista, no como se ordenan los iguales.
+   ========================================================================== */
+
+.d2 .d2-equipo-firma__cuerpo {
+  display: grid;
+  gap: clamp(26px, 3.2vw, 44px);
+}
+
+.d2 .d2-equipo-firma__principal {
+  display: grid;
+  grid-template-columns: minmax(0, .42fr) minmax(0, 1fr);
+  gap: clamp(20px, 2.6vw, 36px);
+  align-items: center;
+}
+
+/* El retrato es un <img> directo dentro de la rejilla, no va envuelto:
+   una version anterior lo estilaba como contenedor y quedaba sin recorte. */
+.d2 .d2-equipo-firma__foto-grande {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: var(--d2-radio-md);
+  background: var(--d2-relleno);
+}
+
+.d2 .d2-equipo-firma__nombre--grande {
+  margin: 0 0 2px;
+  font-size: clamp(1.25rem, 1.1rem + .6vw, 1.625rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-equipo-firma__cargo {
+  margin: 0 0 var(--d2-e2);
+  font-size: .9375rem;
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-equipo-firma__bio {
+  margin: 0;
+  font-size: .9375rem;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* Es un <ul> de seis credenciales, no un parrafo: una version anterior lo
+   estilaba como texto y los <li> caian apilados en vertical, con vista de
+   lista suelta al pie de la seccion.
+
+   Van en fila, como pastillas: son el respaldo colectivo del equipo, no
+   una enumeracion que haya que recorrer. */
+.d2 .d2-equipo-firma__credenciales {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--d2-e1) var(--d2-e2);
+  margin: clamp(20px, 2.6vw, 30px) 0 0;
+  padding: clamp(16px, 2vw, 22px) 0 0;
+  border-top: 1px solid rgba(2, 51, 0, .1);
+  list-style: none;
+}
+
+.d2 .d2-equipo-firma__credenciales li {
+  padding: 5px var(--d2-e2);
+  font-size: .75rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .04em;
+  color: var(--c-verde-hover);
+  background: var(--d2-relleno);
+  border-radius: var(--d2-radio-full);
+}
+
+/* El resto del equipo: fila de miniaturas bajo el principal */
+.d2 .d2-equipo-firma__resto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(18px, 2.2vw, 28px);
+  margin: 0;
+  padding-top: clamp(20px, 2.6vw, 30px);
+  border-top: 1px solid rgba(2, 51, 0, .1);
+  list-style: none;
+}
+
+/* Cuatro elementos --foto, nombre, cargo y bio-- en dos columnas. Sin
+   areas explicitas el cargo y la bio caian bajo la foto, en una columna de
+   64px, y el texto se rompia letra a letra. */
+.d2 .d2-equipo-firma__mini {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  grid-template-areas:
+    "foto nombre"
+    "foto cargo"
+    "bio  bio";
+  column-gap: var(--d2-e3);
+  row-gap: 2px;
+  align-items: center;
+}
+
+.d2 .d2-equipo-firma__mini .d2-equipo-firma__foto-mini { grid-area: foto; }
+
+.d2 .d2-equipo-firma__mini .d2-equipo-firma__nombre { grid-area: nombre; align-self: end; }
+
+.d2 .d2-equipo-firma__mini .d2-equipo-firma__cargo {
+  grid-area: cargo;
+  align-self: start;
+  margin: 0;
+  font-size: .8125rem;
+}
+
+.d2 .d2-equipo-firma__mini .d2-equipo-firma__bio {
+  grid-area: bio;
+  margin-top: var(--d2-e2);
+  font-size: .875rem;
+}
+
+.d2 .d2-equipo-firma__mini .d2-equipo-firma__foto-mini {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--d2-radio-full);
+  background: var(--d2-relleno);
+}
+
+.d2 .d2-equipo-firma__mini .d2-equipo-firma__nombre {
+  margin: 0;
+  font-size: .9375rem;
+  font-weight: var(--fw-extrabold);
+  line-height: 1.25;
+  color: var(--c-texto);
+}
+
+.d2 .d2-equipo-ficha__intro,
+.d2 .d2-equipo-ficha__persona,
+.d2 .d2-equipo-dosier__intro,
+.d2 .d2-equipo-dosier__banda,
+.d2 .d2-equipo-firma__intro,
+.d2 .d2-equipo-firma__principal,
+.d2 .d2-equipo-firma__resto {
+  animation: d2-equipo-entra .55s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .d2-equipo-firma__principal { animation-delay: .08s; }
+
+.d2 .d2-equipo-firma__resto { animation-delay: .16s; }
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .d2-equipo-ficha__intro,
+  .d2 .d2-equipo-ficha__persona,
+  .d2 .d2-equipo-ficha__marco,
+  .d2 .d2-equipo-dosier__intro,
+  .d2 .d2-equipo-dosier__banda,
+  .d2 .d2-equipo-dosier__retrato,
+  .d2 .d2-equipo-firma__intro,
+  .d2 .d2-equipo-firma__principal,
+  .d2 .d2-equipo-firma__resto {
+    animation: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
+.d2 .d2-equipo-firma__principal { grid-template-columns: 1fr; }
+.d2 .d2-equipo-firma__foto-grande { max-width: 260px; }
+}
+
+.d2 .d2-equipo-ficha, .d2 .d2-equipo-dosier, .d2 .d2-equipo-firma { background: var(--comp-equipo); }
+
+/* ==========================================================================
+   CONTRASTE: LAS NUEVE CAUSAS
+
+   Auditadas 2165 combinaciones --30 variantes x 4 composiciones-- midiendo
+   cada texto contra el fondo que de verdad tiene detras, subiendo por los
+   ancestros hasta encontrar quien pinta.
+
+   Salieron 210 fallos, pero son NUEVE defectos repetidos. Se arreglan por
+   la causa, no uno a uno: asi no vuelven a aparecer en la siguiente
+   variante que se escriba.
+
+   Todos los valores medidos, no estimados.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. EL VERDE OSCURO SOBRE FONDO CLARO — 107 fallos, el mas extendido
+
+   #2A8438 daba 4.40:1 sobre el tinte y 4.25:1 sobre el gris. El minimo son
+   4.5 y estos textos miden 11-15px, muy por debajo del umbral de 18.66px
+   que permitiria 3:1.
+
+   Se sustituye por #026F00, que ya existe en el sistema como
+   --c-verde-hover y da 6.41:1 sobre blanco y 5.78:1 sobre gris. Es el
+   mismo verde que ya usan los enlaces del cuerpo.
+   -------------------------------------------------------------------------- */
+
+.d2 :is(.d2-rutas-sel__eyebrow, .d2-rutas-esc__eyebrow, .d2-rutas-cmp__eyebrow,
+        .d2-rutas-sel__tag, .d2-rutas-esc__tag, .d2-rutas-cmp__tag,
+        .d2-rutas-sel__link, .d2-rutas-esc__link, .d2-rutas-cmp__link,
+        .d2-prob-comp__eti--rede, .d2-prueba-reg__fuente,
+        .d2-cta-con__etiqueta, .d2-cta-con__enlace,
+        .d2-equipo-firma__credenciales li, .d2-equipo-dosier__cred) {
+  color: #026F00;
+}
+
+/* --------------------------------------------------------------------------
+   8. LA ETIQUETA "WITH REDE" SOBRE NEGRO — 2.68:1
+
+   El verde oscuro #026F00 funciona sobre claro pero se hunde sobre negro.
+   Dentro de una seccion oscura hay que invertirlo al verde claro, que sobre
+   #333333 da 7.20:1.
+   -------------------------------------------------------------------------- */
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-rutas-sel__eyebrow, .d2-rutas-esc__eyebrow,
+                                  .d2-rutas-cmp__eyebrow, .d2-rutas-sel__tag,
+                                  .d2-rutas-esc__tag, .d2-rutas-cmp__tag,
+                                  .d2-rutas-sel__link, .d2-rutas-esc__link,
+                                  .d2-rutas-cmp__link, .d2-prob-comp__eti--rede,
+                                  .d2-prueba-reg__fuente, .d2-hero__eyebrow,
+                                  .d2-eyebrow, .eyebrow, .acento,
+                                  .d2-equipo-firma__credenciales li,
+                                  .d2-equipo-dosier__cred) {
+  color: #B0E1B7;
+}
+
+/* ==========================================================================
+   LAS ISLAS CLARAS DENTRO DE UNA SECCION OSCURA
+
+   El fallo que esto corrige: cuando una seccion pasa a negro, su texto se
+   invierte a blanco. Pero muchas secciones contienen TARJETAS con fondo
+   claro propio --items de lista, marcos de foto, paneles-- y ahi el texto
+   blanco quedaba sobre fondo casi blanco: 1.07:1, invisible.
+
+   Ya paso una vez y lo resolvi nombrando las cinco tarjetas que conocia.
+   Volvio a pasar en cuanto aparecieron variantes nuevas, porque la lista
+   hay que mantenerla a mano y nadie se acuerda.
+
+   Aqui se invierte el enfoque: en lugar de enumerar que tarjetas hay, se
+   declara que CUALQUIER superficie clara restaura los valores oscuros. Se
+   listan por su clase --no hay selector CSS para "elemento con fondo
+   claro"-- pero el criterio salio de barrer el DOM y preguntar por el color
+   real de cada elemento, no de la memoria.
+
+   Las 51 superficies claras detectadas, menos las que son la propia
+   seccion.
+   ========================================================================== */
+
+.d2 [data-comp-tono="oscuro"] :is(
+  /* Tarjetas e items de lista */
+  .d2-prob-lec__lista > li,
+  .d2-prob-comp__rede,
+  .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item,
+  .d2-prueba-resp__par,
+  .d2-prueba-rec__marca,
+  .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo,
+  .d2-equipo-firma__credenciales > li,
+  .d2-foco__prueba,
+  .d2-cta-bal__accion,
+  .d2-cta-car__carril,
+  .d2-cta-con__inner,
+  .d2-prob-mapa__ficha,
+  /* Marcos de imagen */
+  .d2-equipo-ficha__marco,
+  .d2-equipo-dosier__retrato,
+  .d2-equipo-firma__foto-grande,
+  .d2-equipo-firma__foto-mini,
+  .d2-res-ed__marco,
+  .d2-lec__grafico,
+  /* Paneles y piezas de la calculadora */
+  .d2-panel,
+  .d2-panel__filtro,
+  .calc,
+  .campo__wrap,
+  .resultado,
+  .adelanto,
+  .recomienda,
+  .prueba,
+  .perfil__punto,
+  .pastilla,
+  .contacto,
+  .contacto__icono
+) {
+  --c-texto:        #333333;
+  --c-texto-cuerpo: #333333;
+  --c-texto-suave:  #6B6B6B;
+  --c-linea:        rgba(0, 0, 0, .12);
+  color: var(--c-texto);
+}

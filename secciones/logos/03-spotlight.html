@@ -1,0 +1,90 @@
+<!-- Client logos / Spotlight
+     Clase raiz: .d2-foco
+     Extraido de home-d2.html. El CSS va en 03-spotlight.css -->
+
+<!-- ====================================================================
+         OPCION 3 — FRANJA DE FOCO
+
+         Las otras dos presentan los siete logos como iguales. Esta agrupa
+         distinto: saca UNO y lo mete en la misma tarjeta que el $4.4M.
+
+         El motivo es que la cifra se sostenga. Suelta en su columna --como
+         en la opcion 2-- esta cerca de los logos pero no ligada a ninguno:
+         afirma un ahorro sin dejar ver de quien. Dentro de un mismo marco
+         que un logo, se lee como el resultado de ese cliente.
+
+         Es el principio de region comun: un contorno visible agrupa mas
+         fuerte que la simple cercania. Por eso la tarjeta lleva borde y no
+         solo espacio en blanco.
+
+         Los otros seis van al lado, apagados y quietos. No compiten; dan la
+         escala ("son muchos distritos") mientras el protagonista sostiene
+         el dato.
+
+         Sin movimiento continuo a proposito: lo que se mueve no se lee, y
+         estos logos solo aportan si se reconocen. La unica animacion es la
+         entrada.
+         ==================================================================== -->
+    <section class="d2-foco" aria-labelledby="foco-titulo">
+      <div class="d2-foco__inner">
+
+        <div class="d2-foco__texto">
+          <p class="d2-foco__titular" id="foco-titulo">
+            Proven across<br>complex multi-site portfolios
+          </p>
+          <p class="d2-foco__etiqueta">PUBLIC-SECTOR PORTFOLIOS WE&rsquo;VE WORKED WITH</p>
+        </div>
+
+        <!-- La tarjeta: el logo y la cifra comparten marco. Eso es lo que
+             ata el dato a un cliente concreto.
+
+             PENDIENTE DE ERICK: falta confirmar cual de los siete distritos
+             genero los $4.4M. Calgary Board esta de marcador de posicion.
+             Cuando llegue la respuesta se cambia el src y el alt de esta
+             imagen, y se saca ese distrito de la lista de al lado. -->
+        <div class="d2-foco__prueba">
+          <img class="d2-foco__prueba-logo"
+               src="assets/img/logos-clientes/calgary-board.png"
+               alt="Calgary Board of Education"
+               width="400" height="200" loading="lazy" decoding="async">
+
+          <div class="d2-foco__prueba-dato">
+            <p class="d2-foco__cifra">$4.4M</p>
+            <p class="d2-foco__cifra-pie">Cumulative savings</p>
+            <p class="d2-foco__cifra-nota">for one long-term client</p>
+          </div>
+        </div>
+
+        <!-- Los seis restantes: campo de apoyo, sin movimiento -->
+        <ul class="d2-foco__resto" aria-label="Other public-sector portfolios">
+          <li><img src="assets/img/logos-clientes/greater-victoria.png" alt="Greater Victoria School District" width="693" height="200" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/logos-clientes/northland.png" alt="Northland School Division" width="244" height="200" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/logos-clientes/fort-vermilion.png" alt="Fort Vermilion School Division" width="200" height="200" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/logos-clientes/cariboo-chilcotin.png" alt="Cariboo Chilcotin School District" width="400" height="200" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/logos-clientes/grande-prairie.png" alt="Grande Prairie Public Schools" width="197" height="200" loading="lazy" decoding="async"></li>
+          <li><img src="assets/img/logos-clientes/sunshine-coast.png" alt="Sunshine Coast School District" width="400" height="200" loading="lazy" decoding="async"></li>
+        </ul>
+
+      </div>
+    </section>
+
+  </div>
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Close options">
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Previous option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Marquee</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Three blocks</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Spotlight</small></button>
+    </div>
+
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>

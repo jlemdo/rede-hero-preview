@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solution routes / Comparison</title>
+
+<!-- La biblioteca vive dos niveles por debajo de la raiz -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/d2.css">
+
+<!-- Solo el CSS de esta variante -->
+<link rel="stylesheet" href="03-comparison.css">
+
+<style>
+  /* La barra de la vista previa. No forma parte de la seccion. */
+  .vp-barra {
+    position: sticky; top: 0; z-index: 99;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 18px;
+    font: 600 12px/1.4 "Open Sans", system-ui, sans-serif;
+    color: #FFFFFF; background: #333333;
+  }
+  .vp-barra a { color: #B0E1B7; text-decoration: none; }
+  .vp-barra a:hover { text-decoration: underline; }
+  .vp-barra code {
+    padding: 2px 6px; font-size: 11px;
+    background: rgba(255,255,255,.14); border-radius: 3px;
+  }
+  .vp-sep { opacity: .45; }
+  /* Los tokens de composicion, para que la seccion no salga sin fondo */
+  .d2 {
+    --comp-blanco:#FFFFFF; --comp-gris:#F3F3F3; --comp-negro:#333333;
+    --comp-hero:#FFFFFF; --comp-logos:#FFFFFF; --comp-problema:#F3F3F3;
+    --comp-calc:#FFFFFF; --comp-rutas:#F3F3F3; --comp-prueba:#FFFFFF;
+    --comp-resenas:#F3F3F3; --comp-equipo:#FFFFFF; --comp-faq:#F3F3F3;
+    --comp-cta:#333333; --comp-footer:#333333;
+  }
+</style>
+</head>
+<body class="d2">
+
+<div class="vp-barra">
+  <a href="../indice.html">&larr; Library</a>
+  <span class="vp-sep">/</span>
+  <strong>Solution routes</strong>
+  <span class="vp-sep">/</span>
+  <span>Comparison</span>
+  <span class="vp-sep">|</span>
+  <code>.d2-rutas-cmp</code>
+  <span class="vp-sep">|</span>
+  <a href="03-comparison.html">markup</a>
+  <a href="03-comparison.css">css</a>
+</div>
+
+<section class="d2-rutas-cmp" id="solutions">
+      <div class="d2-rutas-cmp__inner">
+
+        <div class="d2-rutas-cmp__cabecera">
+          <p class="d2-rutas-cmp__eyebrow">Solutions</p>
+          <h2 class="d2-rutas-cmp__titulo">Every organization&rsquo;s situation is different.</h2>
+          <p class="d2-rutas-cmp__lead">
+            The right path depends on what you already know, what your buildings need,
+            and how much support your team has in-house.
+          </p>
+        </div>
+
+        <!-- El envoltorio con overflow-x aisla el scroll de la tabla: si en
+             390px la rejilla no cabe, se desplaza ELLA y no la pagina. El
+             contrato prohibe scroll horizontal de pagina, no de un contenedor
+             que lo declara. -->
+        <div class="d2-rutas-cmp__marco">
+          <table class="d2-rutas-cmp__tabla">
+            <caption class="d2-rutas-cmp__caption">
+              The three paths compared by what you already know, what your buildings
+              need, and how much support your team has in-house.
+            </caption>
+            <thead>
+              <tr>
+                <td class="d2-rutas-cmp__esquina"></td>
+                <th scope="col">
+                  <span class="d2-rutas-cmp__tag">Investigate</span>
+                  <span class="d2-rutas-cmp__titulo-ruta">Energy Gap Analysis + Site Investigation</span>
+                </th>
+                <th scope="col">
+                  <span class="d2-rutas-cmp__tag">Optimize</span>
+                  <span class="d2-rutas-cmp__titulo-ruta">RCx / C-Op</span>
+                </th>
+                <th scope="col">
+                  <span class="d2-rutas-cmp__tag">Manage</span>
+                  <span class="d2-rutas-cmp__titulo-ruta">Energy Management + RUN</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Fila unica de descripcion: el copy aprobado da UN parrafo por
+                   ruta y no se trocea, porque trocearlo seria reescribirlo.
+                   Las filas de atributo que faltan (alcance, plazo, precio)
+                   estan PENDIENTE DE ERICK. -->
+              <tr>
+                <th scope="row">What it is</th>
+                <td>
+                  Start by finding out where the unnecessary energy costs are. EGA looks
+                  across a portfolio. Site Investigation brings the same level of focus to
+                  one building.
+                </td>
+                <td>
+                  Correct operational drift in schedules, setpoints, controls, and sequences
+                  so buildings run closer to the way they were intended to.
+                </td>
+                <td>
+                  Keep performance visible over time through ongoing support, reporting, and
+                  the utility data infrastructure to see what is changing.
+                </td>
+              </tr>
+
+              <!-- PENDIENTE DE ERICK — fila "Scope" (portfolio / building /
+                   ongoing), fila "Commitment" y fila "Starting price". La
+                   pagina interior Solutions SI tiene precios aprobados
+                   ($5K la EGA, 1-2% del gasto anual para RUN Intelligence,
+                   Intelligence + $20K/ano para RUN Insights, "contact us" en
+                   RCx y EM), pero esos textos son de OTRA pagina y ademas no
+                   mapean 1:1 sobre estas tres rutas. No se traen sin que
+                   Erick confirme el mapeo. Sin esa fila, esta variante es
+                   una comparativa de una sola dimension y rinde por debajo
+                   de su potencial: es el dato que mas le falta. -->
+
+              <tr>
+                <th scope="row">Where to start</th>
+                <td>
+                  <a class="d2-rutas-cmp__link" href="#">
+                    See Investigate
+                    <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                      <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                </td>
+                <td>
+                  <a class="d2-rutas-cmp__link" href="#">
+                    See Optimize
+                    <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                      <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                </td>
+                <td>
+                  <a class="d2-rutas-cmp__link" href="#">
+                    See Manage
+                    <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                      <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Close options">
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Previous option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Self-select</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Ladder</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Comparison</small></button>
+    </div>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+
+
+</body>
+</html>

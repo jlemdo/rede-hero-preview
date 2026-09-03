@@ -133,7 +133,7 @@
       function pintarMinimizado() {
         mandos.classList.toggle('esta-minimizado', minimizado);
         ocultar.setAttribute('aria-expanded', minimizado ? 'false' : 'true');
-        ocultar.setAttribute('aria-label', minimizado ? 'Mostrar las opciones' : 'Minimizar las opciones');
+        ocultar.setAttribute('aria-label', minimizado ? 'Show options' : 'Close options');
 
         /* Minimizados quedan recortados por overflow:hidden: sin esto
            seguirian recibiendo el tabulador y el foco se iria a un boton

@@ -1,0 +1,721 @@
+/* The problem / Map
+   Reglas cuyo selector menciona .d2-prob-mapa, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   PROBLEMA — OPCION 4: MAPA DE CARTERA
+
+   Portada del diseno 3, traida aqui. Lo que cambia respecto al original:
+
+   1. EL FONDO. Alli era #0E2A12, un verde oscuro que me invente y que no
+      sale del manual. Aqui es el negro de marca --#333333, el que la propia
+      lamina marca como "DARK GREY BETTER FOR WEB"-- con el verde oficial
+      al 12% encima. El resultado sigue siendo verde oscuro, pero ahora
+      cada capa es del guideline.
+
+      Medido sobre ese fondo (#3c4b3d, luminancia .0673):
+        blanco #FFFFFF ............ 11.02:1   titular
+        verde claro #B0E1B7 ....... 7.48:1    la segunda linea del titular
+        gris claro #D6E4D8 ........ 9.16:1    cuerpo
+        verde marca #39B54A ....... 4.13:1    solo decorativo, no texto
+
+      El verde de marca a pleno NO llega a 4.5 sobre este fondo, asi que
+      el eyebrow y el enlace usan el verde al 40% (#B0E1B7), que da 7.48.
+
+   2. EL FOCO NO ES SOLO COLOR. En el original, el edificio destacado se
+      distinguia por ser mas verde. Eso deja fuera a quien no separa bien
+      el verde del gris --WCAG 1.4.1--. Aqui el destacado ademas ENGORDA su
+      anillo, gana un halo y su etiqueta pasa a blanco: tres senales, solo
+      una de ellas cromatica.
+
+   3. Los nombres de clase pasan a d2-, y los colores sueltos a tokens.
+   ========================================================================== */
+
+.d2-prob-mapa {
+  /* Sigue al token de su seccion, como las otras tres variantes del
+     problema. Antes tenia fondo propio --un verde oscuro-- porque supuse
+     que el grafico no se leeria sobre claro. Medido: si se lee, solo hay
+     que invertir los valores del trazado. */
+  --mapa-fondo:     var(--comp-problema, #FFFFFF);
+  --mapa-texto:     #FFFFFF;
+  --mapa-cuerpo:    #D6E4D8;
+  --mapa-acento:    #B0E1B7;   /* verde de marca al 40%: 7.48:1 aqui */
+  /* Subido desde #93B99D, que daba 4.27:1 sobre este fondo: por debajo
+     del minimo de 4.5. Este da 5.31 y lo cumple. */
+  --mapa-tenue:     #A9C8B1;
+
+  background: var(--mapa-fondo);
+  position: relative;
+  overflow: hidden;
+}
+
+/* El filete inclinado del diseno 3. Decorativo puro. */
+.d2-prob-mapa::before {
+  content: "";
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: 76px;
+  height: 140px;
+  background: linear-gradient(#0000, #39B54A14, #0000);
+  border-top: 1px solid #7EE18E4D;
+  border-bottom: 1px solid #7EE18E1F;
+  transform: rotate(-3deg);
+  pointer-events: none;
+}
+
+.d2-prob-mapa__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: .74fr 1.26fr;
+  align-items: center;
+  gap: 70px;
+  max-width: var(--ancho-max, 1320px);
+  margin-inline: auto;
+  padding: 110px var(--pad-lateral, 28px);
+  min-height: 720px;
+}
+
+/* --- La columna de texto --- */
+
+.d2-prob-mapa__eyebrow {
+  margin: 0 0 18px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mapa-acento);
+}
+
+.d2-prob-mapa__titulo {
+  margin: 0 0 22px;
+  font-size: clamp(34px, 3.4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -.03em;
+  font-weight: 400;
+  color: var(--mapa-texto);
+}
+
+.d2-prob-mapa__titulo span { color: var(--mapa-acento); }
+
+.d2-prob-mapa__lead {
+  margin: 0 0 14px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--mapa-cuerpo);
+  max-width: 46ch;
+}
+
+.d2-prob-mapa__enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mapa-acento);
+  text-decoration: none;
+}
+
+.d2-prob-mapa__enlace:hover { text-decoration: underline; }
+
+.d2-prob-mapa__enlace svg { transition: transform .18s ease; }
+
+.d2-prob-mapa__enlace:hover svg { transform: translateX(3px); }
+
+/* --- El lienzo del grafico --- */
+
+.d2-prob-mapa__lienzo {
+  position: relative;
+  min-height: 520px;
+  background: radial-gradient(circle, #39B54A36, #0000 58%);
+  overflow: hidden;
+}
+
+/* La retícula, difuminada hacia los bordes para que no acabe en corte */
+.d2-prob-mapa__lienzo::before {
+  content: "";
+  position: absolute;
+  inset: 48px 30px 52px 42px;
+  z-index: 0;
+  pointer-events: none;
+  background-image: linear-gradient(#FFFFFF11 1px, #0000 1px),
+                    linear-gradient(90deg, #FFFFFF11 1px, #0000 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(58% 62%, #000 28%, #000000D1 48%, #00000052 74%, #0000 100%);
+          mask-image: radial-gradient(58% 62%, #000 28%, #000000D1 48%, #00000052 74%, #0000 100%);
+}
+
+.d2-prob-mapa__visual { position: absolute; inset: 0; z-index: 1; }
+
+.d2-prob-mapa__aviso {
+  position: absolute;
+  top: 21px;
+  right: 24px;
+  z-index: 3;
+  margin: 0;
+  font-size: 9px;
+  letter-spacing: .025em;
+  color: var(--mapa-tenue);
+  white-space: nowrap;
+}
+
+.d2-prob-mapa__grafico { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.d2-prob-mapa__referencia {
+  stroke: #7DE49373;
+  stroke-width: 1.25px;
+  stroke-dasharray: 7 8;
+}
+
+.d2-prob-mapa__zona {
+  fill: var(--mapa-tenue);
+  font-size: 7px;
+  letter-spacing: .1em;
+  text-anchor: start;
+}
+
+.d2-prob-mapa__perfil {
+  fill: none;
+  stroke: #8BE29CB0;
+  stroke-width: 2.25px;
+  filter: drop-shadow(0 0 7px #64D9751F);
+}
+
+.d2-prob-mapa__sitio { cursor: pointer; outline: none; }
+
+.d2-prob-mapa__burbuja {
+  fill: #22301F;
+  stroke: #93B99D;
+  stroke-width: 1.5px;
+  transition: fill .18s, stroke .18s, stroke-width .18s, filter .18s;
+}
+
+.d2-prob-mapa__nucleo { fill: #7DE493; stroke: none; }
+
+.d2-prob-mapa__etiqueta {
+  fill: var(--mapa-tenue);
+  font-size: 7px;
+  letter-spacing: .06em;
+  text-anchor: middle;
+}
+
+.d2-prob-mapa__sitio:hover .d2-prob-mapa__burbuja {
+  stroke: #82E894;
+  stroke-width: 3px;
+}
+
+/* El destacado. Tres senales a la vez --grosor, halo y etiqueta blanca--
+   para que no dependa de distinguir un verde de otro (WCAG 1.4.1). */
+.d2-prob-mapa__sitio.es-foco .d2-prob-mapa__burbuja {
+  fill: #39B54A3B;
+  stroke: #82E894;
+  stroke-width: 4px;
+  filter: drop-shadow(0 0 12px #64D9753D);
+}
+
+.d2-prob-mapa__sitio.es-foco .d2-prob-mapa__nucleo { fill: #FFFFFF; }
+
+.d2-prob-mapa__sitio.es-foco .d2-prob-mapa__etiqueta {
+  fill: #FFFFFF;
+  font-weight: 700;
+}
+
+.d2-prob-mapa__sitio:focus-visible .d2-prob-mapa__burbuja {
+  stroke: #FFFFFF;
+  stroke-width: 3px;
+}
+
+/* --- La ficha de lectura --- */
+
+.d2-prob-mapa__ficha {
+  position: absolute;
+  right: 22px;
+  bottom: 22px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  padding: 19px;
+  background: #FFFFFF;
+  border-top: 4px solid var(--c-verde-marca, #39B54A);
+  /* La tarjeta es blanca: dentro vuelve el gris de marca, 12.63:1 */
+  color: var(--c-texto, #333333);
+  animation: d2MapaFicha .2s ease-out;
+}
+
+.d2-prob-mapa__ficha > small {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  /* Sobre blanco el verde de marca da 2.66:1: aqui va el oscuro */
+  color: var(--c-verde-hover, #026F00);
+}
+
+.d2-prob-mapa__ficha > b {
+  margin-top: 3px;
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+.d2-prob-mapa__ficha > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #E2E6E3;
+  font-size: 10px;
+}
+
+.d2-prob-mapa__ficha strong { text-align: right; white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+.d2-prob-mapa__ficha { animation: none; }
+.d2-prob-mapa__enlace svg { transition: none; }
+}
+
+@media (max-width: 1080px) {
+.d2-prob-mapa__inner {
+    grid-template-columns: 1fr;
+    gap: 44px;
+    padding-block: 76px;
+    min-height: 0;
+  }
+.d2-prob-mapa__lienzo { min-height: 440px; }
+.d2-prob-mapa__lead { max-width: none; }
+}
+
+@media (max-width: 700px) {
+.d2-prob-mapa__lienzo { min-height: 380px; }
+/* Abajo y a todo el ancho: encajada en la esquina taparia dos burbujas */
+  .d2-prob-mapa__ficha {
+    position: static;
+    width: auto;
+    margin: 12px 16px 16px;
+  }
+.d2-prob-mapa__visual {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+.d2-prob-mapa__grafico { position: relative; height: auto; }
+.d2-prob-mapa__aviso { font-size: 8px; }
+}
+
+/* Pero dentro de una tarjeta clara vuelven a su valor original: ahi el fondo
+   sigue siendo blanco y el texto tiene que ser oscuro otra vez. */
+.d2 [data-comp-tono="oscuro"] :is(.d2-res-tres__item, .d2-foco__prueba,
+                                  .d2-prueba-resp__tarjeta, .d2-cta-bal__accion,
+                                  .d2-cta-car__carril, .d2-prob-mapa__ficha) {
+  --c-texto:        #333333;
+  --c-texto-cuerpo: #333333;
+  --c-texto-suave:  #6B6B6B;
+  --c-linea:        rgba(0, 0, 0, .12);
+}
+
+/* ==========================================================================
+   LAS ISLAS CLARAS DENTRO DE UNA SECCION OSCURA
+
+   El fallo que esto corrige: cuando una seccion pasa a negro, su texto se
+   invierte a blanco. Pero muchas secciones contienen TARJETAS con fondo
+   claro propio --items de lista, marcos de foto, paneles-- y ahi el texto
+   blanco quedaba sobre fondo casi blanco: 1.07:1, invisible.
+
+   Ya paso una vez y lo resolvi nombrando las cinco tarjetas que conocia.
+   Volvio a pasar en cuanto aparecieron variantes nuevas, porque la lista
+   hay que mantenerla a mano y nadie se acuerda.
+
+   Aqui se invierte el enfoque: en lugar de enumerar que tarjetas hay, se
+   declara que CUALQUIER superficie clara restaura los valores oscuros. Se
+   listan por su clase --no hay selector CSS para "elemento con fondo
+   claro"-- pero el criterio salio de barrer el DOM y preguntar por el color
+   real de cada elemento, no de la memoria.
+
+   Las 51 superficies claras detectadas, menos las que son la propia
+   seccion.
+   ========================================================================== */
+
+.d2 [data-comp-tono="oscuro"] :is(
+  /* Tarjetas e items de lista */
+  .d2-prob-lec__lista > li,
+  .d2-prob-comp__rede,
+  .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item,
+  .d2-prueba-resp__par,
+  .d2-prueba-rec__marca,
+  .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo,
+  .d2-equipo-firma__credenciales > li,
+  .d2-foco__prueba,
+  .d2-cta-bal__accion,
+  .d2-cta-car__carril,
+  .d2-cta-con__inner,
+  .d2-prob-mapa__ficha,
+  /* Marcos de imagen */
+  .d2-equipo-ficha__marco,
+  .d2-equipo-dosier__retrato,
+  .d2-equipo-firma__foto-grande,
+  .d2-equipo-firma__foto-mini,
+  .d2-res-ed__marco,
+  .d2-lec__grafico,
+  /* Paneles y piezas de la calculadora */
+  .d2-panel,
+  .d2-panel__filtro,
+  .calc,
+  .campo__wrap,
+  .resultado,
+  .adelanto,
+  .recomienda,
+  .prueba,
+  .perfil__punto,
+  .pastilla,
+  .contacto,
+  .contacto__icono
+) {
+  --c-texto:        #333333;
+  --c-texto-cuerpo: #333333;
+  --c-texto-suave:  #6B6B6B;
+  --c-linea:        rgba(0, 0, 0, .12);
+  color: var(--c-texto);
+}
+
+/* ==========================================================================
+   EL MAPA DE CARTERA, ADAPTADO A LOS DOS TONOS
+
+   Esta variante tenia fondo propio --un verde oscuro-- porque supuse que su
+   grafico no se leeria sobre claro. Comprobado midiendo: si se lee. Solo
+   habia que invertir los valores del trazado, igual que se hace con el
+   texto.
+
+   Asi que ahora sigue al token de su seccion como las otras tres opciones
+   del problema. Si el problema es gris, el mapa es gris.
+
+   Los valores para fondo claro, medidos contra blanco y contra el gris
+   tenue (minimo 3:1 por WCAG 1.4.11, contraste no textual):
+
+     trazado del perfil   #1B7A2C ....  5.43 / 4.89
+     burbuja normal       #4A7355 ....  5.42 / 4.88
+     nucleo de burbuja    #26913A ....  4.04 / 3.64
+     linea de referencia  #3D7A4A ....  4.61 / 4.15
+     etiquetas            #5C6B60 ....  5.63 / 5.08
+   ========================================================================== */
+
+.d2 .d2-prob-mapa {
+  --mapa-texto:  #333333;
+  --mapa-cuerpo: #333333;
+  --mapa-acento: #026F00;   /* 6.41:1 sobre blanco */
+  --mapa-tenue:  #5C6B60;
+}
+
+/* La retícula, que sobre claro tiene que ser oscura para verse */
+.d2 .d2-prob-mapa .d2-prob-mapa__lienzo {
+  background: radial-gradient(circle, rgba(57, 181, 74, .10), transparent 58%);
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__lienzo::before {
+  background-image: linear-gradient(rgba(0, 0, 0, .07) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 0, 0, .07) 1px, transparent 1px);
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__perfil {
+  stroke: #1B7A2C;
+  filter: none;             /* el halo solo funciona sobre oscuro */
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__burbuja {
+  fill: #FFFFFF;
+  stroke: #4A7355;
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__nucleo { fill: #26913A; }
+
+.d2 .d2-prob-mapa .d2-prob-mapa__referencia { stroke: #3D7A4A; }
+
+.d2 .d2-prob-mapa .d2-prob-mapa__zona,
+.d2 .d2-prob-mapa .d2-prob-mapa__etiqueta { fill: #5C6B60; }
+
+/* El destacado conserva sus tres senales --grosor, relleno y etiqueta en
+   negrita-- para no depender solo del color (WCAG 1.4.1). */
+.d2 .d2-prob-mapa .d2-prob-mapa__sitio.es-foco .d2-prob-mapa__burbuja {
+  fill: rgba(57, 181, 74, .22);
+  stroke: #1B7A2C;
+  stroke-width: 4px;
+  filter: none;
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__sitio.es-foco .d2-prob-mapa__nucleo { fill: #12631F; }
+
+.d2 .d2-prob-mapa .d2-prob-mapa__sitio.es-foco .d2-prob-mapa__etiqueta {
+  fill: #12631F;
+  font-weight: 700;
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__sitio:hover .d2-prob-mapa__burbuja {
+  stroke: #12631F;
+  stroke-width: 3px;
+}
+
+/* La ficha, que sobre fondo claro necesita borde para separarse */
+.d2 .d2-prob-mapa .d2-prob-mapa__ficha {
+  border: 1px solid rgba(0, 0, 0, .12);
+  border-top: 4px solid var(--c-verde-marca, #39B54A);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, .06);
+}
+
+/* --- Y cuando la seccion SI es oscura, vuelven los valores originales --- */
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa {
+  --mapa-texto:  #FFFFFF;
+  --mapa-cuerpo: #E8E8E8;
+  --mapa-acento: #B0E1B7;
+  --mapa-tenue:  #A9C8B1;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__lienzo {
+  background: radial-gradient(circle, rgba(57, 181, 74, .21), transparent 58%);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__lienzo::before {
+  background-image: linear-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, .07) 1px, transparent 1px);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__perfil {
+  stroke: #8BE29C;
+  filter: drop-shadow(0 0 7px rgba(100, 217, 117, .12));
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__burbuja {
+  fill: #22301F;
+  stroke: #93B99D;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__nucleo { fill: #7DE493; }
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__referencia { stroke: #7DE493; }
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa :is(.d2-prob-mapa__zona,
+                                                .d2-prob-mapa__etiqueta) {
+  fill: #A9C8B1;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__sitio.es-foco .d2-prob-mapa__burbuja {
+  fill: rgba(57, 181, 74, .23);
+  stroke: #82E894;
+  filter: drop-shadow(0 0 12px rgba(100, 217, 117, .24));
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__sitio.es-foco .d2-prob-mapa__nucleo {
+  fill: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__sitio.es-foco .d2-prob-mapa__etiqueta {
+  fill: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__ficha {
+  border: 0;
+  border-top: 4px solid var(--c-verde-marca, #39B54A);
+  box-shadow: none;
+}
+
+/* El filete inclinado del fondo: sobre claro se apaga casi del todo */
+.d2 .d2-prob-mapa::before {
+  background: linear-gradient(transparent, rgba(57, 181, 74, .05), transparent);
+  border-top: 1px solid rgba(57, 181, 74, .18);
+  border-bottom: 1px solid rgba(57, 181, 74, .08);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa::before {
+  background: linear-gradient(transparent, rgba(57, 181, 74, .08), transparent);
+  border-top: 1px solid rgba(126, 225, 142, .30);
+  border-bottom: 1px solid rgba(126, 225, 142, .12);
+}
+
+/* ==========================================================================
+   EL MAPA, REPINTADO CON LA PALETA DE LA MARCA
+
+   Lo que habia: 34 colores escritos a mano, traidos del diseno 3. De los
+   trece verdes, ONCE no salian del manual --eran mas brillantes y
+   amarillentos que el #39B54A de la marca--.
+
+   Lo que hay ahora: el mismo dibujo, la misma profundidad, los mismos
+   halos y degradados. Cambia el pigmento, no la construccion. Todos los
+   valores son opacidades del verde de marca o del negro de marca, que es
+   exactamente lo que define la lamina de color del manual.
+
+   Se conservan intactos: el halo del destacado, el degradado radial del
+   lienzo, la reticula difuminada, la sombra de la ficha y el filete
+   inclinado del fondo. Son los que dan la sensacion de profundidad.
+
+   La escala del verde, medida (opacidad -> valor -> contraste):
+
+     SOBRE CLARO (mezcla sobre el negro de marca, que oscurece el verde)
+       70%  #378E43  4.11 blanco / 3.70 gris    nucleos
+       60%  #378141  4.80 / 4.32                linea de referencia
+       55%  #367B40  5.17 / 4.66                trazado
+       50%  #36743F  5.63 / 5.08                borde de burbuja
+       40%  #35673C  6.65 / 6.00                destacado
+
+     SOBRE OSCURO (mezcla sobre blanco, que aclara el verde)
+       85%  #57C065  5.49                       destacado
+       80%  #61C46E  5.79                       nucleos
+       70%  #74CB80  6.38                       trazado
+       65%  #7ECF89  6.72                       linea de referencia
+       55%  #92D69B  7.41                       borde de burbuja
+
+   Las etiquetas de texto van en negro de marca al 85% (#525252, 7.81:1)
+   sobre claro y en blanco al 80% sobre oscuro: el gris al 70% que tenian
+   se quedaba en 4.46 y el minimo son 4.5.
+   ========================================================================== */
+
+/* --- SOBRE FONDO CLARO --- */
+
+.d2 .d2-prob-mapa {
+  --mapa-texto:  var(--c-texto, #333333);
+  --mapa-cuerpo: var(--c-texto-cuerpo, #333333);
+  --mapa-acento: var(--c-verde-hover, #026F00);
+  --mapa-tenue:  #525252;
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__lienzo {
+  /* El degradado radial se conserva: es lo que da la sensacion de foco
+     luminoso en el centro. Solo se repinta con el verde correcto. */
+  background: radial-gradient(circle, rgba(57, 181, 74, .12), transparent 58%);
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__lienzo::before {
+  /* La reticula, con su mascara difuminada intacta */
+  background-image: linear-gradient(rgba(51, 51, 51, .07) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(51, 51, 51, .07) 1px, transparent 1px);
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__perfil {
+  stroke: #367B40;                                    /* verde 55% */
+  /* El halo del trazado, en el verde de marca */
+  filter: drop-shadow(0 1px 3px rgba(57, 181, 74, .28));
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__burbuja {
+  fill: #FFFFFF;
+  stroke: #36743F;                                    /* verde 50% */
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__nucleo { fill: #378E43; }
+
+/* verde 70% */
+
+.d2 .d2-prob-mapa .d2-prob-mapa__referencia { stroke: #378141; }
+
+/* verde 60% */
+
+.d2 .d2-prob-mapa :is(.d2-prob-mapa__zona, .d2-prob-mapa__etiqueta) {
+  fill: #525252;                                      /* negro 85%, 7.81:1 */
+}
+
+/* El destacado conserva sus tres senales y su halo */
+.d2 .d2-prob-mapa .d2-prob-mapa__sitio.es-foco .d2-prob-mapa__burbuja {
+  fill: rgba(57, 181, 74, .18);
+  stroke: #35673C;                                    /* verde 40% */
+  stroke-width: 4px;
+  filter: drop-shadow(0 0 10px rgba(57, 181, 74, .35));
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__sitio.es-foco .d2-prob-mapa__nucleo { fill: #35673C; }
+
+.d2 .d2-prob-mapa .d2-prob-mapa__sitio.es-foco .d2-prob-mapa__etiqueta {
+  fill: var(--c-texto, #333333);
+  font-weight: 700;
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__sitio:hover .d2-prob-mapa__burbuja {
+  stroke: #35673C;
+  stroke-width: 3px;
+}
+
+.d2 .d2-prob-mapa .d2-prob-mapa__ficha {
+  border: 1px solid rgba(51, 51, 51, .12);
+  border-top: 4px solid var(--c-verde-marca, #39B54A);
+  box-shadow: 0 4px 16px rgba(51, 51, 51, .07);
+}
+
+.d2 .d2-prob-mapa::before {
+  background: linear-gradient(transparent, rgba(57, 181, 74, .06), transparent);
+  border-top: 1px solid rgba(57, 181, 74, .20);
+  border-bottom: 1px solid rgba(57, 181, 74, .09);
+}
+
+/* --- SOBRE FONDO OSCURO --- */
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa {
+  --mapa-texto:  #FFFFFF;
+  --mapa-cuerpo: #E8E8E8;
+  --mapa-acento: #B0E1B7;                             /* verde 40%, 7.20:1 */
+  --mapa-tenue:  #CCCCCC;                             /* blanco 80%, 7.87:1 */
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__lienzo {
+  background: radial-gradient(circle, rgba(57, 181, 74, .22), transparent 58%);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__lienzo::before {
+  background-image: linear-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, .07) 1px, transparent 1px);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__perfil {
+  stroke: #74CB80;                                    /* verde 70% */
+  filter: drop-shadow(0 0 8px rgba(57, 181, 74, .30));
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__burbuja {
+  /* El relleno oscuro de la burbuja: verde de marca al 12% sobre el negro,
+     que es lo que le da cuerpo sin encenderla. */
+  fill: #35553A;
+  stroke: #92D69B;                                    /* verde 55% */
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__nucleo { fill: #61C46E; }
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__referencia { stroke: #7ECF89; }
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa :is(.d2-prob-mapa__zona,
+                                                .d2-prob-mapa__etiqueta) {
+  fill: #CCCCCC;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__sitio.es-foco .d2-prob-mapa__burbuja {
+  fill: rgba(57, 181, 74, .26);
+  stroke: #57C065;                                    /* verde 85% */
+  filter: drop-shadow(0 0 14px rgba(57, 181, 74, .45));
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__sitio.es-foco .d2-prob-mapa__nucleo {
+  fill: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__sitio.es-foco .d2-prob-mapa__etiqueta {
+  fill: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__sitio:hover .d2-prob-mapa__burbuja {
+  stroke: #57C065;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa .d2-prob-mapa__ficha {
+  border: 0;
+  border-top: 4px solid var(--c-verde-marca, #39B54A);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .30);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-prob-mapa::before {
+  background: linear-gradient(transparent, rgba(57, 181, 74, .10), transparent);
+  border-top: 1px solid rgba(57, 181, 74, .32);
+  border-bottom: 1px solid rgba(57, 181, 74, .14);
+}

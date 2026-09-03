@@ -1,0 +1,333 @@
+/* Proof / Timeline
+   Reglas cuyo selector menciona .d2-prueba-rec, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   OPCION 3 — RECORRIDO
+
+   Cambia EL EJE DE LECTURA: vertical y en orden, frente al horizontal en
+   paralelo de las otras dos. El 2008 deja de ser una cifra suelta y pasa a
+   ser el origen de una linea que explica las otras dos.
+
+   Es la unica variante donde el orden es el argumento, y por eso es la unica
+   que usa <ol>. En las otras dos seria una afirmacion falsa.
+   ========================================================================== */
+
+.d2 .d2-prueba-rec {
+  padding-block: clamp(40px, 5vw, 72px);
+  background: var(--c-blanco);
+}
+
+.d2 .d2-prueba-rec__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+.d2 .d2-prueba-rec__cabecera { max-width: 68ch; }
+
+.d2 .d2-prueba-rec__eyebrow {
+  margin: 0;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-prueba-rec__texto {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo);
+}
+
+.d2 .d2-prueba-rec__linea {
+  margin: clamp(24px, 3vw, 36px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Dos columnas: el carril de la marca y el contenido. El carril lleva ancho
+   fijo para que los tres puntos queden en la misma vertical; con ancho
+   automatico cada uno se colocaria segun su contenido y la linea se torceria. */
+.d2 .d2-prueba-rec__hito {
+  position: relative;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: var(--d2-e3);
+  padding-bottom: clamp(24px, 3vw, 36px);
+}
+
+/* La linea vertical se dibuja con un pseudoelemento del propio hito y no de
+   la lista: asi el ultimo puede cortarla. Una linea que sigue despues del
+   ultimo punto sugiere que falta algo por venir. */
+.d2 .d2-prueba-rec__hito::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  bottom: 0;
+  left: 15px;
+  width: 2px;
+  background: rgba(2, 51, 0, .12);
+}
+
+.d2 .d2-prueba-rec__hito--final::before { display: none; }
+
+/* El punto: circulo hueco relleno de blanco, como los del panel del hero.
+   Es el mismo idioma visual con el que esta pagina marca lecturas. */
+.d2 .d2-prueba-rec__marca {
+  position: relative;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  margin-top: 7px;
+  margin-left: 9px;
+  background: var(--c-blanco);
+  border: 3px solid var(--c-verde);
+  border-radius: var(--d2-radio-full);
+}
+
+.d2 .d2-prueba-rec__cifra {
+  margin: 0;
+  font-size: clamp(1.625rem, 1.25rem + 1.4vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1;
+  letter-spacing: -.03em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-prueba-rec__unidad {
+  font-size: .62em;
+  letter-spacing: 0;
+}
+
+.d2 .d2-prueba-rec__pie {
+  max-width: 62ch;
+  margin: var(--d2-e1) 0 0;
+  font-size: .9375rem;
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
+  color: var(--c-texto);
+}
+
+.d2 .d2-prueba-rec__fuente {
+  margin: 6px 0 0;
+  font-size: .75rem;
+  line-height: 1.35;
+  color: var(--c-verde-hover);
+}
+
+/* El ultimo hito lleva DOS citas. Apiladas median 320px y la seccion se iba
+   a 970px, por encima del limite de ~900px del sistema (medido en Chromium
+   a 1440px). El copy es literal y no se toca, asi que lo que cambia es el
+   reparto: las dos citas van en paralelo en pantallas anchas.
+
+   Se usa una rejilla en el cuerpo del hito final y las citas se colocan en
+   columnas con su autor debajo.
+
+   Las dos columnas se piden con una consulta de medios y NO con auto-fit.
+   Se probo auto-fit + minmax(260px, 1fr) y a 390px mantenia las dos
+   columnas comprimidas a 95px cada una, con 45px de desbordamiento
+   horizontal: dentro de un carril de rejilla ya limitado, el minimo del
+   minmax no cede y el contenido se sale. Con la consulta de medios el
+   apilado a una columna es la regla por defecto y las dos columnas solo
+   aparecen donde hay sitio de sobra. */
+.d2 .d2-prueba-rec__hito--final .d2-prueba-rec__cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0 clamp(16px, 2.2vw, 28px);
+}
+
+@media (min-width: 860px) {
+.d2 .d2-prueba-rec__hito--final .d2-prueba-rec__cuerpo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* La cifra y su pie ocupan la fila entera: son del hito, no de una cita.
+   Van con fila explicita ademas de columna: el pie esta DESPUES de las citas
+   en el marcado --el orden natural es cifra, pie, citas-- pero al fijar las
+   citas en la fila 2 la colocacion automatica mandaba el pie a la fila 4, es
+   decir por debajo de las citas, y la cifra quedaba sin su explicacion.
+   Medido: el pie del $2.94M aparecia al final del hito. */
+.d2 .d2-prueba-rec__hito--final .d2-prueba-rec__cifra {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.d2 .d2-prueba-rec__hito--final .d2-prueba-rec__pie {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+@media (min-width: 860px) {
+.d2 .d2-prueba-rec__hito--final .d2-prueba-rec__cita {
+    grid-row: 3;
+    align-self: start;
+  }
+.d2 .d2-prueba-rec__hito--final .d2-prueba-rec__autor {
+    grid-row: 4;
+    align-self: start;
+  }
+}
+
+/* Las citas van indentadas respecto a la cifra: son anotaciones al hito, no
+   hitos ellas mismas. La sangria lo dice sin necesidad de otro contorno. */
+.d2 .d2-prueba-rec__cita {
+  max-width: 62ch;
+  margin: var(--d2-e3) 0 0;
+  padding-left: var(--d2-e3);
+  border-left: 2px solid rgba(2, 51, 0, .12);
+  font-size: .9375rem;
+  line-height: 1.55;
+  color: var(--c-texto-cuerpo);
+}
+
+.d2 .d2-prueba-rec__autor {
+  margin: 6px 0 0;
+  padding-left: var(--d2-e3);
+  font-size: .8125rem;
+  line-height: 1.35;
+}
+
+.d2 .d2-prueba-rec__nombre {
+  font-weight: var(--fw-bold);
+  color: var(--c-texto);
+}
+
+/* Separador tipografico entre nombre y organizacion. Es decorativo, asi que
+   se genera en CSS: un lector de pantalla lee los dos spans seguidos sin
+   que se cuele un guion suelto. */
+.d2 .d2-prueba-rec__org {
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-prueba-rec__org::before {
+  content: " · ";
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-prueba-rec__hito::before {
+  transform-origin: top center;
+  animation: d2-prueba-traza .5s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .d2-prueba-rec__marca {
+  animation: d2-prueba-punto .4s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .d2-prueba-rec__cuerpo {
+  animation: d2-prueba-entra .5s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+/* El punto se enciende, luego baja su tramo de linea, luego llega el punto
+   siguiente. Los retardos encadenan ese orden. */
+.d2 .d2-prueba-rec__hito:nth-child(1) .d2-prueba-rec__marca  { animation-delay: .05s; }
+
+.d2 .d2-prueba-rec__hito:nth-child(1) .d2-prueba-rec__cuerpo { animation-delay: .10s; }
+
+.d2 .d2-prueba-rec__hito:nth-child(1)::before                { animation-delay: .20s; }
+
+.d2 .d2-prueba-rec__hito:nth-child(2) .d2-prueba-rec__marca  { animation-delay: .45s; }
+
+.d2 .d2-prueba-rec__hito:nth-child(2) .d2-prueba-rec__cuerpo { animation-delay: .50s; }
+
+.d2 .d2-prueba-rec__hito:nth-child(2)::before                { animation-delay: .60s; }
+
+.d2 .d2-prueba-rec__hito:nth-child(3) .d2-prueba-rec__marca  { animation-delay: .85s; }
+
+.d2 .d2-prueba-rec__hito:nth-child(3) .d2-prueba-rec__cuerpo { animation-delay: .90s; }
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .d2-prueba-rec__hito::before,
+  .d2 .d2-prueba-rec__marca,
+  .d2 .d2-prueba-rec__cuerpo {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+.d2 .d2-prueba-rec__hito {
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: var(--d2-e2);
+  }
+.d2 .d2-prueba-rec__hito::before { left: 11px; }
+.d2 .d2-prueba-rec__marca {
+    margin-left: 5px;
+  }
+.d2 .d2-prueba-rec__cita,
+  .d2 .d2-prueba-rec__autor {
+    padding-left: var(--d2-e2);
+  }
+}
+
+.d2 .d2-prueba-reg, .d2 .d2-prueba-resp, .d2 .d2-prueba-rec { background: var(--comp-prueba); }
+
+/* ==========================================================================
+   LAS ISLAS CLARAS DENTRO DE UNA SECCION OSCURA
+
+   El fallo que esto corrige: cuando una seccion pasa a negro, su texto se
+   invierte a blanco. Pero muchas secciones contienen TARJETAS con fondo
+   claro propio --items de lista, marcos de foto, paneles-- y ahi el texto
+   blanco quedaba sobre fondo casi blanco: 1.07:1, invisible.
+
+   Ya paso una vez y lo resolvi nombrando las cinco tarjetas que conocia.
+   Volvio a pasar en cuanto aparecieron variantes nuevas, porque la lista
+   hay que mantenerla a mano y nadie se acuerda.
+
+   Aqui se invierte el enfoque: en lugar de enumerar que tarjetas hay, se
+   declara que CUALQUIER superficie clara restaura los valores oscuros. Se
+   listan por su clase --no hay selector CSS para "elemento con fondo
+   claro"-- pero el criterio salio de barrer el DOM y preguntar por el color
+   real de cada elemento, no de la memoria.
+
+   Las 51 superficies claras detectadas, menos las que son la propia
+   seccion.
+   ========================================================================== */
+
+.d2 [data-comp-tono="oscuro"] :is(
+  /* Tarjetas e items de lista */
+  .d2-prob-lec__lista > li,
+  .d2-prob-comp__rede,
+  .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item,
+  .d2-prueba-resp__par,
+  .d2-prueba-rec__marca,
+  .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo,
+  .d2-equipo-firma__credenciales > li,
+  .d2-foco__prueba,
+  .d2-cta-bal__accion,
+  .d2-cta-car__carril,
+  .d2-cta-con__inner,
+  .d2-prob-mapa__ficha,
+  /* Marcos de imagen */
+  .d2-equipo-ficha__marco,
+  .d2-equipo-dosier__retrato,
+  .d2-equipo-firma__foto-grande,
+  .d2-equipo-firma__foto-mini,
+  .d2-res-ed__marco,
+  .d2-lec__grafico,
+  /* Paneles y piezas de la calculadora */
+  .d2-panel,
+  .d2-panel__filtro,
+  .calc,
+  .campo__wrap,
+  .resultado,
+  .adelanto,
+  .recomienda,
+  .prueba,
+  .perfil__punto,
+  .pastilla,
+  .contacto,
+  .contacto__icono
+) {
+  --c-texto:        #333333;
+  --c-texto-cuerpo: #333333;
+  --c-texto-suave:  #6B6B6B;
+  --c-linea:        rgba(0, 0, 0, .12);
+  color: var(--c-texto);
+}

@@ -1,0 +1,335 @@
+/* Solution routes / Comparison
+   Reglas cuyo selector menciona .d2-rutas-cmp, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   SECCION RUTAS / SOLUTIONS — TRES VARIANTES
+
+   Todo va prefijado .d2 .d2-rutas- para no chocar con las clases genericas
+   .rutas / .ruta del marcado original ni con otras secciones.
+
+   Ni un color a mano: solo tokens de d2.css y tokens.css. Verde #2E902B da
+   4.09:1 sobre blanco, asi que NO se usa en texto pequeno; para eso va
+   --c-verde-hover (#026F00, 6.41:1). Esa regla decide casi todos los
+   colores de texto de este archivo.
+
+   La curva de movimiento es la del header, cubic-bezier(.32,.72,0,1). No se
+   usa --d2-curva porque esa es la de la referencia (.77,0,.175,1) y el
+   contrato fija la otra para las secciones nuevas.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   COMUN A LAS TRES
+
+   Las cabeceras comparten medidas para que al pasar de una variante a otra
+   en el carrusel el titular no salte de sitio. Solo cambia lo que hay
+   debajo, que es lo que se esta comparando.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-rutas-sel,
+.d2 .d2-rutas-esc,
+.d2 .d2-rutas-cmp {
+  padding-block: clamp(38px, 4.2vw, 54px);
+  background: var(--c-blanco, #fff);
+}
+
+.d2 .d2-rutas-sel__inner,
+.d2 .d2-rutas-esc__inner,
+.d2 .d2-rutas-cmp__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+/* 62ch: el lead se corta antes de volverse una linea larga de leer, aunque
+   el contenedor mida 1280. */
+.d2 .d2-rutas-sel__cabecera,
+.d2 .d2-rutas-esc__cabecera,
+.d2 .d2-rutas-cmp__cabecera {
+  max-width: 62ch;
+}
+
+.d2 .d2-rutas-sel__eyebrow,
+.d2 .d2-rutas-esc__eyebrow,
+.d2 .d2-rutas-cmp__eyebrow {
+  margin: 0;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  /* verde oscuro y no --c-verde: a 11px el 4.09:1 del verde claro no pasa */
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-rutas-sel__titulo,
+.d2 .d2-rutas-esc__titulo,
+.d2 .d2-rutas-cmp__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-rutas-sel__lead,
+.d2 .d2-rutas-esc__lead,
+.d2 .d2-rutas-cmp__lead {
+  margin: var(--d2-e3) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* --- El enlace de cada ruta ------------------------------------------------
+   Mismo gesto en las tres: la flecha avanza 3px al pasar el raton, igual
+   que .d2-btn. Es el idioma de movimiento que la pagina ya tiene; inventar
+   otro solo para esta seccion la haria sonar distinta sin motivo. */
+
+.d2 .d2-rutas-sel__link,
+.d2 .d2-rutas-esc__link,
+.d2 .d2-rutas-cmp__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--d2-e1);
+  font-size: .875rem;
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+  color: var(--c-verde-hover);
+  transition: color .18s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .d2-rutas-sel__link svg,
+.d2 .d2-rutas-esc__link svg,
+.d2 .d2-rutas-cmp__link svg {
+  flex: none;
+  transition: transform .18s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .d2-rutas-sel__link:hover svg,
+.d2 .d2-rutas-esc__link:hover svg,
+.d2 .d2-rutas-cmp__link:hover svg {
+  transform: translateX(3px);
+}
+
+.d2 .d2-rutas-sel__link:hover,
+.d2 .d2-rutas-esc__link:hover,
+.d2 .d2-rutas-cmp__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* El foco visible no se hereda del reset: se declara. Va con outline y no
+   con sombra para que sobreviva al modo de alto contraste de Windows. */
+.d2 .d2-rutas-sel__link:focus-visible,
+.d2 .d2-rutas-esc__link:focus-visible,
+.d2 .d2-rutas-cmp__link:focus-visible,
+.d2 .d2-rutas-sel__ruta:focus-within {
+  outline: 2px solid var(--c-verde-hover);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   OPCION 3 — COMPARATIVA POR ATRIBUTO
+
+   Se lee por fila. Es una tabla de datos de verdad, no maquetacion con
+   celdas, asi que conserva thead/th/scope y se le pone caption.
+
+   Sin animacion de entrada mas alla de la comun: una tabla que se monta por
+   partes se lee peor mientras se monta, y aqui el valor esta en poder
+   barrer una fila entera de un vistazo. El triptico y la comparativa de la
+   seccion del problema tampoco llevan, por lo mismo.
+   ========================================================================== */
+
+.d2 .d2-rutas-cmp__marco {
+  margin-top: clamp(28px, 3.4vw, 44px);
+  /* El scroll vive aqui, no en el body: en pantallas estrechas la rejilla
+     se desplaza dentro de su marco y la pagina no gana scroll horizontal. */
+  overflow-x: auto;
+  /* Evita que el foco de un enlace interior quede recortado por el overflow */
+  padding: 2px;
+}
+
+.d2 .d2-rutas-cmp__tabla {
+  width: 100%;
+  min-width: 680px;   /* por debajo, las tres columnas de texto se estrangulan */
+  border-collapse: collapse;
+  text-align: left;
+}
+
+/* La caption se oculta a la vista pero NO a los lectores de pantalla: da el
+   contexto de que compara la tabla antes de entrar en ella. No se usa
+   display:none, que la sacaria tambien del arbol de accesibilidad. */
+.d2 .d2-rutas-cmp__caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.d2 .d2-rutas-cmp__esquina {
+  width: 15%;
+  border: 0;
+}
+
+.d2 .d2-rutas-cmp__tabla thead th {
+  width: 28.33%;
+  padding: 0 var(--d2-e3) var(--d2-e2);
+  vertical-align: bottom;
+  border-bottom: 2px solid var(--c-verde);
+}
+
+.d2 .d2-rutas-cmp__tag {
+  display: block;
+  margin-bottom: 4px;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-rutas-cmp__titulo-ruta {
+  display: block;
+  font-size: clamp(1rem, .96rem + .2vw, 1.125rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.28;
+  letter-spacing: -.01em;
+  color: var(--c-texto);
+}
+
+/* La cabecera de fila es el atributo que se compara. Va en gris suave y en
+   versalitas para que no compita con las tres columnas, que son el
+   contenido. */
+.d2 .d2-rutas-cmp__tabla tbody th {
+  padding: clamp(16px, 2vw, 22px) var(--d2-e3) clamp(16px, 2vw, 22px) 0;
+  vertical-align: top;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+  border-bottom: 1px solid rgba(2, 51, 0, .08);
+}
+
+.d2 .d2-rutas-cmp__tabla tbody td {
+  padding: clamp(16px, 2vw, 22px) var(--d2-e3);
+  vertical-align: top;
+  font-size: .875rem;
+  line-height: 1.56;
+  color: var(--c-texto-cuerpo, #333);
+  border-bottom: 1px solid rgba(2, 51, 0, .08);
+}
+
+.d2 .d2-rutas-cmp__tabla tbody tr:last-child th,
+.d2 .d2-rutas-cmp__tabla tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+@media (hover: hover) {
+.d2 .d2-rutas-cmp__tabla tbody td:hover {
+    background: var(--d2-relleno);
+  }
+}
+
+.d2 .d2-rutas-sel__cabecera,
+.d2 .d2-rutas-sel__ruta,
+.d2 .d2-rutas-esc__cabecera,
+.d2 .d2-rutas-esc__peldano,
+.d2 .d2-rutas-esc__extremos,
+.d2 .d2-rutas-cmp__cabecera,
+.d2 .d2-rutas-cmp__marco {
+  animation: d2-rutas-entra .55s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .d2-rutas-cmp__marco { animation-delay: .1s; }
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .d2-rutas-sel__cabecera,
+  .d2 .d2-rutas-sel__ruta,
+  .d2 .d2-rutas-esc__cabecera,
+  .d2 .d2-rutas-esc__peldano,
+  .d2 .d2-rutas-esc__extremos,
+  .d2 .d2-rutas-cmp__cabecera,
+  .d2 .d2-rutas-cmp__marco,
+  .d2 .d2-rutas-esc__nodo {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+.d2 .d2-rutas-sel__ruta,
+  .d2 .d2-rutas-sel__link,
+  .d2 .d2-rutas-esc__link,
+  .d2 .d2-rutas-cmp__link,
+  .d2 .d2-rutas-sel__link svg,
+  .d2 .d2-rutas-esc__link svg,
+  .d2 .d2-rutas-cmp__link svg {
+    transition: none;
+  }
+}
+
+.d2 .d2-rutas-sel, .d2 .d2-rutas-esc, .d2 .d2-rutas-cmp  { background: var(--comp-rutas); }
+
+/* ==========================================================================
+   CONTRASTE: LAS NUEVE CAUSAS
+
+   Auditadas 2165 combinaciones --30 variantes x 4 composiciones-- midiendo
+   cada texto contra el fondo que de verdad tiene detras, subiendo por los
+   ancestros hasta encontrar quien pinta.
+
+   Salieron 210 fallos, pero son NUEVE defectos repetidos. Se arreglan por
+   la causa, no uno a uno: asi no vuelven a aparecer en la siguiente
+   variante que se escriba.
+
+   Todos los valores medidos, no estimados.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. EL VERDE OSCURO SOBRE FONDO CLARO — 107 fallos, el mas extendido
+
+   #2A8438 daba 4.40:1 sobre el tinte y 4.25:1 sobre el gris. El minimo son
+   4.5 y estos textos miden 11-15px, muy por debajo del umbral de 18.66px
+   que permitiria 3:1.
+
+   Se sustituye por #026F00, que ya existe en el sistema como
+   --c-verde-hover y da 6.41:1 sobre blanco y 5.78:1 sobre gris. Es el
+   mismo verde que ya usan los enlaces del cuerpo.
+   -------------------------------------------------------------------------- */
+
+.d2 :is(.d2-rutas-sel__eyebrow, .d2-rutas-esc__eyebrow, .d2-rutas-cmp__eyebrow,
+        .d2-rutas-sel__tag, .d2-rutas-esc__tag, .d2-rutas-cmp__tag,
+        .d2-rutas-sel__link, .d2-rutas-esc__link, .d2-rutas-cmp__link,
+        .d2-prob-comp__eti--rede, .d2-prueba-reg__fuente,
+        .d2-cta-con__etiqueta, .d2-cta-con__enlace,
+        .d2-equipo-firma__credenciales li, .d2-equipo-dosier__cred) {
+  color: #026F00;
+}
+
+/* --------------------------------------------------------------------------
+   8. LA ETIQUETA "WITH REDE" SOBRE NEGRO — 2.68:1
+
+   El verde oscuro #026F00 funciona sobre claro pero se hunde sobre negro.
+   Dentro de una seccion oscura hay que invertirlo al verde claro, que sobre
+   #333333 da 7.20:1.
+   -------------------------------------------------------------------------- */
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-rutas-sel__eyebrow, .d2-rutas-esc__eyebrow,
+                                  .d2-rutas-cmp__eyebrow, .d2-rutas-sel__tag,
+                                  .d2-rutas-esc__tag, .d2-rutas-cmp__tag,
+                                  .d2-rutas-sel__link, .d2-rutas-esc__link,
+                                  .d2-rutas-cmp__link, .d2-prob-comp__eti--rede,
+                                  .d2-prueba-reg__fuente, .d2-hero__eyebrow,
+                                  .d2-eyebrow, .eyebrow, .acento,
+                                  .d2-equipo-firma__credenciales li,
+                                  .d2-equipo-dosier__cred) {
+  color: #B0E1B7;
+}

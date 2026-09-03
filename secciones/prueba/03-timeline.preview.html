@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof / Timeline</title>
+
+<!-- La biblioteca vive dos niveles por debajo de la raiz -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/d2.css">
+
+<!-- Solo el CSS de esta variante -->
+<link rel="stylesheet" href="03-timeline.css">
+
+<style>
+  /* La barra de la vista previa. No forma parte de la seccion. */
+  .vp-barra {
+    position: sticky; top: 0; z-index: 99;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 18px;
+    font: 600 12px/1.4 "Open Sans", system-ui, sans-serif;
+    color: #FFFFFF; background: #333333;
+  }
+  .vp-barra a { color: #B0E1B7; text-decoration: none; }
+  .vp-barra a:hover { text-decoration: underline; }
+  .vp-barra code {
+    padding: 2px 6px; font-size: 11px;
+    background: rgba(255,255,255,.14); border-radius: 3px;
+  }
+  .vp-sep { opacity: .45; }
+  /* Los tokens de composicion, para que la seccion no salga sin fondo */
+  .d2 {
+    --comp-blanco:#FFFFFF; --comp-gris:#F3F3F3; --comp-negro:#333333;
+    --comp-hero:#FFFFFF; --comp-logos:#FFFFFF; --comp-problema:#F3F3F3;
+    --comp-calc:#FFFFFF; --comp-rutas:#F3F3F3; --comp-prueba:#FFFFFF;
+    --comp-resenas:#F3F3F3; --comp-equipo:#FFFFFF; --comp-faq:#F3F3F3;
+    --comp-cta:#333333; --comp-footer:#333333;
+  }
+</style>
+</head>
+<body class="d2">
+
+<div class="vp-barra">
+  <a href="../indice.html">&larr; Library</a>
+  <span class="vp-sep">/</span>
+  <strong>Proof</strong>
+  <span class="vp-sep">/</span>
+  <span>Timeline</span>
+  <span class="vp-sep">|</span>
+  <code>.d2-prueba-rec</code>
+  <span class="vp-sep">|</span>
+  <a href="03-timeline.html">markup</a>
+  <a href="03-timeline.css">css</a>
+</div>
+
+<section class="d2-prueba-rec">
+      <div class="d2-prueba-rec__inner">
+
+        <header class="d2-prueba-rec__cabecera">
+          <p class="d2-prueba-rec__eyebrow">What this looks like in practice</p>
+          <p class="d2-prueba-rec__texto">
+            These were costs that had been paid, year after year, without anyone knowing
+            they were recoverable. The same diagnostic and optimization approach can apply
+            to eligible commercial, institutional, municipal, post-secondary, and care
+            facilities.
+          </p>
+        </header>
+
+        <ol class="d2-prueba-rec__linea">
+
+          <li class="d2-prueba-rec__hito">
+            <div class="d2-prueba-rec__marca" aria-hidden="true"></div>
+            <div class="d2-prueba-rec__cuerpo">
+              <p class="d2-prueba-rec__cifra">2008</p>
+              <p class="d2-prueba-rec__pie">
+                the year Rede started doing this work in Western Canada.
+              </p>
+            </div>
+          </li>
+
+          <li class="d2-prueba-rec__hito">
+            <div class="d2-prueba-rec__marca" aria-hidden="true"></div>
+            <div class="d2-prueba-rec__cuerpo">
+              <p class="d2-prueba-rec__cifra">9.5<span class="d2-prueba-rec__unidad">%</span></p>
+              <p class="d2-prueba-rec__pie">
+                average historical cost reduction for schools. Across all building
+                types the average is 5.7%.
+              </p>
+              <!-- PENDIENTE DE ERICK: redaccion exacta del credito a BC Hydro. -->
+              <p class="d2-prueba-rec__fuente">BC Hydro Continuous Optimization</p>
+              <blockquote class="d2-prueba-rec__cita">
+                The Rede team is all about proactively implementing energy solutions. They
+                see a gap and they take care of it.</blockquote>
+              <p class="d2-prueba-rec__autor">
+                <span class="d2-prueba-rec__nombre">Alex Telford</span>
+                <span class="d2-prueba-rec__org">SD27 British Columbia</span>
+              </p>
+            </div>
+          </li>
+
+          <li class="d2-prueba-rec__hito d2-prueba-rec__hito--final">
+            <div class="d2-prueba-rec__marca" aria-hidden="true"></div>
+            <div class="d2-prueba-rec__cuerpo">
+              <p class="d2-prueba-rec__cifra">$2.94M</p>
+              <p class="d2-prueba-rec__pie">
+                in unnecessary annual energy costs identified for a large Western Canadian
+                school district.
+              </p>
+              <blockquote class="d2-prueba-rec__cita">
+                Before Northland started working with Rede, we had no energy management plan
+                at all. We recognized quickly that we can save money with an energy
+                management program.</blockquote>
+              <p class="d2-prueba-rec__autor">
+                <span class="d2-prueba-rec__nombre">Wayne Turpin</span>
+                <span class="d2-prueba-rec__org">Northland School Division</span>
+              </p>
+              <blockquote class="d2-prueba-rec__cita">
+                For people like myself, money talks. If we can engage someone like Rede to
+                find inefficiencies within our facilities, then we are able to address them.</blockquote>
+              <p class="d2-prueba-rec__autor">
+                <span class="d2-prueba-rec__nombre">Norman Buhler</span>
+                <span class="d2-prueba-rec__org">Fort Vermilion School Division</span>
+              </p>
+            </div>
+          </li>
+
+        </ol>
+      </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Close options">
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Previous option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Record</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Backed</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Timeline</small></button>
+    </div>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+
+
+</body>
+</html>

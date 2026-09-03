@@ -1,0 +1,368 @@
+/* Footer / Directory
+   Reglas cuyo selector menciona .d2-pie-dir, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   PIE DE PAGINA — TRES VARIANTES (DISENO 2)
+
+   Las tres pintan el mismo copy sobre --d2-oscuro (#0E2A12), el color que
+   d2.css reserva justo para esto ("verde muy oscuro, para footer y bandas").
+
+   Lo que cambia entre ellas NO es la piel. Es a que sirve el pie:
+
+     1. DIRECTORIO   el protagonista es la NAVEGACION. Tres columnas de
+                     enlaces mandan; el contacto es una columna mas.
+     2. DESPACHO     cambia QUE se agrupa con QUE. Telefono, correo y
+                     direccion salen de la rejilla de enlaces y se juntan
+                     en un bloque de contacto con objetivos grandes; el
+                     mapa del sitio se comprime a una fila.
+     3. CIERRE       cambia DONDE vive el protagonista. No hay mega-pie:
+                     una franja baja, y el peso se va al dato de contacto
+                     en linea. Es la antitesis de la opcion 1.
+
+   ─── Por que ninguna lleva CTA ───────────────────────────────────────────
+   El patron "pie con CTA integrado" esta descartado a proposito: la seccion
+   cta-final.html va JUSTO encima del pie y ya trae "Check your opportunity"
+   y "Book a call". Meter otra llamada en el pie duplicaria la de arriba a
+   dos dedos de distancia. El pie recoge, no vuelve a pedir.
+
+   ─── Contraste: medido, no supuesto ─────────────────────────────────────
+   Todos los valores calculados contra #0E2A12 (luminancia .0179):
+
+     blanco puro .................. 15.46:1
+     blanco 82% (#d4d9d4) ......... 10.80:1   enlaces
+     blanco 74% (#c0c8c1) .........  9.03:1   cuerpo
+     blanco 62% (#a3aea5) .........  6.74:1   secundario / direccion
+     blanco 55% (#939f94) .........  5.61:1   minimo que uso
+     --c-verde-marca #39B54A ......  5.80:1   PASA AA en pequeno
+     --c-verde #2E902B ............  3.78:1   NO para texto pequeno
+     --c-verde-hover #026F00 ......  2.41:1   inservible sobre oscuro
+
+   Dos consecuencias que van contra la intuicion y conviene no deshacer:
+
+   (a) --c-verde-marca (#39B54A) es el verde que la guia PROHIBE para texto
+       sobre blanco (~2.5:1). Sobre este fondo oscuro da 5.80:1 y si sirve.
+       Aqui es el verde de acento correcto. Al reves, --c-verde-hover, que
+       es el bueno sobre blanco, da 2.41:1 y no vale para nada oscuro.
+
+   (b) El pie anterior (footer.css) pintaba la direccion, el aviso legal y
+       las etiquetas con rgba(255,255,255,.45) = 4.24:1, por debajo del
+       4.5:1 que pide AA. Ninguna variante baja del 55%.
+
+   Los tokens no cambian: se usan tal cual. Las mezclas con blanco son
+   opacidades sobre el token de fondo, no colores nuevos escritos a mano.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   BASE COMPARTIDA
+
+   Lo que las tres tienen en comun se escribe una vez. Las diferencias
+   estructurales viven en cada bloque, no aqui.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-pie-dir,
+.d2 .d2-pie-desp,
+.d2 .d2-pie-cierre {
+  background: var(--d2-oscuro);
+  color: var(--c-blanco);
+}
+
+/* El contenedor de las tres, identico al del resto de secciones del d2 para
+   que el pie alinee con lo que tiene encima. */
+.d2 .d2-pie-dir__inner,
+.d2 .d2-pie-desp__inner,
+.d2 .d2-pie-cierre__inner,
+.d2 .d2-pie-dir__base-inner,
+.d2 .d2-pie-desp__base-inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+/* --- El logo sobre fondo oscuro ---------------------------------------
+   El SVG lleva el verde del logo (#39A935) y DOS grises (#868686 y
+   #C6C6C5) en la bajada "Building Energy Efficiency". Sobre este fondo el
+   gris oscuro se hunde: #868686 contra #0E2A12 da 4.25:1, por debajo del
+   4.5:1 de AA, y a ese tamano la bajada es texto pequeno.
+
+   El pie anterior usaba brightness(1.6). Medido factor por factor, 1.6 es
+   demasiado: satura canales y rompe el color de marca.
+
+     factor   #868686        #C6C6C5          #39A935
+     1.00     4.25:1         9.04:1           5.08:1
+     1.20     5.98:1        13.31:1           7.26:1
+     1.30     6.97:1        15.46:1  CLIP     8.55:1
+     1.60    10.64:1        15.46:1  CLIP    11.69:1  CLIP  -> menta
+
+   Se queda en 1.20: es el ultimo escalon en que el gris oscuro ya pasa AA
+   (5.98:1) y NINGUN canal se satura todavia. A partir de 1.30 el gris
+   claro se aplasta contra el blanco puro y el verde empieza a lavarse;
+   en 1.60 el verde sale #5bff55, un menta fosforito que ya no es la marca.
+
+   No se toca el archivo del logo: es un asset de marca. */
+.d2 .d2-pie-dir__logo img,
+.d2 .d2-pie-desp__logo img,
+.d2 .d2-pie-cierre__logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: brightness(1.2);
+}
+
+/* --- Titulos de columna ----------------------------------------------
+   Versalitas pequenas. A .6875rem el texto es diminuto, asi que va al 74%
+   (9.03:1) y no al 45% del pie anterior, que daba 4.24:1. */
+.d2 .d2-pie-dir__titulo,
+.d2 .d2-pie-desp__titulo {
+  margin: 0 0 var(--d2-e3);
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .74);
+}
+
+/* Foco visible sobre oscuro: el anillo va en verde de marca, que contra
+   #0E2A12 da 5.8:1 y se ve sin ambiguedad. */
+.d2 .d2-pie-dir a:focus-visible,
+.d2 .d2-pie-desp a:focus-visible,
+.d2 .d2-pie-cierre a:focus-visible,
+.d2 .d2-pie-pron:focus-visible {
+  outline: 2px solid var(--c-verde-marca);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   OBJETIVOS TACTILES EN ENLACES APILADOS
+
+   Una lista de enlaces en el pie es el caso mas conflictivo de un pie:
+   destinos pequenos, pegados y en vertical. Medido:
+
+     14px x 1.5 de interlineado = 21px de alto real
+     15px x 1.5                 = 22.5px
+
+   WCAG 2.2 introduce el criterio 2.5.8 "Target Size (Minimum)", nivel AA,
+   con un minimo de 24x24 px CSS. Los dos casos de arriba se quedan por
+   debajo SOLO por el alto de la linea.
+
+   Matiz importante y facil de aplicar mal: 2.5.8 exceptua los destinos
+   "in-line". Es tentador acogerse a esa excepcion para una lista de
+   enlaces y ahorrarse el padding, pero NO cubre este caso.
+
+   El texto de la excepcion dice "the target is in a sentence or its size
+   is otherwise constrained by the line-height of non-target text", y el
+   documento Understanding solo la ejemplifica con "links within a
+   paragraph of text". La justifica ademas porque el reflujo del texto
+   impide al autor prever donde caera cada enlace: razonamiento que no
+   aplica a una lista vertical puesta ahi a proposito. En la discusion
+   oficial del grupo de trabajo, un colaborador del W3C WCAG WG lo
+   descarta para paginacion con "it's a different use case".
+
+   Asi que estos enlaces necesitan los 24px. Fuentes:
+     https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html
+     https://github.com/w3c/wcag/discussions/3829
+   (El WG no se ha pronunciado de forma explicita y definitiva sobre listas
+   de pie en concreto; se aplica el criterio estricto por prudencia.)
+
+   La solucion NO es subir el interlineado --eso separa el texto y lo hace
+   ilegible-- sino padding-block. Con 14px/1.5 hacen falta 1.5px por lado
+   para llegar a 24. Aqui se usan 6px por lado (33px total) porque:
+
+     - deja margen sobre el minimo, sin llegar a los 44px de 2.5.5 (AAA),
+       que en una lista de cinco enlaces estiraria el pie sin necesidad
+     - los 12px que quedan entre dos textos consecutivos cumplen tambien
+       la separacion minima que pide el contrato
+
+   El padding va en un <a> puesto a block/inline-flex: sobre un <a> en
+   linea, el padding vertical NO agranda la caja de pulsacion y el enlace
+   sigue midiendo 21px aunque se vea mas alto. Ese es el fallo silencioso
+   que hay que evitar aqui.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   OPCION 1 — DIRECTORIO
+
+   El protagonista es la navegacion. Marca a la izquierda, tres columnas de
+   enlaces ocupando el resto: la rejilla 1fr / 1.6fr da mas sitio a los
+   enlaces que a la marca, que es lo que dice esta variante.
+   ========================================================================== */
+
+.d2 .d2-pie-dir__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: clamp(32px, 4vw, 64px);
+  padding-block: clamp(40px, 4.6vw, 64px);
+}
+
+.d2 .d2-pie-dir__logo {
+  display: block;
+  width: 150px;
+}
+
+.d2 .d2-pie-dir__tagline {
+  max-width: 34ch;
+  margin: var(--d2-e4) 0 0;
+  font-size: .875rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, .74);   /* 9.03:1 */
+}
+
+.d2 .d2-pie-dir__pron {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e2);
+  margin: var(--d2-e3) 0 0;
+  font-size: .8125rem;
+  color: rgba(255, 255, 255, .62);   /* 6.74:1 */
+}
+
+/* Tres columnas iguales. Se reparten el 1.6fr del contenedor. */
+.d2 .d2-pie-dir__nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 2.6vw, 40px);
+}
+
+/* Los enlaces: el -6px de margen superior compensa el padding del primero,
+   para que el bloque siga alineado con el titulo de su columna. Sin esto
+   las tres columnas arrancan 6px mas abajo que la marca. */
+.d2 .d2-pie-dir__lista {
+  margin: -6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-pie-dir__lista a {
+  display: inline-flex;
+  padding-block: 6px;               /* 21 + 12 = 33px de alto real */
+  font-size: .875rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .82);  /* 10.80:1 */
+  text-decoration: none;
+  transition: color var(--trans-media);
+}
+
+.d2 .d2-pie-dir__lista a:hover {
+  color: var(--c-verde-marca);       /* 5.80:1 sobre el fondo: pasa AA */
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.d2 .d2-pie-dir__direccion {
+  margin: var(--d2-e3) 0 0;
+  font-size: .8125rem;
+  font-style: normal;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, .62);   /* 6.74:1, no el 4.24:1 de antes */
+}
+
+/* --- Franja inferior --- */
+
+.d2 .d2-pie-dir__base { border-top: 1px solid rgba(255, 255, 255, .16); }
+
+.d2 .d2-pie-dir__base-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--d2-e3) var(--d2-e4);
+  padding-block: var(--d2-e2);
+}
+
+.d2 .d2-pie-dir__legal {
+  margin: 0;
+  font-size: .75rem;
+  color: rgba(255, 255, 255, .62);
+}
+
+.d2 .d2-pie-dir__legales {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--d2-e4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-pie-dir__legales a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--d2-e1);
+  min-height: 32px;
+  font-size: .75rem;
+  color: rgba(255, 255, 255, .74);
+  text-decoration: none;
+  transition: color var(--trans-media);
+}
+
+.d2 .d2-pie-dir__legales a:hover {
+  color: var(--c-blanco);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Client Login se separa con una linea: es de otra naturaleza que los dos
+   avisos legales --es una puerta, no un documento-- y el separador lo dice
+   sin necesidad de otro color. */
+.d2 .d2-pie-dir__login {
+  padding-left: var(--d2-e4);
+  border-left: 1px solid rgba(255, 255, 255, .16);
+  color: rgba(255, 255, 255, .82);
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .d2-pie-dir a,
+  .d2 .d2-pie-desp a,
+  .d2 .d2-pie-cierre a,
+  .d2 .d2-pie-desp__vias a,
+  .d2 .d2-pie-pron {
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
+.d2 .d2-pie-dir__inner,
+  .d2 .d2-pie-desp__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--d2-e5);
+  }
+/* Las tres columnas de la opcion 1 pasan a dos: a tres, "Energy Gap
+     Analysis" parte en tres lineas y la columna se hace mas alta que la
+     de la marca. */
+  .d2 .d2-pie-dir__nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+.d2 .d2-pie-dir__nav,
+  .d2 .d2-pie-desp__mapa .d2-pie-desp__base-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+/* Los legales se apilan y el separador vertical del login sobra: en
+     columna, una linea a la izquierda no separa nada, solo estorba. */
+  .d2 .d2-pie-dir__base-inner,
+  .d2 .d2-pie-desp__base .d2-pie-desp__base-inner,
+  .d2 .d2-pie-cierre__base {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--d2-e2);
+  }
+.d2 .d2-pie-dir__legales,
+  .d2 .d2-pie-desp__legales,
+  .d2 .d2-pie-cierre__legales {
+    gap: var(--d2-e3);
+  }
+.d2 .d2-pie-dir__login,
+  .d2 .d2-pie-desp__login,
+  .d2 .d2-pie-cierre__login {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+.d2 .d2-pie-dir, .d2 .d2-pie-desp, .d2 .d2-pie-cierre    { background: var(--comp-footer); }

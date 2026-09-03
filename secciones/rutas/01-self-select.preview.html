@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solution routes / Self-select</title>
+
+<!-- La biblioteca vive dos niveles por debajo de la raiz -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/d2.css">
+
+<!-- Solo el CSS de esta variante -->
+<link rel="stylesheet" href="01-self-select.css">
+
+<style>
+  /* La barra de la vista previa. No forma parte de la seccion. */
+  .vp-barra {
+    position: sticky; top: 0; z-index: 99;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 18px;
+    font: 600 12px/1.4 "Open Sans", system-ui, sans-serif;
+    color: #FFFFFF; background: #333333;
+  }
+  .vp-barra a { color: #B0E1B7; text-decoration: none; }
+  .vp-barra a:hover { text-decoration: underline; }
+  .vp-barra code {
+    padding: 2px 6px; font-size: 11px;
+    background: rgba(255,255,255,.14); border-radius: 3px;
+  }
+  .vp-sep { opacity: .45; }
+  /* Los tokens de composicion, para que la seccion no salga sin fondo */
+  .d2 {
+    --comp-blanco:#FFFFFF; --comp-gris:#F3F3F3; --comp-negro:#333333;
+    --comp-hero:#FFFFFF; --comp-logos:#FFFFFF; --comp-problema:#F3F3F3;
+    --comp-calc:#FFFFFF; --comp-rutas:#F3F3F3; --comp-prueba:#FFFFFF;
+    --comp-resenas:#F3F3F3; --comp-equipo:#FFFFFF; --comp-faq:#F3F3F3;
+    --comp-cta:#333333; --comp-footer:#333333;
+  }
+</style>
+</head>
+<body class="d2">
+
+<div class="vp-barra">
+  <a href="../indice.html">&larr; Library</a>
+  <span class="vp-sep">/</span>
+  <strong>Solution routes</strong>
+  <span class="vp-sep">/</span>
+  <span>Self-select</span>
+  <span class="vp-sep">|</span>
+  <code>.d2-rutas-sel</code>
+  <span class="vp-sep">|</span>
+  <a href="01-self-select.html">markup</a>
+  <a href="01-self-select.css">css</a>
+</div>
+
+<section class="d2-rutas-sel" id="solutions">
+      <div class="d2-rutas-sel__inner">
+
+        <div class="d2-rutas-sel__cabecera">
+          <p class="d2-rutas-sel__eyebrow">Solutions</p>
+          <h2 class="d2-rutas-sel__titulo">Every organization&rsquo;s situation is different.</h2>
+          <p class="d2-rutas-sel__lead">
+            The right path depends on what you already know, what your buildings need,
+            and how much support your team has in-house.
+          </p>
+        </div>
+
+        <!-- ul y no ol: las tres rutas no tienen un orden obligatorio. Se
+             puede entrar por cualquiera, y el marcado no debe afirmar lo
+             contrario. -->
+        <ul class="d2-rutas-sel__lista">
+
+          <li class="d2-rutas-sel__ruta">
+            <!-- El rotulo de situacion es el gancho de autoseleccion. NO es
+                 copy nuevo del cliente: reformula literalmente el eje que el
+                 propio lead enuncia ("what you already know"). Si Erick lo
+                 quiere textual del aprobado, se sustituye por el tag. -->
+            <p class="d2-rutas-sel__caso">If you don&rsquo;t know where the costs are</p>
+            <p class="d2-rutas-sel__tag">Investigate</p>
+            <h3 class="d2-rutas-sel__titulo-ruta">Energy Gap Analysis + Site Investigation</h3>
+            <p class="d2-rutas-sel__texto">
+              Start by finding out where the unnecessary energy costs are. EGA looks
+              across a portfolio. Site Investigation brings the same level of focus to
+              one building.
+            </p>
+            <a class="d2-rutas-sel__link" href="#">
+              See Investigate
+              <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+
+          <li class="d2-rutas-sel__ruta">
+            <p class="d2-rutas-sel__caso">If your buildings drift from their design</p>
+            <p class="d2-rutas-sel__tag">Optimize</p>
+            <h3 class="d2-rutas-sel__titulo-ruta">RCx / C-Op</h3>
+            <p class="d2-rutas-sel__texto">
+              Correct operational drift in schedules, setpoints, controls, and sequences
+              so buildings run closer to the way they were intended to.
+            </p>
+            <a class="d2-rutas-sel__link" href="#">
+              See Optimize
+              <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+
+          <li class="d2-rutas-sel__ruta">
+            <p class="d2-rutas-sel__caso">If your team needs ongoing support</p>
+            <p class="d2-rutas-sel__tag">Manage</p>
+            <h3 class="d2-rutas-sel__titulo-ruta">Energy Management + RUN</h3>
+            <p class="d2-rutas-sel__texto">
+              Keep performance visible over time through ongoing support, reporting, and
+              the utility data infrastructure to see what is changing.
+            </p>
+            <a class="d2-rutas-sel__link" href="#">
+              See Manage
+              <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+
+
+</body>
+</html>

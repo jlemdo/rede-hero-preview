@@ -1,0 +1,98 @@
+<!-- Reviews / Editorial
+     Clase raiz: .d2-res-ed
+     Extraido de home-d2.html. El CSS va en 02-editorial.css -->
+
+<section class="d2-res-ed" aria-labelledby="res-ed-titulo">
+      <div class="d2-res-ed__cabecera">
+        <p class="d2-res-ed__eyebrow">In their words</p>
+        <h2 class="d2-res-ed__titulo" id="res-ed-titulo">What the districts say.</h2>
+        <p class="d2-res-ed__sub">
+          Three public sector organizations on what changed after bringing Rede in.
+        </p>
+      </div>
+
+      <div class="d2-res-ed__inner" data-res-ed>
+
+        <div class="d2-res-ed__fila">
+          <!-- El numeral: decorativo, el contador de abajo ya lo dice -->
+          <span class="d2-res-ed__num" data-res-num aria-hidden="true">01</span>
+
+          <div class="d2-res-ed__cuerpo">
+            <!-- La region viva: se anuncia el cambio de cita sin saltar el
+                 foco a ningun sitio -->
+            <div role="status" aria-live="polite">
+              <blockquote class="d2-res-ed__cita" data-res-cita>
+                Before Northland started working with Rede, we had no energy management plan
+                at all. We recognized quickly that we can save money with an energy
+                management program.
+              </blockquote>
+
+              <div class="d2-res-ed__autor" data-res-autor>
+                <span class="d2-res-ed__marco">
+                  <img class="d2-res-ed__logo" data-res-logo
+                       src="assets/img/logos-clientes/northland.png"
+                       alt="" width="244" height="200" loading="lazy" decoding="async">
+                </span>
+                <span>
+                  <span class="d2-res-ed__nombre" data-res-nombre>Wayne Turpin</span>
+                  <span class="d2-res-ed__meta">
+                    <span data-res-cargo>Superintendent</span>
+                    <span class="d2-res-ed__barra" aria-hidden="true">/</span>
+                    <span class="d2-res-ed__org" data-res-org>Northland School Division</span>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d2-res-ed__mandos">
+          <div class="d2-res-ed__izq">
+            <div class="d2-res-ed__lineas" role="tablist" aria-label="Client reviews">
+              <button class="d2-res-ed__linea es-activa" type="button" role="tab"
+                      aria-selected="true" data-res-a="0" aria-label="Review 1 of 3"><span></span></button>
+              <button class="d2-res-ed__linea" type="button" role="tab"
+                      aria-selected="false" data-res-a="1" aria-label="Review 2 of 3"><span></span></button>
+              <button class="d2-res-ed__linea" type="button" role="tab"
+                      aria-selected="false" data-res-a="2" aria-label="Review 3 of 3"><span></span></button>
+            </div>
+            <span class="d2-res-ed__contador" data-res-contador aria-hidden="true">01 / 03</span>
+          </div>
+
+          <div class="d2-res-ed__flechas">
+            <button class="d2-res-ed__flecha" type="button" data-res-ir="-1" aria-label="Previous review">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="d2-res-ed__flecha" type="button" data-res-ir="1" aria-label="Next review">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.8"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Close options">
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Previous option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Three</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Editorial</small></button>
+    </div>
+
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>

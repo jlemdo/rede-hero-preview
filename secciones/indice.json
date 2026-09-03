@@ -1,0 +1,321 @@
+[
+  {
+    "slug": "hero",
+    "titulo": "Hero",
+    "variantes": [
+      {
+        "n": 1,
+        "nombre": "Original",
+        "clase": "d2-hero",
+        "archivo": "01-original",
+        "css_reglas": 50
+      },
+      {
+        "n": 2,
+        "nombre": "Smaller panel",
+        "clase": "d2-hero",
+        "archivo": "02-smaller-panel",
+        "css_reglas": 50
+      },
+      {
+        "n": 3,
+        "nombre": "Translucent",
+        "clase": "d2-hero",
+        "archivo": "03-translucent",
+        "css_reglas": 50
+      }
+    ],
+    "js": []
+  },
+  {
+    "slug": "logos",
+    "titulo": "Client logos",
+    "variantes": [
+      {
+        "n": 1,
+        "nombre": "Marquee",
+        "clase": "d2-logos",
+        "archivo": "01-marquee",
+        "css_reglas": 62
+      },
+      {
+        "n": 2,
+        "nombre": "Three blocks",
+        "clase": "d2-logos--dos",
+        "archivo": "02-three-blocks",
+        "css_reglas": 53
+      },
+      {
+        "n": 3,
+        "nombre": "Spotlight",
+        "clase": "d2-foco",
+        "archivo": "03-spotlight",
+        "css_reglas": 73
+      }
+    ],
+    "js": [
+      "js/d2-foco.js"
+    ]
+  },
+  {
+    "slug": "problema",
+    "titulo": "The problem",
+    "variantes": [
+      {
+        "n": 1,
+        "nombre": "Triptych",
+        "clase": "d2-prob-tri",
+        "archivo": "01-triptych",
+        "css_reglas": 29
+      },
+      {
+        "n": 2,
+        "nombre": "Readings",
+        "clase": "d2-prob-lec",
+        "archivo": "02-readings",
+        "css_reglas": 52
+      },
+      {
+        "n": 3,
+        "nombre": "Comparison",
+        "clase": "d2-prob-comp",
+        "archivo": "03-comparison",
+        "css_reglas": 58
+      },
+      {
+        "n": 4,
+        "nombre": "Map",
+        "clase": "d2-prob-mapa",
+        "archivo": "04-map",
+        "css_reglas": 128
+      }
+    ],
+    "js": [
+      "js/d2-mapa-cartera.js"
+    ]
+  },
+  {
+    "slug": "calc",
+    "titulo": "Calculator",
+    "variantes": [
+      {
+        "n": 1,
+        "nombre": "Panel",
+        "clase": "calc",
+        "archivo": "01-panel",
+        "css_reglas": 217
+      },
+      {
+        "n": 2,
+        "nombre": "Split",
+        "clase": "calc",
+        "archivo": "02-split",
+        "css_reglas": 217
+      },
+      {
+        "n": 3,
+        "nombre": "Steps",
+        "clase": "calc",
+        "archivo": "03-steps",
+        "css_reglas": 217
+      }
+    ],
+    "js": [
+      "js/main.js",
+      "js/d2-calc-vivo.js"
+    ]
+  },
+  {
+    "slug": "rutas",
+    "titulo": "Solution routes",
+    "variantes": [
+      {
+        "n": 1,
+        "nombre": "Self-select",
+        "clase": "d2-rutas-sel",
+        "archivo": "01-self-select",
+        "css_reglas": 55
+      },
+      {
+        "n": 2,
+        "nombre": "Ladder",
+        "clase": "d2-rutas-esc",
+        "archivo": "02-ladder",
+        "css_reglas": 62
+      },
+      {
+        "n": 3,
+        "nombre": "Comparison",
+        "clase": "d2-rutas-cmp",
+        "archivo": "03-comparison",
+        "css_reglas": 48
+      }
+    ],
+    "js": []
+  },
+  {
+    "slug": "prueba",
+    "titulo": "Proof",
+    "variantes": [
+      {
+        "n": 1,
+        "nombre": "Record",
+        "clase": "d2-prueba-reg",
+        "archivo": "01-record",
+        "css_reglas": 56
+      },
+      {
+        "n": 2,
+        "nombre": "Backed",
+        "clase": "d2-prueba-resp",
+        "archivo": "02-backed",
+        "css_reglas": 53
+      },
+      {
+        "n": 3,
+        "nombre": "Timeline",
+        "clase": "d2-prueba-rec",
+        "archivo": "03-timeline",
+        "css_reglas": 50
+      }
+    ],
+    "js": []
+  },
+  {
+    "slug": "resenas",
+    "titulo": "Reviews",
+    "variantes": [
+      {
+        "n": 1,
+        "nombre": "Three",
+        "clase": "d2-res-tres",
+        "archivo": "01-three",
+        "css_reglas": 44
+      },
+      {
+        "n": 2,
+        "nombre": "Editorial",
+        "clase": "d2-res-ed",
+        "archivo": "02-editorial",
+        "css_reglas": 99
+      }
+    ],
+    "js": [
+      "js/d2-resenas.js"
+    ]
+  },
+  {
+    "slug": "equipo",
+    "titulo": "Team",
+    "variantes": [
+      {
+        "n": 1,
+        "nombre": "Cards",
+        "clase": "d2-equipo-ficha",
+        "archivo": "01-cards",
+        "css_reglas": 43
+      },
+      {
+        "n": 2,
+        "nombre": "Dossier",
+        "clase": "d2-equipo-dosier",
+        "archivo": "02-dossier",
+        "css_reglas": 49
+      },
+      {
+        "n": 3,
+        "nombre": "Signature",
+        "clase": "d2-equipo-firma",
+        "archivo": "03-signature",
+        "css_reglas": 57
+      }
+    ],
+    "js": []
+  },
+  {
+    "slug": "faq",
+    "titulo": "Questions",
+    "variantes": [
+      {
+        "n": 1,
+        "nombre": "Open",
+        "clase": "d2-faq-abierto",
+        "archivo": "01-open",
+        "css_reglas": 27
+      },
+      {
+        "n": 2,
+        "nombre": "Accordion",
+        "clase": "d2-faq-acord",
+        "archivo": "02-accordion",
+        "css_reglas": 30
+      },
+      {
+        "n": 3,
+        "nombre": "By role",
+        "clase": "d2-faq-rol",
+        "archivo": "03-by-role",
+        "css_reglas": 24
+      }
+    ],
+    "js": [
+      "js/d2-faq.js"
+    ]
+  },
+  {
+    "slug": "cta",
+    "titulo": "Call to action",
+    "variantes": [
+      {
+        "n": 1,
+        "nombre": "Balanced",
+        "clase": "d2-cta-bal",
+        "archivo": "01-balanced",
+        "css_reglas": 53
+      },
+      {
+        "n": 2,
+        "nombre": "Continuity",
+        "clase": "d2-cta-con",
+        "archivo": "02-continuity",
+        "css_reglas": 54
+      },
+      {
+        "n": 3,
+        "nombre": "Two lanes",
+        "clase": "d2-cta-car",
+        "archivo": "03-two-lanes",
+        "css_reglas": 58
+      }
+    ],
+    "js": []
+  },
+  {
+    "slug": "footer",
+    "titulo": "Footer",
+    "variantes": [
+      {
+        "n": 1,
+        "nombre": "Directory",
+        "clase": "d2-pie-dir",
+        "archivo": "01-directory",
+        "css_reglas": 56
+      },
+      {
+        "n": 2,
+        "nombre": "Contact-first",
+        "clase": "d2-pie-desp",
+        "archivo": "02-contact-first",
+        "css_reglas": 58
+      },
+      {
+        "n": 3,
+        "nombre": "Closing",
+        "clase": "d2-pie-cierre",
+        "archivo": "03-closing",
+        "css_reglas": 56
+      }
+    ],
+    "js": []
+  }
+]

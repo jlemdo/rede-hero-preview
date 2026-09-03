@@ -1,0 +1,323 @@
+/* Client logos / Three blocks
+   Reglas cuyo selector menciona .d2-logos--dos, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   SECCION DE LOGOS — OPCION 2: TRES BLOQUES
+
+   Izquierda: el titular. Centro: la etiqueta y los logos. Derecha: la cifra.
+
+   La seccion es una franja delgada: los tres bloques van en una linea y a
+   la misma altura, asi que se lee de un vistazo de izquierda a derecha sin
+   tener que bajar. Es un dato de respaldo, no una seccion de contenido, y
+   ocupar alto la haria pesar mas de lo que aporta.
+
+   El centro es el unico que se mueve. Los logos estan todos ahi, quietos y
+   tenues, y se va encendiendo uno cada vez. Lo que señala al logo es el
+   contraste con los otros cinco apagados, no el desplazamiento: nada cambia
+   de sitio, asi que la franja nunca se reacomoda mientras se lee.
+   ========================================================================== */
+
+.d2-logos--dos {
+  /* Franja delgada: la mitad de aire que una seccion de contenido */
+  padding-block: clamp(26px, 3vw, 40px);
+  background: var(--d2-tinta);
+  border-block: 1px solid rgba(2, 51, 0, .07);
+  overflow: hidden;
+}
+
+/* El centro se lleva el ancho sobrante; los lados solo lo que su texto
+   necesita. Asi los logos aprovechan el hueco en vez de repartirse a
+   partes iguales con dos columnas de texto corto. */
+.d2-logos--dos__inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: clamp(24px, 3.4vw, 52px);
+  align-items: center;
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+/* --------------------------------------------------------------------------
+   Izquierda — el titular
+   -------------------------------------------------------------------------- */
+
+.d2-logos--dos__titular {
+  margin: 0;
+  font-size: clamp(1.125rem, 1rem + .5vw, 1.5rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+/* --------------------------------------------------------------------------
+   Centro — etiqueta y logos
+   -------------------------------------------------------------------------- */
+
+.d2-logos--dos__centro {
+  min-width: 0;   /* deja que la rejilla de logos se encoja de verdad */
+}
+
+.d2-logos--dos__etiqueta {
+  margin: 0 0 clamp(12px, 1.4vw, 18px);
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--c-texto-suave);
+}
+
+/* --------------------------------------------------------------------------
+   La marquesina
+
+   Se ven cinco a la vez y los demas van entrando por la derecha, sin fin.
+   Con cinco en el hueco cada logo es bastante mas grande que repartiendo
+   los siete, que era lo que los dejaba pequeños.
+
+   El ancho de cada uno sale del hueco disponible dividido entre cinco, asi
+   que se ven cinco tanto si la franja mide 900px como 1280.
+   -------------------------------------------------------------------------- */
+
+.d2-logos--dos__marquesina {
+  --visibles: 4;
+  --hueco: clamp(44px, 6.5vw, 96px);
+
+  /* El ancho de cada logo se calcula AQUI, sobre el contenedor visible.
+     Puesto sobre la imagen, el `100%` se medía contra la pista, que es
+     `max-content`: su ancho depende de las imagenes y el de las imagenes
+     dependia de ella. El navegador rompe el circulo usando el tamaño
+     natural del PNG y cada logo salia gigante.
+
+     `cqw` no vale aqui porque el contenedor tiene overflow y la pista se
+     sale de el; se usa una variable propia, que sí se hereda. */
+  --ancho-logo: calc((100% - var(--hueco) * (var(--visibles) - 1)) / var(--visibles));
+
+  /* Los logos conservan su proporcion, asi que los estrechos ocupan menos
+     que su parte y en el hueco caben mas de los previstos. El alto es lo
+     que de verdad regula cuanto ocupan: subiendolo, cada uno se ensancha
+     y entran los que se han pedido. */
+  --alto-logo: clamp(32px, 3.4vw, 44px);
+
+  position: relative;
+  overflow: hidden;
+
+  /* Los bordes se desvanecen: sin esto los logos aparecen y desaparecen de
+     golpe contra el borde y se ve el corte. */
+  mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+/* Sin will-change ni translateZ a proposito: forzaban a rasterizar la
+   pista como textura en GPU y, al pausarla en una posicion sub-pixel, se
+   dibujaba interpolada. Los logos salian borrosos al dejar el raton
+   encima. La animacion es una sola translacion y va fluida sin ellos. */
+.d2-logos--dos__pista {
+  display: flex;
+  align-items: center;
+  gap: var(--hueco);
+  animation: d2-marquesina 34s linear infinite;
+}
+
+/* El ancho se lo da el contenedor. Aqui solo se fija el alto, que es lo
+   que iguala logos con proporciones muy distintas. */
+/* El alto manda y el ancho lo pone la proporcion de cada PNG.
+
+   Antes se forzaba una caja fija con object-fit: contain, y el navegador
+   tenia que reducir cada logo un porcentaje distinto para encajarlo --
+   greater-victoria es de 693x200 y caia al 22%. Esa reduccion es la que
+   se veia blanda: no se degradaba con el tiempo, es que al pausar la
+   marquesina daba tiempo a mirarlo de cerca.
+
+   Dejandolos a su proporcion el navegador escala una sola vez, por el
+   alto, y no hay que rellenar ninguna caja. El max-width es el tope
+   para que un logo muy apaisado no se coma el sitio de los demas. */
+.d2-logos--dos__marquesina img {
+  flex: none;
+  width: auto;
+  max-width: calc(var(--ancho-logo) * 1.35);
+  height: var(--alto-logo);
+  object-fit: contain;
+  opacity: .55;
+  filter: grayscale(100%);
+  transition: opacity var(--d2-normal) ease, filter var(--d2-normal) ease;
+}
+
+/* Al parar el raton encima la marquesina se detiene y el logo toma color:
+   asi se puede leer cual es sin esperar a que vuelva a pasar. */
+.d2-logos--dos__marquesina:hover .d2-logos--dos__pista {
+  animation-play-state: paused;
+}
+
+.d2-logos--dos__marquesina img:hover {
+  opacity: 1;
+  filter: grayscale(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2-logos--dos__marquesina {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+.d2-logos--dos__pista {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+    animation: none;
+  }
+.d2-logos--dos__pista img[aria-hidden="true"] { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Derecha — la cifra
+   -------------------------------------------------------------------------- */
+
+.d2-logos--dos__der {
+  padding-left: clamp(20px, 2.6vw, 40px);
+  border-left: 1px solid rgba(2, 51, 0, .1);
+}
+
+.d2-logos--dos__cifra {
+  margin: 0;
+  font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1;
+  letter-spacing: -.03em;
+  color: var(--c-texto);
+}
+
+.d2-logos--dos__cifra-pie {
+  margin: 6px 0 0;
+  font-size: .9375rem;
+  font-weight: var(--fw-semibold, 600);
+  line-height: 1.25;
+  color: var(--c-texto);
+}
+
+.d2-logos--dos__cifra-nota {
+  margin: 2px 0 0;
+  font-size: .8125rem;
+  line-height: 1.3;
+  color: var(--c-texto-suave);
+}
+
+@media (max-width: 1100px) {
+.d2-logos--dos__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: clamp(18px, 2.4vw, 26px);
+  }
+.d2-logos--dos__izq { grid-column: 1 / -1; }
+.d2-logos--dos__titular { font-size: clamp(1.125rem, 1rem + .5vw, 1.375rem); }
+.d2-logos--dos__etiqueta { text-align: left; }
+.d2-logos--dos__marquesina { --hueco: clamp(56px, 8vw, 96px); }
+}
+
+@media (max-width: 699px) {
+.d2-logos--dos__inner { grid-template-columns: 1fr; }
+.d2-logos--dos__marquesina { --hueco: clamp(44px, 9vw, 96px); }
+/* En una sola columna el borde lateral no separa nada: pasa a ser una
+     linea horizontal entre los logos y la cifra. */
+  .d2-logos--dos__der {
+    padding-left: 0;
+    padding-top: clamp(16px, 2.4vw, 22px);
+    border-left: 0;
+    border-top: 1px solid rgba(2, 51, 0, .1);
+  }
+}
+
+/* ==========================================================================
+   LOS FONDOS DE SECCION
+
+   El selector cambia UNICAMENTE el color de fondo de las secciones
+   tintadas. Nada de lo que vive dentro --tarjetas, botones, graficos-- se
+   toca: cada pieza conserva el color que su propio diseño le dio.
+
+   Un intento anterior repintaba tambien el interior: 82 reglas que
+   acababan poniendo tarjetas blancas sobre fondo oscuro con el texto
+   ilegible, y recuadros donde no debia haberlos. El problema no era el
+   color elegido sino el alcance.
+
+   Solo hay dos excepciones, y ambas son necesarias:
+
+     1. El TEXTO SUELTO de la seccion --el que va directamente sobre el
+        fondo, sin tarjeta-- tiene que invertirse o desaparece.
+     2. Los LOGOS de cliente son marcas grises: sobre oscuro se pierden.
+
+   Todo lo que esta dentro de una tarjeta se queda como esta, porque la
+   tarjeta le da su propio fondo.
+   ========================================================================== */
+
+/* --- Las opciones claras: solo cambia el fondo, nada mas --- */
+
+/* (no hace falta regla: el token --d2-tinta que fija el JS ya lo hace) */
+
+/* --- La opcion oscura --- */
+
+/* El texto que va DIRECTAMENTE sobre el fondo de la seccion. El selector
+   `> *` limita el alcance a los hijos directos del contenedor: lo que este
+   dentro de una tarjeta no entra, que es justo lo que se quiere. */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco, .d2-prueba-resp,
+                                  .d2-cta-bal, .d2-cta-car, .d2-res-tres,
+                                  .d2-res-ed) {
+  color: #FFFFFF;
+}
+
+/* Titulares, entradillas y etiquetas sueltas. Se nombran los contenedores
+   de cabecera, no cada elemento, para no volver a la lista interminable. */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco, .d2-prueba-resp,
+                                  .d2-cta-bal, .d2-cta-car, .d2-res-tres,
+                                  .d2-res-ed) :is(h1, h2, h3, h4) {
+  color: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos__titulo,
+                                 .d2-logos--dos__etiqueta,
+                                 .d2-foco__etiqueta,
+                                 .d2-res-tres__eyebrow,
+                                 .d2-res-ed__eyebrow,
+                                 .d2-res-ed__sub,
+                                 .d2-res-ed__contador,
+                                 .d2-res-ed__meta,
+                                 .d2-cta-bal__parrafo,
+                                 .d2-cta-car__parrafo,
+                                 .d2-logos--dos__cifra-pie,
+                                 .d2-logos--dos__cifra-nota,
+                                 .d2-foco__cifra-pie,
+                                 .d2-foco__cifra-nota) {
+  color: #E8E8E8;
+}
+
+/* Las variables de texto, redefinidas DENTRO de cada seccion tintada.
+
+   Es la unica forma de que titulares y cifras se adapten sin nombrarlos
+   uno a uno: usan var(--c-texto) desde selectores mas especificos, y
+   competir con ellos exigiria una regla por clase.
+
+   Ojo: va en la SECCION, no en .d2. Puesto en .d2 afectaria al hero y al
+   resto de la pagina, que siguen sobre fondo claro. */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco,
+                                  .d2-prueba-resp, .d2-cta-bal,
+                                  .d2-cta-car, .d2-res-tres,
+                                  .d2-res-ed) {
+  --c-texto: #FFFFFF;
+  --c-texto-cuerpo: #E8E8E8;
+  --c-texto-suave: #BFBFBF;
+}
+
+/* Los logos de cliente: marcas grises que sobre oscuro desaparecen */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco) img {
+  filter: grayscale(100%) invert(1) brightness(1.7);
+}
+
+/* Los filetes separadores, que van en verde muy tenue */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco, .d2-prueba-resp,
+                                  .d2-cta-bal, .d2-cta-car, .d2-res-tres,
+                                  .d2-res-ed) {
+  border-color: rgba(255, 255, 255, .14);
+}
+
+.d2 .d2-logos, .d2 .d2-logos--dos, .d2 .d2-foco          { background: var(--comp-logos); }

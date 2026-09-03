@@ -1,0 +1,190 @@
+/* Questions / Open
+   Reglas cuyo selector menciona .d2-faq-abierto, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   SECCION 9 — PREGUNTAS
+
+   Tres variantes sobre el mismo contenido. Todas usan los tokens del
+   sistema, asi que siguen al selector de composicion como el resto.
+
+   Una decision comun a las tres: el indicador de abierto/cerrado NUNCA es
+   solo color. Es forma --un signo que rota de + a x-- porque WCAG 1.4.1 es
+   Nivel A y prohibe que el color sea la unica senal. Ademas de ser
+   requisito, aqui hay una razon concreta: el color no es fiable para todo
+   el mundo.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   OPCION 1 — ABIERTO EN ESCRITORIO, ACORDEON EN MOVIL
+
+   NN/g mide que en escritorio "es mas facil bajar por la pagina que decidir
+   en que titular pulsar", y que cada decision, por menor que sea, suma carga
+   cognitiva. Pero tambien documenta que en movil el acordeon si aporta,
+   porque el espacio manda.
+
+   Asi que esta variante hace las dos cosas con el mismo marcado: el boton
+   existe siempre --por si el JS lo necesita en movil-- pero en escritorio
+   los paneles estan abiertos y el boton no tiene nada que hacer.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-faq-abierto {
+  background: var(--comp-faq, #FFFFFF);
+  padding-block: clamp(64px, 7vw, 104px);
+}
+
+.d2 .d2-faq-abierto__inner {
+  max-width: var(--ancho-max, 1320px);
+  margin-inline: auto;
+  padding-inline: var(--pad-lateral, 28px);
+}
+
+.d2 .d2-faq-abierto__cabecera { max-width: 46ch; margin-bottom: clamp(36px, 4vw, 56px); }
+
+.d2 .d2-faq-abierto__eyebrow,
+.d2 .d2-faq-acord__eyebrow,
+.d2 .d2-faq-rol__eyebrow {
+  margin: 0 0 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--c-verde-hover, #026F00);
+}
+
+.d2 .d2-faq-abierto__titulo,
+.d2 .d2-faq-acord__titulo,
+.d2 .d2-faq-rol__titulo {
+  margin: 0 0 14px;
+  font-size: clamp(30px, 3.1vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--c-texto, #333333);
+}
+
+.d2 .d2-faq-abierto__lead,
+.d2 .d2-faq-rol__lead {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+/* Dos columnas en escritorio. column-count reparte solo, sin tener que
+   decidir a mano donde parte la lista. */
+.d2 .d2-faq-abierto__lista {
+  column-count: 2;
+  column-gap: clamp(36px, 4vw, 68px);
+}
+
+.d2 .d2-faq-abierto__item {
+  /* Sin esto una pregunta se parte entre columnas y queda ilegible */
+  break-inside: avoid;
+  margin-bottom: 30px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--c-borde, #E4E4E4);
+}
+
+.d2 .d2-faq-abierto__preg { margin: 0 0 10px; }
+
+.d2 .d2-faq-abierto__preg button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: left;
+  color: var(--c-texto, #333333);
+  background: none;
+  border: 0;
+  /* En escritorio no hay nada que pulsar: el panel ya esta abierto */
+  cursor: default;
+}
+
+/* El signo solo aparece cuando el acordeon esta activo (movil) */
+.d2 .d2-faq-abierto__signo { display: none; }
+
+.d2 .d2-faq-abierto__resp p {
+  margin: 0 0 9px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+.d2 .d2-faq-abierto__resp p:last-child { margin-bottom: 0; }
+
+.d2 .d2-faq-abierto__pie,
+.d2 .d2-faq-acord__pie,
+.d2 .d2-faq-rol__pie {
+  margin: clamp(32px, 4vw, 52px) 0 0;
+  font-size: 15px;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 :is(.d2-faq-abierto__pie, .d2-faq-acord__pie, .d2-faq-rol__pie) a {
+  font-weight: 700;
+  color: var(--c-verde-hover, #026F00);
+}
+
+@media (max-width: 900px) {
+.d2 .d2-faq-abierto__lista { column-count: 1; }
+.d2 .d2-faq-abierto__preg button {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    cursor: pointer;
+    /* 44px de alto minimo: WCAG 2.5.8 pide 24x24 como minimo AA, pero la
+       recomendacion practica para dedos es 44 */
+    min-height: 44px;
+    padding-block: 4px;
+  }
+/* El signo: + cerrado, x abierto. Es FORMA, no color. */
+  .d2 .d2-faq-abierto__signo {
+    display: block;
+    position: relative;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+    transition: transform .22s cubic-bezier(.4, 0, .2, 1);
+  }
+.d2 .d2-faq-abierto__signo::before,
+  .d2 .d2-faq-abierto__signo::after {
+    content: "";
+    position: absolute;
+    inset: 50% 0 auto;
+    height: 2px;
+    background: currentColor;
+    transform: translateY(-50%);
+  }
+.d2 .d2-faq-abierto__signo::after { transform: translateY(-50%) rotate(90deg); }
+.d2 [aria-expanded="true"] .d2-faq-abierto__signo { transform: rotate(45deg); }
+.d2 .d2-faq-abierto__resp[hidden] { display: none; }
+/* Que la pregunta pulsada no se vaya del viewport al abrirse: NN/g
+     documenta que ese salto hace creer que se ha cambiado de pagina, y la
+     gente pulsa Atras. */
+  .d2 .d2-faq-abierto__item { scroll-margin-top: 96px; }
+}
+
+/* --------------------------------------------------------------------------
+   EL FOCO, EN LAS TRES
+
+   Visible sobre cualquier fondo de la composicion. WCAG 2.4.11 pide ademas
+   que el elemento enfocado no quede tapado: aqui no hay nada superpuesto,
+   asi que se cumple sin trabajo extra.
+   -------------------------------------------------------------------------- */
+
+.d2 :is(.d2-faq-abierto, .d2-faq-acord, .d2-faq-rol) :is(button, a):focus-visible {
+  outline: 3px solid var(--c-verde-marca, #39B54A);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2 :is(.d2-faq-abierto__signo, .d2-faq-acord__mas) { transition: none; }
+}

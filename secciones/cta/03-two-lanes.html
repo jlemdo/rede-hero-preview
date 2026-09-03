@@ -1,0 +1,70 @@
+<!-- Call to action / Two lanes
+     Clase raiz: .d2-cta-car
+     Extraido de home-d2.html. El CSS va en 03-two-lanes.css -->
+
+<section class="d2-cta-car d2-entra">
+      <div class="d2-cta-car__inner">
+
+        <div class="d2-cta-car__cabecera">
+          <h2 class="d2-cta-car__titulo">
+            Find out what your buildings are actually costing you.
+          </h2>
+          <p class="d2-cta-car__parrafo">
+            Start with a clear, specific picture of the unnecessary energy costs in your
+            building or portfolio. One set of inputs. A practical recommendation. No lock-in.
+          </p>
+        </div>
+
+        <!-- Cada carril es un <li> con su propio marco. Region comun
+             (Palmer 1992, via NN/g): el contorno agrupa mas fuerte que la
+             cercania, y aqui el objetivo es justamente atar cada accion a
+             su lector. -->
+        <ul class="d2-cta-car__lista">
+
+          <li class="d2-cta-car__carril">
+            <p class="d2-cta-car__quien">If you can act on this now</p>
+            <a href="#calculator" class="d2-btn d2-btn--solido d2-cta-car__btn">
+              Check your opportunity
+              <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+
+          <li class="d2-cta-car__carril">
+            <p class="d2-cta-car__quien">If someone else has to sign off</p>
+            <a href="contact.html" class="d2-btn d2-btn--linea d2-cta-car__btn">
+              Book a call
+              <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+    </section>
+
+  </div>
+
+
+  <!-- Los mandos del carrusel: identicos a los de las otras secciones -->
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Close options">
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Previous option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Balanced</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Continuity</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Two lanes</small></button>
+    </div>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>

@@ -1,0 +1,371 @@
+/* The problem / Comparison
+   Reglas cuyo selector menciona .d2-prob-comp, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   SECCION "THE PROBLEM" — TRES VARIANTES
+
+   La version anterior --filas alternas con foto-- medía 2470px: casi tres
+   pantallas para tres ideas. Y tenia un defecto de fondo: los tres puntos
+   son PARALELOS, tres sintomas del mismo problema, pero el zigzag los
+   presenta uno detras de otro, como pasos de un proceso.
+
+   NN/g midio ese layout con eyetracking (2017): los usuarios tropiezan al
+   escanearlo, con fijaciones accidentales y redirecciones. El matiz que
+   importa es que el perjuicio aparece SOLO con imagenes decorativas -- las
+   informativas rinden igual en cualquier layout.
+
+   De ahi las tres variantes: la 1 quita la imagen, la 2 la convierte en
+   informativa, y la 3 cambia el eje de lectura.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Piezas comunes a las tres
+   -------------------------------------------------------------------------- */
+
+.d2-prob-tri,
+.d2-prob-lec,
+.d2-prob-comp {
+  padding-block: clamp(48px, 5.4vw, 76px);
+  background: var(--c-blanco, #fff);
+}
+
+/* La comparativa lleva una fila mas que las otras dos --los encabezados de
+   columna-- asi que se le recorta el aire exterior para que las tres
+   quepan en una pantalla. */
+.d2-prob-comp { padding-block: clamp(40px, 4.4vw, 58px); }
+
+.d2-prob-tri__inner,
+.d2-prob-lec__inner,
+.d2-prob-comp__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+.d2-prob-tri__titulo,
+.d2-prob-lec__titulo,
+.d2-prob-comp__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2-prob-tri__lead,
+.d2-prob-lec__lead,
+.d2-prob-comp__lead {
+  margin: var(--d2-e3) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* ==========================================================================
+   OPCION 3 — HOY / CON REDE
+
+   Eje de lectura distinto: se comparan dos columnas de lado a lado en vez
+   de recorrer tres puntos hacia abajo.
+
+   La columna derecha describe, no amenaza. El encuadre de perdida no aporta
+   --219 estudios, r = .01-- y con quien gasta un presupuesto ajeno es aun
+   mas debil, asi que no hay nada que ganar dramatizando el coste.
+   ========================================================================== */
+
+.d2-prob-comp__cabecera {
+  max-width: 62ch;
+}
+
+.d2-prob-comp__tabla {
+  margin-top: clamp(24px, 2.8vw, 34px);
+}
+
+.d2-prob-comp__encabezados {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .9fr);
+  gap: clamp(20px, 2.6vw, 40px);
+  padding-bottom: var(--d2-e2);
+  border-bottom: 1px solid rgba(2, 51, 0, .12);
+}
+
+.d2-prob-comp__eti {
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+.d2-prob-comp__eti--rede { color: var(--c-verde-hover); }
+
+.d2-prob-comp__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2-prob-comp__lista li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .9fr);
+  gap: clamp(20px, 2.6vw, 40px);
+  align-items: start;
+  padding-block: clamp(14px, 1.7vw, 20px);
+  border-bottom: 1px solid rgba(2, 51, 0, .08);
+}
+
+.d2-prob-comp__hoy h3 {
+  margin: 0 0 6px;
+  font-size: 1.0625rem;
+  font-weight: var(--fw-extrabold);
+  line-height: 1.26;
+  color: var(--c-texto);
+}
+
+.d2-prob-comp__hoy p {
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.56;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* La columna de Rede va sobre tinta: la separa sin necesidad de una linea
+   vertical, que en una tabla de tres filas se lee como reja. */
+.d2-prob-comp__rede {
+  align-self: stretch;
+  padding: var(--d2-e2) var(--d2-e3);
+  background: var(--d2-superficie-suave);
+  border-radius: var(--d2-radio-md);
+}
+
+.d2-prob-comp__rede p {
+  display: flex;
+  gap: var(--d2-e2);
+  margin: 0;
+  font-size: .875rem;
+  line-height: 1.5;
+  color: var(--c-texto);
+}
+
+/* La marca de verificacion se dibuja con dos bordes girados: no hace falta
+   un SVG por fila para un gesto de 10px. */
+.d2-prob-comp__marca {
+  flex: none;
+  width: 11px;
+  height: 6px;
+  margin-top: 5px;
+  border-left: 2px solid var(--c-verde);
+  border-bottom: 2px solid var(--c-verde);
+  transform: rotate(-45deg);
+}
+
+.d2-prob-comp__cierre {
+  margin-top: clamp(20px, 2.4vw, 28px);
+}
+
+.d2-prob-tri__cabecera,
+.d2-prob-tri__lista li,
+.d2-prob-tri__cierre,
+.d2-prob-lec__cabecera,
+.d2-prob-lec__lista li,
+.d2-prob-comp__cabecera,
+.d2-prob-comp__tabla,
+.d2-prob-comp__cierre {
+  animation: d2-prob-entra .55s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2-prob-comp__tabla { animation-delay: .08s; }
+
+.d2-prob-comp__cierre { animation-delay: .16s; }
+
+@media (prefers-reduced-motion: reduce) {
+.d2-prob-tri__cabecera,
+  .d2-prob-tri__lista li,
+  .d2-prob-tri__cierre,
+  .d2-prob-lec__cabecera,
+  .d2-prob-lec__lista li,
+  .d2-prob-comp__cabecera,
+  .d2-prob-comp__tabla,
+  .d2-prob-comp__cierre {
+    animation: none;
+  }
+}
+
+@media (max-width: 860px) {
+/* Los encabezados de columna dejan de tener sentido cuando las dos
+     columnas se apilan. */
+  .d2-prob-comp__encabezados { display: none; }
+.d2-prob-comp__lista li {
+    grid-template-columns: 1fr;
+    gap: var(--d2-e3);
+  }
+}
+
+.d2 .d2-prob-tri, .d2 .d2-prob-lec, .d2 .d2-prob-comp    { background: var(--comp-problema); }
+
+/* ==========================================================================
+   CONTRASTE: LAS NUEVE CAUSAS
+
+   Auditadas 2165 combinaciones --30 variantes x 4 composiciones-- midiendo
+   cada texto contra el fondo que de verdad tiene detras, subiendo por los
+   ancestros hasta encontrar quien pinta.
+
+   Salieron 210 fallos, pero son NUEVE defectos repetidos. Se arreglan por
+   la causa, no uno a uno: asi no vuelven a aparecer en la siguiente
+   variante que se escriba.
+
+   Todos los valores medidos, no estimados.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. EL VERDE OSCURO SOBRE FONDO CLARO — 107 fallos, el mas extendido
+
+   #2A8438 daba 4.40:1 sobre el tinte y 4.25:1 sobre el gris. El minimo son
+   4.5 y estos textos miden 11-15px, muy por debajo del umbral de 18.66px
+   que permitiria 3:1.
+
+   Se sustituye por #026F00, que ya existe en el sistema como
+   --c-verde-hover y da 6.41:1 sobre blanco y 5.78:1 sobre gris. Es el
+   mismo verde que ya usan los enlaces del cuerpo.
+   -------------------------------------------------------------------------- */
+
+.d2 :is(.d2-rutas-sel__eyebrow, .d2-rutas-esc__eyebrow, .d2-rutas-cmp__eyebrow,
+        .d2-rutas-sel__tag, .d2-rutas-esc__tag, .d2-rutas-cmp__tag,
+        .d2-rutas-sel__link, .d2-rutas-esc__link, .d2-rutas-cmp__link,
+        .d2-prob-comp__eti--rede, .d2-prueba-reg__fuente,
+        .d2-cta-con__etiqueta, .d2-cta-con__enlace,
+        .d2-equipo-firma__credenciales li, .d2-equipo-dosier__cred) {
+  color: #026F00;
+}
+
+/* --------------------------------------------------------------------------
+   5. LAS ETIQUETAS DE LA TABLA COMPARATIVA — 1.84:1
+
+   #BFBFBF sobre blanco. Era el gris de "estado apagado" para la columna
+   "como funciona ahora", pensado sobre fondo oscuro.
+
+   Aqui hay una decision de fondo: el gris apagado transmitia que esa
+   columna es la mala. Se conserva la intencion pero con un valor legible
+   --#707070, 4.95:1-- y la jerarquia se marca con el peso, no solo con el
+   color (WCAG 1.4.1: el color no puede ser la unica senal).
+   -------------------------------------------------------------------------- */
+
+.d2 :is(.d2-lec__leyenda, .d2-prob-comp__eti) {
+  color: #707070;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   8. LA ETIQUETA "WITH REDE" SOBRE NEGRO — 2.68:1
+
+   El verde oscuro #026F00 funciona sobre claro pero se hunde sobre negro.
+   Dentro de una seccion oscura hay que invertirlo al verde claro, que sobre
+   #333333 da 7.20:1.
+   -------------------------------------------------------------------------- */
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-rutas-sel__eyebrow, .d2-rutas-esc__eyebrow,
+                                  .d2-rutas-cmp__eyebrow, .d2-rutas-sel__tag,
+                                  .d2-rutas-esc__tag, .d2-rutas-cmp__tag,
+                                  .d2-rutas-sel__link, .d2-rutas-esc__link,
+                                  .d2-rutas-cmp__link, .d2-prob-comp__eti--rede,
+                                  .d2-prueba-reg__fuente, .d2-hero__eyebrow,
+                                  .d2-eyebrow, .eyebrow, .acento,
+                                  .d2-equipo-firma__credenciales li,
+                                  .d2-equipo-dosier__cred) {
+  color: #B0E1B7;
+}
+
+/* ==========================================================================
+   LAS ISLAS CLARAS DENTRO DE UNA SECCION OSCURA
+
+   El fallo que esto corrige: cuando una seccion pasa a negro, su texto se
+   invierte a blanco. Pero muchas secciones contienen TARJETAS con fondo
+   claro propio --items de lista, marcos de foto, paneles-- y ahi el texto
+   blanco quedaba sobre fondo casi blanco: 1.07:1, invisible.
+
+   Ya paso una vez y lo resolvi nombrando las cinco tarjetas que conocia.
+   Volvio a pasar en cuanto aparecieron variantes nuevas, porque la lista
+   hay que mantenerla a mano y nadie se acuerda.
+
+   Aqui se invierte el enfoque: en lugar de enumerar que tarjetas hay, se
+   declara que CUALQUIER superficie clara restaura los valores oscuros. Se
+   listan por su clase --no hay selector CSS para "elemento con fondo
+   claro"-- pero el criterio salio de barrer el DOM y preguntar por el color
+   real de cada elemento, no de la memoria.
+
+   Las 51 superficies claras detectadas, menos las que son la propia
+   seccion.
+   ========================================================================== */
+
+.d2 [data-comp-tono="oscuro"] :is(
+  /* Tarjetas e items de lista */
+  .d2-prob-lec__lista > li,
+  .d2-prob-comp__rede,
+  .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item,
+  .d2-prueba-resp__par,
+  .d2-prueba-rec__marca,
+  .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo,
+  .d2-equipo-firma__credenciales > li,
+  .d2-foco__prueba,
+  .d2-cta-bal__accion,
+  .d2-cta-car__carril,
+  .d2-cta-con__inner,
+  .d2-prob-mapa__ficha,
+  /* Marcos de imagen */
+  .d2-equipo-ficha__marco,
+  .d2-equipo-dosier__retrato,
+  .d2-equipo-firma__foto-grande,
+  .d2-equipo-firma__foto-mini,
+  .d2-res-ed__marco,
+  .d2-lec__grafico,
+  /* Paneles y piezas de la calculadora */
+  .d2-panel,
+  .d2-panel__filtro,
+  .calc,
+  .campo__wrap,
+  .resultado,
+  .adelanto,
+  .recomienda,
+  .prueba,
+  .perfil__punto,
+  .pastilla,
+  .contacto,
+  .contacto__icono
+) {
+  --c-texto:        #333333;
+  --c-texto-cuerpo: #333333;
+  --c-texto-suave:  #6B6B6B;
+  --c-linea:        rgba(0, 0, 0, .12);
+  color: var(--c-texto);
+}
+
+/* Los titulares y parrafos dentro de esas islas. Van nombrados porque
+   muchos traen color propio de su regla original, que gana a la herencia. */
+.d2 [data-comp-tono="oscuro"] :is(
+  .d2-prob-lec__lista > li, .d2-prob-comp__rede, .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item, .d2-prueba-resp__par, .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo, .d2-foco__prueba, .d2-cta-bal__accion,
+  .d2-cta-car__carril, .d2-cta-con__inner, .calc, .d2-panel
+) :is(h1, h2, h3, h4, h5, p, span, li, td, th, strong, b, small, dt, dd) {
+  color: var(--c-texto);
+}
+
+/* 2. LA ETIQUETA "HOW IT WORKS NOW" — 4.46:1, falla por 0.04
+
+   El gris #707070 que puse antes se queda a cuatro centesimas sobre el gris
+   tenue del fondo. A 11px no hay margen: baja a #5C5C5C, que da 6.09:1
+   sobre el gris y 6.69:1 sobre blanco. */
+.d2 .d2-prob-comp__eti {
+  color: #5C5C5C;
+}
+
+/* Y sobre seccion oscura se invierte: el gris medio se hunde contra el
+   negro (2.55:1). */
+.d2 [data-comp-tono="oscuro"] .d2-prob-comp__eti {
+  color: #BFBFBF;              /* 7.06:1 sobre #333333 */
+}

@@ -1,0 +1,1324 @@
+/* Calculator / Panel
+   Reglas cuyo selector menciona .calc, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/style.css --- */
+
+/* ==========================================================================
+   SECCION 4 — SAVINGS CALCULATOR
+   Fuente: Wireframe 2 "calc-section"
+
+   SOLO VISUAL. No calcula (D-02). La logica ira en un plugin de WordPress.
+
+   Decision de diseno: el wireframe pone la calculadora sobre fondo plano, con
+   los campos arriba y el resultado debajo. Aqui van lado a lado sobre fondo
+   oscuro: es la unica pieza interactiva del Home y merece destacarse. El panel
+   de resultado reutiliza el lenguaje de la tarjeta del hero, para que se lea
+   como la misma familia de producto.
+   ========================================================================== */
+
+.calc {
+  --padding-top: var(--section-y);
+  --padding-bottom: var(--section-y);
+
+  padding-block: var(--padding-top) var(--padding-bottom);
+  background: var(--c-fondo-alt);
+}
+
+.calc__inner {
+  --padding-x: clamp(1.25rem, 0.5rem + 3vw, 4rem);
+
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-inline: var(--padding-x);
+}
+
+.calc__intro {
+  max-width: 720px;
+  margin-bottom: clamp(var(--sp-6), 3vw, var(--sp-7));
+}
+
+.calc__titulo {
+  margin-block: var(--sp-4) var(--sp-4);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  text-wrap: balance;
+}
+
+.calc__lead {
+  font-size: var(--fs-body-lg);
+  color: var(--c-texto-cuerpo);
+}
+
+/* --- El panel: formulario + resultado --- */
+
+.calc__panel {
+  --gap: clamp(var(--sp-6), 3vw, var(--sp-8));
+  --padding: clamp(var(--sp-6), 3vw, var(--sp-8));
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;   /* la tarjeta llena su columna: el eje de giro queda centrado */
+  gap: var(--gap);
+  padding: var(--padding);
+  background: var(--c-superficie-oscura);
+  border-radius: var(--radio-lg);
+}
+
+/* --- Formulario --- */
+
+.calc__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  height: 100%;
+}
+
+/* Alineacion en el eje Y (peticion de Erick).
+   Ambas columnas terminan en boton + nota. Las notas tienen distinto alto
+   (una linea frente a dos), asi que se les fija el mismo minimo para que los
+   botones caigan exactamente a la misma altura. */
+.calc__btn { margin-top: auto; }
+
+.calc__nota,
+.resultado__legal {
+  min-height: calc(var(--fs-xs) * 1.55 * 3);
+  margin-top: var(--sp-4);
+}
+
+/* Alineacion determinista en el eje Y.
+   Ambas columnas miden lo mismo, asi que se ancla cada bloque final a la
+   misma distancia del fondo. Asi los botones caen siempre a la misma altura,
+   sin depender del alto del contenido que llevan encima. */
+.calc__btn,
+.resultado__cta {
+  --btn-py: var(--sp-4);
+  min-height: 64px;
+}
+
+.calc__nota,
+.resultado__legal {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  margin-top: 0;
+}
+
+.calc__nota, .resultado__legal { min-height: 0; }
+
+@media (max-width: 900px) {
+.calc__panel {
+    --padding: clamp(var(--sp-4), 4vw, var(--sp-6));
+    grid-template-columns: minmax(0, 1fr);
+  }
+/* El legal recupera su alto natural: ya no hay nada con que alinear */
+  .calc__nota,
+  .resultado__legal { min-height: 0; }
+/* Los bloques anclados al fondo vuelven al flujo normal */
+  .pasos__nav,
+  .salida .resultado__cta,
+  .calc__nota,
+  .resultado__legal {
+    position: static;
+    left: auto; right: auto; bottom: auto;
+  }
+.calc__nota { margin-top: var(--sp-4); }
+}
+
+@media (max-width: 640px) {
+/* En movil el panel se pega a los bordes del contenedor: cada pixel de
+     padding se lo quita al contenido, que es lo que importa. */
+  .calc__panel {
+    --padding: var(--sp-3);
+    --gap: var(--sp-4);
+  }
+.calc__inner { --padding-x: var(--sp-4); }
+}
+
+/* Nota bajo el boton del formulario. Refleja la nota legal de la tarjeta,
+   para que ambas columnas tengan la misma estructura y los botones alineen. */
+.calc__nota {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-xs);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, .5);
+}
+
+.pasos__nav .calc__btn { flex: 1; margin-top: 0; }
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   LA CALCULADORA — TRES VARIANTES
+
+   La logica no cambia en ninguna: los trece benchmarks de BC Hydro, la
+   formula y los campos son los mismos. Lo que cambia es CUANDO Y DONDE
+   aparece el numero, que es lo unico que de verdad distingue una forma de
+   otra en una herramienta como esta.
+
+     1  Panel unico      todos los campos a la vista, resultado al lado
+     2  Pantalla partida campos a la izquierda, resultado fijo a la derecha
+     3  Asistente        la actual, una pregunta por pantalla
+
+   El copy es el aprobado, literal, en las tres.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Comun a las tres
+   -------------------------------------------------------------------------- */
+
+.d2 .calc {
+  padding-block: clamp(38px, 4.2vw, 56px);
+  background: var(--d2-tinta);
+  border-block: 1px solid rgba(2, 51, 0, .07);
+}
+
+.d2 .calc__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+.d2 .calc__intro { max-width: 62ch; }
+
+.d2 .calc__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2 .calc__lead {
+  margin: var(--d2-e3) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* El panel de campos y el de resultado, con el tratamiento del diseño 2:
+   superficie blanca sobre la tinta, esquinas del sistema. */
+.d2 .calc__panel {
+  display: grid;
+  gap: clamp(16px, 2vw, 28px);
+  margin-top: clamp(26px, 3vw, 38px);
+}
+
+/* El panel interior se queda OSCURO, como en el diseño 1.
+
+   No es una eleccion estetica: todo el texto de dentro --titulos de paso,
+   etiquetas, campos, bordes-- esta declarado en blanco porque asume ese
+   fondo. Poner una superficie clara aqui dejaba texto blanco sobre blanco
+   y la calculadora se veia vacia.
+
+   Repintar las treinta reglas de texto seria reescribir el componente. Se
+   conserva su fondo, que ademas es su identidad: el panel oscuro sobre la
+   seccion clara es lo que lo separa del resto de la pagina. */
+.d2 .calc__panel {
+  padding: clamp(18px, 2.4vw, 30px);
+  background: var(--c-superficie-oscura);
+  border-radius: var(--d2-radio-lg);
+}
+
+/* --------------------------------------------------------------------------
+   Los campos abiertos (variantes 1 y 2)
+
+   style.css oculta los pasos inactivos con display:none, que es correcto
+   para el asistente. Aqui se muestran los cuatro, asi que se revierte solo
+   dentro de las variantes que lo piden.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc--unico .paso-calc,
+.d2 .calc--partido .paso-calc {
+  display: block;
+}
+
+.d2 .calc__campos {
+  display: grid;
+  gap: clamp(16px, 2vw, 24px);
+}
+
+@media (min-width: 901px) {
+.d2 .calc--unico .calc__campos,
+  .d2 .calc--partido .calc__campos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(18px, 2.2vw, 28px);
+  }
+/* El filo separador vuelve a ser horizontal solo entre filas: con dos
+     columnas, un borde superior en cada campo dibujaba una reja. */
+  .d2 .calc--unico .calc__campos > .paso-calc + .paso-calc,
+  .d2 .calc--partido .calc__campos > .paso-calc + .paso-calc {
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+
+/* Cada pregunta se separa de la siguiente con un filo, no con una caja:
+   son partes de un mismo formulario, no cuatro bloques sueltos. */
+.d2 .calc__campos > .paso-calc + .paso-calc {
+  padding-top: clamp(16px, 2vw, 24px);
+  border-top: 1px solid rgba(2, 51, 0, .08);
+}
+
+/* Con los cuatro a la vista, el titulo de cada pregunta baja de rango: ya
+   no encabeza una pantalla, encabeza un campo. */
+.d2 .calc--unico .paso-calc__titulo,
+.d2 .calc--partido .paso-calc__titulo {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.d2 .calc--unico .paso-calc__ayuda,
+.d2 .calc--partido .paso-calc__ayuda {
+  font-size: .8125rem;
+  line-height: 1.5;
+}
+
+/* El boton Atras no tiene sentido sin pasos; el de avanzar se queda porque
+   es el que dispara el calculo. */
+.d2 .calc--unico #btn-atras,
+.d2 .calc--partido #btn-atras {
+  display: none;
+}
+
+@media (min-width: 901px) {
+.d2 .calc--unico .calc__panel {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+    align-items: start;
+  }
+}
+
+/* ==========================================================================
+   OPCION 2 — PANTALLA PARTIDA
+
+   Igual reparto, pero el resultado queda fijo mientras se rellena: acompaña
+   en vez de esperar al final.
+
+   Es la unica de las tres donde el numero se ve cambiar, y por eso es la que
+   lleva animacion.
+   ========================================================================== */
+
+/* (el reparto de columnas de la V2 se sustituyo por el tablero: ver el
+   bloque VARIANTE 2 — EL TABLERO mas abajo) */
+
+/* La cifra cambia con una transicion cruzada, no con un contador
+   ascendente: un contador teatraliza un numero que se esta presentando
+   como benchmark y no como garantia. */
+.d2 .calc--partido #cifra {
+  transition: opacity .3s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .calc--partido #cifra.es-incompleto {
+  opacity: .55;
+}
+
+/* --------------------------------------------------------------------------
+   El resplandor del resultado
+
+   Mismo recurso que los graficos de la seccion del problema, tomado del
+   mapa del diseño 3: el dato se lee como algo encendido y no como texto
+   impreso. Solo en esta variante, que es donde el numero es el centro de
+   atencion mientras se rellena.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc--partido .resultado__cifra {
+  text-shadow: 0 0 18px rgba(46, 144, 43, .18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .calc--partido #cifra { transition: none; }
+}
+
+@media (min-width: 901px) {
+.d2 .calc--pasos .calc__panel {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+    align-items: start;
+  }
+}
+
+/* La barra de progreso no se anima en bucle: una barra en movimiento
+   continuo es una exposicion de nivel A bajo WCAG 2.2.2. Aqui solo cambia
+   de ancho cuando cambia el paso. */
+.d2 .calc--pasos .barra__fill {
+  transition: width .4s cubic-bezier(.32, .72, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .calc--pasos .barra__fill { transition: none; }
+}
+
+.d2 .calc__intro,
+.d2 .calc .pasos,
+.d2 .calc .flip {
+  animation: d2-calc-entra .55s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .calc .pasos { animation-delay: .08s; }
+
+.d2 .calc .flip  { animation-delay: .16s; }
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .calc__intro,
+  .d2 .calc .pasos,
+  .d2 .calc .flip {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+/* En una columna el resultado va debajo, que es el orden de lectura
+     natural: primero se rellena, luego se mira. */
+  .d2 .calc__panel { grid-template-columns: 1fr; }
+/* El sticky no aporta nada cuando el carril ocupa todo el ancho */
+  .d2 .calc--partido .flip { position: static; }
+}
+
+/* --------------------------------------------------------------------------
+   RITMO: TAMAÑOS COHERENTES Y AIRE
+
+   Tres cosas medidas que habia que arreglar:
+
+     1. Siete anchos distintos de campo (229 a 366px) en la misma columna.
+        La causa: los campos viven en contenedores flex y se encogian a su
+        contenido, asi que el sufijo "sq ft" o el prefijo "$" les robaban
+        ancho. Ahora todos ocupan su columna entera.
+
+     2. Seis alturas distintas (51 a 89px), por la misma razon: el relleno
+        variaba segun el campo. Se unifica con una altura minima comun.
+
+     3. El boton pegado al ultimo campo, sin separacion (0px medidos). En el
+        asistente se nota menos porque hay un hueco grande, pero en las
+        variantes abiertas quedaba encima.
+   -------------------------------------------------------------------------- */
+
+/* Los campos llenan su columna. `min-width: 0` es lo que permite que un
+   elemento flex se encoja por debajo de su contenido; sin el, un desplegable
+   con una opcion larga empuja y desborda. */
+.d2 .calc .campo__wrap {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.d2 .calc .campo__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+}
+
+/* Altura comun para todos: campos, desplegables y el selector de region.
+   48px cumple ademas el tamaño minimo de objetivo tactil (WCAG 2.5.8, que
+   pide 24x24 como minimo absoluto y recomienda mas). */
+.d2 .calc .campo__input,
+.d2 .calc select.campo__input,
+.d2 .calc .duo__btn {
+  min-height: 52px;
+  padding-block: 0;
+}
+
+/* El desplegable necesita sitio para su flecha; sin este relleno el texto
+   quedaba debajo de ella. */
+.d2 .calc select.campo__input {
+  padding-right: 44px;
+}
+
+/* Prefijo y sufijo dejan de robar ancho al campo: se superponen. Antes el
+   "sq ft" empujaba el input a 229px mientras un desplegable media 366. */
+.d2 .calc .campo__wrap:has(.campo__prefijo) .campo__input { padding-left: 30px; }
+
+.d2 .calc .campo__wrap:has(.campo__sufijo) .campo__input { padding-right: 58px; }
+
+.d2 .calc .campo__prefijo,
+.d2 .calc .campo__sufijo {
+  position: absolute;
+  pointer-events: none;
+}
+
+.d2 .calc .campo__wrap { position: relative; }
+
+.d2 .calc .campo__prefijo { left: 16px; }
+
+.d2 .calc .campo__sufijo { right: 16px; }
+
+@supports not selector(:has(*)) {
+.d2 .calc .campo__prefijo,
+  .d2 .calc .campo__sufijo { position: static; }
+.d2 .calc .campo__input { padding-inline: 16px; }
+}
+
+/* --- Aire entre elementos ------------------------------------------------ */
+
+/* Separacion constante entre etiqueta y campo, y entre campos. */
+.d2 .calc .campo {
+  display: grid;
+  gap: 6px;
+}
+
+.d2 .calc .campo + .campo {
+  margin-top: var(--d2-e3);
+}
+
+/* El bloque de opciones respira del texto de ayuda que lo precede. Los
+   13px extra igualan su arranque con el del selector vecino, que lleva
+   etiqueta encima (19px + 6 de hueco - 12 que la ayuda ya deja). */
+.d2 .calc .opciones {
+  display: grid;
+  gap: var(--d2-e2);
+  margin-top: calc(var(--d2-e3) + 13px);
+}
+
+/* Las dos tarjetas de eleccion, con la misma altura */
+.d2 .calc .opcion {
+  min-height: 76px;
+  padding: var(--d2-e3);
+}
+
+/* El selector de region: dos botones que comparten ancho */
+.d2 .calc .duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  width: 100%;
+}
+
+/* --- El boton, separado del ultimo campo --------------------------------- */
+
+.d2 .calc .pasos__nav {
+  margin-top: clamp(20px, 2.4vw, 28px);
+}
+
+/* En las variantes abiertas el boton cierra las dos columnas, asi que se le
+   da un filo que lo separa del formulario. */
+/* .pasos es flex en columna: los campos, el boton y la nota se apilan.
+   El nav NO esta dentro de la rejilla de campos, asi que grid-column no le
+   afecta -- por eso una version anterior lo dejaba solapado. */
+.d2 .calc--unico .pasos,
+.d2 .calc--partido .pasos {
+  display: flex;
+  flex-direction: column;
+}
+
+/* El boton y la nota estan en position:absolute, anclados al fondo del
+   panel. Tiene sentido en el asistente --todos los pasos ocupan el mismo
+   alto y el boton queda siempre en el mismo sitio-- pero con los cuatro
+   campos abiertos el panel crece y el boton se quedaba encima del ultimo
+   campo, solapado 25px.
+
+   Aqui vuelven al flujo, debajo de los campos. */
+.d2 .calc--unico .pasos__nav,
+.d2 .calc--partido .pasos__nav,
+.d2 .calc--unico .calc__nota,
+.d2 .calc--partido .calc__nota {
+  position: static;
+}
+
+.d2 .calc--unico .pasos__nav,
+.d2 .calc--partido .pasos__nav {
+  margin-top: clamp(20px, 2.4vw, 28px);
+  padding-top: clamp(18px, 2.2vw, 24px);
+  border-top: 1px solid rgba(255, 255, 255, .1);
+}
+
+/* El relleno inferior reservaba sitio para el boton absoluto; sin el
+   sobra un hueco grande al final. */
+.d2 .calc--unico .pasos,
+.d2 .calc--partido .pasos {
+  padding-bottom: 0;
+}
+
+/* --- El asistente ---
+
+   Aqui el boton SI se queda anclado abajo: es lo que hace que no salte de
+   sitio al cambiar de paso. Pero en el paso 1 las dos opciones llegan
+   justo hasta el, sin separacion --0px medidos-- y se leian pegadas.
+
+   El paso reserva por dentro el alto del boton mas su aire, asi que el
+   contenido nunca puede llegar a tocarlo. */
+.d2 .calc--pasos .paso-calc {
+  padding-bottom: 24px;
+}
+
+/* Las dos tarjetas de eleccion, algo mas separadas entre si */
+.d2 .calc--pasos .opciones {
+  gap: var(--d2-e3);
+}
+
+/* La nota legal, separada del boton */
+.d2 .calc .calc__nota {
+  margin-top: var(--d2-e3);
+}
+
+@media (min-width: 901px) {
+/* Cada pregunta ocupa su celda entera y las cuatro se alinean arriba, de
+     modo que sus campos caen a la misma altura aunque el texto de ayuda
+     tenga distinto numero de lineas. */
+  .d2 .calc--unico .calc__campos,
+  .d2 .calc--partido .calc__campos {
+    align-items: start;
+  }
+.d2 .calc--unico .paso-calc,
+  .d2 .calc--partido .paso-calc {
+    display: flex;
+    flex-direction: column;
+  }
+/* La cabecera de cada pregunta (titulo + ayuda) reserva su altura: asi
+     los campos de una misma fila arrancan exactamente en el mismo punto,
+     tenga la ayuda dos lineas o tres. Empujarlos al fondo con flex los
+     alineaba por abajo, y arriba quedaban dentados hasta 19px. */
+  .d2 .calc--unico .paso-calc__titulo {
+    min-height: 1.4em;
+  }
+.d2 .calc--unico .paso-calc__ayuda {
+    flex: none;
+    min-height: 4.6em;   /* tres lineas al ancho de media rejilla */
+    margin-bottom: var(--d2-e2);
+  }
+}
+
+/* ==========================================================================
+   VARIANTE 2 — LO QUE DE VERDAD LA DISTINGUE
+
+   Una version anterior solo cambiaba el reparto de columnas y añadia
+   position:sticky. Medido al lado de la variante 1, era practicamente la
+   misma pantalla: la unica diferencia solo se apreciaba al desplazarse.
+
+   Lo que la distingue ahora es que el resultado RESPONDE mientras se
+   rellena. Con cuatro preguntas sin responder, lo honesto no es "$0" sino
+   reconocer que el margen es enorme; a medida que llegan datos, se cierra.
+
+   Kerr, van der Bles y Spiegelhalter (Royal Society Open Science, 2023,
+   n=10.519) midieron que mostrar la incertidumbre con una cuantificacion
+   apenas baja la confianza en el numero y no daña la confianza en la
+   fuente, mientras que cubrirse solo con palabras hace mas daño.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   El indicador de confianza
+   -------------------------------------------------------------------------- */
+
+.d2 .calc--partido .d2-margen {
+  margin: var(--d2-e3) 0;
+  padding: var(--d2-e3);
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: var(--d2-radio-sm);
+  transition: border-color .4s cubic-bezier(.32, .72, 0, 1),
+              background-color .4s cubic-bezier(.32, .72, 0, 1);
+}
+
+/* Completo, la caja se tiñe de verde: es la señal de que ya no falta nada */
+.d2 .calc--partido .d2-margen.esta-completo {
+  background: rgba(46, 144, 43, .1);
+  border-color: rgba(46, 144, 43, .38);
+}
+
+.d2 .calc--partido .d2-margen__cab {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--d2-e2);
+  margin-bottom: var(--d2-e2);
+}
+
+.d2 .calc--partido .d2-margen__eti {
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .62);
+}
+
+.d2 .calc--partido .d2-margen__pct {
+  font-size: .9375rem;
+  font-weight: var(--fw-extrabold);
+  color: #fff;
+  font-variant-numeric: tabular-nums;   /* el ancho no baila al cambiar */
+}
+
+.d2 .calc--partido .d2-margen.esta-completo .d2-margen__pct {
+  color: #7BD877;   /* verde claro: sobre fondo oscuro el de interfaz no llega */
+}
+
+/* --- La barra --- */
+
+.d2 .calc--partido .d2-margen__via {
+  height: 5px;
+  background: rgba(255, 255, 255, .12);
+  border-radius: var(--d2-radio-full);
+  overflow: hidden;
+}
+
+/* Se anima transform y no width: el navegador lo resuelve sin recalcular
+   el diseño en cada fotograma. */
+.d2 .calc--partido .d2-margen__lleno {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(123, 216, 119, .55), #7BD877);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .62s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .calc--partido .d2-margen__nota {
+  margin: var(--d2-e2) 0 0;
+  font-size: .75rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, .62);
+}
+
+/* --------------------------------------------------------------------------
+   La cifra
+
+   Mientras faltan datos se atenua: sigue leyendose, pero dice por si misma
+   que aun no esta asentada. Es preferible a ocultarla -- gatear el numero
+   crea desconfianza (NN/g) -- y a fingir que ya es definitiva.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc--partido .resultado__cifra {
+  transition: opacity .4s cubic-bezier(.32, .72, 0, 1),
+              text-shadow .4s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .calc--partido .resultado.es-provisional .resultado__cifra {
+  opacity: .68;
+  text-shadow: none;
+}
+
+/* Con las cuatro respuestas, la cifra se enciende. Es el mismo recurso que
+   los graficos de la seccion del problema, tomado del mapa del diseño 3:
+   el dato se lee como algo vivo y no como texto impreso. */
+.d2 .calc--partido .resultado:not(.es-provisional) .resultado__cifra {
+  opacity: 1;
+  text-shadow: 0 0 22px rgba(123, 216, 119, .32);
+}
+
+.d2 .calc--partido .resultado__cifra.esta-cambiando {
+  animation: d2-cifra-cambia .42s cubic-bezier(.32, .72, 0, 1);
+}
+
+/* --------------------------------------------------------------------------
+   El carril
+
+   Ademas de quedarse fijo al desplazarse, se separa visualmente del
+   formulario: superficie propia y un filo verde a la izquierda que lo marca
+   como la zona de lectura, no de entrada.
+   -------------------------------------------------------------------------- */
+
+/* (el filo verde a la izquierda se elimino: una barra lateral de acento
+   es un cliche que abarata el panel, y el tablero ya separa el resultado
+   por posicion, no por adorno) */
+
+/* --------------------------------------------------------------------------
+   Las filas del perfil se marcan al llegar
+
+   Cada respuesta enciende su fila. Es el mismo gesto que el relevo de logos:
+   lo que cambia se señala solo, sin que haya que buscarlo.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc--partido .perfil__fila {
+  transition: opacity .34s cubic-bezier(.32, .72, 0, 1);
+  opacity: .5;
+}
+
+.d2 .calc--partido .perfil__fila.is-lleno {
+  opacity: 1;
+}
+
+.d2 .calc--partido .perfil__punto {
+  transition: background-color .34s ease, box-shadow .34s ease;
+}
+
+.d2 .calc--partido .perfil__fila.is-lleno .perfil__punto {
+  background: #7BD877;
+  box-shadow: 0 0 8px rgba(123, 216, 119, .5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .calc--partido .d2-margen,
+  .d2 .calc--partido .d2-margen__lleno,
+  .d2 .calc--partido .resultado__cifra,
+  .d2 .calc--partido .perfil__fila,
+  .d2 .calc--partido .perfil__punto {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   LA CALCULADORA — PULIDO Y EL TABLERO
+
+   Correcciones medidas sobre las tres variantes, y el rediseño de la
+   segunda, que hasta ahora solo se distinguia de la primera por un sticky
+   invisible sin desplazarse.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. LA TARJETA QUE GIRA YA NO RECORTA SU REVERSO
+
+   Las dos caras iban superpuestas con el dorso en absoluto, y el contenedor
+   tomaba la altura SOLO del frente. El formulario del reverso es mas alto:
+   el boton de enviar y la nota legal se salian de la caja.
+
+   Con las dos caras apiladas en la misma celda de una rejilla, el
+   contenedor mide lo que la cara mas alta, y el giro (que es de opacidad y
+   transform) sigue funcionando igual.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc .flip {
+  display: grid;
+  height: auto;
+}
+
+/* Solo la cara VISIBLE esta en flujo y decide la altura. La oculta va en
+   absoluto y recortada: si las dos contaran, el formulario del reverso
+   --que es mas alto-- inflaria la tarjeta antes de girarla. */
+.d2 .calc .flip__cara {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.d2 .calc .flip__cara--frente { position: static; }
+
+.d2 .calc .flip__cara--dorso  { position: absolute; inset: 0; overflow: hidden; }
+
+.d2 .calc .flip.girada .flip__cara--frente { position: absolute; inset: 0; overflow: hidden; }
+
+.d2 .calc .flip.girada .flip__cara--dorso  { position: static; overflow: visible; }
+
+.d2 .calc .resultado {
+  height: auto;
+}
+
+/* La nota legal y el boton del resultado estaban en absoluto, anclados a un
+   fondo que ya no existe con la altura automatica: vuelven al flujo. */
+.d2 .calc .resultado__legal,
+.d2 .calc .salida .resultado__cta {
+  position: static;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  margin-top: var(--d2-e3);
+}
+
+.d2 .calc .flip__cara--frente .resultado {
+  padding-bottom: var(--d2-e4);
+}
+
+/* --------------------------------------------------------------------------
+   2. LA COLUMNA DEL PERFIL YA NO TIENE HUECOS MUERTOS
+
+   La prueba social ($2.94M) llevaba margin-top:auto: se iba al fondo de la
+   columna y dejaba 441px de vacio entre el perfil y ella. El contenido
+   ahora fluye desde arriba con aire constante, y la tarjeta termina donde
+   termina su contenido.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc .espera {
+  gap: var(--d2-e4);
+}
+
+.d2 .calc .prueba {
+  margin-top: 0;
+}
+
+@media (min-width: 901px) {
+.d2 .calc--unico .flip {
+    align-self: start;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. FUERA LA BARRA VERDE DE LA RECOMENDACION
+
+   El acento lateral es un cliche que abarata el bloque. La recomendacion se
+   distingue por su fondo, no por una raya.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc .cierre__recomienda {
+  border-left: 0;
+  background: rgba(123, 216, 119, .1);
+  border-radius: var(--d2-radio-sm);
+}
+
+.d2 .calc .perfil__fila:not(.is-lleno):first-child .perfil__punto,
+.d2 .calc .perfil__fila.is-lleno + .perfil__fila:not(.is-lleno) .perfil__punto {
+  background: #7BD877;
+  animation: d2-latido 1.8s cubic-bezier(.4, 0, .2, 1) infinite;
+}
+
+/* --------------------------------------------------------------------------
+   5. TODO CAMBIO ES SUAVE
+
+   Cada estado que cambia dentro de la calculadora transita: las tarjetas de
+   eleccion, el foco de los campos, los valores del perfil, y los bloques
+   que aparecen (el adelanto, el resultado, el cierre).
+   -------------------------------------------------------------------------- */
+
+.d2 .calc .opcion {
+  transition: border-color .3s cubic-bezier(.32, .72, 0, 1),
+              background-color .3s cubic-bezier(.32, .72, 0, 1),
+              transform .3s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .calc .opcion:hover {
+  transform: translateY(-1px);
+}
+
+.d2 .calc .opcion.is-elegida {
+  border-color: #7BD877;
+  background: rgba(123, 216, 119, .08);
+}
+
+.d2 .calc .campo__input {
+  transition: border-color .25s ease,
+              box-shadow .25s ease,
+              background-color .25s ease;
+}
+
+.d2 .calc .campo__input:focus {
+  border-color: #7BD877;
+  box-shadow: 0 0 0 3px rgba(123, 216, 119, .18);
+  outline: none;
+}
+
+.d2 .calc .perfil__valor,
+.d2 .calc .perfil__texto {
+  transition: color .3s ease, opacity .3s ease;
+}
+
+.d2 .calc .adelanto:not([hidden]),
+.d2 .calc .salida:not([hidden]),
+.d2 .calc .cierre:not([hidden]),
+.d2 .calc .tras-envio:not([hidden]) {
+  animation: d2-calc-aparece .5s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+/* La cifra del cierre --la que de verdad se ve al calcular-- se enciende
+   como los graficos de la seccion del problema. */
+.d2 .calc .cierre__cifra {
+  color: #7BD877;
+  text-shadow: 0 0 22px rgba(123, 216, 119, .3);
+}
+
+@media (min-width: 901px) {
+.d2 .calc--partido .calc__panel {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(14px, 1.8vw, 20px);
+  }
+/* La banda respira menos que una columna: es un estado, no una lectura */
+  .d2 .calc--partido .espera { gap: var(--d2-e3); }
+.d2 .calc--partido .resultado { padding: clamp(14px, 1.8vw, 20px) clamp(16px, 2vw, 24px); }
+/* Los campos arriba y la banda de estado debajo, siguiendo el orden del
+     documento. Al calcular, el resultado ocupa el sitio de los campos y
+     la banda girada (el formulario de contacto) queda bajo el. */
+
+  /* Las cuatro preguntas en fila. La ayuda se compacta: en formato ficha
+     el titulo ya dice lo que hay que hacer. */
+  .d2 .calc--partido .calc__campos {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: clamp(14px, 1.6vw, 22px);
+  }
+.d2 .calc--partido .paso-calc__ayuda {
+    font-size: .75rem;
+    line-height: 1.45;
+    flex: none;
+    min-height: 5.4em;   /* cuatro lineas a este ancho de columna */
+    margin-bottom: var(--d2-e2);
+  }
+.d2 .calc--partido .paso-calc__titulo {
+    min-height: 2.6em;
+  }
+/* El desfase del nudge de las opciones es distinto a este ancho de
+     columna: 8px en vez de 13. */
+  .d2 .calc--partido .opciones {
+    margin-top: calc(var(--d2-e3) + 8px);
+  }
+/* --- La banda: el perfil como cuatro fichas --------------------------- */
+
+  .d2 .calc--partido .perfil {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--d2-e2);
+  }
+.d2 .calc--partido .perfil__fila {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "punto texto"
+      "valor valor";
+    align-items: center;
+    column-gap: 8px;
+    row-gap: 4px;
+    padding: var(--d2-e2) var(--d2-e3);
+    background: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: var(--d2-radio-sm);
+    transition: border-color .35s cubic-bezier(.32, .72, 0, 1),
+                background-color .35s cubic-bezier(.32, .72, 0, 1);
+  }
+/* La ficha rellena se enciende: borde y fondo suben un punto */
+  .d2 .calc--partido .perfil__fila.is-lleno {
+    border-color: rgba(123, 216, 119, .4);
+    background: rgba(123, 216, 119, .07);
+  }
+.d2 .calc--partido .perfil__punto { grid-area: punto; }
+.d2 .calc--partido .perfil__texto { grid-area: texto; }
+.d2 .calc--partido .perfil__valor {
+    grid-area: valor;
+    font-weight: var(--fw-bold);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+/* El adelanto del benchmark, como franja bajo las fichas */
+  .d2 .calc--partido .adelanto {
+    display: flex;
+    align-items: baseline;
+    gap: var(--d2-e2);
+  }
+/* La prueba social no cabe en la banda sin competir con el dato propio:
+     esta variante la cede a las otras dos, que si la muestran. */
+  .d2 .calc--partido .prueba {
+    display: none;
+  }
+/* --- El resultado final, centrado y protagonista ---------------------- */
+
+  .d2 .calc--partido .cierre {
+    text-align: center;
+  }
+.d2 .calc--partido .cierre__cifra {
+    font-size: 40px;   /* el techo del sistema para cifras */
+  }
+.d2 .calc--partido .cierre .desglose,
+  .d2 .calc--partido .cierre__desglose {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--d2-e3);
+    justify-items: center;
+    margin-inline: auto;
+    max-width: 720px;
+  }
+.d2 .calc--partido .cierre__recomienda {
+    max-width: 640px;
+    margin-inline: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .calc .perfil__punto,
+  .d2 .calc .opcion,
+  .d2 .calc .campo__input,
+  .d2 .calc .perfil__valor,
+  .d2 .calc .perfil__texto,
+  .d2 .calc .adelanto:not([hidden]),
+  .d2 .calc .salida:not([hidden]),
+  .d2 .calc .cierre:not([hidden]),
+  .d2 .calc .tras-envio:not([hidden]),
+  .d2 .calc--partido .perfil__fila {
+    animation: none;
+    transition: none;
+  }
+}
+
+@supports (appearance: base-select) {
+.d2 .calc select.campo__input,
+  .d2 .calc select.campo__input::picker(select) {
+    appearance: base-select;
+  }
+.d2 .calc select.campo__input::picker(select) {
+    background: #1F1F1F;
+    border: 1px solid rgba(255, 255, 255, .14);
+    border-radius: var(--d2-radio-sm);
+    padding: 6px;
+    margin-top: 6px;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, .5);
+
+    /* El panel se abre con la misma curva que todo lo demas */
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity .22s cubic-bezier(.32, .72, 0, 1),
+                transform .22s cubic-bezier(.32, .72, 0, 1),
+                overlay .22s allow-discrete,
+                display .22s allow-discrete;
+  }
+.d2 .calc select.campo__input:open::picker(select) {
+    opacity: 1;
+    transform: none;
+  }
+.d2 .calc select.campo__input option {
+    padding: 10px 14px;
+    border-radius: calc(var(--d2-radio-sm) - 4px);
+    background: transparent;
+    color: rgba(255, 255, 255, .88);
+    font-size: .9375rem;
+    transition: background-color .15s ease, color .15s ease;
+  }
+.d2 .calc select.campo__input option:hover,
+  .d2 .calc select.campo__input option:focus {
+    background: rgba(123, 216, 119, .12);
+  }
+.d2 .calc select.campo__input option:checked {
+    background: rgba(123, 216, 119, .16);
+    color: #7BD877;
+    font-weight: var(--fw-bold);
+  }
+/* La marca de la opcion elegida, con el estilo de la web y no el tic del
+     sistema */
+  .d2 .calc select.campo__input option::checkmark {
+    color: #7BD877;
+    margin-right: 8px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. EL VOLTEO DEL RESULTADO
+
+   Al calcular, el formulario se retira con un giro corto y el resultado
+   entra desde el angulo contrario: la tarjeta parece darse la vuelta y el
+   resultado haber estado siempre detras.
+
+   Es el mismo lenguaje del giro que ya tiene la tarjeta derecha (rotateY
+   corto + desvanecimiento), aplicado a la columna izquierda. El JS de
+   d2-calc-vivo reabre el formulario un instante para que este giro pueda
+   verse: `hidden` a secas es un corte.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc .calc__panel {
+  perspective: 1600px;
+}
+
+.d2 .calc .pasos.se-va {
+  animation: d2-cara-sale .42s cubic-bezier(.32, .72, 0, 1) both;
+  pointer-events: none;
+}
+
+/* El resultado entra cuando el formulario va por la mitad de su salida:
+   las dos mitades se solapan y se lee como UN giro, no como dos fundidos. */
+.d2 .calc .cierre:not([hidden]) {
+  animation: d2-cara-entra .55s cubic-bezier(.32, .72, 0, 1) .18s both;
+}
+
+@media (min-width: 901px) {
+.d2 .calc--unico .pasos,
+  .d2 .calc--unico .cierre,
+  .d2 .calc--pasos .pasos,
+  .d2 .calc--pasos .cierre {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
+/* En el tablero (columna flexible) el saliente se despega del flujo durante
+   el giro: si empujara, la banda de abajo daria un salto. */
+.d2 .calc--partido .calc__panel { position: relative; }
+
+.d2 .calc--partido .pasos.se-va {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+@media (min-width: 901px) {
+.d2 .calc--partido .perfil {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .calc .pasos.se-va,
+  .d2 .calc .cierre:not([hidden]) {
+    animation: none;
+  }
+.d2 .calc select.campo__input::picker(select) {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   LA CALCULADORA — TRES CORRECCIONES MEDIDAS
+
+   1. `hidden` vuelve a mandar. Mis reglas de display sobre .pasos y
+      .adelanto tenian mas especificidad que [hidden], asi que el
+      formulario NUNCA se escondia de verdad al calcular en las variantes
+      abiertas: el atributo estaba puesto, pero el display lo pisaba. Este
+      blindaje corta el problema de raiz para todo el componente.
+
+   2. El indicador de confianza y las fichas viven en la tarjeta BLANCA del
+      perfil, y yo los pinte con texto blanco pensando en el panel oscuro:
+      "Estimate confidence / 100%" era blanco sobre blanco. Todos los
+      colores pasan a la paleta de superficie clara.
+
+   3. El desplegable mostraba dos flechas: la del diseño (el SVG fino del
+      envoltorio) y la que base-select añade por defecto. Se apaga la
+      añadida y se queda la del diseño.
+   ========================================================================== */
+
+/* --- 1. hidden manda --- */
+
+.d2 .calc [hidden] {
+  display: none !important;
+}
+
+/* --- 2. el indicador sobre la tarjeta blanca --- */
+
+.d2 .calc--partido .d2-margen {
+  background: rgba(2, 51, 0, .04);
+  border-color: rgba(2, 51, 0, .12);
+}
+
+.d2 .calc--partido .d2-margen.esta-completo {
+  background: rgba(46, 144, 43, .08);
+  border-color: rgba(46, 144, 43, .38);
+}
+
+.d2 .calc--partido .d2-margen__eti { color: #575757; }
+
+.d2 .calc--partido .d2-margen__pct { color: var(--c-texto, #333); }
+
+.d2 .calc--partido .d2-margen.esta-completo .d2-margen__pct {
+  color: var(--c-verde-hover);   /* 6.41:1 sobre blanco */
+}
+
+.d2 .calc--partido .d2-margen__via { background: rgba(2, 51, 0, .12); }
+
+.d2 .calc--partido .d2-margen__lleno {
+  background: linear-gradient(90deg, rgba(46, 144, 43, .55), var(--c-verde));
+}
+
+.d2 .calc--partido .d2-margen__nota { color: #575757; }
+
+@media (min-width: 901px) {
+.d2 .calc--partido .perfil__fila {
+    background: rgba(2, 51, 0, .035);
+    border-color: rgba(2, 51, 0, .12);
+  }
+.d2 .calc--partido .perfil__fila.is-lleno {
+    background: rgba(46, 144, 43, .06);
+    border-color: rgba(46, 144, 43, .45);
+  }
+}
+
+/* El punto que late y el punto lleno: verde de interfaz, no el claro, que
+   sobre blanco apenas se ve. */
+.d2 .calc .perfil__fila:not(.is-lleno):first-child .perfil__punto,
+.d2 .calc .perfil__fila.is-lleno + .perfil__fila:not(.is-lleno) .perfil__punto {
+  background: var(--c-verde);
+}
+
+.d2 .calc--partido .perfil__fila.is-lleno .perfil__punto,
+.d2 .calc .perfil__fila.is-lleno .perfil__punto {
+  background: var(--c-verde);
+  box-shadow: 0 0 8px rgba(46, 144, 43, .4);
+}
+
+@supports (appearance: base-select) {
+.d2 .calc select.campo__input::picker-icon {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   SIN "STEP 1 OF 4" EN LAS VARIANTES ABIERTAS
+
+   El contador y la barra de progreso cuentan un recorrido por pasos que
+   estas dos variantes no tienen: los cuatro campos estan a la vista.
+
+   No se sustituye por otra animacion a proposito: el avance ya lo narran
+   el perfil que se va llenando --con su punto latiendo en lo que toca-- y,
+   en el tablero, la barra de confianza. Un segundo indicador contaria lo
+   mismo dos veces.
+
+   El asistente (variante 3) los conserva: ahi si hay pasos que contar.
+   -------------------------------------------------------------------------- */
+
+.d2 .calc--unico .pasos__cabecera,
+.d2 .calc--partido .pasos__cabecera {
+  display: none;
+}
+
+.d2 .calc                                                { background: var(--comp-calc); }
+
+/* ==========================================================================
+   LAS ISLAS CLARAS DENTRO DE UNA SECCION OSCURA
+
+   El fallo que esto corrige: cuando una seccion pasa a negro, su texto se
+   invierte a blanco. Pero muchas secciones contienen TARJETAS con fondo
+   claro propio --items de lista, marcos de foto, paneles-- y ahi el texto
+   blanco quedaba sobre fondo casi blanco: 1.07:1, invisible.
+
+   Ya paso una vez y lo resolvi nombrando las cinco tarjetas que conocia.
+   Volvio a pasar en cuanto aparecieron variantes nuevas, porque la lista
+   hay que mantenerla a mano y nadie se acuerda.
+
+   Aqui se invierte el enfoque: en lugar de enumerar que tarjetas hay, se
+   declara que CUALQUIER superficie clara restaura los valores oscuros. Se
+   listan por su clase --no hay selector CSS para "elemento con fondo
+   claro"-- pero el criterio salio de barrer el DOM y preguntar por el color
+   real de cada elemento, no de la memoria.
+
+   Las 51 superficies claras detectadas, menos las que son la propia
+   seccion.
+   ========================================================================== */
+
+.d2 [data-comp-tono="oscuro"] :is(
+  /* Tarjetas e items de lista */
+  .d2-prob-lec__lista > li,
+  .d2-prob-comp__rede,
+  .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item,
+  .d2-prueba-resp__par,
+  .d2-prueba-rec__marca,
+  .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo,
+  .d2-equipo-firma__credenciales > li,
+  .d2-foco__prueba,
+  .d2-cta-bal__accion,
+  .d2-cta-car__carril,
+  .d2-cta-con__inner,
+  .d2-prob-mapa__ficha,
+  /* Marcos de imagen */
+  .d2-equipo-ficha__marco,
+  .d2-equipo-dosier__retrato,
+  .d2-equipo-firma__foto-grande,
+  .d2-equipo-firma__foto-mini,
+  .d2-res-ed__marco,
+  .d2-lec__grafico,
+  /* Paneles y piezas de la calculadora */
+  .d2-panel,
+  .d2-panel__filtro,
+  .calc,
+  .campo__wrap,
+  .resultado,
+  .adelanto,
+  .recomienda,
+  .prueba,
+  .perfil__punto,
+  .pastilla,
+  .contacto,
+  .contacto__icono
+) {
+  --c-texto:        #333333;
+  --c-texto-cuerpo: #333333;
+  --c-texto-suave:  #6B6B6B;
+  --c-linea:        rgba(0, 0, 0, .12);
+  color: var(--c-texto);
+}
+
+/* Los titulares y parrafos dentro de esas islas. Van nombrados porque
+   muchos traen color propio de su regla original, que gana a la herencia. */
+.d2 [data-comp-tono="oscuro"] :is(
+  .d2-prob-lec__lista > li, .d2-prob-comp__rede, .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item, .d2-prueba-resp__par, .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo, .d2-foco__prueba, .d2-cta-bal__accion,
+  .d2-cta-car__carril, .d2-cta-con__inner, .calc, .d2-panel
+) :is(h1, h2, h3, h4, h5, p, span, li, td, th, strong, b, small, dt, dd) {
+  color: var(--c-texto);
+}

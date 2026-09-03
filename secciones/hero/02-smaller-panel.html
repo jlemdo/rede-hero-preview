@@ -1,0 +1,129 @@
+<!-- Hero / Smaller panel
+     Clase raiz: .d2-hero
+     Extraido de home-d2.html. El CSS va en 02-smaller-panel.css -->
+
+<section class="d2-hero es-variante-b">
+
+      <img class="d2-hero__fondo" src="assets/img/building-render.jpg"
+           alt="" aria-hidden="true" width="1920" height="1047" fetchpriority="high">
+
+      <div class="d2-hero__inner">
+
+        <div class="d2-hero__texto">
+          <p class="d2-hero__eyebrow d2-entra">Building Energy Efficiency</p>
+
+          <h1 class="d2-hero__titulo d2-entra">
+            Cut energy costs without adding more to <span class="acento">your team</span>.
+          </h1>
+
+          <p class="d2-hero__lead d2-entra">
+            Rede helps public sector and multi-site organizations find and recover
+            unnecessary energy costs through better data, smarter decisions, and
+            engineering expertise that stays engaged for the long term.
+          </p>
+
+          <div class="d2-hero__acciones d2-entra">
+            <a href="#solutions" class="d2-btn d2-btn--solido">
+              Explore solutions
+              <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a href="contact.html" class="d2-btn d2-btn--linea">
+              Book a call
+              <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+                <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- El panel de datos, el objeto que el cliente ya aprobo -->
+        <div class="d2-panel d2-entra">
+          <div class="d2-panel__cabecera">
+            <h2 class="d2-panel__titulo">Portfolio overview</h2>
+            <span class="d2-panel__filtro" aria-hidden="true">All buildings</span>
+          </div>
+
+          <div class="d2-panel__metricas">
+            <div class="d2-metrica">
+              <p class="d2-metrica__label">Total annual cost savings</p>
+              <p class="d2-metrica__valor">$480K</p>
+              <p class="d2-metrica__delta">
+                <svg width="10" height="7" viewBox="0 0 11 7" aria-hidden="true">
+                  <path d="M1 1l4.5 5L10 1" fill="none" stroke="currentColor"
+                        stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <strong>14%</strong> lower vs baseline
+              </p>
+            </div>
+
+            <div class="d2-metrica">
+              <p class="d2-metrica__label">Total energy savings</p>
+              <p class="d2-metrica__valor">2.7M <small>kWh</small></p>
+              <p class="d2-metrica__delta">
+                <svg width="10" height="7" viewBox="0 0 11 7" aria-hidden="true">
+                  <path d="M1 1l4.5 5L10 1" fill="none" stroke="currentColor"
+                        stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <strong>11%</strong> lower vs baseline
+              </p>
+            </div>
+          </div>
+
+          <div class="d2-panel__pie">
+            <p>Monthly cost trend</p>
+            <div class="d2-leyenda">
+              <span><svg width="16" height="3" aria-hidden="true"><rect width="16" height="3" rx="1.5" fill="var(--c-verde)"/></svg> With Rede</span>
+              <span><svg width="16" height="3" aria-hidden="true"><rect width="4" height="3" rx="1.5" fill="#B8B8B8"/><rect x="6" width="4" height="3" rx="1.5" fill="#B8B8B8"/><rect x="12" width="4" height="3" rx="1.5" fill="#B8B8B8"/></svg> Without Rede</span>
+            </div>
+          </div>
+
+          <div class="d2-grafico" role="img"
+               aria-label="Monthly cost trend across the year: with Rede, costs stay consistently below the baseline">
+            <svg viewBox="0 0 520 132" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+              <!-- Rejilla de fondo: da escala, sin ella el grafico flota -->
+              <g class="g-rejilla" stroke="#EFEFEF" stroke-width="1">
+                <line x1="8" y1="20" x2="512" y2="20"/>
+                <line x1="8" y1="55" x2="512" y2="55"/>
+                <line x1="8" y1="90" x2="512" y2="90"/>
+                <line x1="8" y1="120" x2="512" y2="120"/>
+              </g>
+
+              <!-- El area bajo la linea de Rede -->
+              <path class="g-area" d="M14 88 L59 82 L104 94 L149 90 L194 100 L239 95 L284 96 L329 92 L374 98 L419 94 L464 100 L506 102 L506 120 L14 120 Z"
+                    fill="var(--c-verde)" fill-opacity=".07"/>
+
+              <!-- Sin Rede: discontinua y alta -->
+              <path class="g-base" d="M14 40 L59 34 L104 44 L149 39 L194 50 L239 45 L284 36 L329 31 L374 38 L419 28 L464 33 L506 30"
+                    stroke="#C9C9C9" stroke-width="2" stroke-dasharray="5 5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+
+              <!-- Con Rede: continua, verde y por debajo -->
+              <path class="g-linea" d="M14 88 L59 82 L104 94 L149 90 L194 100 L239 95 L284 96 L329 92 L374 98 L419 94 L464 100 L506 102"
+                    stroke="var(--c-verde)" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+
+              <!-- Los puntos: marcan que cada mes es una lectura, no una curva suelta -->
+              <g class="g-puntos" fill="#FFFFFF" stroke="var(--c-verde)" stroke-width="2">
+                <circle cx="14" cy="88" r="3"/>
+                <circle cx="149" cy="90" r="3"/>
+                <circle cx="284" cy="96" r="3"/>
+                <circle cx="419" cy="94" r="3"/>
+                <circle cx="506" cy="102" r="3"/>
+              </g>
+            </svg>
+
+            <div class="d2-grafico__meses" aria-hidden="true">
+              <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span>
+              <span>May</span><span>Jun</span><span>Jul</span><span>Aug</span>
+              <span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>

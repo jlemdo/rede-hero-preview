@@ -85,7 +85,10 @@
     logo.setAttribute('src', r.logo);
     logo.setAttribute('alt', '');
 
-    num.textContent = dosDigitos(i + 1);
+    /* El numeral gigante se retiro del diseno. Se comprueba antes de
+       escribirlo por si vuelve: sin esta guarda, la linea lanzaba y el
+       carrusel dejaba de cambiar. */
+    if (num) { num.textContent = dosDigitos(i + 1); }
     contador.textContent = dosDigitos(i + 1) + ' / ' + dosDigitos(RESENAS.length);
 
     lineas.forEach(function (l, n) {

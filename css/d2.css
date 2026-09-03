@@ -52,7 +52,20 @@
   /* --- Superficies ----------------------------------------------------
      La referencia separa secciones con fondos de color suave, no
      alternando blanco y gris. Aqui la tinta del verde de marca. */
+  /* El fondo de las secciones tintadas. Es el UNICO que mueve el selector
+     de composicion: por eso esta separado de los dos de abajo. */
   --d2-tinta: #F2F9F2;
+
+  /* El relleno de piezas internas --marcos de foto, celdas, credenciales--
+     que antes compartia token con el fondo de seccion. Al cambiar la
+     composicion se iban con el, y los marcos del equipo se volvian negros.
+     Valor fijo: no depende de la composicion. */
+  --d2-relleno: #F2F9F2;
+
+  /* Los estados del menu. Mismo motivo: con el token compartido, poner la
+     pagina en oscuro tenia el efecto de ennegrecer el hover del header. */
+  --d2-hover: #F2F9F2;
+
   --d2-oscuro: #0E2A12;     /* verde muy oscuro, para footer y bandas */
 
   background: var(--c-blanco);
@@ -258,7 +271,7 @@
               color var(--d2-rapido) ease;
 }
 
-.d2 .nav__link:hover { background: var(--d2-tinta); }
+.d2 .nav__link:hover { background: var(--d2-hover); }
 
 /* El subrayado que crece, como en la referencia */
 .d2 .nav__link::after {
@@ -329,7 +342,7 @@
   transition: background-color var(--d2-rapido) ease;
 }
 
-.d2 .nav__drop a:hover { background: var(--d2-tinta); }
+.d2 .nav__drop a:hover { background: var(--d2-hover); }
 
 /* El icono: va suelto en la composicion, sin cuadrito de color */
 .d2 .nav__drop__icono {

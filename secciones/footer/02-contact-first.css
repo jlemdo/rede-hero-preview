@@ -1,0 +1,388 @@
+/* Footer / Contact-first
+   Reglas cuyo selector menciona .d2-pie-desp, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   PIE DE PAGINA — TRES VARIANTES (DISENO 2)
+
+   Las tres pintan el mismo copy sobre --d2-oscuro (#0E2A12), el color que
+   d2.css reserva justo para esto ("verde muy oscuro, para footer y bandas").
+
+   Lo que cambia entre ellas NO es la piel. Es a que sirve el pie:
+
+     1. DIRECTORIO   el protagonista es la NAVEGACION. Tres columnas de
+                     enlaces mandan; el contacto es una columna mas.
+     2. DESPACHO     cambia QUE se agrupa con QUE. Telefono, correo y
+                     direccion salen de la rejilla de enlaces y se juntan
+                     en un bloque de contacto con objetivos grandes; el
+                     mapa del sitio se comprime a una fila.
+     3. CIERRE       cambia DONDE vive el protagonista. No hay mega-pie:
+                     una franja baja, y el peso se va al dato de contacto
+                     en linea. Es la antitesis de la opcion 1.
+
+   ─── Por que ninguna lleva CTA ───────────────────────────────────────────
+   El patron "pie con CTA integrado" esta descartado a proposito: la seccion
+   cta-final.html va JUSTO encima del pie y ya trae "Check your opportunity"
+   y "Book a call". Meter otra llamada en el pie duplicaria la de arriba a
+   dos dedos de distancia. El pie recoge, no vuelve a pedir.
+
+   ─── Contraste: medido, no supuesto ─────────────────────────────────────
+   Todos los valores calculados contra #0E2A12 (luminancia .0179):
+
+     blanco puro .................. 15.46:1
+     blanco 82% (#d4d9d4) ......... 10.80:1   enlaces
+     blanco 74% (#c0c8c1) .........  9.03:1   cuerpo
+     blanco 62% (#a3aea5) .........  6.74:1   secundario / direccion
+     blanco 55% (#939f94) .........  5.61:1   minimo que uso
+     --c-verde-marca #39B54A ......  5.80:1   PASA AA en pequeno
+     --c-verde #2E902B ............  3.78:1   NO para texto pequeno
+     --c-verde-hover #026F00 ......  2.41:1   inservible sobre oscuro
+
+   Dos consecuencias que van contra la intuicion y conviene no deshacer:
+
+   (a) --c-verde-marca (#39B54A) es el verde que la guia PROHIBE para texto
+       sobre blanco (~2.5:1). Sobre este fondo oscuro da 5.80:1 y si sirve.
+       Aqui es el verde de acento correcto. Al reves, --c-verde-hover, que
+       es el bueno sobre blanco, da 2.41:1 y no vale para nada oscuro.
+
+   (b) El pie anterior (footer.css) pintaba la direccion, el aviso legal y
+       las etiquetas con rgba(255,255,255,.45) = 4.24:1, por debajo del
+       4.5:1 que pide AA. Ninguna variante baja del 55%.
+
+   Los tokens no cambian: se usan tal cual. Las mezclas con blanco son
+   opacidades sobre el token de fondo, no colores nuevos escritos a mano.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   BASE COMPARTIDA
+
+   Lo que las tres tienen en comun se escribe una vez. Las diferencias
+   estructurales viven en cada bloque, no aqui.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-pie-dir,
+.d2 .d2-pie-desp,
+.d2 .d2-pie-cierre {
+  background: var(--d2-oscuro);
+  color: var(--c-blanco);
+}
+
+/* El contenedor de las tres, identico al del resto de secciones del d2 para
+   que el pie alinee con lo que tiene encima. */
+.d2 .d2-pie-dir__inner,
+.d2 .d2-pie-desp__inner,
+.d2 .d2-pie-cierre__inner,
+.d2 .d2-pie-dir__base-inner,
+.d2 .d2-pie-desp__base-inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+/* --- El logo sobre fondo oscuro ---------------------------------------
+   El SVG lleva el verde del logo (#39A935) y DOS grises (#868686 y
+   #C6C6C5) en la bajada "Building Energy Efficiency". Sobre este fondo el
+   gris oscuro se hunde: #868686 contra #0E2A12 da 4.25:1, por debajo del
+   4.5:1 de AA, y a ese tamano la bajada es texto pequeno.
+
+   El pie anterior usaba brightness(1.6). Medido factor por factor, 1.6 es
+   demasiado: satura canales y rompe el color de marca.
+
+     factor   #868686        #C6C6C5          #39A935
+     1.00     4.25:1         9.04:1           5.08:1
+     1.20     5.98:1        13.31:1           7.26:1
+     1.30     6.97:1        15.46:1  CLIP     8.55:1
+     1.60    10.64:1        15.46:1  CLIP    11.69:1  CLIP  -> menta
+
+   Se queda en 1.20: es el ultimo escalon en que el gris oscuro ya pasa AA
+   (5.98:1) y NINGUN canal se satura todavia. A partir de 1.30 el gris
+   claro se aplasta contra el blanco puro y el verde empieza a lavarse;
+   en 1.60 el verde sale #5bff55, un menta fosforito que ya no es la marca.
+
+   No se toca el archivo del logo: es un asset de marca. */
+.d2 .d2-pie-dir__logo img,
+.d2 .d2-pie-desp__logo img,
+.d2 .d2-pie-cierre__logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: brightness(1.2);
+}
+
+/* --- Titulos de columna ----------------------------------------------
+   Versalitas pequenas. A .6875rem el texto es diminuto, asi que va al 74%
+   (9.03:1) y no al 45% del pie anterior, que daba 4.24:1. */
+.d2 .d2-pie-dir__titulo,
+.d2 .d2-pie-desp__titulo {
+  margin: 0 0 var(--d2-e3);
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .74);
+}
+
+/* Foco visible sobre oscuro: el anillo va en verde de marca, que contra
+   #0E2A12 da 5.8:1 y se ve sin ambiguedad. */
+.d2 .d2-pie-dir a:focus-visible,
+.d2 .d2-pie-desp a:focus-visible,
+.d2 .d2-pie-cierre a:focus-visible,
+.d2 .d2-pie-pron:focus-visible {
+  outline: 2px solid var(--c-verde-marca);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   OPCION 2 — DESPACHO
+
+   Cambia que se agrupa con que. Arriba, marca y bloque de contacto en dos
+   columnas; debajo, el mapa del sitio comprimido en filas.
+
+   El reparto 1fr / 1fr --y no el 1fr/1.6fr de la opcion 1-- es deliberado:
+   aqui el contacto no es una columna de servicio, es la mitad del pie.
+   ========================================================================== */
+
+.d2 .d2-pie-desp__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 4vw, 64px);
+  align-items: start;
+  padding-block: clamp(40px, 4.6vw, 56px);
+}
+
+.d2 .d2-pie-desp__logo {
+  display: block;
+  width: 150px;
+}
+
+.d2 .d2-pie-desp__tagline {
+  max-width: 34ch;
+  margin: var(--d2-e4) 0 0;
+  font-size: .875rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, .74);
+}
+
+.d2 .d2-pie-desp__pron {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e2);
+  margin: var(--d2-e3) 0 0;
+  font-size: .8125rem;
+  color: rgba(255, 255, 255, .62);
+}
+
+/* --- El bloque de contacto: el protagonista -------------------------- */
+
+/* Las dos fichas no se estiran a la columna entera: medido a 1440px daban
+   610px de ancho para un numero de telefono, y la ficha se leia como una
+   barra vacia con el dato pegado a la izquierda.
+
+   Con un tope de 34ch la ficha se ajusta al dato mas largo (el correo) y
+   las dos siguen midiendo IGUAL entre si, que es lo que pide la geometria
+   del contrato: misma altura y mismo ancho en la misma fila. */
+.d2 .d2-pie-desp__vias {
+  display: grid;
+  gap: var(--d2-e2);
+  max-width: 34ch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Fichas con contorno. Es region comun: el marco ata el icono al dato y
+   separa "una via de contacto" de "un enlace de navegacion", que es
+   justamente la distincion que esta variante quiere hacer.
+
+   Ocupan el ancho de su columna para que las dos midan igual --requisito
+   de geometria del contrato-- y no se ajusten al largo del texto, que
+   dejaria el correo mucho mas ancho que el telefono. */
+.d2 .d2-pie-desp__vias a {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e2);
+  min-height: 52px;
+  padding: var(--d2-e2) var(--d2-e3);
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--c-blanco);            /* 15.46:1 */
+  text-decoration: none;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: var(--d2-radio-sm);
+  transition: background-color var(--trans-media),
+              border-color var(--trans-media);
+}
+
+/* El correo puede ser largo: se parte antes que desbordar la ficha. A
+   390px "matthew@getrede.ca" cabe, pero si Erick cambia el dato por uno
+   mas largo esto evita el scroll horizontal. */
+.d2 .d2-pie-desp__vias a span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.d2 .d2-pie-desp__vias svg {
+  flex: none;
+  color: var(--c-verde-marca);
+}
+
+.d2 .d2-pie-desp__vias a:hover {
+  background: rgba(255, 255, 255, .1);
+  border-color: rgba(57, 181, 74, .55);
+}
+
+.d2 .d2-pie-desp__direccion {
+  margin: var(--d2-e3) 0 0;
+  font-size: .8125rem;
+  font-style: normal;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, .62);
+}
+
+/* --- El mapa del sitio, comprimido ------------------------------------
+   Dos grupos en dos columnas; dentro de cada uno, los enlaces fluyen en
+   fila y saltan de linea solos. Asi los nueve enlaces siguen enteros pero
+   ocupan una franja, no media pantalla. */
+
+.d2 .d2-pie-desp__mapa { border-top: 1px solid rgba(255, 255, 255, .16); }
+
+.d2 .d2-pie-desp__mapa .d2-pie-desp__base-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--d2-e4) clamp(24px, 3vw, 48px);
+  padding-block: var(--d2-e4);
+}
+
+.d2 .d2-pie-desp__grupo .d2-pie-desp__titulo { margin-bottom: var(--d2-e1); }
+
+/* El gap horizontal de 20px hace de separador entre enlaces contiguos:
+   sin el, dos enlaces seguidos en la misma linea se leen como uno solo.
+   El vertical es 0 porque el padding del propio enlace ya separa. */
+.d2 .d2-pie-desp__fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-pie-desp__fila a {
+  display: inline-flex;
+  padding-block: 6px;                /* mismo calculo de 24px que la op.1 */
+  font-size: .875rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .82);
+  text-decoration: none;
+  transition: color var(--trans-media);
+}
+
+.d2 .d2-pie-desp__fila a:hover {
+  color: var(--c-verde-marca);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* --- Franja inferior (igual reparto que la opcion 1) --- */
+
+.d2 .d2-pie-desp__base { border-top: 1px solid rgba(255, 255, 255, .16); }
+
+.d2 .d2-pie-desp__base .d2-pie-desp__base-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--d2-e3) var(--d2-e4);
+  padding-block: var(--d2-e2);
+}
+
+.d2 .d2-pie-desp__legal {
+  margin: 0;
+  font-size: .75rem;
+  color: rgba(255, 255, 255, .62);
+}
+
+.d2 .d2-pie-desp__legales {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--d2-e4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-pie-desp__legales a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--d2-e1);
+  min-height: 32px;
+  font-size: .75rem;
+  color: rgba(255, 255, 255, .74);
+  text-decoration: none;
+  transition: color var(--trans-media);
+}
+
+.d2 .d2-pie-desp__legales a:hover {
+  color: var(--c-blanco);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.d2 .d2-pie-desp__login {
+  padding-left: var(--d2-e4);
+  border-left: 1px solid rgba(255, 255, 255, .16);
+  color: rgba(255, 255, 255, .82);
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .d2-pie-dir a,
+  .d2 .d2-pie-desp a,
+  .d2 .d2-pie-cierre a,
+  .d2 .d2-pie-desp__vias a,
+  .d2 .d2-pie-pron {
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
+.d2 .d2-pie-dir__inner,
+  .d2 .d2-pie-desp__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--d2-e5);
+  }
+}
+
+@media (max-width: 560px) {
+.d2 .d2-pie-dir__nav,
+  .d2 .d2-pie-desp__mapa .d2-pie-desp__base-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+/* Los legales se apilan y el separador vertical del login sobra: en
+     columna, una linea a la izquierda no separa nada, solo estorba. */
+  .d2 .d2-pie-dir__base-inner,
+  .d2 .d2-pie-desp__base .d2-pie-desp__base-inner,
+  .d2 .d2-pie-cierre__base {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--d2-e2);
+  }
+.d2 .d2-pie-dir__legales,
+  .d2 .d2-pie-desp__legales,
+  .d2 .d2-pie-cierre__legales {
+    gap: var(--d2-e3);
+  }
+.d2 .d2-pie-dir__login,
+  .d2 .d2-pie-desp__login,
+  .d2 .d2-pie-cierre__login {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+.d2 .d2-pie-dir, .d2 .d2-pie-desp, .d2 .d2-pie-cierre    { background: var(--comp-footer); }

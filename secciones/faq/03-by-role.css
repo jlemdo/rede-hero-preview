@@ -1,0 +1,139 @@
+/* Questions / By role
+   Reglas cuyo selector menciona .d2-faq-rol, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+.d2 .d2-faq-abierto__eyebrow,
+.d2 .d2-faq-acord__eyebrow,
+.d2 .d2-faq-rol__eyebrow {
+  margin: 0 0 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--c-verde-hover, #026F00);
+}
+
+.d2 .d2-faq-abierto__titulo,
+.d2 .d2-faq-acord__titulo,
+.d2 .d2-faq-rol__titulo {
+  margin: 0 0 14px;
+  font-size: clamp(30px, 3.1vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--c-texto, #333333);
+}
+
+.d2 .d2-faq-abierto__lead,
+.d2 .d2-faq-rol__lead {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+.d2 .d2-faq-abierto__pie,
+.d2 .d2-faq-acord__pie,
+.d2 .d2-faq-rol__pie {
+  margin: clamp(32px, 4vw, 52px) 0 0;
+  font-size: 15px;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 :is(.d2-faq-abierto__pie, .d2-faq-acord__pie, .d2-faq-rol__pie) a {
+  font-weight: 700;
+  color: var(--c-verde-hover, #026F00);
+}
+
+/* --------------------------------------------------------------------------
+   OPCION 3 — POR ROL
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-faq-rol {
+  background: var(--comp-faq, #FFFFFF);
+  padding-block: clamp(64px, 7vw, 104px);
+}
+
+.d2 .d2-faq-rol__inner {
+  max-width: var(--ancho-max, 1320px);
+  margin-inline: auto;
+  padding-inline: var(--pad-lateral, 28px);
+}
+
+.d2 .d2-faq-rol__cabecera { max-width: 52ch; margin-bottom: clamp(40px, 4.5vw, 64px); }
+
+.d2 .d2-faq-rol__cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(28px, 3vw, 48px);
+}
+
+.d2 .d2-faq-rol__col {
+  padding-top: 22px;
+  border-top: 3px solid var(--c-verde-marca, #39B54A);
+}
+
+.d2 .d2-faq-rol__marca { margin-bottom: 22px; }
+
+.d2 .d2-faq-rol__num {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--c-verde-hover, #026F00);
+}
+
+.d2 .d2-faq-rol__quien {
+  margin: 0 0 5px;
+  font-size: 19px;
+  line-height: 1.25;
+  color: var(--c-texto, #333333);
+}
+
+.d2 .d2-faq-rol__sub {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .d2-faq-rol__lista { margin: 0; }
+
+.d2 .d2-faq-rol__lista dt {
+  margin-bottom: 7px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--c-texto, #333333);
+}
+
+.d2 .d2-faq-rol__lista dd {
+  margin: 0 0 22px;
+  padding-bottom: 22px;
+  font-size: 14px;
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo, #333333);
+  border-bottom: 1px solid var(--c-borde, #E4E4E4);
+}
+
+.d2 .d2-faq-rol__lista dd:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+
+@media (max-width: 980px) {
+.d2 .d2-faq-rol__cols { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* --------------------------------------------------------------------------
+   EL FOCO, EN LAS TRES
+
+   Visible sobre cualquier fondo de la composicion. WCAG 2.4.11 pide ademas
+   que el elemento enfocado no quede tapado: aqui no hay nada superpuesto,
+   asi que se cumple sin trabajo extra.
+   -------------------------------------------------------------------------- */
+
+.d2 :is(.d2-faq-abierto, .d2-faq-acord, .d2-faq-rol) :is(button, a):focus-visible {
+  outline: 3px solid var(--c-verde-marca, #39B54A);
+  outline-offset: 3px;
+  border-radius: 2px;
+}

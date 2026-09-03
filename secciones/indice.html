@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rede — section library</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root { --v:#39B54A; --vo:#026F00; --t:#333333; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0 24px 80px;
+    font: 400 15px/1.6 "Open Sans", system-ui, sans-serif;
+    color: var(--t); background: #FAFAFA;
+  }
+  header { max-width: 1100px; margin: 0 auto; padding: 56px 0 40px; }
+  h1 { margin: 0 0 10px; font-size: 34px; letter-spacing: -.02em; }
+  .lead { max-width: 62ch; margin: 0; color: #5C5C5C; }
+  .lib-s { max-width: 1100px; margin: 0 auto 44px; }
+  .lib-s h2 {
+    margin: 0 0 4px; padding-bottom: 10px;
+    font-size: 19px; border-bottom: 2px solid var(--v);
+  }
+  .lib-s h2 small { font-weight: 400; color: #707070; font-size: 13px; }
+  .lib-js { margin: 8px 0 0; font-size: 12px; color: #707070; }
+  .lib-g {
+    display: grid; gap: 12px; margin-top: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(228px, 1fr));
+  }
+  .lib-v {
+    display: block; padding: 16px 18px;
+    text-decoration: none; color: inherit;
+    background: #FFFFFF; border: 1px solid #E4E4E4; border-radius: 8px;
+    transition: border-color .15s, transform .15s;
+  }
+  .lib-v:hover { border-color: var(--v); transform: translateY(-2px); }
+  .lib-n {
+    display: inline-block; margin-bottom: 6px;
+    font-size: 11px; font-weight: 700; color: var(--vo);
+  }
+  .lib-t { display: block; font-weight: 700; margin-bottom: 6px; }
+  code {
+    font-size: 11px; color: #5C5C5C;
+    padding: 1px 5px; background: #F3F3F3; border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Section library</h1>
+  <p class="lead">Every section variant built for this site, saved as an independent
+  piece: markup, its own CSS, and the scripts it needs. Nothing is deleted — a variant
+  that does not fit the home page may fit another one.</p>
+</header>
+<section class="lib-s"><h2>Hero <small>3 variants</small></h2><div class="lib-g"><a class="lib-v" href="hero/01-original.preview.html"><span class="lib-n">1</span><span class="lib-t">Original</span><code>.d2-hero</code></a><a class="lib-v" href="hero/02-smaller-panel.preview.html"><span class="lib-n">2</span><span class="lib-t">Smaller panel</span><code>.d2-hero</code></a><a class="lib-v" href="hero/03-translucent.preview.html"><span class="lib-n">3</span><span class="lib-t">Translucent</span><code>.d2-hero</code></a></div></section>
+<section class="lib-s"><h2>Client logos <small>3 variants</small></h2><p class="lib-js">Needs: <code>js/d2-foco.js</code></p><div class="lib-g"><a class="lib-v" href="logos/01-marquee.preview.html"><span class="lib-n">1</span><span class="lib-t">Marquee</span><code>.d2-logos</code></a><a class="lib-v" href="logos/02-three-blocks.preview.html"><span class="lib-n">2</span><span class="lib-t">Three blocks</span><code>.d2-logos--dos</code></a><a class="lib-v" href="logos/03-spotlight.preview.html"><span class="lib-n">3</span><span class="lib-t">Spotlight</span><code>.d2-foco</code></a></div></section>
+<section class="lib-s"><h2>The problem <small>4 variants</small></h2><p class="lib-js">Needs: <code>js/d2-mapa-cartera.js</code></p><div class="lib-g"><a class="lib-v" href="problema/01-triptych.preview.html"><span class="lib-n">1</span><span class="lib-t">Triptych</span><code>.d2-prob-tri</code></a><a class="lib-v" href="problema/02-readings.preview.html"><span class="lib-n">2</span><span class="lib-t">Readings</span><code>.d2-prob-lec</code></a><a class="lib-v" href="problema/03-comparison.preview.html"><span class="lib-n">3</span><span class="lib-t">Comparison</span><code>.d2-prob-comp</code></a><a class="lib-v" href="problema/04-map.preview.html"><span class="lib-n">4</span><span class="lib-t">Map</span><code>.d2-prob-mapa</code></a></div></section>
+<section class="lib-s"><h2>Calculator <small>3 variants</small></h2><p class="lib-js">Needs: <code>js/main.js</code>, <code>js/d2-calc-vivo.js</code></p><div class="lib-g"><a class="lib-v" href="calc/01-panel.preview.html"><span class="lib-n">1</span><span class="lib-t">Panel</span><code>.calc</code></a><a class="lib-v" href="calc/02-split.preview.html"><span class="lib-n">2</span><span class="lib-t">Split</span><code>.calc</code></a><a class="lib-v" href="calc/03-steps.preview.html"><span class="lib-n">3</span><span class="lib-t">Steps</span><code>.calc</code></a></div></section>
+<section class="lib-s"><h2>Solution routes <small>3 variants</small></h2><div class="lib-g"><a class="lib-v" href="rutas/01-self-select.preview.html"><span class="lib-n">1</span><span class="lib-t">Self-select</span><code>.d2-rutas-sel</code></a><a class="lib-v" href="rutas/02-ladder.preview.html"><span class="lib-n">2</span><span class="lib-t">Ladder</span><code>.d2-rutas-esc</code></a><a class="lib-v" href="rutas/03-comparison.preview.html"><span class="lib-n">3</span><span class="lib-t">Comparison</span><code>.d2-rutas-cmp</code></a></div></section>
+<section class="lib-s"><h2>Proof <small>3 variants</small></h2><div class="lib-g"><a class="lib-v" href="prueba/01-record.preview.html"><span class="lib-n">1</span><span class="lib-t">Record</span><code>.d2-prueba-reg</code></a><a class="lib-v" href="prueba/02-backed.preview.html"><span class="lib-n">2</span><span class="lib-t">Backed</span><code>.d2-prueba-resp</code></a><a class="lib-v" href="prueba/03-timeline.preview.html"><span class="lib-n">3</span><span class="lib-t">Timeline</span><code>.d2-prueba-rec</code></a></div></section>
+<section class="lib-s"><h2>Reviews <small>2 variants</small></h2><p class="lib-js">Needs: <code>js/d2-resenas.js</code></p><div class="lib-g"><a class="lib-v" href="resenas/01-three.preview.html"><span class="lib-n">1</span><span class="lib-t">Three</span><code>.d2-res-tres</code></a><a class="lib-v" href="resenas/02-editorial.preview.html"><span class="lib-n">2</span><span class="lib-t">Editorial</span><code>.d2-res-ed</code></a></div></section>
+<section class="lib-s"><h2>Team <small>3 variants</small></h2><div class="lib-g"><a class="lib-v" href="equipo/01-cards.preview.html"><span class="lib-n">1</span><span class="lib-t">Cards</span><code>.d2-equipo-ficha</code></a><a class="lib-v" href="equipo/02-dossier.preview.html"><span class="lib-n">2</span><span class="lib-t">Dossier</span><code>.d2-equipo-dosier</code></a><a class="lib-v" href="equipo/03-signature.preview.html"><span class="lib-n">3</span><span class="lib-t">Signature</span><code>.d2-equipo-firma</code></a></div></section>
+<section class="lib-s"><h2>Questions <small>3 variants</small></h2><p class="lib-js">Needs: <code>js/d2-faq.js</code></p><div class="lib-g"><a class="lib-v" href="faq/01-open.preview.html"><span class="lib-n">1</span><span class="lib-t">Open</span><code>.d2-faq-abierto</code></a><a class="lib-v" href="faq/02-accordion.preview.html"><span class="lib-n">2</span><span class="lib-t">Accordion</span><code>.d2-faq-acord</code></a><a class="lib-v" href="faq/03-by-role.preview.html"><span class="lib-n">3</span><span class="lib-t">By role</span><code>.d2-faq-rol</code></a></div></section>
+<section class="lib-s"><h2>Call to action <small>3 variants</small></h2><div class="lib-g"><a class="lib-v" href="cta/01-balanced.preview.html"><span class="lib-n">1</span><span class="lib-t">Balanced</span><code>.d2-cta-bal</code></a><a class="lib-v" href="cta/02-continuity.preview.html"><span class="lib-n">2</span><span class="lib-t">Continuity</span><code>.d2-cta-con</code></a><a class="lib-v" href="cta/03-two-lanes.preview.html"><span class="lib-n">3</span><span class="lib-t">Two lanes</span><code>.d2-cta-car</code></a></div></section>
+<section class="lib-s"><h2>Footer <small>3 variants</small></h2><div class="lib-g"><a class="lib-v" href="footer/01-directory.preview.html"><span class="lib-n">1</span><span class="lib-t">Directory</span><code>.d2-pie-dir</code></a><a class="lib-v" href="footer/02-contact-first.preview.html"><span class="lib-n">2</span><span class="lib-t">Contact-first</span><code>.d2-pie-desp</code></a><a class="lib-v" href="footer/03-closing.preview.html"><span class="lib-n">3</span><span class="lib-t">Closing</span><code>.d2-pie-cierre</code></a></div></section>
+</body>
+</html>

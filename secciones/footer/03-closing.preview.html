@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Footer / Closing</title>
+
+<!-- La biblioteca vive dos niveles por debajo de la raiz -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/d2.css">
+
+<!-- Solo el CSS de esta variante -->
+<link rel="stylesheet" href="03-closing.css">
+
+<style>
+  /* La barra de la vista previa. No forma parte de la seccion. */
+  .vp-barra {
+    position: sticky; top: 0; z-index: 99;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 18px;
+    font: 600 12px/1.4 "Open Sans", system-ui, sans-serif;
+    color: #FFFFFF; background: #333333;
+  }
+  .vp-barra a { color: #B0E1B7; text-decoration: none; }
+  .vp-barra a:hover { text-decoration: underline; }
+  .vp-barra code {
+    padding: 2px 6px; font-size: 11px;
+    background: rgba(255,255,255,.14); border-radius: 3px;
+  }
+  .vp-sep { opacity: .45; }
+  /* Los tokens de composicion, para que la seccion no salga sin fondo */
+  .d2 {
+    --comp-blanco:#FFFFFF; --comp-gris:#F3F3F3; --comp-negro:#333333;
+    --comp-hero:#FFFFFF; --comp-logos:#FFFFFF; --comp-problema:#F3F3F3;
+    --comp-calc:#FFFFFF; --comp-rutas:#F3F3F3; --comp-prueba:#FFFFFF;
+    --comp-resenas:#F3F3F3; --comp-equipo:#FFFFFF; --comp-faq:#F3F3F3;
+    --comp-cta:#333333; --comp-footer:#333333;
+  }
+</style>
+</head>
+<body class="d2">
+
+<div class="vp-barra">
+  <a href="../indice.html">&larr; Library</a>
+  <span class="vp-sep">/</span>
+  <strong>Footer</strong>
+  <span class="vp-sep">/</span>
+  <span>Closing</span>
+  <span class="vp-sep">|</span>
+  <code>.d2-pie-cierre</code>
+  <span class="vp-sep">|</span>
+  <a href="03-closing.html">markup</a>
+  <a href="03-closing.css">css</a>
+</div>
+
+<footer class="d2-pie-cierre">
+      <div class="d2-pie-cierre__inner">
+
+        <!-- Fila alta: marca a la izquierda, contacto a la derecha.
+             La direccion va en la misma linea que el telefono y el correo,
+             separada por puntos: es un dato de una linea, no un bloque. -->
+        <div class="d2-pie-cierre__alto">
+          <div class="d2-pie-cierre__marca">
+            <a href="#" class="d2-pie-cierre__logo" aria-label="Rede Energy Solutions, home">
+              <img src="assets/Rede-logo.svg" alt="Rede, Building Energy Efficiency"
+                   width="360" height="108">
+            </a>
+            <p class="d2-pie-cierre__pron">
+              Rede rhymes with steady.
+              <button class="d2-pie-pron" type="button" aria-label="Hear how Rede is pronounced">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.8"
+                        stroke-linejoin="round"/>
+                  <path d="M15.5 8.5a5 5 0 010 7" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round"/>
+                </svg>
+              </button>
+            </p>
+          </div>
+
+          <p class="d2-pie-cierre__tagline">
+            Energy management for public sector and multi-site organizations across
+            Western Canada.
+          </p>
+        </div>
+
+        <!-- Fila de contacto: los tres datos en linea. -->
+        <div class="d2-pie-cierre__contacto">
+          <a class="d2-pie-cierre__dato" href="tel:+17783276851">778.327.6851</a>
+          <a class="d2-pie-cierre__dato" href="mailto:matthew@getrede.ca">matthew@getrede.ca</a>
+          <address class="d2-pie-cierre__direccion">
+            535 D&rsquo;Artisan Lane, Bowen Island, BC V0N 1G2
+          </address>
+        </div>
+
+        <!-- Todos los enlaces en una sola fila envolvente. Un unico <nav>
+             porque aqui SI forman una lista plana: sin columnas no hay
+             grupos que distinguir, y agrupar dos veces lo mismo confunde.
+
+             El orden es el de la opcion 1 leido de corrido: primero
+             Solutions, luego Company. -->
+        <nav class="d2-pie-cierre__nav" aria-label="Footer">
+          <ul class="d2-pie-cierre__enlaces">
+            <li><a href="energy-gap-analysis.html">Energy Gap Analysis</a></li>
+            <li><a href="#">Site Investigation</a></li>
+            <li><a href="recommissioning.html">Recommissioning</a></li>
+            <li><a href="energy-management.html">Energy Management</a></li>
+            <li><a href="run.html">RUN</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="#calculator">Check your opportunity</a></li>
+          </ul>
+        </nav>
+
+        <!-- Linea de cierre: legales y acceso de cliente. -->
+        <div class="d2-pie-cierre__base">
+          <p class="d2-pie-cierre__legal">&copy; 2026 Rede Energy Solutions Ltd.</p>
+          <ul class="d2-pie-cierre__legales">
+            <li><a href="#">Privacy policy</a></li>
+            <li><a href="#">Terms of use</a></li>
+            <li><a href="client-login.html" class="d2-pie-cierre__login">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M4.5 20c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              Client Login
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Close options">
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Previous option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Directory</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Contact-first</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Closing</small></button>
+    </div>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+</section>
+
+
+<!-- ==========================================================================
+     SECCIONES AUN OCULTAS
+
+     Reseñas y lo que venga despues. Se publican cuando se aprueben las
+     variantes de arriba.
+
+     PARA DEVOLVERLAS: quitar la apertura y el cierre de este comentario y
+     cambiar los ~~ por guiones dobles (los comentarios HTML no se pueden
+     anidar, por eso se neutralizaron).
+     ========================================================================== -->
+<!--
+<!~~ ==========================================================================
+     SECCION 4 — COMPACT CUSTOMER REVIEW
+
+     Las tres citas son reales y atribuidas. El copy no cambia.
+
+     Cada una va con el logo real de su distrito, en blanco sobre el fondo
+     oscuro. SD27 British Columbia es Cariboo Chilcotin, de ahi el logo.
+     ========================================================================== ~~>
+<section class="d2-resenas" aria-labelledby="resenas-titulo">
+  <img class="d2-resenas__fondo" src="assets/img/banners/consumo-descendente.jpg"
+       alt="" aria-hidden="true" loading="lazy">
+
+  <div class="d2-resenas__inner">
+    <p class="d2-resenas__eyebrow" id="resenas-titulo">What clients say</p>
+
+    <div class="d2-carrusel" id="carrusel-citas">
+
+      <figure class="d2-cita es-activa">
+        <div>
+          <blockquote class="d2-cita__texto">
+            Before Northland started working with Rede, we had no energy management plan
+            at all. We recognized quickly that we can save money with an energy
+            management program.</blockquote>
+          <figcaption class="d2-cita__autor">
+            <span class="d2-cita__nombre">Wayne Turpin</span>
+            <span class="d2-cita__org">Northland School Division</span>
+          </figcaption>
+        </div>
+        <div class="d2-cita__logo">
+          <img src="assets/img/logos-blanco/northland.png"
+               alt="Northland School Division" width="244" height="200" loading="lazy">
+        </div>
+      </figure>
+
+      <figure class="d2-cita">
+        <div>
+          <blockquote class="d2-cita__texto">
+            The Rede team is all about proactively implementing energy solutions. They
+            see a gap and they take care of it.</blockquote>
+          <figcaption class="d2-cita__autor">
+            <span class="d2-cita__nombre">Alex Telford</span>
+            <span class="d2-cita__org">SD27 British Columbia</span>
+          </figcaption>
+        </div>
+        <div class="d2-cita__logo">
+          <img src="assets/img/logos-blanco/cariboo-chilcotin.png"
+               alt="Cariboo Chilcotin School District 27" width="400" height="200" loading="lazy">
+        </div>
+      </figure>
+
+      <figure class="d2-cita">
+        <div>
+          <blockquote class="d2-cita__texto">
+            For people like myself, money talks. If we can engage someone like Rede to
+            find inefficiencies within our facilities, then we are able to address them.</blockquote>
+          <figcaption class="d2-cita__autor">
+            <span class="d2-cita__nombre">Norman Buhler</span>
+            <span class="d2-cita__org">Fort Vermilion School Division</span>
+          </figcaption>
+        </div>
+        <div class="d2-cita__logo">
+          <img src="assets/img/logos-blanco/fort-vermilion.png"
+               alt="Fort Vermilion School Division" width="200" height="200" loading="lazy">
+        </div>
+      </figure>
+
+    </div>
+
+    <div class="d2-carrusel__puntos" id="puntos-citas" role="tablist" aria-label="Client reviews">
+      <button class="d2-punto es-activo" type="button" role="tab"
+              aria-selected="true" aria-label="Review 1 of 3"></button>
+      <button class="d2-punto" type="button" role="tab"
+              aria-selected="false" aria-label="Review 2 of 3"></button>
+      <button class="d2-punto" type="button" role="tab"
+              aria-selected="false" aria-label="Review 3 of 3"></button>
+    </div>
+
+
+
+</body>
+</html>

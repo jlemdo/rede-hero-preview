@@ -1,0 +1,178 @@
+/* The problem / Triptych
+   Reglas cuyo selector menciona .d2-prob-tri, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   SECCION "THE PROBLEM" — TRES VARIANTES
+
+   La version anterior --filas alternas con foto-- medía 2470px: casi tres
+   pantallas para tres ideas. Y tenia un defecto de fondo: los tres puntos
+   son PARALELOS, tres sintomas del mismo problema, pero el zigzag los
+   presenta uno detras de otro, como pasos de un proceso.
+
+   NN/g midio ese layout con eyetracking (2017): los usuarios tropiezan al
+   escanearlo, con fijaciones accidentales y redirecciones. El matiz que
+   importa es que el perjuicio aparece SOLO con imagenes decorativas -- las
+   informativas rinden igual en cualquier layout.
+
+   De ahi las tres variantes: la 1 quita la imagen, la 2 la convierte en
+   informativa, y la 3 cambia el eje de lectura.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Piezas comunes a las tres
+   -------------------------------------------------------------------------- */
+
+.d2-prob-tri,
+.d2-prob-lec,
+.d2-prob-comp {
+  padding-block: clamp(48px, 5.4vw, 76px);
+  background: var(--c-blanco, #fff);
+}
+
+.d2-prob-tri__inner,
+.d2-prob-lec__inner,
+.d2-prob-comp__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+.d2-prob-tri__titulo,
+.d2-prob-lec__titulo,
+.d2-prob-comp__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2-prob-tri__lead,
+.d2-prob-lec__lead,
+.d2-prob-comp__lead {
+  margin: var(--d2-e3) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* ==========================================================================
+   OPCION 1 — TRIPTICO ALINEADO
+
+   Tres columnas de igual ancho. NN/g observo que los cuerpos de texto
+   alineados se recorren "sin esfuerzo", frente al tropiezo del zigzag.
+
+   Y la forma dice la verdad sobre el contenido: en paralelo, sin un orden
+   que seguir.
+   ========================================================================== */
+
+.d2-prob-tri__cabecera {
+  max-width: 62ch;
+}
+
+.d2-prob-tri__lista {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 3vw, 44px);
+  margin: clamp(34px, 4vw, 52px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* El filo superior sustituye a la caja: separa las columnas sin encerrarlas.
+   NN/g aconseja preferir el blanco al contorno cuando el blanco basta, y
+   aqui basta. */
+.d2-prob-tri__lista li {
+  padding-top: var(--d2-e3);
+  border-top: 2px solid var(--c-verde);
+}
+
+/* El numeral se pinta desde CSS, no desde el marcado: es ritmo visual, no
+   estructura. Un lector de pantalla no lo anuncia, asi que no afirma un
+   orden que estos tres puntos no tienen. */
+.d2-prob-tri__lista li::before {
+  content: "0" counter(list-item);
+  display: block;
+  margin-bottom: var(--d2-e2);
+  font-size: .8125rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .06em;
+  color: var(--c-verde-hover);
+}
+
+.d2-prob-tri__lista h3 {
+  margin: 0 0 var(--d2-e1);
+  font-size: clamp(1.0625rem, 1rem + .3vw, 1.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.28;
+  color: var(--c-texto);
+}
+
+.d2-prob-tri__lista p {
+  margin: 0;
+  font-size: .9375rem;
+  line-height: 1.58;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+.d2-prob-tri__cierre {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 28px);
+  flex-wrap: wrap;
+  margin-top: clamp(30px, 3.6vw, 44px);
+  padding-top: clamp(22px, 2.6vw, 30px);
+  border-top: 1px solid rgba(2, 51, 0, .1);
+}
+
+.d2-prob-tri__remate {
+  margin: 0;
+  font-size: clamp(1.0625rem, 1rem + .4vw, 1.375rem);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2-prob-tri__cabecera,
+.d2-prob-tri__lista li,
+.d2-prob-tri__cierre,
+.d2-prob-lec__cabecera,
+.d2-prob-lec__lista li,
+.d2-prob-comp__cabecera,
+.d2-prob-comp__tabla,
+.d2-prob-comp__cierre {
+  animation: d2-prob-entra .55s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+/* Las columnas entran escalonadas, para que se lean una detras de otra en
+   vez de aparecer las tres de golpe. */
+.d2-prob-tri__lista li:nth-child(1) { animation-delay: .06s; }
+
+.d2-prob-tri__lista li:nth-child(2) { animation-delay: .13s; }
+
+.d2-prob-tri__lista li:nth-child(3) { animation-delay: .20s; }
+
+.d2-prob-tri__cierre { animation-delay: .28s; }
+
+@media (prefers-reduced-motion: reduce) {
+.d2-prob-tri__cabecera,
+  .d2-prob-tri__lista li,
+  .d2-prob-tri__cierre,
+  .d2-prob-lec__cabecera,
+  .d2-prob-lec__lista li,
+  .d2-prob-comp__cabecera,
+  .d2-prob-comp__tabla,
+  .d2-prob-comp__cierre {
+    animation: none;
+  }
+}
+
+@media (max-width: 860px) {
+.d2-prob-tri__lista { grid-template-columns: 1fr; gap: var(--d2-e4); }
+}
+
+.d2 .d2-prob-tri, .d2 .d2-prob-lec, .d2 .d2-prob-comp    { background: var(--comp-problema); }

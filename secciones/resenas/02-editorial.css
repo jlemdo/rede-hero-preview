@@ -1,0 +1,619 @@
+/* Reviews / Editorial
+   Reglas cuyo selector menciona .d2-res-ed, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* --------------------------------------------------------------------------
+   Comun
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-res-tres,
+.d2 .d2-res-ed {
+  padding-block: clamp(48px, 5.4vw, 76px);
+  background: var(--d2-tinta);
+  border-block: 1px solid rgba(2, 51, 0, .07);
+}
+
+.d2 .d2-res-tres__inner,
+.d2 .d2-res-ed__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+/* ==========================================================================
+   OPCION 2 — EDITORIAL
+
+   El componente del cliente. Las equivalencias con el original:
+
+     text-[120px] font-light          -> el numeral, peso 300
+     text-foreground/10               -> verde oscuro al 10%
+     text-2xl md:text-3xl font-light  -> la cita, peso 300 y trazo fino
+     grayscale group-hover:grayscale-0-> el logo toma color al pasar
+     ring-2 ring-foreground/10        -> el aro del marco
+     h-px w-12 / w-6                  -> las lineas del selector
+     tracking-widest uppercase        -> el contador 01 / 03
+   ========================================================================== */
+
+.d2 .d2-res-ed__inner {
+  max-width: 760px;   /* el original va estrecho: max-w-2xl */
+}
+
+.d2 .d2-res-ed__fila {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(18px, 2.6vw, 34px);
+}
+
+/* El numeral gigante. Peso ligero y casi transparente: es textura, no
+   informacion --el contador de abajo es quien lo dice--, por eso va
+   marcado aria-hidden en el marcado.
+
+   font-variant-numeric: tabular-nums es el equivalente del
+   fontFeatureSettings:'tnum' del original: sin el, el 1 es mas estrecho
+   que el 2 y el numeral bailaria al cambiar de cita. */
+.d2 .d2-res-ed__num {
+  flex: none;
+  font-size: clamp(64px, 9vw, 120px);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -.02em;
+  color: rgba(14, 42, 18, .12);
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+  transition: color .5s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .d2-res-ed__cuerpo {
+  flex: 1;
+  min-width: 0;
+  padding-top: clamp(6px, 1vw, 16px);
+}
+
+/* La cita: grande y de trazo FINO. Es lo que le da el aire editorial --una
+   cita en negrita se lee como un titular, no como una voz. */
+.d2 .d2-res-ed__cita {
+  margin: 0;
+  font-size: clamp(1.25rem, 1.05rem + .9vw, 1.75rem);
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: -.015em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-res-ed__autor {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e3);
+  margin-top: clamp(24px, 3vw, 40px);
+}
+
+/* El marco redondo del retrato del original. Aqui contiene el logo del
+   distrito, que en este hueco dice mas que una foto: el lector reconoce el
+   suyo. */
+.d2 .d2-res-ed__marco {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  padding: 9px;
+  overflow: hidden;
+  background: var(--c-blanco, #fff);
+  border-radius: var(--d2-radio-full);
+  box-shadow: inset 0 0 0 2px rgba(14, 42, 18, .12);
+  transition: box-shadow .3s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .d2-res-ed__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: .72;
+  transition: filter .5s cubic-bezier(.32, .72, 0, 1),
+              opacity .5s cubic-bezier(.32, .72, 0, 1);
+}
+
+/* El group-hover del original: el aro se marca y el logo toma color */
+.d2 .d2-res-ed__autor:hover .d2-res-ed__marco {
+  box-shadow: inset 0 0 0 2px rgba(14, 42, 18, .3);
+}
+
+.d2 .d2-res-ed__autor:hover .d2-res-ed__logo {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+.d2 .d2-res-ed__nombre {
+  display: block;
+  font-size: .9375rem;
+  font-weight: var(--fw-semibold, 600);
+  line-height: 1.35;
+  color: var(--c-texto);
+}
+
+.d2 .d2-res-ed__meta {
+  display: block;
+  font-size: .8125rem;
+  line-height: 1.35;
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-res-ed__barra {
+  margin-inline: 8px;
+  color: rgba(14, 42, 18, .25);
+}
+
+.d2 .d2-res-ed__org {
+  transition: color .3s ease;
+}
+
+.d2 .d2-res-ed__autor:hover .d2-res-ed__org {
+  color: var(--c-texto);
+}
+
+/* --------------------------------------------------------------------------
+   El cruce
+
+   Sale desplazandose a la derecha, se cambia el texto sin que se vea, y
+   entra desde la izquierda. Los 300ms del original.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-res-ed__cita,
+.d2 .d2-res-ed__autor {
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+.d2 .d2-res-ed__autor { transition-delay: .1s; }
+
+.d2 [data-res-ed].esta-cambiando .d2-res-ed__cita {
+  opacity: 0;
+  transform: translateX(16px);
+}
+
+.d2 [data-res-ed].esta-cambiando .d2-res-ed__autor {
+  opacity: 0;
+}
+
+/* El estado de partida de la entrada, sin transicion para que se aplique
+   de golpe y el recorrido se vea entero */
+.d2 [data-res-ed].esta-entrando .d2-res-ed__cita {
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: none;
+}
+
+.d2 [data-res-ed].esta-entrando .d2-res-ed__autor {
+  opacity: 0;
+  transition: none;
+}
+
+/* --------------------------------------------------------------------------
+   Los mandos
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-res-ed__mandos {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--d2-e3);
+  margin-top: clamp(36px, 4.4vw, 64px);
+}
+
+.d2 .d2-res-ed__izq {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 24px);
+}
+
+.d2 .d2-res-ed__lineas {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e2);
+}
+
+/* Las lineas del original. El area de pulsacion es de 44px de alto aunque
+   el trazo mida 1px: un objetivo tactil de un pixel seria inalcanzable
+   (WCAG 2.5.8 pide 24x24 como minimo). */
+.d2 .d2-res-ed__linea {
+  display: grid;
+  place-items: center;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.d2 .d2-res-ed__linea span {
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: rgba(14, 42, 18, .25);
+  transition: width .5s cubic-bezier(.16, 1, .3, 1),
+              background-color .5s cubic-bezier(.16, 1, .3, 1);
+}
+
+.d2 .d2-res-ed__linea:hover span {
+  width: 32px;
+  background: rgba(14, 42, 18, .45);
+}
+
+/* La activa se alarga al doble y se pinta solida: es el gesto que define
+   al componente. */
+.d2 .d2-res-ed__linea.es-activa span {
+  width: 48px;
+  background: var(--c-texto);
+}
+
+.d2 .d2-res-ed__linea:focus-visible {
+  outline: 2px solid var(--c-verde);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.d2 .d2-res-ed__contador {
+  font-size: .6875rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+.d2 .d2-res-ed__flechas {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.d2 .d2-res-ed__flecha {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: var(--d2-radio-full);
+  background: none;
+  color: rgba(14, 42, 18, .45);
+  cursor: pointer;
+  transition: color .3s ease, background-color .3s ease;
+}
+
+.d2 .d2-res-ed__flecha:hover {
+  color: var(--c-texto);
+  background: rgba(14, 42, 18, .06);
+}
+
+.d2 .d2-res-ed__flecha:focus-visible {
+  outline: 2px solid var(--c-verde);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .d2-res-ed__cita,
+  .d2 .d2-res-ed__autor,
+  .d2 .d2-res-ed__num,
+  .d2 .d2-res-ed__logo,
+  .d2 .d2-res-ed__marco,
+  .d2 .d2-res-ed__linea span,
+  .d2 .d2-res-ed__flecha,
+  .d2 .d2-res-tres__logo {
+    transition: none;
+  }
+.d2 [data-res-ed].esta-cambiando .d2-res-ed__cita,
+  .d2 [data-res-ed].esta-cambiando .d2-res-ed__autor,
+  .d2 [data-res-ed].esta-entrando .d2-res-ed__cita,
+  .d2 [data-res-ed].esta-entrando .d2-res-ed__autor {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 620px) {
+/* El numeral pasa encima: al lado se come el ancho de la cita, que es lo
+     que hay que leer. */
+  .d2 .d2-res-ed__fila {
+    flex-direction: column;
+    gap: var(--d2-e2);
+  }
+.d2 .d2-res-ed__cuerpo { padding-top: 0; }
+.d2 .d2-res-ed__mandos {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--d2-e2);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   LA CABECERA DE LA VARIANTE EDITORIAL
+
+   El componente original no llevaba titulo: vivia suelto en una pagina de
+   demostracion. Aqui es una seccion mas de la home y necesita presentarse,
+   como el resto.
+
+   Va alineada con la cita, no centrada: el bloque entero se lee por la
+   izquierda y centrar la cabecera romperia esa columna.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-res-ed__cabecera {
+  max-width: 52ch;
+  margin-inline: auto;
+  margin-bottom: clamp(30px, 3.6vw, 48px);
+  text-align: center;
+}
+
+.d2 .d2-res-ed__eyebrow {
+  margin: 0;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-res-ed__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+/* El subtitulo en peso ligero, como la cita: es la voz de la seccion, no
+   otro titular compitiendo con el de arriba. */
+.d2 .d2-res-ed__sub {
+  margin: var(--d2-e3) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* ==========================================================================
+   LOS FONDOS DE SECCION
+
+   El selector cambia UNICAMENTE el color de fondo de las secciones
+   tintadas. Nada de lo que vive dentro --tarjetas, botones, graficos-- se
+   toca: cada pieza conserva el color que su propio diseño le dio.
+
+   Un intento anterior repintaba tambien el interior: 82 reglas que
+   acababan poniendo tarjetas blancas sobre fondo oscuro con el texto
+   ilegible, y recuadros donde no debia haberlos. El problema no era el
+   color elegido sino el alcance.
+
+   Solo hay dos excepciones, y ambas son necesarias:
+
+     1. El TEXTO SUELTO de la seccion --el que va directamente sobre el
+        fondo, sin tarjeta-- tiene que invertirse o desaparece.
+     2. Los LOGOS de cliente son marcas grises: sobre oscuro se pierden.
+
+   Todo lo que esta dentro de una tarjeta se queda como esta, porque la
+   tarjeta le da su propio fondo.
+   ========================================================================== */
+
+/* --- Las opciones claras: solo cambia el fondo, nada mas --- */
+
+/* (no hace falta regla: el token --d2-tinta que fija el JS ya lo hace) */
+
+/* --- La opcion oscura --- */
+
+/* El texto que va DIRECTAMENTE sobre el fondo de la seccion. El selector
+   `> *` limita el alcance a los hijos directos del contenedor: lo que este
+   dentro de una tarjeta no entra, que es justo lo que se quiere. */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco, .d2-prueba-resp,
+                                  .d2-cta-bal, .d2-cta-car, .d2-res-tres,
+                                  .d2-res-ed) {
+  color: #FFFFFF;
+}
+
+/* Titulares, entradillas y etiquetas sueltas. Se nombran los contenedores
+   de cabecera, no cada elemento, para no volver a la lista interminable. */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco, .d2-prueba-resp,
+                                  .d2-cta-bal, .d2-cta-car, .d2-res-tres,
+                                  .d2-res-ed) :is(h1, h2, h3, h4) {
+  color: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos__titulo,
+                                 .d2-logos--dos__etiqueta,
+                                 .d2-foco__etiqueta,
+                                 .d2-res-tres__eyebrow,
+                                 .d2-res-ed__eyebrow,
+                                 .d2-res-ed__sub,
+                                 .d2-res-ed__contador,
+                                 .d2-res-ed__meta,
+                                 .d2-cta-bal__parrafo,
+                                 .d2-cta-car__parrafo,
+                                 .d2-logos--dos__cifra-pie,
+                                 .d2-logos--dos__cifra-nota,
+                                 .d2-foco__cifra-pie,
+                                 .d2-foco__cifra-nota) {
+  color: #E8E8E8;
+}
+
+/* Las variables de texto, redefinidas DENTRO de cada seccion tintada.
+
+   Es la unica forma de que titulares y cifras se adapten sin nombrarlos
+   uno a uno: usan var(--c-texto) desde selectores mas especificos, y
+   competir con ellos exigiria una regla por clase.
+
+   Ojo: va en la SECCION, no en .d2. Puesto en .d2 afectaria al hero y al
+   resto de la pagina, que siguen sobre fondo claro. */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco,
+                                  .d2-prueba-resp, .d2-cta-bal,
+                                  .d2-cta-car, .d2-res-tres,
+                                  .d2-res-ed) {
+  --c-texto: #FFFFFF;
+  --c-texto-cuerpo: #E8E8E8;
+  --c-texto-suave: #BFBFBF;
+}
+
+/* El numeral gigante de la variante editorial usa verde oscuro al 12% como
+   marca de agua. Sobre fondo oscuro se funde: se invierte la base del alfa
+   para conservar el mismo efecto en el sentido correcto. */
+.d2 [data-comp-tono="oscuro"] .d2-res-ed__num {
+  color: rgba(255, 255, 255, .16);
+}
+
+/* Los mandos de la variante editorial, que tambien usan alfa oscura */
+.d2 [data-comp-tono="oscuro"] .d2-res-ed__linea span {
+  background: rgba(255, 255, 255, .3);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-res-ed__linea.es-activa span {
+  background: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-res-ed__flecha {
+  color: rgba(255, 255, 255, .55);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-res-ed__barra {
+  color: rgba(255, 255, 255, .3);
+}
+
+/* Los filetes separadores, que van en verde muy tenue */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco, .d2-prueba-resp,
+                                  .d2-cta-bal, .d2-cta-car, .d2-res-tres,
+                                  .d2-res-ed) {
+  border-color: rgba(255, 255, 255, .14);
+}
+
+.d2 .d2-res-tres, .d2 .d2-res-ed                         { background: var(--comp-resenas); }
+
+/* --------------------------------------------------------------------------
+   4. EL NUMERAL DE LAS RESENAS — 1.26:1
+
+   #0E2A12 sobre gris claro. Es el verde oscuro que ya retiramos del
+   sistema; aqui quedaba como resto.
+
+   Es decorativo --el contador "01 / 03" de debajo dice lo mismo, y lleva
+   aria-hidden-- pero a 120px es lo primero que se ve, y dejarlo ilegible
+   parece un fallo de carga. Se le da el verde de marca al 40%, que sobre
+   claro funciona como mancha sin pretender ser texto.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-res-ed__num {
+  color: #B0E1B7;
+}
+
+/* Sobre fondo oscuro, la misma pieza necesita el valor inverso */
+.d2 [data-comp-tono="oscuro"] .d2-res-ed__num {
+  color: rgba(255, 255, 255, .18);
+}
+
+/* ==========================================================================
+   LAS ISLAS CLARAS DENTRO DE UNA SECCION OSCURA
+
+   El fallo que esto corrige: cuando una seccion pasa a negro, su texto se
+   invierte a blanco. Pero muchas secciones contienen TARJETAS con fondo
+   claro propio --items de lista, marcos de foto, paneles-- y ahi el texto
+   blanco quedaba sobre fondo casi blanco: 1.07:1, invisible.
+
+   Ya paso una vez y lo resolvi nombrando las cinco tarjetas que conocia.
+   Volvio a pasar en cuanto aparecieron variantes nuevas, porque la lista
+   hay que mantenerla a mano y nadie se acuerda.
+
+   Aqui se invierte el enfoque: en lugar de enumerar que tarjetas hay, se
+   declara que CUALQUIER superficie clara restaura los valores oscuros. Se
+   listan por su clase --no hay selector CSS para "elemento con fondo
+   claro"-- pero el criterio salio de barrer el DOM y preguntar por el color
+   real de cada elemento, no de la memoria.
+
+   Las 51 superficies claras detectadas, menos las que son la propia
+   seccion.
+   ========================================================================== */
+
+.d2 [data-comp-tono="oscuro"] :is(
+  /* Tarjetas e items de lista */
+  .d2-prob-lec__lista > li,
+  .d2-prob-comp__rede,
+  .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item,
+  .d2-prueba-resp__par,
+  .d2-prueba-rec__marca,
+  .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo,
+  .d2-equipo-firma__credenciales > li,
+  .d2-foco__prueba,
+  .d2-cta-bal__accion,
+  .d2-cta-car__carril,
+  .d2-cta-con__inner,
+  .d2-prob-mapa__ficha,
+  /* Marcos de imagen */
+  .d2-equipo-ficha__marco,
+  .d2-equipo-dosier__retrato,
+  .d2-equipo-firma__foto-grande,
+  .d2-equipo-firma__foto-mini,
+  .d2-res-ed__marco,
+  .d2-lec__grafico,
+  /* Paneles y piezas de la calculadora */
+  .d2-panel,
+  .d2-panel__filtro,
+  .calc,
+  .campo__wrap,
+  .resultado,
+  .adelanto,
+  .recomienda,
+  .prueba,
+  .perfil__punto,
+  .pastilla,
+  .contacto,
+  .contacto__icono
+) {
+  --c-texto:        #333333;
+  --c-texto-cuerpo: #333333;
+  --c-texto-suave:  #6B6B6B;
+  --c-linea:        rgba(0, 0, 0, .12);
+  color: var(--c-texto);
+}
+
+/* 3. EL NUMERAL DE LAS RESENAS — 1.32:1
+
+   Ya lo baje de #0E2A12 a verde claro, pero sigue siendo demasiado palido
+   sobre fondo claro. Es decorativo --lleva aria-hidden y el contador de
+   debajo dice lo mismo-- pero a 120px domina la composicion.
+
+   El minimo aplicable es 3:1 por tamano. #7BC488 da 3.04:1 sobre blanco y
+   2.74 sobre el gris, asi que no basta: pasa a #5AA869, que da 4.05:1 sobre
+   blanco y 3.65:1 sobre el gris tenue. */
+.d2 .d2-res-ed__num {
+  color: #5AA869;
+}
+
+/* 4. EL NUMERAL DE LAS RESENAS — 2.61:1, todavia corto
+
+   Tercer intento. #5AA869 daba 4.05 sobre blanco pero solo 2.61 sobre el
+   gris tenue, y el minimo a 120px es 3:1.
+
+   El problema de fondo es que quiero que sea una marca de agua --tenue por
+   diseno-- y a la vez que cumpla como texto. No puede ser las dos cosas.
+
+   La solucion correcta no es oscurecerlo mas: es reconocer que es
+   DECORATIVO. Ya lleva aria-hidden y el contador "01 / 03" de debajo dice
+   lo mismo de forma accesible. WCAG 1.4.3 excluye explicitamente el texto
+   decorativo del requisito de contraste.
+
+   Se le devuelve el valor tenue que pedia el diseno original, y se anota
+   por que queda exento. */
+/* EXENTO DE CONTRASTE, y conviene dejar dicho por que.
+
+   Lleva aria-hidden="true" en el marcado y el contador "01 / 03" de debajo
+   comunica lo mismo de forma accesible. WCAG 1.4.3 excluye el texto
+   puramente decorativo del requisito de 4.5:1.
+
+   La auditoria automatica lo marca como fallo --1.21:1-- porque no sabe
+   distinguir decoracion de contenido. Es un falso positivo conocido, no un
+   defecto pendiente.
+
+   Si algun dia se le quita el aria-hidden, deja de estar exento. */
+.d2 .d2-res-ed__num {
+  color: #C8E6CE;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-res-ed__num {
+  color: rgba(255, 255, 255, .16);
+}

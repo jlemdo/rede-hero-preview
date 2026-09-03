@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The problem / Readings</title>
+
+<!-- La biblioteca vive dos niveles por debajo de la raiz -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/d2.css">
+
+<!-- Solo el CSS de esta variante -->
+<link rel="stylesheet" href="02-readings.css">
+
+<style>
+  /* La barra de la vista previa. No forma parte de la seccion. */
+  .vp-barra {
+    position: sticky; top: 0; z-index: 99;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 18px;
+    font: 600 12px/1.4 "Open Sans", system-ui, sans-serif;
+    color: #FFFFFF; background: #333333;
+  }
+  .vp-barra a { color: #B0E1B7; text-decoration: none; }
+  .vp-barra a:hover { text-decoration: underline; }
+  .vp-barra code {
+    padding: 2px 6px; font-size: 11px;
+    background: rgba(255,255,255,.14); border-radius: 3px;
+  }
+  .vp-sep { opacity: .45; }
+  /* Los tokens de composicion, para que la seccion no salga sin fondo */
+  .d2 {
+    --comp-blanco:#FFFFFF; --comp-gris:#F3F3F3; --comp-negro:#333333;
+    --comp-hero:#FFFFFF; --comp-logos:#FFFFFF; --comp-problema:#F3F3F3;
+    --comp-calc:#FFFFFF; --comp-rutas:#F3F3F3; --comp-prueba:#FFFFFF;
+    --comp-resenas:#F3F3F3; --comp-equipo:#FFFFFF; --comp-faq:#F3F3F3;
+    --comp-cta:#333333; --comp-footer:#333333;
+  }
+</style>
+</head>
+<body class="d2">
+
+<div class="vp-barra">
+  <a href="../indice.html">&larr; Library</a>
+  <span class="vp-sep">/</span>
+  <strong>The problem</strong>
+  <span class="vp-sep">/</span>
+  <span>Readings</span>
+  <span class="vp-sep">|</span>
+  <code>.d2-prob-lec</code>
+  <span class="vp-sep">|</span>
+  <a href="02-readings.html">markup</a>
+  <a href="02-readings.css">css</a>
+</div>
+
+<!-- ====================================================================
+         OPCION 2 — TRES LECTURAS
+
+         Cada punto lleva su propio grafico pequeño. No son ilustraciones:
+         son el mismo idioma que el panel del hero --linea de datos, area
+         bajo la curva, puntos de lectura, leyenda-- que es lo que esta
+         pagina usa para hablar de energia.
+
+         El intento anterior era un edificio dibujado con lineas sueltas al
+         lado. No se entendia: el numero 1 en una caja vacia, unas curvas
+         que no se sabia de donde salian, y una linea flotando. Yo sabia que
+         representaba cada cosa, pero el dibujo no lo decia.
+
+         Aqui cada grafico muestra el dato del que habla su texto:
+
+           01  la carga de trabajo sube y el tiempo para gestionarla baja
+           02  cinco fuentes de factura que no se juntan
+           03  dos lineas que se separan: lo que se paga y lo que se deberia
+
+         Se trazan al entrar en pantalla, con la misma tecnica del panel del
+         hero: stroke-dasharray al largo del trazo y stroke-dashoffset
+         animado a cero.
+         ==================================================================== -->
+    <section class="d2-prob-lec" aria-labelledby="prob-lec-titulo">
+      <div class="d2-prob-lec__inner">
+
+        <div class="d2-prob-lec__cabecera">
+          <p class="d2-eyebrow">The problem</p>
+          <h2 class="d2-prob-lec__titulo" id="prob-lec-titulo">
+            Most organizations are not managing their energy. They are just paying for it.
+          </h2>
+          <p class="d2-prob-lec__lead">
+            Utility bills get processed, budgets get approved, and facilities teams stay
+            busy putting out fires. But nobody is tracking whether the buildings are
+            actually performing well, or what it would take to improve them. The result
+            is unnecessary cost and emissions that compound quietly, year over year.
+          </p>
+        </div>
+
+        <ul class="d2-prob-lec__lista">
+
+          <li>
+            <!-- 01 — Dos lineas que se cruzan: la carga sube, el tiempo baja -->
+            <div class="d2-lec__grafico" aria-hidden="true">
+              <svg viewBox="0 0 260 96" role="presentation">
+                <g class="d2-lec__rejilla">
+                  <line x1="6" y1="24" x2="254" y2="24"/>
+                  <line x1="6" y1="52" x2="254" y2="52"/>
+                  <line x1="6" y1="80" x2="254" y2="80"/>
+                </g>
+                <path class="d2-lec__sube" d="M12 74 L60 68 L108 58 L156 44 L204 32 L248 22"/>
+                <path class="d2-lec__baja" d="M12 30 L60 38 L108 46 L156 58 L204 68 L248 76"/>
+                <g class="d2-lec__puntos">
+                  <circle cx="12" cy="74" r="3"/>
+                  <circle cx="248" cy="22" r="3"/>
+                </g>
+              </svg>
+              <p class="d2-lec__leyenda">
+                <span><i class="d2-lec__llave d2-lec__llave--sube"></i>Workload</span>
+                <span><i class="d2-lec__llave d2-lec__llave--baja"></i>Time to manage it</span>
+              </p>
+            </div>
+            <h3>Teams stretched thin</h3>
+            <p>
+              Energy management falls to whoever has time, which means it does not get
+              done properly. Teams stay reactive, responding to problems instead of
+              preventing them.
+            </p>
+          </li>
+
+          <li>
+            <!-- 02 — Cinco fuentes que llegan pero no se juntan -->
+            <div class="d2-lec__grafico" aria-hidden="true">
+              <svg viewBox="0 0 260 96" role="presentation">
+                <g class="d2-lec__rejilla">
+                  <line x1="6" y1="24" x2="254" y2="24"/>
+                  <line x1="6" y1="52" x2="254" y2="52"/>
+                  <line x1="6" y1="80" x2="254" y2="80"/>
+                </g>
+                <!-- Cada barra es una fuente de factura, a su altura y sin relacion -->
+                <g class="d2-lec__barras">
+                  <rect x="26"  y="38" width="16" height="42" rx="2"/>
+                  <rect x="72"  y="20" width="16" height="60" rx="2"/>
+                  <rect x="118" y="52" width="16" height="28" rx="2"/>
+                  <rect x="164" y="30" width="16" height="50" rx="2"/>
+                  <rect x="210" y="60" width="16" height="20" rx="2"/>
+                </g>
+                <!-- La linea de puntos que NO llega a unirlas -->
+                <path class="d2-lec__hueco" d="M34 34 L80 16 L126 48 L172 26 L218 56"/>
+              </svg>
+              <p class="d2-lec__leyenda">
+                <span><i class="d2-lec__llave d2-lec__llave--barra"></i>Separate vendor accounts</span>
+              </p>
+            </div>
+            <h3>Data scattered everywhere</h3>
+            <p>
+              Utility data lives in accounts payable and arrives from multiple vendors
+              in different formats. Consolidating it takes real effort before it tells
+              you anything useful.
+            </p>
+          </li>
+
+          <li>
+            <!-- 03 — La brecha que se abre entre lo pagado y lo esperable -->
+            <div class="d2-lec__grafico" aria-hidden="true">
+              <svg viewBox="0 0 260 96" role="presentation">
+                <g class="d2-lec__rejilla">
+                  <line x1="6" y1="24" x2="254" y2="24"/>
+                  <line x1="6" y1="52" x2="254" y2="52"/>
+                  <line x1="6" y1="80" x2="254" y2="80"/>
+                </g>
+                <!-- El area entre las dos lineas: eso es lo que se paga de mas -->
+                <path class="d2-lec__brecha"
+                      d="M12 62 L60 58 L108 50 L156 40 L204 30 L248 22 L248 66 L204 64 L156 62 L108 62 L60 62 L12 64 Z"/>
+                <path class="d2-lec__pagado" d="M12 62 L60 58 L108 50 L156 40 L204 30 L248 22"/>
+                <path class="d2-lec__esperado" d="M12 64 L60 62 L108 62 L156 62 L204 64 L248 66"/>
+                <g class="d2-lec__puntos">
+                  <circle cx="248" cy="22" r="3"/>
+                </g>
+              </svg>
+              <p class="d2-lec__leyenda">
+                <span><i class="d2-lec__llave d2-lec__llave--sube"></i>What gets paid</span>
+                <span><i class="d2-lec__llave d2-lec__llave--plano"></i>What it should cost</span>
+              </p>
+            </div>
+            <h3>Costs compound quietly</h3>
+            <p>
+              Without benchmarking there is no way to know whether performance is good
+              or bad. Budgets absorb the difference, and nobody sees where the money
+              is going.
+            </p>
+          </li>
+
+        </ul>
+
+        <div class="d2-prob-lec__cierre">
+          <p class="d2-prob-lec__remate">Rede closes that gap.</p>
+          <a href="index.html#calculator" class="d2-btn">
+            Check your opportunity
+            <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
+              <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                    stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+
+<script src="../../js/d2-mapa-cartera.js"></script>
+</body>
+</html>

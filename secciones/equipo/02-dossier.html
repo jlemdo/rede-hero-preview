@@ -1,0 +1,94 @@
+<!-- Team / Dossier
+     Clase raiz: .d2-equipo-dosier
+     Extraido de home-d2.html. El CSS va en 02-dossier.css -->
+
+<section class="d2-equipo-dosier">
+      <div class="d2-equipo-dosier__inner">
+
+        <div class="d2-equipo-dosier__intro">
+          <p class="d2-equipo-dosier__eyebrow">People behind Rede</p>
+          <h2 class="d2-equipo-dosier__titulo">More than engineers.</h2>
+          <p class="d2-equipo-dosier__lead">
+            Rede is a small team of engineers, project managers, data analysts, and energy
+            efficiency professionals. We work alongside your team rather than delivering a
+            report and moving on.
+          </p>
+        </div>
+
+        <!-- La banda de retratos. Van juntos y sin texto: aqui la foto solo
+             tiene que decir "son personas reales, no stock". El nombre
+             viaja abajo, en la fila que le corresponde.
+             aria-hidden porque cada nombre ya esta en la tabla de abajo:
+             repetirlo haria que un lector de pantalla oyera los tres
+             nombres dos veces seguidas sin aportar nada. -->
+        <div class="d2-equipo-dosier__banda" aria-hidden="true">
+          <img class="d2-equipo-dosier__retrato"
+               src="assets/img/equipo/matthew-redekopp.jpg"
+               alt="" width="300" height="420" loading="lazy" decoding="async">
+          <img class="d2-equipo-dosier__retrato"
+               src="assets/img/equipo/marco-bieri.jpg"
+               alt="" width="300" height="420" loading="lazy" decoding="async">
+          <img class="d2-equipo-dosier__retrato"
+               src="assets/img/equipo/erica-letchford.jpg"
+               alt="" width="298" height="417" loading="lazy" decoding="async">
+          <!-- PENDIENTE DE ERICK — falta el cuarto retrato.
+               La banda usa flex con reparto igual, asi que con tres fotos
+               se reparte el ancho entre tres y no queda ningun hueco. Al
+               anadir la cuarta se reparte entre cuatro. Degrada sola. -->
+        </div>
+
+        <!-- La tabla de personal. Es una lista de definiciones visual, no
+             una <table>: no hay relacion fila-columna que consultar, es una
+             ficha por persona con campos siempre en el mismo sitio. La
+             regularidad la da la rejilla, no el marcado. -->
+        <ul class="d2-equipo-dosier__lista">
+
+          <li class="d2-equipo-dosier__fila">
+            <div class="d2-equipo-dosier__id">
+              <h3 class="d2-equipo-dosier__nombre">Matthew Redekopp</h3>
+              <p class="d2-equipo-dosier__cargo">Founder and CEO</p>
+            </div>
+            <p class="d2-equipo-dosier__cred">P.Eng., CEM, LEED AP</p>
+            <p class="d2-equipo-dosier__bio">
+              Matthew founded Rede in 2008 to serve communities and organizations that
+              larger engineering firms were not reaching. Nearly two decades later, he
+              leads a team helping organizations across Western Canada reduce energy costs
+              and manage buildings more effectively.
+            </p>
+          </li>
+
+          <li class="d2-equipo-dosier__fila">
+            <div class="d2-equipo-dosier__id">
+              <h3 class="d2-equipo-dosier__nombre">Marco Bieri</h3>
+              <p class="d2-equipo-dosier__cargo">Energy Efficiency Engineer</p>
+            </div>
+            <p class="d2-equipo-dosier__cred">P.Eng., M.Eng., M.Sc., CEM</p>
+            <p class="d2-equipo-dosier__bio">
+              Marco brings deep expertise in recommissioning, energy auditing, and building
+              performance diagnostics, along with a rigorous approach to data analysis and
+              measurement verification.
+            </p>
+          </li>
+
+          <li class="d2-equipo-dosier__fila">
+            <div class="d2-equipo-dosier__id">
+              <h3 class="d2-equipo-dosier__nombre">Erica Letchford</h3>
+              <p class="d2-equipo-dosier__cargo">Director of Operations</p>
+            </div>
+            <p class="d2-equipo-dosier__cred">BID, LEED AP</p>
+            <p class="d2-equipo-dosier__bio">
+              Erica has spent nearly two decades working to reduce energy consumption and
+              operating costs in residential, commercial, and institutional facilities. She
+              brings a project manager's instinct for keeping the big picture in view while
+              managing the details.
+            </p>
+          </li>
+
+          <!-- PENDIENTE DE ERICK — cuarta fila de personal.
+               Se duplica un <li> y se rellenan los cuatro campos. La fila no
+               depende de que exista la foto: si Erick manda los datos sin
+               retrato, esta variante ya funciona con la fila puesta y la
+               banda de arriba en tres. -->
+        </ul>
+      </div>
+    </section>

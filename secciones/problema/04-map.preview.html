@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The problem / Map</title>
+
+<!-- La biblioteca vive dos niveles por debajo de la raiz -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/d2.css">
+
+<!-- Solo el CSS de esta variante -->
+<link rel="stylesheet" href="04-map.css">
+
+<style>
+  /* La barra de la vista previa. No forma parte de la seccion. */
+  .vp-barra {
+    position: sticky; top: 0; z-index: 99;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 18px;
+    font: 600 12px/1.4 "Open Sans", system-ui, sans-serif;
+    color: #FFFFFF; background: #333333;
+  }
+  .vp-barra a { color: #B0E1B7; text-decoration: none; }
+  .vp-barra a:hover { text-decoration: underline; }
+  .vp-barra code {
+    padding: 2px 6px; font-size: 11px;
+    background: rgba(255,255,255,.14); border-radius: 3px;
+  }
+  .vp-sep { opacity: .45; }
+  /* Los tokens de composicion, para que la seccion no salga sin fondo */
+  .d2 {
+    --comp-blanco:#FFFFFF; --comp-gris:#F3F3F3; --comp-negro:#333333;
+    --comp-hero:#FFFFFF; --comp-logos:#FFFFFF; --comp-problema:#F3F3F3;
+    --comp-calc:#FFFFFF; --comp-rutas:#F3F3F3; --comp-prueba:#FFFFFF;
+    --comp-resenas:#F3F3F3; --comp-equipo:#FFFFFF; --comp-faq:#F3F3F3;
+    --comp-cta:#333333; --comp-footer:#333333;
+  }
+</style>
+</head>
+<body class="d2">
+
+<div class="vp-barra">
+  <a href="../indice.html">&larr; Library</a>
+  <span class="vp-sep">/</span>
+  <strong>The problem</strong>
+  <span class="vp-sep">/</span>
+  <span>Map</span>
+  <span class="vp-sep">|</span>
+  <code>.d2-prob-mapa</code>
+  <span class="vp-sep">|</span>
+  <a href="04-map.html">markup</a>
+  <a href="04-map.css">css</a>
+</div>
+
+<section class="d2-prob-mapa" aria-labelledby="prob-mapa-titulo">
+      <div class="d2-prob-mapa__inner">
+
+        <div class="d2-prob-mapa__copy">
+          <p class="d2-prob-mapa__eyebrow">Portfolio intelligence</p>
+          <h2 class="d2-prob-mapa__titulo" id="prob-mapa-titulo">
+            Energy costs are visible.<br>
+            <span>The biggest opportunities are not.</span>
+          </h2>
+          <p class="d2-prob-mapa__lead">Utility bills show what each building spent, but not which sites are underperforming or where your team should investigate first.</p>
+          <p class="d2-prob-mapa__lead">Rede compares building energy performance across your portfolio, helping you prioritize detailed energy audits and capital projects.</p>
+          <a class="d2-prob-mapa__enlace" href="#contact">See how Rede prioritizes buildings
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="d2-prob-mapa__lienzo" data-mapa-cartera>
+          <div class="d2-prob-mapa__visual">
+
+            <p class="d2-prob-mapa__aviso">For visual representation only. Not actual client data.</p>
+
+            <svg class="d2-prob-mapa__grafico" viewBox="0 0 700 500" role="img"
+                 aria-label="Illustrative connected profile of five buildings compared with expected energy performance">
+              <text class="d2-prob-mapa__zona" x="101" y="91">ABOVE EXPECTED USE</text>
+              <text class="d2-prob-mapa__zona" x="101" y="276">BELOW EXPECTED USE</text>
+              <line class="d2-prob-mapa__referencia" x1="86" y1="252" x2="640" y2="252"/>
+              <path class="d2-prob-mapa__perfil" d="M135 340C180 340 200 290 245 290S310 145 355 145 420 220 465 220 530 180 575 180"/>
+
+              <g class="d2-prob-mapa__sitio" data-sitio="central" role="button" tabindex="0"
+                 aria-label="Central Office: -8% benchmark variance, 82 kWh per square metre energy use intensity, Low savings potential">
+                <circle class="d2-prob-mapa__burbuja" cx="135" cy="340" r="18"/>
+                <circle class="d2-prob-mapa__nucleo" cx="135" cy="340" r="5"/>
+                <text class="d2-prob-mapa__etiqueta" x="135" y="378"><tspan x="135">CENTRAL</tspan><tspan x="135" dy="11">OFFICE</tspan></text>
+              </g>
+
+              <g class="d2-prob-mapa__sitio" data-sitio="north" role="button" tabindex="0"
+                 aria-label="North Campus: -3% benchmark variance, 108 kWh per square metre energy use intensity, Moderate savings potential">
+                <circle class="d2-prob-mapa__burbuja" cx="245" cy="290" r="24"/>
+                <circle class="d2-prob-mapa__nucleo" cx="245" cy="290" r="5"/>
+                <text class="d2-prob-mapa__etiqueta" x="245" y="334"><tspan x="245">NORTH</tspan><tspan x="245" dy="11">CAMPUS</tspan></text>
+              </g>
+
+              <g class="d2-prob-mapa__sitio es-foco" data-sitio="riverside" role="button" tabindex="0"
+                 aria-label="Riverside Centre: +18% benchmark variance, 176 kWh per square metre energy use intensity, High savings potential">
+                <circle class="d2-prob-mapa__burbuja" cx="355" cy="145" r="31"/>
+                <circle class="d2-prob-mapa__nucleo" cx="355" cy="145" r="5"/>
+                <text class="d2-prob-mapa__etiqueta" x="355" y="196"><tspan x="355">RIVERSIDE</tspan><tspan x="355" dy="11">CENTRE</tspan></text>
+              </g>
+
+              <g class="d2-prob-mapa__sitio" data-sitio="operations" role="button" tabindex="0"
+                 aria-label="Operations Centre: +7% benchmark variance, 194 kWh per square metre energy use intensity, Medium savings potential">
+                <circle class="d2-prob-mapa__burbuja" cx="465" cy="220" r="21"/>
+                <circle class="d2-prob-mapa__nucleo" cx="465" cy="220" r="5"/>
+                <text class="d2-prob-mapa__etiqueta" x="465" y="261"><tspan x="465">OPERATIONS</tspan><tspan x="465" dy="11">CENTRE</tspan></text>
+              </g>
+
+              <g class="d2-prob-mapa__sitio" data-sitio="west" role="button" tabindex="0"
+                 aria-label="West Campus: +12% benchmark variance, 146 kWh per square metre energy use intensity, Moderate savings potential">
+                <circle class="d2-prob-mapa__burbuja" cx="575" cy="180" r="16"/>
+                <circle class="d2-prob-mapa__nucleo" cx="575" cy="180" r="5"/>
+                <text class="d2-prob-mapa__etiqueta" x="575" y="216"><tspan x="575">WEST</tspan><tspan x="575" dy="11">CAMPUS</tspan></text>
+              </g>
+            </svg>
+
+            <div class="d2-prob-mapa__ficha" data-mapa-ficha aria-live="polite">
+              <small data-mapa-titulo>Priority opportunity</small>
+              <b data-mapa-nombre>Riverside Centre</b>
+              <div><span>Benchmark variance</span><strong data-mapa-variance>+18%</strong></div>
+              <div><span>Energy use intensity</span><strong data-mapa-intensidad>176 kWh/m&sup2;</strong></div>
+              <div><span>Savings potential</span><strong data-mapa-potencial>High</strong></div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Close options">
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Previous option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Triptych</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Readings</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Comparison</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="3"><span>4</span><small>Map</small></button>
+    </div>
+
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+
+<script src="../../js/d2-mapa-cartera.js"></script>
+</body>
+</html>

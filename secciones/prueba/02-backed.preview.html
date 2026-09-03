@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proof / Backed</title>
+
+<!-- La biblioteca vive dos niveles por debajo de la raiz -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/d2.css">
+
+<!-- Solo el CSS de esta variante -->
+<link rel="stylesheet" href="02-backed.css">
+
+<style>
+  /* La barra de la vista previa. No forma parte de la seccion. */
+  .vp-barra {
+    position: sticky; top: 0; z-index: 99;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 18px;
+    font: 600 12px/1.4 "Open Sans", system-ui, sans-serif;
+    color: #FFFFFF; background: #333333;
+  }
+  .vp-barra a { color: #B0E1B7; text-decoration: none; }
+  .vp-barra a:hover { text-decoration: underline; }
+  .vp-barra code {
+    padding: 2px 6px; font-size: 11px;
+    background: rgba(255,255,255,.14); border-radius: 3px;
+  }
+  .vp-sep { opacity: .45; }
+  /* Los tokens de composicion, para que la seccion no salga sin fondo */
+  .d2 {
+    --comp-blanco:#FFFFFF; --comp-gris:#F3F3F3; --comp-negro:#333333;
+    --comp-hero:#FFFFFF; --comp-logos:#FFFFFF; --comp-problema:#F3F3F3;
+    --comp-calc:#FFFFFF; --comp-rutas:#F3F3F3; --comp-prueba:#FFFFFF;
+    --comp-resenas:#F3F3F3; --comp-equipo:#FFFFFF; --comp-faq:#F3F3F3;
+    --comp-cta:#333333; --comp-footer:#333333;
+  }
+</style>
+</head>
+<body class="d2">
+
+<div class="vp-barra">
+  <a href="../indice.html">&larr; Library</a>
+  <span class="vp-sep">/</span>
+  <strong>Proof</strong>
+  <span class="vp-sep">/</span>
+  <span>Backed</span>
+  <span class="vp-sep">|</span>
+  <code>.d2-prueba-resp</code>
+  <span class="vp-sep">|</span>
+  <a href="02-backed.html">markup</a>
+  <a href="02-backed.css">css</a>
+</div>
+
+<section class="d2-prueba-resp">
+      <div class="d2-prueba-resp__inner">
+
+        <header class="d2-prueba-resp__cabecera">
+          <p class="d2-prueba-resp__eyebrow">What this looks like in practice</p>
+          <p class="d2-prueba-resp__texto">
+            These were costs that had been paid, year after year, without anyone knowing
+            they were recoverable. The same diagnostic and optimization approach can apply
+            to eligible commercial, institutional, municipal, post-secondary, and care
+            facilities.
+          </p>
+        </header>
+
+        <ul class="d2-prueba-resp__lista">
+
+          <li class="d2-prueba-resp__par">
+            <div class="d2-prueba-resp__dato">
+              <p class="d2-prueba-resp__cifra">$2.94M</p>
+              <p class="d2-prueba-resp__pie">
+                in unnecessary annual energy costs identified for a large Western Canadian
+                school district.
+              </p>
+            </div>
+            <blockquote class="d2-prueba-resp__cita">
+              Before Northland started working with Rede, we had no energy management plan
+              at all. We recognized quickly that we can save money with an energy
+              management program.</blockquote>
+            <p class="d2-prueba-resp__autor">
+              <span class="d2-prueba-resp__nombre">Wayne Turpin</span>
+              <span class="d2-prueba-resp__org">Northland School Division</span>
+            </p>
+          </li>
+
+          <li class="d2-prueba-resp__par">
+            <div class="d2-prueba-resp__dato">
+              <p class="d2-prueba-resp__cifra">9.5<span class="d2-prueba-resp__unidad">%</span></p>
+              <p class="d2-prueba-resp__pie">
+                average historical cost reduction for schools. Across all building
+                types the average is 5.7%.
+              </p>
+              <!-- PENDIENTE DE ERICK: redaccion exacta del credito a BC Hydro. -->
+              <p class="d2-prueba-resp__fuente">BC Hydro Continuous Optimization</p>
+            </div>
+            <blockquote class="d2-prueba-resp__cita">
+              The Rede team is all about proactively implementing energy solutions. They
+              see a gap and they take care of it.</blockquote>
+            <p class="d2-prueba-resp__autor">
+              <span class="d2-prueba-resp__nombre">Alex Telford</span>
+              <span class="d2-prueba-resp__org">SD27 British Columbia</span>
+            </p>
+          </li>
+
+          <li class="d2-prueba-resp__par">
+            <div class="d2-prueba-resp__dato">
+              <p class="d2-prueba-resp__cifra">2008</p>
+              <p class="d2-prueba-resp__pie">
+                the year Rede started doing this work in Western Canada.
+              </p>
+            </div>
+            <blockquote class="d2-prueba-resp__cita">
+              For people like myself, money talks. If we can engage someone like Rede to
+              find inefficiencies within our facilities, then we are able to address them.</blockquote>
+            <p class="d2-prueba-resp__autor">
+              <span class="d2-prueba-resp__nombre">Norman Buhler</span>
+              <span class="d2-prueba-resp__org">Fort Vermilion School Division</span>
+            </p>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+
+
+</body>
+</html>

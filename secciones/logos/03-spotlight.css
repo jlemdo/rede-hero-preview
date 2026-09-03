@@ -1,0 +1,487 @@
+/* Client logos / Spotlight
+   Reglas cuyo selector menciona .d2-foco, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   SECCION DE LOGOS — OPCION 3: FRANJA DE FOCO
+
+   Las otras dos tratan los siete logos por igual. Esta cambia QUE se agrupa
+   con QUE: saca uno y lo mete en la misma tarjeta que la cifra.
+
+   El problema que resuelve: en la opcion 2 el $4.4M vive en su propia
+   columna. Esta al lado de los logos pero no ligado a ninguno, asi que
+   afirma un ahorro sin dejar ver de quien. Compartir marco con un logo lo
+   convierte en el resultado de ese cliente.
+
+   Es region comun (Palmer 1992, via NN/g): un contorno visible agrupa mas
+   fuerte que la cercania. NN/g aconseja preferir el blanco y recurrir al
+   borde solo cuando el blanco no basta -- aqui no basta, porque el objetivo
+   es precisamente atar dos cosas.
+
+   La jerarquia se hace con tamaño, peso y contraste, no con color: el
+   efecto Von Restorff se probo en preferencia de interfaz (MeasuringU,
+   N=202 y N=213) y no predijo la eleccion. "Ponlo de otro color y
+   destacara" no esta respaldado.
+
+   Sin movimiento continuo. Un logo que se mueve no se reconoce, y estos
+   solo aportan si se leen como nombres. La unica animacion es la entrada.
+   ========================================================================== */
+
+.d2-foco {
+  padding-block: clamp(24px, 2.8vw, 36px);
+  background: var(--d2-tinta);
+  border-block: 1px solid rgba(2, 51, 0, .07);
+}
+
+/* Tres zonas en una fila: texto, tarjeta, resto.
+
+   La tarjeta se lleva un ancho fijo porque es el ancla de la seccion; el
+   resto de logos toma lo que sobra. Al reves, la tarjeta encogeria justo
+   donde no debe. */
+.d2-foco__inner {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(230px, 292px) minmax(0, 1fr);
+  gap: clamp(20px, 2.6vw, 40px);
+  align-items: center;
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+/* --------------------------------------------------------------------------
+   Texto de entrada
+   -------------------------------------------------------------------------- */
+
+.d2-foco__titular {
+  margin: 0;
+  font-size: clamp(1rem, .92rem + .38vw, 1.3125rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.22;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2-foco__etiqueta {
+  margin: var(--d2-e2) 0 0;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+/* --------------------------------------------------------------------------
+   La tarjeta: logo y cifra bajo el mismo marco
+   -------------------------------------------------------------------------- */
+
+.d2-foco__prueba {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e3);
+  padding: var(--d2-e3);
+  background: #fff;
+  border: 1px solid rgba(2, 139, 0, .22);
+  border-radius: var(--d2-radio-md);
+  box-shadow: var(--d2-sombra-md);
+}
+
+/* El logo protagonista va a color y a mayor tamaño que los otros seis: es
+   la unica diferencia de tratamiento, y basta para ordenarlos. */
+/* Ancho FIJO, no automatico. Los siete logos tienen proporciones muy
+   distintas, asi que ajustandose a cada uno la tarjeta cambiaba de reparto
+   en cada relevo y la cifra se desplazaba 33px de lado. Con la casilla
+   reservada, el logo cambia dentro y nada mas se mueve. */
+.d2-foco__prueba-logo {
+  flex: none;
+  width: 96px;
+  height: clamp(40px, 4vw, 52px);
+  object-fit: contain;
+  object-position: center;
+}
+
+.d2-foco__prueba-dato { min-width: 0; }
+
+/* El tope del sistema son 40px. Aqui se queda por debajo: la franja mide
+   menos de 220px y una cifra mayor la desequilibra. */
+.d2-foco__cifra {
+  margin: 0;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2.125rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1;
+  letter-spacing: -.03em;
+  color: var(--c-texto);
+}
+
+.d2-foco__cifra-pie {
+  margin: 5px 0 0;
+  font-size: .8125rem;
+  font-weight: var(--fw-semibold, 600);
+  line-height: 1.25;
+  color: var(--c-texto);
+}
+
+/* Verde oscuro, no el de interfaz: a 12px hace falta 4.5:1 y --c-verde da
+   4.09 sobre blanco. Este da 6.41. */
+.d2-foco__cifra-nota {
+  margin: 2px 0 0;
+  font-size: .75rem;
+  line-height: 1.3;
+  color: var(--c-verde-hover);
+}
+
+/* --------------------------------------------------------------------------
+   Los otros seis
+   -------------------------------------------------------------------------- */
+
+.d2-foco__resto {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(10px, 1.4vw, 18px) clamp(12px, 1.8vw, 26px);
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Apagados en reposo: asi no compiten con la tarjeta. Es lo que hace la
+   jerarquia, en lugar de recurrir a un color de acento. */
+/* Todos en la misma caja. Los PNG van de 197x200 a 693x200, asi que a
+   igual alto uno medía 111px de ancho y otro 32: una diferencia de 79px
+   que se leia como desorden.
+
+   La caja ademas es requisito del relevo: si cada casilla se ajustara a
+   su logo, la rejilla se recolocaria en cada intercambio. */
+.d2-foco__resto li {
+  display: grid;
+  place-items: center;
+  height: clamp(38px, 3.6vw, 46px);
+  padding-inline: 4px;
+  transition: transform 420ms cubic-bezier(.4, 0, .2, 1),
+              opacity 420ms cubic-bezier(.4, 0, .2, 1);
+}
+
+.d2-foco__resto img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: clamp(24px, 2.4vw, 32px);
+  object-fit: contain;
+  opacity: .46;
+  filter: grayscale(100%);
+  transition: opacity var(--d2-normal) ease, filter var(--d2-normal) ease;
+}
+
+/* Al pasar el raton se lee cual es. Es un extra, no la via de acceso a
+   nada: todo lo importante ya esta visible sin interactuar. */
+.d2-foco__resto img:hover {
+  opacity: 1;
+  filter: grayscale(0);
+}
+
+/* --------------------------------------------------------------------------
+   EL RELEVO
+
+   Cada pocos segundos el logo de la tarjeta se intercambia con uno de los
+   seis. Rota porque no sabemos que distrito genero los $4.4M: con un logo
+   fijo la tarjeta afirmaria que fue ese, y rotando la cifra queda atribuida
+   a la cartera entera, que es lo que se puede sostener.
+
+   El movimiento es un CRUCE, no un parpadeo. Cada uno se retira hacia el
+   sitio del otro y llega desde alli, con las dos mitades solapadas, asi que
+   se lee como un solo gesto.
+
+   Se anima opacity y transform: el navegador las resuelve sin repintar, y
+   son las unicas dos propiedades que se pueden mover a 60fps con garantia.
+
+   El desplazamiento es pequeño a proposito. Un recorrido largo llama la
+   atencion sobre el movimiento; uno de 6-8px hace que el cambio se note sin
+   robarle el sitio a la cifra, que es lo que tiene que leerse.
+   -------------------------------------------------------------------------- */
+
+/* La tarjeta reserva el espacio del logo: sin esto encoge en el punto
+   medio del cruce, cuando la imagen esta invisible, y la cifra da un salto
+   lateral en cada relevo. */
+.d2-foco__prueba-logo {
+  transition: opacity 420ms cubic-bezier(.4, 0, .2, 1),
+              transform 420ms cubic-bezier(.4, 0, .2, 1);
+}
+
+/* Sale hacia la derecha, que es de donde viene su relevo */
+.d2-foco__prueba-logo.esta-saliendo {
+  opacity: 0;
+  transform: translateX(5px) scale(.985);
+}
+
+/* Y el que entra llega desde ese mismo lado */
+.d2-foco__prueba-logo.esta-entrando {
+  opacity: 0;
+  transform: translateX(-5px) scale(.985);
+  transition: none;   /* el estado de partida se pone de golpe */
+}
+
+/* La casilla hace el gesto simetrico: se va hacia la tarjeta */
+.d2-foco__resto li.esta-saliendo {
+  opacity: 0;
+  transform: translateX(-4px) scale(.97);
+}
+
+.d2-foco__resto li.esta-entrando {
+  opacity: 0;
+  transform: translateX(4px) scale(.97);
+  transition: none;
+}
+
+/* La casilla que va a entrar se insinua un instante antes: es lo que hace
+   que el relevo se lea como una secuencia y no como dos cosas sueltas. */
+.d2-foco__resto li.esta-saliendo img {
+  opacity: .46;
+}
+
+/* Al parar el raton encima todo se detiene y los logos toman color: es lo
+   que permite leer uno concreto sin esperar a que vuelva a pasar. */
+.d2-foco:hover .d2-foco__resto img {
+  opacity: .62;
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2-foco__prueba-logo,
+  .d2-foco__resto li {
+    transition: none;
+  }
+}
+
+.d2-foco__texto,
+.d2-foco__prueba,
+.d2-foco__resto {
+  animation: d2-foco-entra .5s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2-foco__prueba { animation-delay: .08s; }
+
+.d2-foco__resto  { animation-delay: .16s; }
+
+@media (prefers-reduced-motion: reduce) {
+.d2-foco__texto,
+  .d2-foco__prueba,
+  .d2-foco__resto {
+    animation: none;
+  }
+}
+
+@media (max-width: 1180px) {
+.d2-foco__inner {
+    grid-template-columns: minmax(0, auto) minmax(220px, 268px) minmax(0, 1fr);
+    gap: clamp(16px, 2vw, 26px);
+  }
+}
+
+@media (max-width: 980px) {
+.d2-foco__inner {
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+    row-gap: clamp(16px, 2.4vw, 22px);
+  }
+.d2-foco__texto { grid-column: 1 / -1; }
+}
+
+@media (max-width: 620px) {
+.d2-foco__inner { grid-template-columns: 1fr; }
+/* La tarjeta se queda en fila: logo y cifra tienen que seguir juntos,
+     que es de lo que trata esta variante. */
+  .d2-foco__prueba { justify-content: flex-start; }
+.d2-foco__resto { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ==========================================================================
+   LOS FONDOS DE SECCION
+
+   El selector cambia UNICAMENTE el color de fondo de las secciones
+   tintadas. Nada de lo que vive dentro --tarjetas, botones, graficos-- se
+   toca: cada pieza conserva el color que su propio diseño le dio.
+
+   Un intento anterior repintaba tambien el interior: 82 reglas que
+   acababan poniendo tarjetas blancas sobre fondo oscuro con el texto
+   ilegible, y recuadros donde no debia haberlos. El problema no era el
+   color elegido sino el alcance.
+
+   Solo hay dos excepciones, y ambas son necesarias:
+
+     1. El TEXTO SUELTO de la seccion --el que va directamente sobre el
+        fondo, sin tarjeta-- tiene que invertirse o desaparece.
+     2. Los LOGOS de cliente son marcas grises: sobre oscuro se pierden.
+
+   Todo lo que esta dentro de una tarjeta se queda como esta, porque la
+   tarjeta le da su propio fondo.
+   ========================================================================== */
+
+/* --- Las opciones claras: solo cambia el fondo, nada mas --- */
+
+/* (no hace falta regla: el token --d2-tinta que fija el JS ya lo hace) */
+
+/* --- La opcion oscura --- */
+
+/* El texto que va DIRECTAMENTE sobre el fondo de la seccion. El selector
+   `> *` limita el alcance a los hijos directos del contenedor: lo que este
+   dentro de una tarjeta no entra, que es justo lo que se quiere. */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco, .d2-prueba-resp,
+                                  .d2-cta-bal, .d2-cta-car, .d2-res-tres,
+                                  .d2-res-ed) {
+  color: #FFFFFF;
+}
+
+/* Titulares, entradillas y etiquetas sueltas. Se nombran los contenedores
+   de cabecera, no cada elemento, para no volver a la lista interminable. */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco, .d2-prueba-resp,
+                                  .d2-cta-bal, .d2-cta-car, .d2-res-tres,
+                                  .d2-res-ed) :is(h1, h2, h3, h4) {
+  color: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos__titulo,
+                                 .d2-logos--dos__etiqueta,
+                                 .d2-foco__etiqueta,
+                                 .d2-res-tres__eyebrow,
+                                 .d2-res-ed__eyebrow,
+                                 .d2-res-ed__sub,
+                                 .d2-res-ed__contador,
+                                 .d2-res-ed__meta,
+                                 .d2-cta-bal__parrafo,
+                                 .d2-cta-car__parrafo,
+                                 .d2-logos--dos__cifra-pie,
+                                 .d2-logos--dos__cifra-nota,
+                                 .d2-foco__cifra-pie,
+                                 .d2-foco__cifra-nota) {
+  color: #E8E8E8;
+}
+
+/* Las variables de texto, redefinidas DENTRO de cada seccion tintada.
+
+   Es la unica forma de que titulares y cifras se adapten sin nombrarlos
+   uno a uno: usan var(--c-texto) desde selectores mas especificos, y
+   competir con ellos exigiria una regla por clase.
+
+   Ojo: va en la SECCION, no en .d2. Puesto en .d2 afectaria al hero y al
+   resto de la pagina, que siguen sobre fondo claro. */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco,
+                                  .d2-prueba-resp, .d2-cta-bal,
+                                  .d2-cta-car, .d2-res-tres,
+                                  .d2-res-ed) {
+  --c-texto: #FFFFFF;
+  --c-texto-cuerpo: #E8E8E8;
+  --c-texto-suave: #BFBFBF;
+}
+
+/* Pero DENTRO de una tarjeta blanca vuelven a su valor original: ahi el
+   fondo sigue siendo claro y el texto tiene que ser oscuro. */
+.d2 [data-comp-tono="oscuro"] :is(.d2-res-tres__item,
+                                        .d2-foco__prueba,
+                                        .d2-prueba-resp__tarjeta,
+                                        .d2-cta-bal__accion,
+                                        .d2-cta-car__carril) {
+  --c-texto: #333333;
+  --c-texto-cuerpo: #333333;
+  --c-texto-suave: #6B6B6B;
+}
+
+/* Los logos de cliente: marcas grises que sobre oscuro desaparecen */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco) img {
+  filter: grayscale(100%) invert(1) brightness(1.7);
+}
+
+/* Los filetes separadores, que van en verde muy tenue */
+.d2 [data-comp-tono="oscuro"] :is(.d2-logos, .d2-logos--dos, .d2-foco, .d2-prueba-resp,
+                                  .d2-cta-bal, .d2-cta-car, .d2-res-tres,
+                                  .d2-res-ed) {
+  border-color: rgba(255, 255, 255, .14);
+}
+
+.d2 .d2-logos, .d2 .d2-logos--dos, .d2 .d2-foco          { background: var(--comp-logos); }
+
+/* Pero dentro de una tarjeta clara vuelven a su valor original: ahi el fondo
+   sigue siendo blanco y el texto tiene que ser oscuro otra vez. */
+.d2 [data-comp-tono="oscuro"] :is(.d2-res-tres__item, .d2-foco__prueba,
+                                  .d2-prueba-resp__tarjeta, .d2-cta-bal__accion,
+                                  .d2-cta-car__carril, .d2-prob-mapa__ficha) {
+  --c-texto:        #333333;
+  --c-texto-cuerpo: #333333;
+  --c-texto-suave:  #6B6B6B;
+  --c-linea:        rgba(0, 0, 0, .12);
+}
+
+/* ==========================================================================
+   LAS ISLAS CLARAS DENTRO DE UNA SECCION OSCURA
+
+   El fallo que esto corrige: cuando una seccion pasa a negro, su texto se
+   invierte a blanco. Pero muchas secciones contienen TARJETAS con fondo
+   claro propio --items de lista, marcos de foto, paneles-- y ahi el texto
+   blanco quedaba sobre fondo casi blanco: 1.07:1, invisible.
+
+   Ya paso una vez y lo resolvi nombrando las cinco tarjetas que conocia.
+   Volvio a pasar en cuanto aparecieron variantes nuevas, porque la lista
+   hay que mantenerla a mano y nadie se acuerda.
+
+   Aqui se invierte el enfoque: en lugar de enumerar que tarjetas hay, se
+   declara que CUALQUIER superficie clara restaura los valores oscuros. Se
+   listan por su clase --no hay selector CSS para "elemento con fondo
+   claro"-- pero el criterio salio de barrer el DOM y preguntar por el color
+   real de cada elemento, no de la memoria.
+
+   Las 51 superficies claras detectadas, menos las que son la propia
+   seccion.
+   ========================================================================== */
+
+.d2 [data-comp-tono="oscuro"] :is(
+  /* Tarjetas e items de lista */
+  .d2-prob-lec__lista > li,
+  .d2-prob-comp__rede,
+  .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item,
+  .d2-prueba-resp__par,
+  .d2-prueba-rec__marca,
+  .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo,
+  .d2-equipo-firma__credenciales > li,
+  .d2-foco__prueba,
+  .d2-cta-bal__accion,
+  .d2-cta-car__carril,
+  .d2-cta-con__inner,
+  .d2-prob-mapa__ficha,
+  /* Marcos de imagen */
+  .d2-equipo-ficha__marco,
+  .d2-equipo-dosier__retrato,
+  .d2-equipo-firma__foto-grande,
+  .d2-equipo-firma__foto-mini,
+  .d2-res-ed__marco,
+  .d2-lec__grafico,
+  /* Paneles y piezas de la calculadora */
+  .d2-panel,
+  .d2-panel__filtro,
+  .calc,
+  .campo__wrap,
+  .resultado,
+  .adelanto,
+  .recomienda,
+  .prueba,
+  .perfil__punto,
+  .pastilla,
+  .contacto,
+  .contacto__icono
+) {
+  --c-texto:        #333333;
+  --c-texto-cuerpo: #333333;
+  --c-texto-suave:  #6B6B6B;
+  --c-linea:        rgba(0, 0, 0, .12);
+  color: var(--c-texto);
+}
+
+/* Los titulares y parrafos dentro de esas islas. Van nombrados porque
+   muchos traen color propio de su regla original, que gana a la herencia. */
+.d2 [data-comp-tono="oscuro"] :is(
+  .d2-prob-lec__lista > li, .d2-prob-comp__rede, .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item, .d2-prueba-resp__par, .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo, .d2-foco__prueba, .d2-cta-bal__accion,
+  .d2-cta-car__carril, .d2-cta-con__inner, .calc, .d2-panel
+) :is(h1, h2, h3, h4, h5, p, span, li, td, th, strong, b, small, dt, dd) {
+  color: var(--c-texto);
+}

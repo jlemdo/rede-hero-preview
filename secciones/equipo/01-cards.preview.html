@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team / Cards</title>
+
+<!-- La biblioteca vive dos niveles por debajo de la raiz -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/d2.css">
+
+<!-- Solo el CSS de esta variante -->
+<link rel="stylesheet" href="01-cards.css">
+
+<style>
+  /* La barra de la vista previa. No forma parte de la seccion. */
+  .vp-barra {
+    position: sticky; top: 0; z-index: 99;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 18px;
+    font: 600 12px/1.4 "Open Sans", system-ui, sans-serif;
+    color: #FFFFFF; background: #333333;
+  }
+  .vp-barra a { color: #B0E1B7; text-decoration: none; }
+  .vp-barra a:hover { text-decoration: underline; }
+  .vp-barra code {
+    padding: 2px 6px; font-size: 11px;
+    background: rgba(255,255,255,.14); border-radius: 3px;
+  }
+  .vp-sep { opacity: .45; }
+  /* Los tokens de composicion, para que la seccion no salga sin fondo */
+  .d2 {
+    --comp-blanco:#FFFFFF; --comp-gris:#F3F3F3; --comp-negro:#333333;
+    --comp-hero:#FFFFFF; --comp-logos:#FFFFFF; --comp-problema:#F3F3F3;
+    --comp-calc:#FFFFFF; --comp-rutas:#F3F3F3; --comp-prueba:#FFFFFF;
+    --comp-resenas:#F3F3F3; --comp-equipo:#FFFFFF; --comp-faq:#F3F3F3;
+    --comp-cta:#333333; --comp-footer:#333333;
+  }
+</style>
+</head>
+<body class="d2">
+
+<div class="vp-barra">
+  <a href="../indice.html">&larr; Library</a>
+  <span class="vp-sep">/</span>
+  <strong>Team</strong>
+  <span class="vp-sep">/</span>
+  <span>Cards</span>
+  <span class="vp-sep">|</span>
+  <code>.d2-equipo-ficha</code>
+  <span class="vp-sep">|</span>
+  <a href="01-cards.html">markup</a>
+  <a href="01-cards.css">css</a>
+</div>
+
+<section class="d2-equipo-ficha">
+      <div class="d2-equipo-ficha__inner">
+
+        <div class="d2-equipo-ficha__intro">
+          <p class="d2-equipo-ficha__eyebrow">People behind Rede</p>
+          <h2 class="d2-equipo-ficha__titulo">More than engineers.</h2>
+          <p class="d2-equipo-ficha__lead">
+            Rede is a small team of engineers, project managers, data analysts, and energy
+            efficiency professionals. We work alongside your team rather than delivering a
+            report and moving on.
+          </p>
+        </div>
+
+        <!-- ul y no ol: el orden de las personas no significa nada. -->
+        <ul class="d2-equipo-ficha__lista">
+
+          <li class="d2-equipo-ficha__persona">
+            <div class="d2-equipo-ficha__marco">
+              <img class="d2-equipo-ficha__foto"
+                   src="assets/img/equipo/matthew-redekopp.jpg"
+                   alt="Matthew Redekopp"
+                   width="300" height="420" loading="lazy" decoding="async">
+              <!-- La credencial se apoya sobre la foto: es la banda que ata
+                   el rostro a la licencia sin gastar una linea del cuerpo. -->
+              <p class="d2-equipo-ficha__cred">P.Eng., CEM, LEED AP</p>
+            </div>
+            <h3 class="d2-equipo-ficha__nombre">Matthew Redekopp</h3>
+            <p class="d2-equipo-ficha__cargo">Founder and CEO</p>
+            <p class="d2-equipo-ficha__bio">
+              Matthew founded Rede in 2008 to serve communities and organizations that
+              larger engineering firms were not reaching. Nearly two decades later, he
+              leads a team helping organizations across Western Canada reduce energy costs
+              and manage buildings more effectively.
+            </p>
+          </li>
+
+          <li class="d2-equipo-ficha__persona">
+            <div class="d2-equipo-ficha__marco">
+              <img class="d2-equipo-ficha__foto"
+                   src="assets/img/equipo/marco-bieri.jpg"
+                   alt="Marco Bieri"
+                   width="300" height="420" loading="lazy" decoding="async">
+              <p class="d2-equipo-ficha__cred">P.Eng., M.Eng., M.Sc., CEM</p>
+            </div>
+            <h3 class="d2-equipo-ficha__nombre">Marco Bieri</h3>
+            <p class="d2-equipo-ficha__cargo">Energy Efficiency Engineer</p>
+            <p class="d2-equipo-ficha__bio">
+              Marco brings deep expertise in recommissioning, energy auditing, and building
+              performance diagnostics, along with a rigorous approach to data analysis and
+              measurement verification.
+            </p>
+          </li>
+
+          <li class="d2-equipo-ficha__persona">
+            <div class="d2-equipo-ficha__marco">
+              <img class="d2-equipo-ficha__foto"
+                   src="assets/img/equipo/erica-letchford.jpg"
+                   alt="Erica Letchford"
+                   width="298" height="417" loading="lazy" decoding="async">
+              <p class="d2-equipo-ficha__cred">BID, LEED AP</p>
+            </div>
+            <h3 class="d2-equipo-ficha__nombre">Erica Letchford</h3>
+            <p class="d2-equipo-ficha__cargo">Director of Operations</p>
+            <p class="d2-equipo-ficha__bio">
+              Erica has spent nearly two decades working to reduce energy consumption and
+              operating costs in residential, commercial, and institutional facilities. She
+              brings a project manager's instinct for keeping the big picture in view while
+              managing the details.
+            </p>
+          </li>
+
+          <!-- PENDIENTE DE ERICK — cuarta persona.
+               Falta la foto y faltan nombre, credenciales, cargo y bio.
+               Cuando lleguen, se duplica un <li> de arriba y se rellena; la
+               rejilla ya esta preparada para cuatro (ver el CSS: en
+               escritorio son cuatro columnas y con tres se centra sola, asi
+               que anadir la cuarta no toca nada mas).
+               No se pone un placeholder con iniciales: una silueta gris
+               junto a tres rostros reales llama la atencion sobre lo que
+               falta en vez de sobre el equipo. -->
+        </ul>
+      </div>
+    </section>
+
+
+
+</body>
+</html>

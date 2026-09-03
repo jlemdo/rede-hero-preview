@@ -64,6 +64,7 @@
     toggle = limpio;
 
     var abierto = false;
+    var bloqueadoPorClic = false;
 
     function pintar(v) {
       abierto = v;
@@ -73,7 +74,17 @@
 
     toggle.addEventListener('click', function (e) {
       e.stopPropagation();
+
+      /* El clic siempre alterna: si esta abierto lo cierra, sin importar
+         si lo abrio el hover o un clic anterior. Una version previa hacia
+         que el primer clic tras el hover no cerrara, y el resultado era
+         que hacian falta dos clics: se sentia roto. */
       pintar(!abierto);
+
+      /* Cerrado a proposito con el raton encima: se bloquea el hover o el
+         mouseenter siguiente lo reabriria al instante. Se libera al salir
+         de la zona. */
+      bloqueadoPorClic = !abierto ? false : true;
     });
 
     /* Al pulsar fuera se cierra */
@@ -98,7 +109,160 @@
       if (drop.contains(e.relatedTarget) || e.relatedTarget === toggle) { return; }
       pintar(false);
     });
+
+    /* ----------------------------------------------------------------------
+       ABRIR AL PASAR EL RATON
+
+       El desplegable se abre al apuntar el boton y se cierra al salir de
+       el o del panel. El clic sigue funcionando: es la via del teclado y
+       la de los dispositivos tactiles, donde no hay hover.
+
+       DOS DETALLES QUE HACEN QUE SE SIENTA BIEN:
+
+       1. El cierre espera 180ms. Entre el boton y el panel hay un hueco, y
+          al cruzarlo el raton sale de los dos por un instante: sin esa
+          espera el menu se cerraria en la cara del usuario a mitad de
+          camino.
+
+       2. Solo se activa con raton de verdad. En una pantalla tactil el
+          primer toque dispara un hover fantasma, y el menu se abriria y
+          cerraria solo. La consulta (hover: hover) lo descarta.
+       ---------------------------------------------------------------------- */
+
+    var hayRaton = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var zona = toggle.closest('.nav__item--has-drop') || toggle.parentNode;
+
+    if (hayRaton && zona) {
+      var esperaCierre = null;
+
+      function cancelarCierre() {
+        if (esperaCierre) { window.clearTimeout(esperaCierre); esperaCierre = null; }
+      }
+
+      function entrar() {
+        /* Cancelar SIEMPRE, tambien si ya esta abierto.
+
+           El fallo intermitente venia de aqui: al salir queda un cierre
+           programado a 180ms; si el raton vuelve antes de que expire,
+            sigue siendo true, la condicion de abajo no entraba y
+           el temporizador seguia vivo. Se ejecutaba, cerraba el menu, y el
+           mouseenter del panel lo volvia a abrir: ese era el parpadeo,
+           reproducido 19 de cada 20 veces. */
+        cancelarCierre();
+        if (bloqueadoPorClic) { return; }
+        if (!abierto) { pintar(true); }
+      }
+
+      function salir() {
+        /* Un solo cierre en vuelo: si ya habia uno programado se descarta,
+           para que dos salidas seguidas no encadenen dos cierres. */
+        cancelarCierre();
+        esperaCierre = window.setTimeout(function () {
+          /* Si el foco esta dentro, alguien lo esta recorriendo con el
+             teclado: no se cierra por debajo. */
+          if (drop.contains(document.activeElement)) { return; }
+
+          /* Y si el raton sigue sobre el boton o sobre el panel, tampoco.
+
+             Este era el fallo intermitente: al abrirse, el panel aparece
+             DEBAJO del cursor y recibe un mouseenter inmediato. En cuanto
+             el raton se movia un poco hacia el boton salia del panel, y
+             ese mouseleave cerraba el menu aunque el cursor siguiera
+             perfectamente sobre Solutions.
+
+             :hover lo resuelve sin llevar la cuenta a mano de por donde
+             anda el raton: pregunta al navegador donde esta AHORA. */
+          if (zona.matches(':hover') || drop.matches(':hover')) { return; }
+
+          if (abierto) { pintar(false); }
+        }, 180);
+      }
+
+      /* Entre el boton y el panel hay 12px de aire. Al cruzarlos el raton
+         no esta sobre ninguno de los dos, y el cierre se disparaba a mitad
+         de camino. El puente es una franja invisible que tapa ese hueco:
+         asi el recorrido nunca sale de una zona vigilada.
+
+         Se pinta desde el CSS (::before del panel) para no añadir un nodo
+         que el lector de pantalla tendria que ignorar. */
+      zona.addEventListener('mouseenter', entrar);
+      zona.addEventListener('mouseleave', function () {
+        bloqueadoPorClic = false;
+        salir();
+      });
+      drop.addEventListener('mouseenter', cancelarCierre);
+      drop.addEventListener('mouseleave', salir);
+    }
   }
+
+  /* ------------------------------------------------------------------------
+     EL MEGA MENU: VISTA PREVIA POR ENLACE
+
+     Cada servicio tiene su imagen y su descripcion. Al apuntar un enlace,
+     el panel de la derecha muestra los suyos.
+
+     Se cambia UNA imagen en vez de tener cuatro superpuestas: asi el
+     navegador solo descarga la que se ve, y el panel no arrastra tres
+     imagenes ocultas en cada apertura.
+
+     La vista previa es decorativa --el nombre y la descripcion corta ya
+     estan en el enlace-- asi que va marcada aria-hidden y no interfiere
+     con quien navega por teclado o lector de pantalla.
+     ------------------------------------------------------------------------ */
+
+  (function () {
+    var destino = document.querySelector('[data-mega-destino]');
+    var texto = document.querySelector('[data-mega-texto]');
+    var cifra = document.querySelector('[data-mega-cifra]');
+    if (!destino || !texto || !cifra) { return; }
+
+    var enlaces = document.querySelectorAll('[data-mega-img]');
+    if (!enlaces.length) { return; }
+
+    /* Se precargan las cuatro al abrir el menu por primera vez: si se
+       cargaran al apuntar, la primera vez que se recorre la lista se veria
+       un hueco en blanco en cada salto. */
+    var precargadas = false;
+    function precargar() {
+      if (precargadas) { return; }
+      precargadas = true;
+      Array.prototype.forEach.call(enlaces, function (a) {
+        var im = new Image();
+        im.src = a.getAttribute('data-mega-img');
+      });
+    }
+
+    var activo = null;
+
+    function mostrar(a) {
+      var img = a.getAttribute('data-mega-img');
+      if (!img || img === activo) { return; }
+      activo = img;
+
+      /* Se desvanece, se cambia la fuente y vuelve: cambiar el src a secas
+         produce un salto duro entre dos fotos distintas. */
+      var caja = destino.closest('.nav__drop__destacado') || destino;
+      caja.classList.add('esta-cambiando');
+
+      window.setTimeout(function () {
+        destino.setAttribute('src', img);
+        cifra.textContent = a.getAttribute('data-mega-cif') || cifra.textContent;
+        texto.textContent = a.getAttribute('data-mega-txt') || '';
+        caja.classList.remove('esta-cambiando');
+      }, 160);
+
+      Array.prototype.forEach.call(enlaces, function (e) {
+        e.classList.toggle('es-activo', e === a);
+      });
+    }
+
+    Array.prototype.forEach.call(enlaces, function (a) {
+      a.addEventListener('mouseenter', function () { precargar(); mostrar(a); });
+
+      /* El teclado tambien: al tabular por la lista, la previa acompaña */
+      a.addEventListener('focus', function () { precargar(); mostrar(a); });
+    });
+  })();
 
   /* ------------------------------------------------------------------------
      EL MENU MOVIL

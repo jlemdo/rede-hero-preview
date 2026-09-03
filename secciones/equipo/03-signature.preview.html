@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team / Signature</title>
+
+<!-- La biblioteca vive dos niveles por debajo de la raiz -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/d2.css">
+
+<!-- Solo el CSS de esta variante -->
+<link rel="stylesheet" href="03-signature.css">
+
+<style>
+  /* La barra de la vista previa. No forma parte de la seccion. */
+  .vp-barra {
+    position: sticky; top: 0; z-index: 99;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 10px 18px;
+    font: 600 12px/1.4 "Open Sans", system-ui, sans-serif;
+    color: #FFFFFF; background: #333333;
+  }
+  .vp-barra a { color: #B0E1B7; text-decoration: none; }
+  .vp-barra a:hover { text-decoration: underline; }
+  .vp-barra code {
+    padding: 2px 6px; font-size: 11px;
+    background: rgba(255,255,255,.14); border-radius: 3px;
+  }
+  .vp-sep { opacity: .45; }
+  /* Los tokens de composicion, para que la seccion no salga sin fondo */
+  .d2 {
+    --comp-blanco:#FFFFFF; --comp-gris:#F3F3F3; --comp-negro:#333333;
+    --comp-hero:#FFFFFF; --comp-logos:#FFFFFF; --comp-problema:#F3F3F3;
+    --comp-calc:#FFFFFF; --comp-rutas:#F3F3F3; --comp-prueba:#FFFFFF;
+    --comp-resenas:#F3F3F3; --comp-equipo:#FFFFFF; --comp-faq:#F3F3F3;
+    --comp-cta:#333333; --comp-footer:#333333;
+  }
+</style>
+</head>
+<body class="d2">
+
+<div class="vp-barra">
+  <a href="../indice.html">&larr; Library</a>
+  <span class="vp-sep">/</span>
+  <strong>Team</strong>
+  <span class="vp-sep">/</span>
+  <span>Signature</span>
+  <span class="vp-sep">|</span>
+  <code>.d2-equipo-firma</code>
+  <span class="vp-sep">|</span>
+  <a href="03-signature.html">markup</a>
+  <a href="03-signature.css">css</a>
+</div>
+
+<section class="d2-equipo-firma">
+      <div class="d2-equipo-firma__inner">
+
+        <div class="d2-equipo-firma__intro">
+          <p class="d2-equipo-firma__eyebrow">People behind Rede</p>
+          <h2 class="d2-equipo-firma__titulo">More than engineers.</h2>
+        </div>
+
+        <div class="d2-equipo-firma__cuerpo">
+
+          <!-- El destacado. No es "el jefe es mas importante": es que su bio
+               es la unica que cuenta el origen de la empresa (2008), y ese
+               parrafo pide mas aire que los otros dos. -->
+          <article class="d2-equipo-firma__principal">
+            <img class="d2-equipo-firma__foto-grande"
+                 src="assets/img/equipo/matthew-redekopp.jpg"
+                 alt="Matthew Redekopp"
+                 width="300" height="420" loading="lazy" decoding="async">
+            <div class="d2-equipo-firma__principal-texto">
+              <p class="d2-equipo-firma__lead">
+                Rede is a small team of engineers, project managers, data analysts, and energy
+                efficiency professionals. We work alongside your team rather than delivering a
+                report and moving on.
+              </p>
+              <h3 class="d2-equipo-firma__nombre d2-equipo-firma__nombre--grande">Matthew Redekopp</h3>
+              <p class="d2-equipo-firma__cargo">Founder and CEO</p>
+              <p class="d2-equipo-firma__bio">
+                Matthew founded Rede in 2008 to serve communities and organizations that
+                larger engineering firms were not reaching. Nearly two decades later, he
+                leads a team helping organizations across Western Canada reduce energy costs
+                and manage buildings more effectively.
+              </p>
+            </div>
+          </article>
+
+          <!-- El resto, en fila vertical. Retrato pequeño y bio completa:
+               el copy va literal, no se recorta para que quepa. -->
+          <ul class="d2-equipo-firma__resto">
+
+            <li class="d2-equipo-firma__mini">
+              <img class="d2-equipo-firma__foto-mini"
+                   src="assets/img/equipo/marco-bieri.jpg"
+                   alt="Marco Bieri"
+                   width="300" height="420" loading="lazy" decoding="async">
+              <div>
+                <h3 class="d2-equipo-firma__nombre">Marco Bieri</h3>
+                <p class="d2-equipo-firma__cargo">Energy Efficiency Engineer</p>
+                <p class="d2-equipo-firma__bio">
+                  Marco brings deep expertise in recommissioning, energy auditing, and building
+                  performance diagnostics, along with a rigorous approach to data analysis and
+                  measurement verification.
+                </p>
+              </div>
+            </li>
+
+            <li class="d2-equipo-firma__mini">
+              <img class="d2-equipo-firma__foto-mini"
+                   src="assets/img/equipo/erica-letchford.jpg"
+                   alt="Erica Letchford"
+                   width="298" height="417" loading="lazy" decoding="async">
+              <div>
+                <h3 class="d2-equipo-firma__nombre">Erica Letchford</h3>
+                <p class="d2-equipo-firma__cargo">Director of Operations</p>
+                <p class="d2-equipo-firma__bio">
+                  Erica has spent nearly two decades working to reduce energy consumption and
+                  operating costs in residential, commercial, and institutional facilities. She
+                  brings a project manager's instinct for keeping the big picture in view while
+                  managing the details.
+                </p>
+              </div>
+            </li>
+
+            <!-- PENDIENTE DE ERICK — cuarta persona.
+                 Va aqui, como un <li> mas de esta columna. La columna crece
+                 hacia abajo sin tocar el destacado de la izquierda, asi que
+                 es la variante que mejor absorbe a la cuarta persona.
+                 Sus siglas hay que anadirlas tambien a la linea de
+                 credenciales del pie. -->
+          </ul>
+        </div>
+
+        <!-- La linea de credenciales de la firma.
+             Aqui estan TODAS las siglas de las tres personas, sin perder
+             ninguna, pero atribuidas al equipo y no a cada cara. Es el dato
+             que puntua el evaluador del RFP (SF-330 seccion E, campos 17 y
+             18: registro profesional y otras cualificaciones).
+             role="list" porque list-style:none le quita la semantica de
+             lista a <ul> en Safari con VoiceOver. -->
+        <ul class="d2-equipo-firma__credenciales" role="list"
+            aria-label="Professional credentials held by the Rede team">
+          <li>P.Eng.</li>
+          <li>M.Eng.</li>
+          <li>M.Sc.</li>
+          <li>CEM</li>
+          <li>LEED AP</li>
+          <li>BID</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Close options">
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Previous option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Cards</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Dossier</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Signature</small></button>
+    </div>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+
+
+</body>
+</html>

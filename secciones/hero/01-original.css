@@ -1,0 +1,275 @@
+/* Hero / Original
+   Reglas cuyo selector menciona .d2-hero, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2.css --- */
+
+/* ==========================================================================
+   HERO
+
+   Dos columnas, como la referencia: texto a la izquierda, panel de datos a
+   la derecha.
+
+   El fondo es el render de la empresa: un dibujo a lapiz del conjunto de
+   edificios con lineas de circuito verdes. Es material propio de Rede, no un
+   marcador, asi que aqui no va el rayado diagonal.
+   ========================================================================== */
+
+.d2-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--c-blanco);
+}
+
+/* El render, anclado a la derecha y desvanecido hacia el texto */
+.d2-hero__fondo {
+  position: absolute;
+  top: 0;
+
+  /* Desplazado a la derecha: la imagen es mas apaisada que su hueco, asi
+     que centrada dejaba la parte util detras del texto. Lo llevan las tres
+     variantes, no solo las dos ultimas. */
+  right: -9%;
+  width: 77%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center left;
+  opacity: .5;
+  pointer-events: none;
+  mask-image: linear-gradient(to right, transparent 0%, #000 22%, #000 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 22%, #000 100%);
+}
+
+.d2-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 64px);
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding: clamp(48px, 6vw, 88px) var(--d2-gutter);
+}
+
+/* --- La columna de texto --- */
+
+.d2-hero__eyebrow {
+  margin: 0 0 var(--d2-e3);
+  font-size: .875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--c-verde);
+}
+
+.d2-hero__titulo {
+  margin: 0;
+  font-size: clamp(2.25rem, 1.3rem + 3.4vw, 3.75rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.08;
+  letter-spacing: -.03em;
+  color: var(--c-texto);
+  text-wrap: balance;
+}
+
+.d2-hero__titulo .acento { color: var(--c-verde); }
+
+.d2-hero__lead {
+  max-width: 44ch;
+  margin: var(--d2-e4) 0 0;
+  font-size: clamp(1rem, .95rem + .3vw, 1.0625rem);
+  line-height: 1.7;
+  color: var(--c-texto-cuerpo);
+}
+
+.d2-hero__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--d2-e2);
+  margin-top: clamp(24px, 3vw, 36px);
+}
+
+@media (max-width: 1000px) {
+.d2-hero__inner { grid-template-columns: 1fr; }
+/* El render pasa a cubrir el ancho, mas tenue tras el texto */
+  .d2-hero__fondo {
+    width: 100%;
+    opacity: .22;
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 40%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 40%);
+  }
+}
+
+@media (max-width: 560px) {
+.d2-hero__acciones { flex-direction: column; align-items: stretch; }
+}
+
+/* --- de css/d2-variantes.css --- */
+
+.d2-caru__diapo > .d2-hero {
+  animation: d2-caru-entra .32s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+/* ==========================================================================
+   OPCION 2 — el panel un 20% mas pequeño
+   ========================================================================== */
+
+/* El panel no tiene ancho propio: lo da la columna de la rejilla. Encogerlo
+   con transform:scale desenfocaria el texto, asi que se estrecha la columna
+   y el panel la sigue.
+
+   El hueco que deja se lo queda la columna de texto: el titular respira en
+   vez de dejar un vacio. */
+
+.d2-hero.es-variante-b .d2-hero__inner {
+  grid-template-columns: minmax(0, 1.22fr) minmax(0, .82fr);
+}
+
+/* Los adentros se ajustan al nuevo ancho: sin esto, el padding y las cifras
+   quedarian desproporcionados dentro de una caja mas estrecha. */
+.d2-hero.es-variante-b .d2-panel {
+  padding: clamp(16px, 1.9vw, 22px);
+}
+
+.d2-hero.es-variante-b .d2-metrica__valor {
+  font-size: clamp(26px, 2.6vw, 32px);
+}
+
+.d2-hero.es-variante-b .d2-panel__titulo {
+  font-size: 15px;
+}
+
+/* El render se desplaza a la derecha.
+
+   `object-position` NO sirve aqui: la imagen es mas ancha que su hueco
+   (1.83 contra 1.52), asi que con `cover` solo sobran 204px de ancho. Un 18%
+   movia 37px sobre 1183px de imagen: invisible.
+
+   Se desplaza el elemento entero y se ensancha otro tanto, para que no
+   quede un hueco blanco por la izquierda al correrlo. */
+/* ==========================================================================
+   OPCION 3 — panel translucido, tamaño original
+   ========================================================================== */
+
+/* La rejilla no se toca: el panel mide lo mismo que en el hero original.
+   Lo unico que cambia es que deja ver el render por detras. */
+
+.d2-hero.es-variante-c .d2-hero__fondo {
+  /* El render sube de opacidad SOLO en esta variante: con el 50% original,
+     bajo un panel translucido apenas quedaba un 4% de imagen visible y el
+     efecto no se apreciaba. */
+  opacity: .66;
+}
+
+.d2-hero.es-variante-c .d2-panel {
+  /* SIN desenfoque.
+
+     El backdrop-filter funciona sobre fotos, pero este render es un dibujo
+     de lineas finas: un blur de 14px lo convertia en una mancha gris. El
+     edificio desaparecia antes de que la transparencia lo dejara pasar, y
+     por eso la opcion 3 se veia casi igual que la 1.
+
+     Sin blur el trazo se conserva y se reconoce el edificio. Como el dibujo
+     es claro y de poco contraste, el texto encima sigue leyendose: medido
+     mas abajo. */
+  background: rgba(255, 255, 255, .78);
+
+  /* Sobre foto, el borde suave se pierde y la caja parece flotar sin apoyo */
+  border-color: rgba(255, 255, 255, .75);
+  box-shadow: 0 2px 40px rgba(2, 51, 0, .22);
+}
+
+/* Las cajas de las metricas tienen su propio fondo menta OPACO y ocupan el
+   26% del panel, justo donde va la vista primero. Transparentar solo el
+   panel dejaba pasar la imagen por los margenes pero no por el centro, que
+   es lo que se estaba viendo (o mejor dicho, lo que no se veia).
+
+   El filtro conserva su tono menta transparente; las metricas ya no
+   tienen caja que transparentar. */
+.d2-hero.es-variante-c .d2-panel__filtro {
+  background: rgba(242, 249, 242, .66);
+}
+
+/* La etiqueta ya no se apoya en un fondo menta: sobre el panel
+   translucido necesita algo mas de peso para sostener el contraste. */
+.d2-hero.es-variante-c .d2-metrica__label {
+  color: #3D3D3D;
+}
+
+/* El grafico lleva una rejilla y un area en gris muy claro; sobre la imagen
+   pierden referencia. Se refuerzan un punto para que el dato siga
+   leyendose como un grafico y no como un dibujo suelto. */
+.d2-hero.es-variante-c .d2-grafico svg g[stroke="#EFEFEF"] line {
+  stroke: rgba(120, 130, 122, .34);
+}
+
+@media (max-width: 1000px) {
+.d2-hero.es-variante-b .d2-hero__inner { grid-template-columns: 1fr; }
+.d2-hero.es-variante-b .d2-panel { padding: clamp(20px, 2.4vw, 28px); }
+.d2-hero.es-variante-b .d2-metrica__valor { font-size: clamp(28px, 3.4vw, 38px); }
+.d2-hero.es-variante-b .d2-panel__titulo { font-size: 16px; }
+/* La transparencia SE MANTIENE en movil: es una variante que hay que
+     comparar, y si en el movil se ve como la 1 no se puede juzgar.
+
+     Se sube un punto respecto a escritorio porque aqui el render pasa por
+     DETRAS del texto (no a un lado), asi que hay mas superficie de dibujo
+     bajo las cifras. Contraste comprobado. */
+  /* El desplazamiento (right/width) es para la version de dos columnas. En
+     movil el render debe volver a ocupar todo el ancho: con el 77% quedaba
+     en 300px sobre un panel de 350 y un tercio de la caja no tenia nada
+     debajo. */
+  .d2-hero__fondo {
+    right: 0;
+    width: 100%;
+  }
+/* La regla base baja el render al 22% en movil. Sube al mismo .66 que en
+     escritorio para que la cantidad de dibujo que atraviesa el panel sea la
+     misma en los dos sitios. */
+  .d2-hero.es-variante-c .d2-hero__fondo { opacity: .66; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2-caru__diapo > .d2-hero { animation: none; }
+}
+
+/* --------------------------------------------------------------------------
+   LAS 30 VARIANTES, AGRUPADAS POR SECCION
+
+   Van al final de la hoja para ganar a las reglas que ya declaraban fondo
+   una por una. Se mantiene la especificidad .d2 de las originales.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-hero                                             { background: var(--comp-hero); }
+
+/* --------------------------------------------------------------------------
+   2. EL VERDE DE MARCA COMO TEXTO — 15 fallos
+
+   #39B54A sobre blanco da 2.66:1. El manual lo dice: es un color de
+   SUPERFICIE, no de texto. En titulares grandes (>=24px) el minimo baja a
+   3:1, pero 2.66 tampoco llega.
+   -------------------------------------------------------------------------- */
+
+.d2 :is(.d2-hero__eyebrow, .d2-eyebrow, .eyebrow, .acento) {
+  color: #026F00;
+}
+
+/* --------------------------------------------------------------------------
+   8. LA ETIQUETA "WITH REDE" SOBRE NEGRO — 2.68:1
+
+   El verde oscuro #026F00 funciona sobre claro pero se hunde sobre negro.
+   Dentro de una seccion oscura hay que invertirlo al verde claro, que sobre
+   #333333 da 7.20:1.
+   -------------------------------------------------------------------------- */
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-rutas-sel__eyebrow, .d2-rutas-esc__eyebrow,
+                                  .d2-rutas-cmp__eyebrow, .d2-rutas-sel__tag,
+                                  .d2-rutas-esc__tag, .d2-rutas-cmp__tag,
+                                  .d2-rutas-sel__link, .d2-rutas-esc__link,
+                                  .d2-rutas-cmp__link, .d2-prob-comp__eti--rede,
+                                  .d2-prueba-reg__fuente, .d2-hero__eyebrow,
+                                  .d2-eyebrow, .eyebrow, .acento,
+                                  .d2-equipo-firma__credenciales li,
+                                  .d2-equipo-dosier__cred) {
+  color: #B0E1B7;
+}

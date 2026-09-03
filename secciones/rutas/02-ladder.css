@@ -1,0 +1,458 @@
+/* Solution routes / Ladder
+   Reglas cuyo selector menciona .d2-rutas-esc, en el orden original.
+   Usa tokens del sistema: hay que cargar css/tokens.css antes. */
+
+/* --- de css/d2-variantes.css --- */
+
+/* ==========================================================================
+   SECCION RUTAS / SOLUTIONS — TRES VARIANTES
+
+   Todo va prefijado .d2 .d2-rutas- para no chocar con las clases genericas
+   .rutas / .ruta del marcado original ni con otras secciones.
+
+   Ni un color a mano: solo tokens de d2.css y tokens.css. Verde #2E902B da
+   4.09:1 sobre blanco, asi que NO se usa en texto pequeno; para eso va
+   --c-verde-hover (#026F00, 6.41:1). Esa regla decide casi todos los
+   colores de texto de este archivo.
+
+   La curva de movimiento es la del header, cubic-bezier(.32,.72,0,1). No se
+   usa --d2-curva porque esa es la de la referencia (.77,0,.175,1) y el
+   contrato fija la otra para las secciones nuevas.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   COMUN A LAS TRES
+
+   Las cabeceras comparten medidas para que al pasar de una variante a otra
+   en el carrusel el titular no salte de sitio. Solo cambia lo que hay
+   debajo, que es lo que se esta comparando.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-rutas-sel,
+.d2 .d2-rutas-esc,
+.d2 .d2-rutas-cmp {
+  padding-block: clamp(38px, 4.2vw, 54px);
+  background: var(--c-blanco, #fff);
+}
+
+.d2 .d2-rutas-sel__inner,
+.d2 .d2-rutas-esc__inner,
+.d2 .d2-rutas-cmp__inner {
+  max-width: var(--d2-ancho);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter);
+}
+
+/* 62ch: el lead se corta antes de volverse una linea larga de leer, aunque
+   el contenedor mida 1280. */
+.d2 .d2-rutas-sel__cabecera,
+.d2 .d2-rutas-esc__cabecera,
+.d2 .d2-rutas-cmp__cabecera {
+  max-width: 62ch;
+}
+
+.d2 .d2-rutas-sel__eyebrow,
+.d2 .d2-rutas-esc__eyebrow,
+.d2 .d2-rutas-cmp__eyebrow {
+  margin: 0;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  /* verde oscuro y no --c-verde: a 11px el 4.09:1 del verde claro no pasa */
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-rutas-sel__titulo,
+.d2 .d2-rutas-esc__titulo,
+.d2 .d2-rutas-cmp__titulo {
+  margin: var(--d2-e2) 0 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.18;
+  letter-spacing: -.02em;
+  color: var(--c-texto);
+}
+
+.d2 .d2-rutas-sel__lead,
+.d2 .d2-rutas-esc__lead,
+.d2 .d2-rutas-cmp__lead {
+  margin: var(--d2-e3) 0 0;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* --- El enlace de cada ruta ------------------------------------------------
+   Mismo gesto en las tres: la flecha avanza 3px al pasar el raton, igual
+   que .d2-btn. Es el idioma de movimiento que la pagina ya tiene; inventar
+   otro solo para esta seccion la haria sonar distinta sin motivo. */
+
+.d2 .d2-rutas-sel__link,
+.d2 .d2-rutas-esc__link,
+.d2 .d2-rutas-cmp__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--d2-e1);
+  font-size: .875rem;
+  font-weight: var(--fw-bold);
+  text-decoration: none;
+  color: var(--c-verde-hover);
+  transition: color .18s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .d2-rutas-sel__link svg,
+.d2 .d2-rutas-esc__link svg,
+.d2 .d2-rutas-cmp__link svg {
+  flex: none;
+  transition: transform .18s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .d2-rutas-sel__link:hover svg,
+.d2 .d2-rutas-esc__link:hover svg,
+.d2 .d2-rutas-cmp__link:hover svg {
+  transform: translateX(3px);
+}
+
+.d2 .d2-rutas-sel__link:hover,
+.d2 .d2-rutas-esc__link:hover,
+.d2 .d2-rutas-cmp__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* El foco visible no se hereda del reset: se declara. Va con outline y no
+   con sombra para que sobreviva al modo de alto contraste de Windows. */
+.d2 .d2-rutas-sel__link:focus-visible,
+.d2 .d2-rutas-esc__link:focus-visible,
+.d2 .d2-rutas-cmp__link:focus-visible,
+.d2 .d2-rutas-sel__ruta:focus-within {
+  outline: 2px solid var(--c-verde-hover);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   OPCION 2 — ESCALERA DE COMPROMISO
+
+   Un solo eje horizontal. Las tres rutas son tramos de una linea, no tres
+   cajas: cambia que se agrupa con que.
+
+   El rail es una linea SVG que se dibuja de izquierda a derecha al entrar
+   en pantalla --stroke-dasharray al largo, stroke-dashoffset a cero-- y se
+   queda quieta. Una sola pasada: ningun bucle, nada que obligue a un
+   control de pausa (WCAG 2.2.2).
+   ========================================================================== */
+
+.d2 .d2-rutas-esc__eje {
+  position: relative;
+  margin-top: clamp(34px, 4vw, 52px);
+}
+
+.d2 .d2-rutas-esc__rail {
+  display: block;
+  width: 100%;
+  height: 8px;
+  overflow: visible;
+}
+
+.d2 .d2-rutas-esc__rail-linea {
+  fill: none;
+  stroke: var(--c-verde);
+  stroke-width: 2;
+  stroke-linecap: round;
+  /* 1200 es el ancho del viewBox; preserveAspectRatio="none" lo estira, asi
+     que el dasharray se calcula en unidades del viewBox y no en pixeles
+     reales. Por eso el valor es fijo y no hace falta medirlo con JS. */
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: d2-rutas-traza 1.1s cubic-bezier(.32, .72, 0, 1) .1s both;
+}
+
+.d2 .d2-rutas-esc__lista {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.6vw, 36px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Rejilla de filas igual que en la opcion 1, y por el mismo motivo: que los
+   tres enlaces caigan a la misma altura. */
+.d2 .d2-rutas-esc__peldano {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  padding-top: var(--d2-e4);
+}
+
+/* El nodo se monta sobre el rail. -22px lo sube hasta la linea: el rail
+   mide 8px de alto y el peldano tiene 24px de padding superior. */
+.d2 .d2-rutas-esc__nodo {
+  position: absolute;
+  top: -22px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--d2-radio-full);
+  background: var(--c-blanco, #fff);
+  border: 2px solid var(--c-verde);
+  /* Aparece cuando el trazo ya ha pasado por su posicion. Los retardos
+     .35/.65/.95 estan calados sobre la duracion del rail (1.1s) para que
+     cada nodo brote justo detras de la punta de la linea. */
+  animation: d2-rutas-nodo .3s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .d2-rutas-esc__peldano:nth-child(1) .d2-rutas-esc__nodo { animation-delay: .35s; }
+
+.d2 .d2-rutas-esc__peldano:nth-child(2) .d2-rutas-esc__nodo { animation-delay: .65s; }
+
+.d2 .d2-rutas-esc__peldano:nth-child(3) .d2-rutas-esc__nodo { animation-delay: .95s; }
+
+.d2 .d2-rutas-esc__tag {
+  margin: 0 0 6px;
+  font-size: .6875rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-verde-hover);
+}
+
+.d2 .d2-rutas-esc__titulo-ruta {
+  margin: 0 0 var(--d2-e1);
+  font-size: clamp(1rem, .96rem + .2vw, 1.125rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.28;
+  color: var(--c-texto);
+}
+
+.d2 .d2-rutas-esc__texto {
+  margin: 0 0 var(--d2-e3);
+  font-size: .875rem;
+  line-height: 1.56;
+  color: var(--c-texto-cuerpo, #333);
+}
+
+/* Los dos extremos rotulan que crece a lo largo del eje. Sin ellos la linea
+   no dice nada. */
+.d2 .d2-rutas-esc__extremos {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--d2-e3);
+  margin: clamp(20px, 2.4vw, 28px) 0 0;
+  padding-top: var(--d2-e2);
+  border-top: 1px solid rgba(2, 51, 0, .1);
+  font-size: .75rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave);
+}
+
+.d2 .d2-rutas-esc__extremo:last-child { text-align: right; }
+
+.d2 .d2-rutas-sel__cabecera,
+.d2 .d2-rutas-sel__ruta,
+.d2 .d2-rutas-esc__cabecera,
+.d2 .d2-rutas-esc__peldano,
+.d2 .d2-rutas-esc__extremos,
+.d2 .d2-rutas-cmp__cabecera,
+.d2 .d2-rutas-cmp__marco {
+  animation: d2-rutas-entra .55s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .d2-rutas-sel__ruta:nth-child(1),
+.d2 .d2-rutas-esc__peldano:nth-child(1) { animation-delay: .06s; }
+
+.d2 .d2-rutas-sel__ruta:nth-child(2),
+.d2 .d2-rutas-esc__peldano:nth-child(2) { animation-delay: .12s; }
+
+.d2 .d2-rutas-sel__ruta:nth-child(3),
+.d2 .d2-rutas-esc__peldano:nth-child(3) { animation-delay: .18s; }
+
+.d2 .d2-rutas-esc__extremos { animation-delay: .24s; }
+
+@media (max-width: 860px) {
+.d2 .d2-rutas-sel__lista,
+  .d2 .d2-rutas-esc__lista {
+    grid-template-columns: 1fr;
+  }
+/* El eje horizontal deja de tener sentido en una sola columna: el rail se
+     retira y cada peldano se apoya en un filo propio. La forma sigue
+     diciendo la verdad sobre el contenido en los dos anchos. */
+  .d2 .d2-rutas-esc__rail {
+    display: none;
+  }
+.d2 .d2-rutas-esc__peldano {
+    padding-top: var(--d2-e3);
+    border-top: 2px solid var(--c-verde);
+  }
+.d2 .d2-rutas-esc__nodo {
+    display: none;
+  }
+.d2 .d2-rutas-esc__extremos {
+    display: none;   /* rotulaban el eje horizontal; sin eje, sobran */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+.d2 .d2-rutas-sel__cabecera,
+  .d2 .d2-rutas-sel__ruta,
+  .d2 .d2-rutas-esc__cabecera,
+  .d2 .d2-rutas-esc__peldano,
+  .d2 .d2-rutas-esc__extremos,
+  .d2 .d2-rutas-cmp__cabecera,
+  .d2 .d2-rutas-cmp__marco,
+  .d2 .d2-rutas-esc__nodo {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+.d2 .d2-rutas-esc__rail-linea {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+.d2 .d2-rutas-sel__ruta,
+  .d2 .d2-rutas-sel__link,
+  .d2 .d2-rutas-esc__link,
+  .d2 .d2-rutas-cmp__link,
+  .d2 .d2-rutas-sel__link svg,
+  .d2 .d2-rutas-esc__link svg,
+  .d2 .d2-rutas-cmp__link svg {
+    transition: none;
+  }
+}
+
+.d2 .d2-rutas-sel, .d2 .d2-rutas-esc, .d2 .d2-rutas-cmp  { background: var(--comp-rutas); }
+
+/* ==========================================================================
+   CONTRASTE: LAS NUEVE CAUSAS
+
+   Auditadas 2165 combinaciones --30 variantes x 4 composiciones-- midiendo
+   cada texto contra el fondo que de verdad tiene detras, subiendo por los
+   ancestros hasta encontrar quien pinta.
+
+   Salieron 210 fallos, pero son NUEVE defectos repetidos. Se arreglan por
+   la causa, no uno a uno: asi no vuelven a aparecer en la siguiente
+   variante que se escriba.
+
+   Todos los valores medidos, no estimados.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. EL VERDE OSCURO SOBRE FONDO CLARO — 107 fallos, el mas extendido
+
+   #2A8438 daba 4.40:1 sobre el tinte y 4.25:1 sobre el gris. El minimo son
+   4.5 y estos textos miden 11-15px, muy por debajo del umbral de 18.66px
+   que permitiria 3:1.
+
+   Se sustituye por #026F00, que ya existe en el sistema como
+   --c-verde-hover y da 6.41:1 sobre blanco y 5.78:1 sobre gris. Es el
+   mismo verde que ya usan los enlaces del cuerpo.
+   -------------------------------------------------------------------------- */
+
+.d2 :is(.d2-rutas-sel__eyebrow, .d2-rutas-esc__eyebrow, .d2-rutas-cmp__eyebrow,
+        .d2-rutas-sel__tag, .d2-rutas-esc__tag, .d2-rutas-cmp__tag,
+        .d2-rutas-sel__link, .d2-rutas-esc__link, .d2-rutas-cmp__link,
+        .d2-prob-comp__eti--rede, .d2-prueba-reg__fuente,
+        .d2-cta-con__etiqueta, .d2-cta-con__enlace,
+        .d2-equipo-firma__credenciales li, .d2-equipo-dosier__cred) {
+  color: #026F00;
+}
+
+/* --------------------------------------------------------------------------
+   8. LA ETIQUETA "WITH REDE" SOBRE NEGRO — 2.68:1
+
+   El verde oscuro #026F00 funciona sobre claro pero se hunde sobre negro.
+   Dentro de una seccion oscura hay que invertirlo al verde claro, que sobre
+   #333333 da 7.20:1.
+   -------------------------------------------------------------------------- */
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-rutas-sel__eyebrow, .d2-rutas-esc__eyebrow,
+                                  .d2-rutas-cmp__eyebrow, .d2-rutas-sel__tag,
+                                  .d2-rutas-esc__tag, .d2-rutas-cmp__tag,
+                                  .d2-rutas-sel__link, .d2-rutas-esc__link,
+                                  .d2-rutas-cmp__link, .d2-prob-comp__eti--rede,
+                                  .d2-prueba-reg__fuente, .d2-hero__eyebrow,
+                                  .d2-eyebrow, .eyebrow, .acento,
+                                  .d2-equipo-firma__credenciales li,
+                                  .d2-equipo-dosier__cred) {
+  color: #B0E1B7;
+}
+
+/* ==========================================================================
+   LAS ISLAS CLARAS DENTRO DE UNA SECCION OSCURA
+
+   El fallo que esto corrige: cuando una seccion pasa a negro, su texto se
+   invierte a blanco. Pero muchas secciones contienen TARJETAS con fondo
+   claro propio --items de lista, marcos de foto, paneles-- y ahi el texto
+   blanco quedaba sobre fondo casi blanco: 1.07:1, invisible.
+
+   Ya paso una vez y lo resolvi nombrando las cinco tarjetas que conocia.
+   Volvio a pasar en cuanto aparecieron variantes nuevas, porque la lista
+   hay que mantenerla a mano y nadie se acuerda.
+
+   Aqui se invierte el enfoque: en lugar de enumerar que tarjetas hay, se
+   declara que CUALQUIER superficie clara restaura los valores oscuros. Se
+   listan por su clase --no hay selector CSS para "elemento con fondo
+   claro"-- pero el criterio salio de barrer el DOM y preguntar por el color
+   real de cada elemento, no de la memoria.
+
+   Las 51 superficies claras detectadas, menos las que son la propia
+   seccion.
+   ========================================================================== */
+
+.d2 [data-comp-tono="oscuro"] :is(
+  /* Tarjetas e items de lista */
+  .d2-prob-lec__lista > li,
+  .d2-prob-comp__rede,
+  .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item,
+  .d2-prueba-resp__par,
+  .d2-prueba-rec__marca,
+  .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo,
+  .d2-equipo-firma__credenciales > li,
+  .d2-foco__prueba,
+  .d2-cta-bal__accion,
+  .d2-cta-car__carril,
+  .d2-cta-con__inner,
+  .d2-prob-mapa__ficha,
+  /* Marcos de imagen */
+  .d2-equipo-ficha__marco,
+  .d2-equipo-dosier__retrato,
+  .d2-equipo-firma__foto-grande,
+  .d2-equipo-firma__foto-mini,
+  .d2-res-ed__marco,
+  .d2-lec__grafico,
+  /* Paneles y piezas de la calculadora */
+  .d2-panel,
+  .d2-panel__filtro,
+  .calc,
+  .campo__wrap,
+  .resultado,
+  .adelanto,
+  .recomienda,
+  .prueba,
+  .perfil__punto,
+  .pastilla,
+  .contacto,
+  .contacto__icono
+) {
+  --c-texto:        #333333;
+  --c-texto-cuerpo: #333333;
+  --c-texto-suave:  #6B6B6B;
+  --c-linea:        rgba(0, 0, 0, .12);
+  color: var(--c-texto);
+}
+
+/* Los titulares y parrafos dentro de esas islas. Van nombrados porque
+   muchos traen color propio de su regla original, que gana a la herencia. */
+.d2 [data-comp-tono="oscuro"] :is(
+  .d2-prob-lec__lista > li, .d2-prob-comp__rede, .d2-res-tres__item,
+  .d2-prueba-reg__cifra-item, .d2-prueba-resp__par, .d2-rutas-sel__ruta,
+  .d2-rutas-esc__nodo, .d2-foco__prueba, .d2-cta-bal__accion,
+  .d2-cta-car__carril, .d2-cta-con__inner, .calc, .d2-panel
+) :is(h1, h2, h3, h4, h5, p, span, li, td, th, strong, b, small, dt, dd) {
+  color: var(--c-texto);
+}

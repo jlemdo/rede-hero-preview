@@ -2361,9 +2361,16 @@ body { -webkit-font-smoothing: antialiased; }
 
 .duo__btn:hover { color: var(--c-blanco); }
 
+/* La opcion elegida. El texto va en gris oscuro, no en blanco: sobre el
+   verde de marca el blanco da 2.66:1 y el minimo son 4.5. Con #333333 son
+   4.74:1. Es la misma regla que ya siguen los botones solidos.
+
+   Ademas del color hay un segundo indicador --el peso de la fuente-- para
+   que la opcion activa no dependa solo del fondo verde (WCAG 1.4.1). */
 .duo__btn.is-elegida {
-  color: var(--c-blanco);
+  color: var(--c-sobre-verde, #333333);
   background: var(--c-verde);
+  font-weight: 800;
 }
 
 @media (max-width: 400px) {

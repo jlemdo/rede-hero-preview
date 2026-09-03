@@ -1,0 +1,95 @@
+<!-- Solution routes / Ladder
+     Clase raiz: .d2-rutas-esc
+     Extraido de home-d2.html. El CSS va en 02-ladder.css -->
+
+<section class="d2-rutas-esc" id="solutions">
+      <div class="d2-rutas-esc__inner">
+
+        <div class="d2-rutas-esc__cabecera">
+          <p class="d2-rutas-esc__eyebrow">Solutions</p>
+          <h2 class="d2-rutas-esc__titulo">Every organization&rsquo;s situation is different.</h2>
+          <p class="d2-rutas-esc__lead">
+            The right path depends on what you already know, what your buildings need,
+            and how much support your team has in-house.
+          </p>
+        </div>
+
+        <div class="d2-rutas-esc__eje">
+
+          <!-- El rail es decorativo: el orden ya lo lleva el <ol>. Por eso
+               aria-hidden. El trazo se dibuja al entrar con
+               stroke-dasharray/dashoffset, la misma tecnica del panel del
+               hero, una sola pasada. -->
+          <svg class="d2-rutas-esc__rail" viewBox="0 0 1200 8" preserveAspectRatio="none"
+               aria-hidden="true" focusable="false">
+            <line class="d2-rutas-esc__rail-linea" x1="0" y1="4" x2="1200" y2="4"/>
+          </svg>
+
+          <ol class="d2-rutas-esc__lista">
+
+            <li class="d2-rutas-esc__peldano">
+              <span class="d2-rutas-esc__nodo" aria-hidden="true"></span>
+              <p class="d2-rutas-esc__tag">Investigate</p>
+              <h3 class="d2-rutas-esc__titulo-ruta">Energy Gap Analysis + Site Investigation</h3>
+              <p class="d2-rutas-esc__texto">
+                Start by finding out where the unnecessary energy costs are. EGA looks
+                across a portfolio. Site Investigation brings the same level of focus to
+                one building.
+              </p>
+              <a class="d2-rutas-esc__link" href="#">
+                See Investigate
+                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                  <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </li>
+
+            <li class="d2-rutas-esc__peldano">
+              <span class="d2-rutas-esc__nodo" aria-hidden="true"></span>
+              <p class="d2-rutas-esc__tag">Optimize</p>
+              <h3 class="d2-rutas-esc__titulo-ruta">RCx / C-Op</h3>
+              <p class="d2-rutas-esc__texto">
+                Correct operational drift in schedules, setpoints, controls, and sequences
+                so buildings run closer to the way they were intended to.
+              </p>
+              <a class="d2-rutas-esc__link" href="#">
+                See Optimize
+                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                  <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </li>
+
+            <li class="d2-rutas-esc__peldano">
+              <span class="d2-rutas-esc__nodo" aria-hidden="true"></span>
+              <p class="d2-rutas-esc__tag">Manage</p>
+              <h3 class="d2-rutas-esc__titulo-ruta">Energy Management + RUN</h3>
+              <p class="d2-rutas-esc__texto">
+                Keep performance visible over time through ongoing support, reporting, and
+                the utility data infrastructure to see what is changing.
+              </p>
+              <a class="d2-rutas-esc__link" href="#">
+                See Manage
+                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                  <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </li>
+
+          </ol>
+
+          <!-- Los extremos rotulan el eje. Sin ellos, la linea es adorno:
+               el lector no sabe que magnitud crece de izquierda a derecha.
+               Van fuera de la lista para no colarse en el recuento de
+               elementos que anuncia un lector de pantalla. -->
+          <p class="d2-rutas-esc__extremos">
+            <span class="d2-rutas-esc__extremo">One-time diagnostic</span>
+            <span class="d2-rutas-esc__extremo">Ongoing partnership</span>
+          </p>
+
+        </div>
+      </div>
+    </section>
