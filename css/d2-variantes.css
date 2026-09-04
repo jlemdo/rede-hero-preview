@@ -12228,26 +12228,45 @@ span.d2-panel__filtro:hover {
 }
 
 /* --------------------------------------------------------------------------
-   La marquesina, ahora que ocupa todo el ancho
+   LA COMPOSICION QUE PIDIO EL CLIENTE (4/9/2026)
 
-   Al retirar el titular y la cifra el contenedor paso de unos 720px a 1200:
-   un 68% mas. Con los 4 visibles de antes cada logo se quedaba con 228px de
-   sitio y la fila se veia deshilachada.
+   Medido sobre su referencia: el eyebrow va pegado al margen izquierdo y el
+   bloque de logos ocupa el 51% del ancho, no el 78% que ocupaba al quitar
+   las columnas laterales.
 
-   Cinco visibles, que ademas es lo que muestra la referencia del cliente.
+   Menos logos a la vez y mas juntos: el carrusel se lee como una franja
+   discreta, no como una fila que cruza la pantalla.
    -------------------------------------------------------------------------- */
 
+.d2 .d2-logos--dos__etiqueta {
+  /* A la izquierda, alineado con el margen del contenedor */
+  text-align: left;
+}
+
+.d2 .d2-logos--dos__centro {
+  /* El bloque de logos, mas angosto y centrado en la seccion */
+  text-align: center;
+}
+
 .d2 .d2-logos--dos__marquesina {
-  --visibles: 5;
+  /* 51% del contenedor, la proporcion de la referencia */
+  max-width: 62%;
+  margin-inline: auto;
+  --visibles: 4;
 }
 
 @media (max-width: 1100px) {
-  /* Menos ancho, menos logos a la vez: si no, cada uno se queda diminuto */
-  .d2 .d2-logos--dos__marquesina { --visibles: 4; }
+  .d2 .d2-logos--dos__marquesina {
+    max-width: 78%;
+    --visibles: 3;
+  }
 }
 
 @media (max-width: 699px) {
-  .d2 .d2-logos--dos__marquesina { --visibles: 3; }
+  .d2 .d2-logos--dos__marquesina {
+    max-width: 100%;
+    --visibles: 3;
+  }
 }
 
 @media (max-width: 460px) {
