@@ -11971,71 +11971,40 @@ span.d2-panel__filtro:hover {
 }
 
 /* ==========================================================================
-   LA MARCA DE AGUA DEL PIE (variante 3)
+   LA MARCA DE AGUA DEL PIE — RETIRADA (3/9/2026)
 
-   El LOGO en grande al fondo, recortado por el borde inferior.
+   Se descarto la idea. El marcado sigue comentado en home-d2.html y la
+   imagen en assets/img/rede-marca-agua.png.
 
-   POR QUE EL LOGO Y NO TEXTO: el primer intento escribia "Rede" con la
-   tipografia de la web --Open Sans-- pero el logotipo de Rede es Olivier.
-   La palabra no se parecia al logo y se leia como un error, no como una
-   firma.
+   Para recuperarla: descomentar los dos sitios. Los valores estaban
+   medidos contra la referencia de Capacity --1.14:1 de contraste, asoma el
+   28% del logo-- y la franja libre de abajo evitaba que cruzara los
+   legales.
 
-   MEDIDO SOBRE LA REFERENCIA: en el ejemplo de Capacity la marca da 1.14:1
-   contra su fondo, practicamente invisible. Aqui se usa opacity .07 sobre
-   el #666666, que da la misma sutileza.
-
-   Es decoracion: va con aria-hidden, alt vacio y pointer-events none.
+   Lo unico que se conserva del bloque es el overflow del pie: la variante
+   3 lo necesita igualmente para que nada se salga de la caja.
    ========================================================================== */
 
 .d2 .d2-pie-cierre {
-  /* Para anclar la marca y recortarla por abajo */
   position: relative;
   overflow: hidden;
 }
 
+/*
 .d2 .d2-pie-cierre__inner {
-  /* Por encima de la marca: el contenido no puede quedar por detras */
   position: relative;
   z-index: 1;
-  /* Una franja libre debajo para que la marca tenga sitio propio en vez de
-     cruzarse con los legales. Es lo que hace la referencia: el logo vive en
-     su banda, no por detras del texto.
-
-     Con la marca topada al contenedor su alto tambien lo esta: 1200px de
-     ancho / 2.33 = 515px de alto, de los que asoma el 28% = 144px. La
-     franja se queda en 165px, con 21px de margen.
-
-     Medido de 760 a 1920px: siempre quedan entre 17 y 26px de aire entre el
-     ultimo renglon y donde empieza la marca. */
   padding-bottom: clamp(110px, 13vw, 165px);
 }
 
 .d2 .d2-pie-cierre__agua {
   position: absolute;
   left: 50%;
-
-  /* Del ancho del contenedor, no de la ventana.
-
-     La referencia (Capacity) desborda por los lados al 98% del viewport,
-     pero aqui se decidio que la marca respete la caja de 1280px en la que
-     vive todo el contenido del sitio: asi alinea con el logo de arriba y
-     con los enlaces en vez de salirse por su cuenta.
-
-     El calc descuenta el gutter, igual que hace .d2-pie-cierre__inner. */
   width: min(calc(var(--d2-ancho, 1280px) - var(--d2-gutter, 40px) * 2), calc(100vw - var(--d2-gutter, 40px) * 2));
-
-  /* -72%: solo asoma la parte de arriba, el 28% del logo. */
   bottom: -72%;
-
   transform: translateX(-50%);
   z-index: 0;
-
-  /* .07 y no un color: asi la imagen entera se atenua por igual, sin
-     depender de reglas de color que puedan pisarla --que es justo lo que
-     paso con la version en texto: la regla generica de los `p` del pie le
-     forzaba blanco al 92%. */
   opacity: .07;
-
   pointer-events: none;
   user-select: none;
 }
@@ -12046,13 +12015,8 @@ span.d2-panel__filtro:hover {
   height: auto;
 }
 
-/* En movil el pie es mas corto: la marca se recorta mas para no subirse
-   encima del aviso legal. */
-/* En movil el pie es mas corto y la marca taparia el aviso legal, asi que
-   se recorta bastante mas. */
 @media (max-width: 700px) {
-  /* En movil la caja ya es todo el ancho util, asi que basta con recortar
-     un poco mas para que no se coma el aviso legal. */
   .d2 .d2-pie-cierre__agua { bottom: -76%; }
   .d2 .d2-pie-cierre__inner { padding-bottom: clamp(70px, 14vw, 96px); }
 }
+*/
