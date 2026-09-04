@@ -12203,3 +12203,29 @@ span.d2-panel__filtro:hover {
 @media (max-width: 900px) {
   .d2 .d2-rutas-sec__num svg { width: 23px; height: 23px; }
 }
+
+/* ==========================================================================
+   MARCAS: SOLO EL EYEBROW Y LOS LOGOS (4/9/2026)
+
+   Se retiraron el titular de la izquierda --"Proven across complex
+   multi-site portfolios"-- y la cifra de la derecha --$4.4M--. La seccion
+   queda como pidio el cliente: una franja sobria con el eyebrow arriba y
+   los logos debajo.
+
+   El $4.4M no se pierde: sigue en Reviews, que es donde acompana a la voz
+   de un cliente en vez de flotar junto a unos logos.
+
+   El marcado de las dos columnas queda comentado.
+   ========================================================================== */
+
+.d2 .d2-logos--dos__inner {
+  /* Una sola columna: la rejilla era auto/1fr/auto para las tres que habia.
+     Con grid-template-columns puesto a 1fr el gap deja de aplicarse entre
+     columnas que ya no existen. */
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.d2 .d2-logos--dos__centro {
+  /* Centrado, que es como se ve en la referencia del cliente */
+  text-align: center;
+}
