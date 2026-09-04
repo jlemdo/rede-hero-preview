@@ -7,6 +7,31 @@ Actualizado: 3 de septiembre de 2026
 
 ---
 
+## 0. CIFRAS INVENTADAS EN REVIEWS — LO MAS URGENTE
+
+Dos de las tres reseñas muestran **cifras de muestra junto al nombre de una
+persona real**, y desde el 3/9/2026 **nada las distingue en pantalla**: el
+recuadro "sample data" se retiró por petición.
+
+| Reseña | Buildings | Annual | Cumulative | |
+|---|---|---|---|---|
+| Alex Telford — SD27 | 20 | $500K+ | $4.4M | **reales**, del copy aprobado |
+| Wayne Turpin — Northland | 34 | $310K+ | $2.1M | **INVENTADAS** |
+| Norman Buhler — Fort Vermilion | 12 | $180K+ | $950K | **INVENTADAS** |
+
+Publicar esto atribuye números falsos a personas identificadas de
+organizaciones reales. **No puede salir así.**
+
+Dos salidas:
+1. Pedir los números reales de cada distrito y sustituirlos
+2. Volver a dejar las tres con las cifras de cartera y la etiqueta
+   "across our client portfolio", que es cierta y no atribuye nada
+
+Dónde: `RESENAS` en `js/d2-res-centrada.js`. Las entradas con datos de
+muestra llevan `provisional: true`.
+
+---
+
 ## 1. El verde de los botones — DECISIÓN DE CLIENTE
 
 `#026F00`, 141 usos en toda la web (55 en Solutions, 40 en el hero, 6 en la

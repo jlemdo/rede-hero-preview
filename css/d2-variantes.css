@@ -8990,20 +8990,18 @@ span.d2-panel__filtro:hover {
 .d2 .d2-res-cen__cifras b {
   font-size: clamp(30px, 3vw, 48px);
   line-height: 1;
-  /* Verde de marca al 60% sobre negro. 6.38:1 sobre blanco.
+  /* Verde de marca al 90% sobre negro: #33A343, 3.25:1 sobre blanco.
 
-     El manual solo define tintas hacia CLARO y ninguna sirve aqui: a este
-     tamano hace falta 3:1 y el verde de marca da 2.66, el 80% da 2.24 y de
-     ahi para abajo. Aclarar sobre blanco siempre empeora.
+     Es el verde claro de marca, apenas oscurecido. A 31 de 765 del
+     #39B54A, o sea el mismo verde a la vista --el #226D2C anterior estaba
+     a 125--.
 
-     Oscurecer sobre negro es el mismo metodo con el que ya sale el #1A1A1A
-     de la web --negro de marca al 50% sobre negro-- asi que el color sigue
-     siendo derivable del manual, no inventado. Sustituye a un #2E9E3D que
-     no lo era.
+     Por que no el #39B54A exacto: da 2.66:1 y estas cifras miden 30-48px,
+     donde WCAG pide 3:1. Es el minimo ajuste que lo hace cumplir.
 
-     Es el mismo verde oscuro que esta pendiente de decidir para los 141
-     usos del #026F00: si se elige otro, este cambia con el. */
-  color: #226D2C;
+     Oscurecer sobre negro es el mismo metodo del que sale el #1A1A1A de la
+     web, asi que el color se deriva del manual y no esta inventado. */
+  color: #33A343;
 }
 
 .d2 .d2-res-cen__cifras span {
@@ -9130,45 +9128,19 @@ span.d2-panel__filtro:hover {
 }
 
 /* --------------------------------------------------------------------------
-   LA MARCA DE DATO PROVISIONAL
+   LAS CIFRAS DE MUESTRA
 
-   Dos de las tres resenas llevan cifras de muestra --ver la advertencia en
-   js/d2-res-centrada.js--. Aqui se ven marcadas para que no acaben
-   publicadas por descuido.
+   Dos de las tres resenas llevan cifras sin confirmar --ver la advertencia
+   en js/d2-res-centrada.js--.
 
-   La marca es texto, no solo color: quien no distinga tonos tiene que poder
-   verla igual. Y va en el bloque de cifras, no en cada una, porque el juego
-   entero es provisional.
+   Llevaban un recuadro amarillo en pantalla que se retiro por peticion:
+   se veia mal. El aviso vive ahora solo en el codigo y en
+   PENDIENTES-ANTES-DE-PUBLICAR.md, asi que hay que comprobarlo ANTES de
+   publicar: nada en la pagina distingue ya un dato real de uno de muestra.
+
+   Tampoco se atenuan: se probo bajarlas a .62 y medido daba 2.10:1 sobre
+   blanco, por debajo del 3:1 que pide WCAG para texto grande.
    -------------------------------------------------------------------------- */
-
-.d2 .d2-res-cen__cifras {
-  position: relative;
-}
-
-.d2 .d2-res-cen.tiene-cifras-muestra .d2-res-cen__cifras::before {
-  content: "sample data — pending confirmation";
-  position: absolute;
-  top: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 3px 10px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: #8A5A00;                 /* 4.63:1 sobre el amarillo de abajo */
-  background: #FFF4D6;
-  border: 1px solid #E8C97A;
-  border-radius: 3px;
-}
-
-/* Las cifras de muestra NO se atenuan.
-
-   Se probo bajarlas a .62 para que se distinguieran de un vistazo, y
-   medido daba 2.10:1 sobre blanco: por debajo del 3:1 que pide WCAG para
-   texto grande. La marca de arriba ya hace ese trabajo, y hace falta que
-   las cifras se lean para poder juzgarlas. */
 
 @media (prefers-reduced-motion: reduce) {
   .d2 .d2-res-cen__cifras { transition: none; }

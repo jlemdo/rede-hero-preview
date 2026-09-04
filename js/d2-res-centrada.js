@@ -119,9 +119,14 @@
       });
     }
 
-    /* La marca de dato provisional. Va en el contenedor de las cifras y el
-       CSS decide como se ve: asi no hay que crear ni destruir nodos, que es
-       lo que rompe los lectores de pantalla a mitad de una region viva. */
+    /* La marca de dato provisional. El recuadro amarillo que la mostraba se
+       retiro por peticion --se veia mal-- asi que hoy esta clase no pinta
+       nada. Se mantiene porque marca en el DOM cuales son las cifras sin
+       confirmar: basta una regla de CSS para volver a hacerla visible, y
+       sirve para comprobarlo desde consola.
+
+       OJO: ya nada distingue en pantalla un dato real de uno de muestra.
+       Hay que confirmarlos con Erick antes de publicar. */
     if (seccion) {
       seccion.classList.toggle('tiene-cifras-muestra', !!r.provisional);
     }
