@@ -12296,9 +12296,14 @@ span.d2-panel__filtro:hover {
    ========================================================================== */
 
 .d2 [data-comp-tono="oscuro"] .d2-rutas-sec__paso:hover .d2-rutas-sec__num {
-  /* El verde cubre TODO el circulo, no el 72% */
+  /* El verde cubre TODO el circulo, no el 72%.
+
+     SOLO la variable, sin background-color: el relleno lo dibuja el
+     radial-gradient y --num-carga es lo que se anima --esta declarada con
+     @property, por eso se puede interpolar--. Un background-color verde
+     pintaba el circulo de golpe y tapaba ese degradado, asi que el hover
+     se veia plano, sin llenado. */
   --num-carga: 100%;
-  background-color: var(--c-verde-marca, #39B54A);
-  /* Y el icono encima, oscuro: 4.74:1 sobre ese verde */
+  /* El icono encima, oscuro: 4.74:1 sobre ese verde */
   color: #333333;
 }
