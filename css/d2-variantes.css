@@ -11264,7 +11264,8 @@ span.d2-panel__filtro:hover {
   margin: 0 0 18px;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: .16em;
+  /* .14em, como el eyebrow del mapa y el de Solutions */
+  letter-spacing: .14em;
   text-transform: uppercase;
   color: #B0E1B7;
 }
@@ -11279,7 +11280,10 @@ span.d2-panel__filtro:hover {
   /* 700 como el resto: con 400 se leia como otra fuente */
   font-weight: 700;
   line-height: 1.06;
-  letter-spacing: -.02em;
+  /* -.03em, como el hero, Solutions y el mapa. Con -.02 a 50px la
+     diferencia es de medio pixel por letra y el titular se veia mas
+     suelto que los demas. */
+  letter-spacing: -.03em;
   color: #FFFFFF;
   text-wrap: balance;
 }
