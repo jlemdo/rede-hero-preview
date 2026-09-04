@@ -3266,6 +3266,16 @@ span.d2-panel__filtro:hover {
   /* El halo se queda, pero en el verde de marca: es lo que la enciende sin
      tenirla. */
   text-shadow: 0 0 22px rgba(57, 181, 74, .3);
+  transition: opacity .3s cubic-bezier(.32, .72, 0, 1);
+}
+
+/* Cuando no hay datos esto no es una cifra sino un aviso --"Add your
+   area"--, y el resplandor verde ahi dice justo lo contrario: celebra algo
+   que todavia no ha pasado. Se apaga el halo y se atenua, igual que hace
+   el paso anterior con su propia cifra incompleta. */
+.d2 .calc .cierre__cifra.es-incompleto {
+  text-shadow: none;
+  opacity: .55;
 }
 
 /* ==========================================================================
