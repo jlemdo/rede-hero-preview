@@ -11574,42 +11574,41 @@ span.d2-panel__filtro:hover {
 }
 
 /* ==========================================================================
-   LA CALCULADORA ENTRA AL LLEGAR A ELLA
+   LA CALCULADORA APARECE AL LLEGAR A ELLA
 
-   La tarjeta aparece desde abajo, con un desvanecido corto. Sutil pero
-   perceptible: 520ms y 18px de recorrido.
+   La tarjeta entera --cabecera negra, formulario y perfil-- se desvanece
+   hacia arriba cuando la seccion entra en pantalla. No entra elemento por
+   elemento: es una sola pieza que se asienta.
 
-   POR QUE NO SE USA LA CLASE .d2-entra QUE YA EXISTE
+   Los estados los pone js/d2-calc-entrada.js. Si ese script no corre, no
+   hay clase .va-a-entrar y la tarjeta se queda visible: el fallo nunca
+   deja la seccion en blanco.
 
-   Ese observador recoge sus elementos al cargar la pagina, y las
-   diapositivas de un carrusel arrancan con [hidden]. La tarjeta nunca era
-   observada y se quedaba en opacidad 0: invisible para siempre.
-
-   Aqui la animacion se dispara sola con animation-timeline cuando el
-   navegador lo soporta, y si no --Firefox-- la tarjeta se ve normal desde
-   el principio. Nunca puede quedarse invisible, que es el fallo que hay
-   que evitar en un elemento de esta importancia.
+   620ms y 18px: el mismo par que usa el resto de la web para entradas.
+   La curva de Apple para el movimiento, como en todo lo que se desplaza.
    ========================================================================== */
 
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .d2 .calc__panel {
-      animation: d2CalcEntra linear both;
-      animation-timeline: view();
-      /* Entra mientras cruza el ultimo tercio de la pantalla y termina
-         antes de quedar centrada: cuando el usuario la mira, ya esta. */
-      animation-range: entry 8% cover 32%;
-    }
+.d2 .calc__panel.va-a-entrar {
+  opacity: 0;
+  transform: translateY(18px) scale(.994);
+  transition:
+    opacity .62s cubic-bezier(.4, 0, .2, 1),
+    transform .62s cubic-bezier(.32, .72, 0, 1);
+  /* El navegador prepara la capa antes de mover: sin esto el primer
+     fotograma llega tarde y la entrada se ve entrecortada. */
+  will-change: opacity, transform;
+}
 
-    @keyframes d2CalcEntra {
-      from {
-        opacity: 0;
-        transform: translateY(18px) scale(.994);
-      }
-      to {
-        opacity: 1;
-        transform: none;
-      }
-    }
+.d2 .calc__panel.ha-entrado {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .calc__panel.va-a-entrar {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
