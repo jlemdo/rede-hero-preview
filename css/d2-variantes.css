@@ -1228,17 +1228,14 @@ span.d2-panel__filtro:hover {
    Responsive
    -------------------------------------------------------------------------- */
 
-/* Los tres en linea dejan de caber: el titular pasa arriba, a lo ancho, y
-   abajo quedan los logos y la cifra. */
-@media (max-width: 1100px) {
-  .d2-logos--dos__inner {
-    grid-template-columns: minmax(0, 1fr) auto;
-    row-gap: clamp(18px, 2.4vw, 26px);
-  }
+/* Este bloque era para cuando la seccion tenia tres columnas --titular,
+   logos y cifra--: al no caber en linea, el titular pasaba arriba y la
+   etiqueta se alineaba a la izquierda con el.
 
-  .d2-logos--dos__izq { grid-column: 1 / -1; }
-  .d2-logos--dos__titular { font-size: clamp(1.125rem, 1rem + .5vw, 1.375rem); }
-  .d2-logos--dos__etiqueta { text-align: left; }
+   Retiradas esas dos columnas (4/9/2026) solo queda ajustar el hueco entre
+   logos. La alineacion a la izquierda se elimina: descentraba la etiqueta
+   sin un titular al que acompanar. */
+@media (max-width: 1100px) {
   .d2-logos--dos__marquesina { --hueco: clamp(56px, 8vw, 96px); }
 }
 
@@ -12228,4 +12225,32 @@ span.d2-panel__filtro:hover {
 .d2 .d2-logos--dos__centro {
   /* Centrado, que es como se ve en la referencia del cliente */
   text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   La marquesina, ahora que ocupa todo el ancho
+
+   Al retirar el titular y la cifra el contenedor paso de unos 720px a 1200:
+   un 68% mas. Con los 4 visibles de antes cada logo se quedaba con 228px de
+   sitio y la fila se veia deshilachada.
+
+   Cinco visibles, que ademas es lo que muestra la referencia del cliente.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-logos--dos__marquesina {
+  --visibles: 5;
+}
+
+@media (max-width: 1100px) {
+  /* Menos ancho, menos logos a la vez: si no, cada uno se queda diminuto */
+  .d2 .d2-logos--dos__marquesina { --visibles: 4; }
+}
+
+@media (max-width: 699px) {
+  .d2 .d2-logos--dos__marquesina { --visibles: 3; }
+}
+
+@media (max-width: 460px) {
+  /* Con tres, a 380px cada logo se quedaba en 84px: ilegible */
+  .d2 .d2-logos--dos__marquesina { --visibles: 2; }
 }
