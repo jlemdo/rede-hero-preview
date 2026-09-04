@@ -30,6 +30,78 @@
     var flechas = caja.querySelectorAll('[data-caru-ir]');
     if (diapos.length < 2) { return; }
 
+    /* ------------------------------------------------------------------
+       VARIANTE FIJADA
+
+       data-caru-fijo="1" en el carrusel deja esa variante puesta y esconde
+       los mandos. Las demas NO se borran: siguen en el marcado, ocultas,
+       y basta quitar el atributo para recuperarlas.
+
+       Es la via para ir cerrando secciones sin perder el trabajo hecho: lo
+       que hoy no se usa puede servir en otra pagina, y la biblioteca de
+       secciones ya guarda cada variante por separado.
+       ------------------------------------------------------------------ */
+    var fijo = caja.getAttribute('data-caru-fijo');
+    if (fijo !== null) {
+      var n = parseInt(fijo, 10);
+      if (isNaN(n) || n < 0 || n >= diapos.length) { n = 0; }
+
+      Array.prototype.forEach.call(diapos, function (d, i) {
+        d.hidden = i !== n;
+        d.classList.toggle('es-activa', i === n);
+      });
+
+      /* Los mandos fuera del arbol de accesibilidad, no solo invisibles:
+         ocultarlos con CSS los dejaria en la ruta del tabulador. */
+      var mandos = caja.querySelector('.d2-caru__mandos');
+      if (mandos) { mandos.remove(); }
+      return;
+    }
+
+    /* ------------------------------------------------------------------
+       VARIANTES ESCONDIDAS
+
+       data-caru-solo="1,3" deja solo esas variantes elegibles y esconde
+       las demas. No se borra nada: siguen en el marcado y basta quitar el
+       atributo para recuperarlas.
+
+       Los botones sobrantes se retiran del DOM --no se ocultan con CSS--
+       porque ocultarlos los dejaria en la ruta del tabulador: accesibles
+       con teclado pero invisibles.
+
+       La numeracion visible se rehace: si quedan la 2 y la 4, se ven como
+       1 y 2. Lo que importa es el orden en pantalla, no el indice interno.
+       ------------------------------------------------------------------ */
+    var solo = caja.getAttribute('data-caru-solo');
+    if (solo) {
+      var permitidas = solo.split(',').map(function (x) { return parseInt(x, 10); })
+                           .filter(function (x) { return !isNaN(x) && x >= 0 && x < diapos.length; });
+
+      if (permitidas.length) {
+        var vivas = [], vivosPuntos = [];
+
+        Array.prototype.forEach.call(diapos, function (d, i) {
+          if (permitidas.indexOf(i) >= 0) { vivas.push(d); }
+          else { d.hidden = true; d.classList.remove('es-activa'); }
+        });
+
+        Array.prototype.forEach.call(puntos, function (p, i) {
+          if (permitidas.indexOf(i) >= 0) { vivosPuntos.push(p); }
+          else { p.remove(); }
+        });
+
+        /* Renumerar y reindexar: los data-caru-a pasan a ser correlativos */
+        vivosPuntos.forEach(function (p, n) {
+          p.setAttribute('data-caru-a', String(n));
+          var num = p.querySelector('span');
+          if (num) { num.textContent = String(n + 1); }
+        });
+
+        diapos = vivas;
+        puntos = vivosPuntos;
+      }
+    }
+
     var actual = 0;
 
     /* La eleccion se recuerda mientras dure la visita: al volver a la pagina
