@@ -177,6 +177,66 @@ Sans.
 
 ---
 
+## 4. SOLUTIONS — auditado 4/9/2026
+
+### Corregido
+
+**El nombre del servicio iba en peso 400.** Era el único subtítulo de toda
+la web en peso normal: equipo, reseñas, prueba, FAQ y las otras variantes de
+esta misma sección usan 700 u 800. Pasa a `--fw-bold`.
+
+**Catorce respaldos de token que mentían.** Al comprobar si de verdad usamos
+los mismos hexadecimales en todas las secciones apareció esto:
+
+| Token | Vale | Pero el respaldo decía |
+|---|---|---|
+| `--c-verde` | `#39B54A` | `#009B27` (13 veces) |
+| `--c-borde-suave` | `#EFEFEF` | `#E2E6E2` |
+| `--c-texto-suave` | `#6B6B6B` | `#5C5C5C` (3 veces) |
+
+No cambiaba lo que se ve —el token siempre gana— pero es una mentira en el
+código: quien lea `var(--c-verde, #009B27)` creerá que el verde de marca es
+ese. Y de hecho **me engañó a mí**: mi primera auditoría reportó `#5C5C5C`
+en esta sección porque leí el respaldo en vez del valor real.
+
+El `#009B27` era además el verde inventado del menú móvil, esparcido por
+todo el CSS.
+
+### Correcto, sin tocar
+
+Colores: `#333333`, `#6B6B6B`, `#BFBFBF`, `#E4E4E4`, `#39B54A`, `#B5DBAD`,
+blanco. Todos del manual. El único fuera de guía es `#026F00`, la decisión
+global.
+
+Contraste: de 5.78:1 a 11.39:1.
+
+### Anotado para el final
+
+- Seis pesos escritos a mano y cuatro tamaños sueltos (`14px`, `12px`,
+  `17px`, `13px`).
+
+---
+
+## Comprobación transversal: ¿usamos los mismos colores en todas las secciones?
+
+Hecha el 4/9/2026, a petición del cliente.
+
+**Sí, con una excepción documentada.** El mismo elemento usa el mismo color
+en todas las secciones:
+
+| Elemento | Fondo claro | Fondo oscuro |
+|---|---|---|
+| Eyebrow | `#026F00` | `#B5DBAD` |
+| Texto de cuerpo | `--c-texto-cuerpo` (`#333333`) | `#BFBFBF` / `#E8E8E8` |
+| Texto suave | `--c-texto-suave` (`#6B6B6B`) | — |
+
+**La excepción:** Equipo y la cabecera de la calculadora usan `#D6E4D8` y
+`#D6D6D6` en su texto de cuerpo. Ambas tienen fondo propio —verde y negro—
+así que no comparten el mismo contexto. Se revisan al auditar esas
+secciones.
+
+---
+
 ## Pendiente global (afecta a varias secciones)
 
 - **`#026F00`** — 141 usos. No está en el manual; viene del mockup de Erick.

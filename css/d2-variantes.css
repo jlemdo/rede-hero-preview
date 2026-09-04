@@ -56,7 +56,7 @@
   background: rgba(255, 255, 255, .9);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border: 1px solid var(--c-borde-suave, #E2E6E2);
+  border: 1px solid var(--c-borde-suave, #EFEFEF);
   border-radius: 999px;
   box-shadow: 0 2px 18px rgba(2, 51, 0, .12);
 }
@@ -128,12 +128,12 @@
 }
 
 .d2-caru__flecha:hover {
-  background: var(--c-verde, #009B27);
+  background: var(--c-verde, #39B54A);
   color: #fff;
 }
 
 .d2-caru__flecha:focus-visible {
-  outline: 2px solid var(--c-verde, #009B27);
+  outline: 2px solid var(--c-verde, #39B54A);
   outline-offset: 2px;
 }
 
@@ -240,12 +240,12 @@
 }
 
 .d2-caru__ocultar:hover {
-  background: var(--c-verde, #009B27);
+  background: var(--c-verde, #39B54A);
   color: #fff;
 }
 
 .d2-caru__ocultar:focus-visible {
-  outline: 2px solid var(--c-verde, #009B27);
+  outline: 2px solid var(--c-verde, #39B54A);
   outline-offset: 2px;
 }
 
@@ -256,7 +256,7 @@
   width: 100%;
   margin-right: 0;
   padding-right: 12px;
-  background: var(--c-verde, #009B27);
+  background: var(--c-verde, #39B54A);
   color: #fff;
   border-radius: 999px 0 0 999px;
 }
@@ -293,12 +293,12 @@
 .d2-caru__punto:hover { background: rgba(0, 0, 0, .05); color: var(--c-texto, #333); }
 
 .d2-caru__punto.es-activo {
-  background: var(--c-verde, #009B27);
+  background: var(--c-verde, #39B54A);
   color: #fff;
 }
 
 .d2-caru__punto:focus-visible {
-  outline: 2px solid var(--c-verde, #009B27);
+  outline: 2px solid var(--c-verde, #39B54A);
   outline-offset: 2px;
 }
 
@@ -934,8 +934,8 @@ span.d2-panel__filtro:hover {
   gap: 10px;
   width: 100%;
   min-height: 52px;
-  background: var(--c-verde, #009B27);
-  border: 1px solid var(--c-verde, #009B27);
+  background: var(--c-verde, #39B54A);
+  border: 1px solid var(--c-verde, #39B54A);
   color: #fff;
 }
 
@@ -957,15 +957,15 @@ span.d2-panel__filtro:hover {
    secundario y no debe competir con la llamada principal */
 .d2 .mobile-menu .header__login-btn {
   background: transparent;
-  border-color: var(--c-verde, #009B27);
-  color: var(--c-verde, #009B27);
+  border-color: var(--c-verde, #39B54A);
+  color: var(--c-verde, #39B54A);
 }
 
 .d2 .mobile-menu .header__login-btn svg { color: inherit; }
 
 .d2 .mobile-menu .header__login-btn:hover {
-  background: var(--c-verde, #009B27);
-  border-color: var(--c-verde, #009B27);
+  background: var(--c-verde, #39B54A);
+  border-color: var(--c-verde, #39B54A);
   color: #fff;
 }
 
@@ -8970,7 +8970,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-res-cen__firma span {
   font-size: 14px;
-  color: var(--c-texto-suave, #5C5C5C);
+  color: var(--c-texto-suave, #6B6B6B);
 }
 
 /* --- Las tres cifras --- */
@@ -9015,7 +9015,7 @@ span.d2-panel__filtro:hover {
   letter-spacing: .08em;
   text-transform: uppercase;
   text-align: center;
-  color: var(--c-texto-suave, #5C5C5C);
+  color: var(--c-texto-suave, #6B6B6B);
 }
 
 /* --- Los mandos --- */
@@ -10016,7 +10016,10 @@ span.d2-panel__filtro:hover {
 .d2 .d2-rutas-sec__nombre {
   margin: 0 0 16px;
   font-size: clamp(19px, 1.7vw, 23px);
-  font-weight: 400;
+  /* 700 y no 400: era el unico subtitulo de la web en peso normal. Todos
+     los demas --equipo, resenas, prueba, FAQ y las otras variantes de esta
+     misma seccion-- usan 700 u 800. */
+  font-weight: var(--fw-bold);
   line-height: 1.2;
   letter-spacing: -.01em;
   color: var(--c-texto, #333333);
@@ -10029,7 +10032,7 @@ span.d2-panel__filtro:hover {
   padding-bottom: 28px;
   font-size: 14px;
   line-height: 1.62;
-  color: var(--c-texto-suave, #5C5C5C);
+  color: var(--c-texto-suave, #6B6B6B);
 }
 
 .d2 .d2-rutas-sec__enlace {
