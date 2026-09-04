@@ -338,6 +338,53 @@ Marcas y Equipo quedan con **cero colores inventados**.
 
 ---
 
+## 8. FAQ Y EL MAPA — auditado 4/9/2026
+
+### El FAQ: cumple sin cambios
+
+Todo el texto usa `#333333`, `#6B6B6B` y `#026F00`. Contrastes de 4.80:1 a
+11.39:1 sobre el gris de la sección.
+
+### El mapa de cartera: corregidos 8 colores
+
+Era el foco del problema — 21 de los 32 colores inventados que detectó la
+primera auditoría estaban aquí. Verdes intermedios creados a ojo para las
+burbujas, la retícula y el destacado.
+
+**Se sustituyeron por la escala del verde sobre negro**, que sí deriva del
+manual:
+
+| Elemento | Antes | Ahora | Contraste |
+|---|---|---|---|
+| Línea del recorrido | `#367B40` | `#287F34` — verde 70% | 5.03:1 (antes 5.17) |
+| Borde de burbuja | `#36743F` | `#257630` — verde 65% | 5.66:1 (antes 5.63) |
+| Núcleo | `#378E43` | `#2E913B` — verde 80% | 4.02:1 (antes 4.11) |
+| Línea de referencia | `#378141` | `#2B8838` — verde 75% | 4.49:1 (antes 4.80) |
+| Destacado y hover | `#35673C` | `#226D2C` — verde 60% | 6.38:1 (antes 6.65) |
+| Etiquetas | `#5C6B60` | `#666666` — negro 75% | 5.74:1 (antes 5.63) |
+| Separador de la ficha | `#E2E6E3` | `#E4E4E4` — negro 13% | decorativo |
+
+Las diferencias de contraste van de 0.03 a 0.31: la sección se ve igual.
+
+**Los comentarios del CSS también mentían aquí.** Llamaban "verde 70%",
+"verde 60%" y "verde 40%" a valores que no correspondían a ninguna tinta.
+Corregidos.
+
+### Se respetó la restricción del cliente
+
+Solo se tocaron valores de color. Verificado con un diff de propiedades:
+
+- **Propiedades modificadas:** `fill`, `stroke`, `border-top`, `--mapa-tenue`
+- **Sin cambios:** 143 transiciones, 13 drop-shadows, 46 degradados, 135
+  animaciones, 12 `stroke-dasharray`, 23 `stroke-width`, 15 burbujas, 10
+  núcleos
+
+Ni un elemento, animación o degradado retirado.
+
+**El mapa queda solo con `#026F00`**, la decisión global pendiente.
+
+---
+
 ## Comprobación transversal: ¿usamos los mismos colores en todas las secciones?
 
 Hecha el 4/9/2026, a petición del cliente.
