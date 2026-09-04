@@ -12173,3 +12173,33 @@ span.d2-panel__filtro:hover {
   /* Con la rejilla ya en una columna, el mapa recupera proporcion */
   .d2 .d2-faq-dato__mapa .d2-prob-mapa__lienzo { aspect-ratio: 16 / 10; }
 }
+
+/* ==========================================================================
+   SOLUTIONS: ICONOS EN LUGAR DE 01-04 (4/9/2026)
+
+   Los numerales sugerian una secuencia que no existe: los cuatro servicios
+   son alternativas, no pasos --lo dice el brief del cliente: "They are not
+   steps in a sequence"--. Un icono describe el servicio; un numero solo
+   dice en que orden esta escrito.
+
+   Cada uno dice lo que hace su servicio, no decora:
+     lupa sobre la cartera .... cribar edificios antes de auditar
+     panel con lectura ........ ver todos los edificios a la vez
+     dial de ajuste ........... afinar lo instalado, no reemplazarlo
+     ciclo sobre el edificio .. el plan que no termina
+
+   Misma gramatica que el resto de iconos de la web: lienzo de 24, trazo de
+   1.7, sin relleno y puntas redondeadas.
+   ========================================================================== */
+
+.d2 .d2-rutas-sec__num svg {
+  width: 26px;
+  height: 26px;
+  /* El trazo hereda el color del circulo, asi que los estados --hover,
+     tono oscuro-- siguen funcionando sin reglas nuevas. */
+  color: inherit;
+}
+
+@media (max-width: 900px) {
+  .d2 .d2-rutas-sec__num svg { width: 23px; height: 23px; }
+}
