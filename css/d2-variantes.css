@@ -9893,9 +9893,20 @@ span.d2-panel__filtro:hover {
 }
 
 .d2 .d2-rutas-sec__lead {
-  /* Baja un poco para alinearse con la primera linea del titular en vez de
-     con su caja, que empieza mas arriba */
-  margin: clamp(6px, 1.4vw, 22px) 0 0;
+  /* Alineado con la PRIMERA LINEA del titular, no con el borde de su caja.
+
+     La columna izquierda arranca con el eyebrow --14.4px de alto mas 18 de
+     margen-- asi que el titular empieza 32px mas abajo. Antes el lead solo
+     bajaba hasta 22px y quedaba unos 28px por encima; medido a 1280, 1440 y
+     1920.
+
+     El calculo: lo que ocupa el eyebrow (32px) mas la mitad de la
+     diferencia entre la caja de linea del titular y la del lead.
+
+     El clamp del titular se repite entero a proposito: un `em` aqui se
+     mediria sobre los 17px del lead, no sobre el tamano del titular, y el
+     ajuste se quedaba en 27px cuando hacen falta 48. */
+  margin: calc(32px + (clamp(34px, 4vw, 58px) * 1.04 - 17px * 1.6) / 2) 0 0;
   font-size: 17px;
   line-height: 1.6;
   color: var(--c-texto-cuerpo, #333333);
