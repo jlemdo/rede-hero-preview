@@ -126,6 +126,57 @@ Correcta. Todo hereda Open Sans y los pesos salen de tokens
 
 ---
 
+## 3. MARCAS — auditado 4/9/2026
+
+**Resultado: cumple. No hizo falta tocar nada.**
+
+### Colores
+
+Todos los que pinta salen del manual:
+
+| Color | Qué es | Dónde |
+|---|---|---|
+| `#6B6B6B` | Negro al 73% | Eyebrow sobre fondo claro |
+| `#BFBFBF` | Negro al 31% | Eyebrow sobre fondo oscuro |
+| `#333333`, `#39B54A`, `#E4E4E4`, `#E8E8E8`, `#FFFFFF` | Del manual | Varios |
+
+**Un color no deriva: `#CFDCD1`.** Pero solo pinta cuando el selector de
+fondos de Erick pone el verde `#2A5C31`, que es una herramienta temporal, no
+un estado de producción. Si ese fondo se descarta, el color se va con él.
+
+*Nota de método:* una primera pasada marcó también `#026F00` en esta
+sección. Era un falso positivo — mi filtro capturó una regla genérica que
+comparte selector. Verificado: **no hay ninguna regla de marcas que lo use.**
+
+### Contraste
+
+El eyebrow es el único texto, y cumple en los cinco fondos del selector:
+
+| Fondo | Eyebrow | Contraste |
+|---|---|---|
+| Blanco | `#6B6B6B` | 5.33:1 |
+| Gris | `#6B6B6B` | 4.80:1 |
+| Gris oscuro | `#BFBFBF` | 6.87:1 |
+| Negro | `#BFBFBF` | 9.46:1 |
+| Verde | `#CFDCD1` | 5.54:1 |
+
+**Los logos también se verificaron.** Sobre fondo oscuro se invierten a
+blanco con `opacity: .85`; medido, quedan entre 6.23:1 y 12.81:1, por encima
+del 3:1 que pide WCAG para gráficos.
+
+### Tipografía
+
+Correcta. Un solo tamaño (`.6875rem`) con `--fw-bold`, y todo hereda Open
+Sans.
+
+### Anotado para el final
+
+- **El selector de fondos de Erick sigue en la página.** Es temporal: hay
+  que retirarlo cuando se decida el fondo definitivo. Con él se va el
+  `#CFDCD1`.
+
+---
+
 ## Pendiente global (afecta a varias secciones)
 
 - **`#026F00`** — 141 usos. No está en el manual; viene del mockup de Erick.
