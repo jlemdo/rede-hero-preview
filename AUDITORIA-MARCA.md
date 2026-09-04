@@ -217,6 +217,51 @@ Contraste: de 5.78:1 a 11.39:1.
 
 ---
 
+## 5. CALCULADORA — auditado 4/9/2026
+
+Se auditó en dos partes, como pidió el cliente: la cabecera negra y el panel.
+
+### 5a. La cabecera — cumple, sin cambios
+
+Sobre el negro `#1A1A1A`:
+
+| Elemento | Color | Contraste |
+|---|---|---|
+| Eyebrow | `#B5DBAD` (verde 40%) | 11.35:1 |
+| Titular | `#FFFFFF` | 17.40:1 |
+| Entradilla | `#D6D6D6` (negro 20%) | 11.97:1 |
+
+Los tres derivan del manual. El `#1A1A1A` del fondo también: es el negro de
+marca al 50% sobre negro.
+
+### 5b. El panel — corregido el `$2.94M`
+
+**El problema:** iba en verde de marca sobre el gris `#F5F5F5` del bloque, y
+daba **2.44:1** — por debajo del 3 que pide WCAG para texto grande.
+
+Es la misma cifra que aparece en Reviews, así que se resolvió igual: **el
+bloque pasa a blanco y la cifra al `#33A343`**, verde de marca al 90% sobre
+negro. Medido: 3.25:1.
+
+*Por qué no bastaba con cambiar solo el verde:* sobre el gris, el `#33A343`
+da 2.98 — se queda a 0.02 del mínimo. El fondo gris es más exigente que el
+blanco, y además tener la misma cifra sobre dos fondos distintos según la
+sección no tenía sentido.
+
+**El resto del panel cumple.** Es oscuro, no blanco como parecía: los
+blancos con transparencia van sobre `#1A1A1A` y dan de 7.32:1 a 17.40:1. Las
+cifras en verde de marca sobre ese fondo dan 6.53:1.
+
+La zona blanca del perfil también: `#333333` a 12.63:1 y `#6B6B6B` a 5.33:1.
+
+### Anotado para el final
+
+- **Tres grises distintos para el mismo papel** en secciones oscuras:
+  `#BFBFBF` (Solutions), `#D6D6D6` (esta cabecera), `#E8E8E8` (Marcas). Los
+  tres derivan del manual y los tres cumplen, pero convendría unificar.
+
+---
+
 ## Comprobación transversal: ¿usamos los mismos colores en todas las secciones?
 
 Hecha el 4/9/2026, a petición del cliente.

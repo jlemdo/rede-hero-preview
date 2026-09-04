@@ -12403,3 +12403,29 @@ span.d2-panel__filtro:hover {
   border-color: var(--c-verde-hover, #026F00);
   color: #FFFFFF;
 }
+
+/* ==========================================================================
+   EL $2.94M DE LA CALCULADORA (4/9/2026)
+
+   Iba en verde de marca sobre el gris #F5F5F5 del bloque: 2.44:1, por
+   debajo del 3 que pide WCAG para texto grande.
+
+   Es la misma cifra que aparece en Reviews, asi que se resuelve igual: el
+   bloque pasa a blanco y la cifra al verde de marca al 90% sobre negro.
+
+   Por que no bastaba con cambiar solo el verde: sobre el gris el #33A343
+   da 2.98 --se queda a 0.02 del minimo--. El fondo gris es mas exigente
+   que el blanco, y ademas tener la misma cifra sobre dos fondos distintos
+   segun la seccion no tiene sentido.
+
+   Medido: 3.25:1 sobre blanco.
+   ========================================================================== */
+
+.d2 .calc .prueba {
+  background: #FFFFFF;
+  border: 1px solid var(--c-borde, #E4E4E4);
+}
+
+.d2 .calc .prueba__cifra {
+  color: #33A343;
+}
