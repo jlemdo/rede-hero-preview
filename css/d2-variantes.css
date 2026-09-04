@@ -1644,11 +1644,20 @@ span.d2-panel__filtro:hover {
 
   /* Client Login vuelve a ser texto, separado por una linea vertical. Se
      neutraliza el aspecto de boton que traia de .d2-btn--linea. */
-  .d2 .header__actions { gap: var(--sp-5); }
+  /* El mismo valor que el padding del login: asi el separador cae a la
+     misma distancia de Contact que del icono de Client Login. */
+  .d2 .header__actions { gap: 22px; }
 
   .d2 .header__login-btn {
     gap: var(--sp-2);
-    padding: 0 0 0 var(--sp-5);
+    /* El separador es el border-left de este boton, asi que el hueco a su
+       IZQUIERDA lo pone el gap del contenedor y el de su DERECHA este
+       padding. Estaban descompensados: el gap era mayor.
+
+       Ahora el padding iguala al hueco entre enlaces del menu --29px a
+       1440-- y el gap del contenedor se ajusta al mismo valor mas abajo,
+       de modo que el separador queda centrado en su espacio. */
+    padding: 0 0 0 22px;
     font-size: var(--fs-body);
     font-weight: var(--fw-medium);
     color: var(--c-texto-cuerpo);
@@ -11680,4 +11689,33 @@ span.d2-panel__filtro:hover {
 
 @media (prefers-reduced-motion: reduce) {
   .d2 .d2-logos--dos { transition: none; }
+}
+
+/* ==========================================================================
+   EL SEPARADOR DEL HEADER, CENTRADO EN SU HUECO
+
+   El separador es el border-left del boton de Client Login, asi que el
+   espacio a su izquierda lo pone el margen del contenedor y el de su
+   derecha el padding del boton. Estaban descompensados: 37px a la
+   izquierda y 25 a la derecha.
+
+   Medido con el ultimo enlace real --Contact acaba en x=948, el separador
+   cae en 985 y el icono empieza en 1010--.
+
+   Se igualan a 29px, que es el mismo hueco que separa los enlaces del menu
+   entre si. Asi el separador no introduce un ritmo distinto: es una pausa
+   del mismo compas.
+   ========================================================================== */
+
+@media (min-width: 1000px) {
+  .d2 .header__inner .header__actions {
+    /* El hueco a la IZQUIERDA del separador */
+    margin-inline-start: 0;
+    gap: 22px;
+  }
+
+  .d2 .header__actions .header__login-btn {
+    /* Y el de su DERECHA. 29px iguala al hueco entre enlaces. */
+    padding-inline: 29px 0;
+  }
 }
