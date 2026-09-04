@@ -503,10 +503,21 @@
     }
 
     // El resultado pasa a la IZQUIERDA, donde estaban las preguntas.
-    $('#cierre-cifra').textContent = dinero(oportunidad);
-    $('#cierre-nota').textContent = gasto
-      ? 'in annual opportunity, based on your entered utility spend'
-      : 'in annual opportunity, estimated from historical cost per square foot';
+
+    /* La misma guardia que en calcular(): sin area ni gasto no hay nada que
+       calcular, y un "$0" en grande le dice al cliente que no tiene nada que
+       ahorrar --justo lo contrario de lo que la seccion afirma--. Aqui
+       faltaba, asi que el cierre mostraba $0 mientras el paso anterior
+       mostraba "Add your area". */
+    var hayCierre = gastoFinal > 0;
+
+    $('#cierre-cifra').textContent = hayCierre ? dinero(oportunidad) : 'Add your area';
+    $('#cierre-cifra').classList.toggle('es-incompleto', !hayCierre);
+    $('#cierre-nota').textContent = !hayCierre
+      ? 'Enter your total area or annual utility spend and we will estimate the opportunity.'
+      : (gasto
+        ? 'in annual opportunity, based on your entered utility spend'
+        : 'in annual opportunity, estimated from historical cost per square foot');
     $('#c-d-tipo').textContent = b.label;
     $('#c-d-pct').textContent = b.savingsPct.toFixed(1) + ' per cent';
     $('#c-d-payback').textContent = b.payback + ' years';

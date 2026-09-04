@@ -2961,7 +2961,7 @@ span.d2-panel__filtro:hover {
 }
 
 .d2 .calc--partido .d2-margen.esta-completo .d2-margen__pct {
-  color: #7BD877;   /* verde claro: sobre fondo oscuro el de interfaz no llega */
+  color: #39B54A;   /* verde de marca: sobre el fondo oscuro rinde 6.53:1 */
 }
 
 /* --- La barra --- */
@@ -2980,7 +2980,7 @@ span.d2-panel__filtro:hover {
   width: 100%;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, rgba(123, 216, 119, .55), #7BD877);
+  background: linear-gradient(90deg, rgba(57, 181, 74, .55), #39B54A);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform .62s cubic-bezier(.32, .72, 0, 1);
@@ -3016,7 +3016,7 @@ span.d2-panel__filtro:hover {
    el dato se lee como algo vivo y no como texto impreso. */
 .d2 .calc--partido .resultado:not(.es-provisional) .resultado__cifra {
   opacity: 1;
-  text-shadow: 0 0 22px rgba(123, 216, 119, .32);
+  text-shadow: 0 0 22px rgba(57, 181, 74, .32);
 }
 
 /* La transicion cruzada al cambiar de valor. Sin contador ascendente: un
@@ -3063,8 +3063,8 @@ span.d2-panel__filtro:hover {
 }
 
 .d2 .calc--partido .perfil__fila.is-lleno .perfil__punto {
-  background: #7BD877;
-  box-shadow: 0 0 8px rgba(123, 216, 119, .5);
+  background: #39B54A;
+  box-shadow: 0 0 8px rgba(57, 181, 74, .5);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3171,7 +3171,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .calc .cierre__recomienda {
   border-left: 0;
-  background: rgba(123, 216, 119, .1);
+  background: rgba(57, 181, 74, .1);
   border-radius: var(--d2-radio-sm);
 }
 
@@ -3186,12 +3186,12 @@ span.d2-panel__filtro:hover {
    -------------------------------------------------------------------------- */
 
 @keyframes d2-latido {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(123, 216, 119, .45); opacity: .7; }
-  50%      { box-shadow: 0 0 0 5px rgba(123, 216, 119, 0); opacity: 1; }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(57, 181, 74, .45); opacity: .7; }
+  50%      { box-shadow: 0 0 0 5px rgba(57, 181, 74, 0); opacity: 1; }
 }
 
 .d2 .calc .perfil__fila:not(.is-lleno) .perfil__punto {
-  background: #7BD877;
+  background: #39B54A;
   animation: d2-latido 1.8s cubic-bezier(.4, 0, .2, 1) infinite;
 }
 
@@ -3214,8 +3214,8 @@ span.d2-panel__filtro:hover {
 }
 
 .d2 .calc .opcion.is-elegida {
-  border-color: #7BD877;
-  background: rgba(123, 216, 119, .08);
+  border-color: #39B54A;
+  background: rgba(57, 181, 74, .08);
 }
 
 .d2 .calc .campo__input {
@@ -3225,8 +3225,8 @@ span.d2-panel__filtro:hover {
 }
 
 .d2 .calc .campo__input:focus {
-  border-color: #7BD877;
-  box-shadow: 0 0 0 3px rgba(123, 216, 119, .18);
+  border-color: #39B54A;
+  box-shadow: 0 0 0 3px rgba(57, 181, 74, .18);
   outline: none;
 }
 
@@ -3249,11 +3249,23 @@ span.d2-panel__filtro:hover {
   animation: d2-calc-aparece .5s cubic-bezier(.32, .72, 0, 1) both;
 }
 
-/* La cifra del cierre --la que de verdad se ve al calcular-- se enciende
-   como los graficos de la seccion del problema. */
+/* La cifra del cierre en BLANCO, no en verde.
+
+   Es la unica cifra grande de la web sobre fondo oscuro, y todas las demas
+   --$480K, $4.4M, $2.94M, 2008-- van en el negro de marca sobre fondo
+   claro. Ninguna va en verde. El blanco es esa misma decision trasladada
+   al fondo oscuro: la cifra manda por tamano, y el verde se reserva para
+   el acento, que es su papel en el manual.
+
+   El #39B54A que habia aqui ademas no existe en la guia: yo derivaba las
+   tintas por opacidad y el manual las da muestreadas del PDF.
+
+   Medido: 15.90:1 sobre el #1A1A1A del panel. */
 .d2 .calc .cierre__cifra {
-  color: #7BD877;
-  text-shadow: 0 0 22px rgba(123, 216, 119, .3);
+  color: #FFFFFF;
+  /* El halo se queda, pero en el verde de marca: es lo que la enciende sin
+     tenirla. */
+  text-shadow: 0 0 22px rgba(57, 181, 74, .3);
 }
 
 /* ==========================================================================
@@ -3342,8 +3354,8 @@ span.d2-panel__filtro:hover {
 
   /* La ficha rellena se enciende: borde y fondo suben un punto */
   .d2 .calc--partido .perfil__fila.is-lleno {
-    border-color: rgba(123, 216, 119, .4);
-    background: rgba(123, 216, 119, .07);
+    border-color: rgba(57, 181, 74, .4);
+    background: rgba(57, 181, 74, .07);
   }
 
   .d2 .calc--partido .perfil__punto { grid-area: punto; }
@@ -3472,19 +3484,19 @@ span.d2-panel__filtro:hover {
 
   .d2 .calc select.campo__input option:hover,
   .d2 .calc select.campo__input option:focus {
-    background: rgba(123, 216, 119, .12);
+    background: rgba(57, 181, 74, .12);
   }
 
   .d2 .calc select.campo__input option:checked {
-    background: rgba(123, 216, 119, .16);
-    color: #7BD877;
+    background: rgba(57, 181, 74, .16);
+    color: #39B54A;
     font-weight: var(--fw-bold);
   }
 
   /* La marca de la opcion elegida, con el estilo de la web y no el tic del
      sistema */
   .d2 .calc select.campo__input option::checkmark {
-    color: #7BD877;
+    color: #39B54A;
     margin-right: 8px;
   }
 }
@@ -11554,7 +11566,7 @@ span.d2-panel__filtro:hover {
    MEDIDO: sobre el blanco del panel del perfil ningun verde claro llega
    al 3:1 que pide WCAG 1.4.11 para graficos que informan.
 
-     #7BD877  1.76:1     verde de marca  2.66:1     verde 80%  2.18:1
+     #39B54A  1.76:1     verde de marca  2.66:1     verde 80%  2.18:1
 
    Y contra su hermano gris #E4E4E4 la diferencia es aun menor: 1.38:1.
    Es decir, el punto activo se distinguia SOLO por color --incumple
