@@ -11272,8 +11272,25 @@ span.d2-panel__filtro:hover {
 
 /* La sombra que separa la tarjeta del fondo, ahora que cabalga entre dos
    bandas. No cambia nada de su interior. */
+/* El panel se distinguia CERO de la cabecera: ambos eran #1A1A1A, asi que
+   daba 1.00:1 --literalmente el mismo color-- y no se veia donde empezaba
+   la calculadora.
+
+   Se resuelve con un filete verde arriba y un halo blanco de 1px, no
+   aclarando el fondo. Dos motivos:
+
+   1. Ningun gris llega a los 3:1 que pide WCAG 1.4.11 sobre negro sin
+      volverse gris claro, y eso cambiaria el diseno ya aprobado. El verde
+      de marca si: 6.53:1.
+   2. El filete verde superior es el mismo recurso que ya usan la ficha del
+      mapa, la del FAQ y el documento del CTA. No es un adorno nuevo: es la
+      gramatica de la web aplicada aqui.
+
+   El halo blanco al 10% cierra el resto del contorno sin competir. */
 .d2 .calc__panel {
-  box-shadow: 0 26px 70px rgba(0, 0, 0, .26);
+  border-top: 3px solid var(--c-verde-marca, #39B54A);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .10),
+              0 30px 80px rgba(0, 0, 0, .5);
 }
 
 @media (max-width: 900px) {
