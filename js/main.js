@@ -221,7 +221,13 @@
     op.textContent = BENCHMARKS[clave].label;
     selTipo.appendChild(op);
   });
-  selTipo.value = 'school';   // el sector principal de Rede
+  /* Se preselecciona school --el sector principal de Rede-- pero eso NO
+     cuenta como eleccion del usuario: el perfil solo marca la fila cuando
+     alguien toca el selector o pasa por ese paso. Antes salia marcada
+     desde el primer momento. */
+  selTipo.value = 'school';
+  var tipoElegido = false;
+  selTipo.addEventListener('change', function () { tipoElegido = true; });
 
   /* --- Navegacion entre pasos -------------------------------------------- */
 
@@ -330,8 +336,10 @@
     /* Basta con que haya tipo elegido. Antes se exigia ademas estar en el
        paso 3, pero las variantes abiertas no recorren pasos: el tipo se
        quedaba sin rellenar y el contador atascado en 3 de 4. */
+    /* El paso 3 es el del tipo de edificio: al salir de el se da por
+       elegido aunque no se haya tocado el desplegable. */
     var clave = selTipo.value;
-    if (clave) {
+    if (clave && (tipoElegido || estado.paso > 3)) {
       var b = BENCHMARKS[clave];
       ponerFila('tipo', b.label);
 

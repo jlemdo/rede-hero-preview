@@ -11522,3 +11522,94 @@ span.d2-panel__filtro:hover {
 .d2 [data-comp-tono="oscuro"] .d2-lec__llave--barra {
   background: rgba(57, 181, 74, .34);
 }
+
+/* ==========================================================================
+   LA CALCULADORA: TRES CORRECCIONES
+
+   1. EL TEXTO DE LOS SELECTORES, CENTRADO
+
+   Medido: la caja tiene min-height 52px y el texto line-height 33 sin
+   padding vertical, asi que se apoyaba arriba en vez de quedar en medio.
+   Con align-content el contenido se centra dentro de la caja sin tocar su
+   altura ni la posicion de la flecha.
+
+   2. EL LATIDO DEL PASO ACTUAL, MAS VISIBLE
+
+   Ya existia --d2-latido, 1.8s-- pero el halo llegaba solo a 5px y con
+   poca opacidad: se perdia. Se amplia a 7px y sube el punto de partida,
+   manteniendo el ritmo pausado. Es una guia, no una alarma.
+
+   3. Lo demas va en main.js: el tipo de edificio ya no se marca solo.
+   ========================================================================== */
+
+.d2 .calc select.campo__input {
+  /* El texto al centro de la caja */
+  align-content: center;
+  /* Respaldo para motores sin align-content en bloques: el line-height
+     iguala a la altura util y el texto queda centrado igual. */
+  line-height: 50px;
+  padding-block: 0;
+}
+
+/* El latido del punto que marca el paso actual */
+@keyframes d2-latido {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(123, 216, 119, .55); }
+  50%      { box-shadow: 0 0 0 7px rgba(123, 216, 119, 0); }
+}
+
+.d2 .calc .perfil__fila:not(.is-lleno):first-child .perfil__punto,
+.d2 .calc .perfil__fila.is-lleno + .perfil__fila:not(.is-lleno) .perfil__punto {
+  background: #7BD877;
+  animation: d2-latido 2.2s cubic-bezier(.4, 0, .2, 1) infinite;
+}
+
+/* Los pasos ya completados dejan de latir y se quedan fijos */
+.d2 .calc .perfil__fila.is-lleno .perfil__punto {
+  animation: none;
+  background: var(--c-verde-marca, #39B54A);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .calc .perfil__punto { animation: none !important; }
+}
+
+/* ==========================================================================
+   LA CALCULADORA ENTRA AL LLEGAR A ELLA
+
+   La tarjeta aparece desde abajo, con un desvanecido corto. Sutil pero
+   perceptible: 520ms y 18px de recorrido.
+
+   POR QUE NO SE USA LA CLASE .d2-entra QUE YA EXISTE
+
+   Ese observador recoge sus elementos al cargar la pagina, y las
+   diapositivas de un carrusel arrancan con [hidden]. La tarjeta nunca era
+   observada y se quedaba en opacidad 0: invisible para siempre.
+
+   Aqui la animacion se dispara sola con animation-timeline cuando el
+   navegador lo soporta, y si no --Firefox-- la tarjeta se ve normal desde
+   el principio. Nunca puede quedarse invisible, que es el fallo que hay
+   que evitar en un elemento de esta importancia.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .d2 .calc__panel {
+      animation: d2CalcEntra linear both;
+      animation-timeline: view();
+      /* Entra mientras cruza el ultimo tercio de la pantalla y termina
+         antes de quedar centrada: cuando el usuario la mira, ya esta. */
+      animation-range: entry 8% cover 32%;
+    }
+
+    @keyframes d2CalcEntra {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(.994);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+}
