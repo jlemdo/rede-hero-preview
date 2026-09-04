@@ -262,6 +262,47 @@ La zona blanca del perfil también: `#333333` a 12.63:1 y `#6B6B6B` a 5.33:1.
 
 ---
 
+## 6. REVIEWS — auditado 4/9/2026
+
+### Corregido: los puntos de navegación
+
+Son controles, así que WCAG 1.4.11 pide 3:1 contra el fondo. Ninguno
+llegaba:
+
+| | Antes | Ahora |
+|---|---|---|
+| Inactivo | `#E4E4E4` — 1.27:1 | `#8F8F8F` — 3.23:1 |
+| Activo | `#39B54A` — 2.66:1 | `#026F00` — 6.41:1 |
+
+**Un detalle que hizo falta medir:** el primer intento puso el activo en
+`#33A343`, el verde de las cifras de esta misma sección. Pero los dos puntos
+daban **1.01:1 entre sí** —casi la misma luminosidad— así que quien no
+distinga tonos no sabría cuál está activo. Con `#026F00` suben a 1.98.
+
+El `#8F8F8F` es negro de marca al 55% sobre blanco, así que deriva del
+manual.
+
+El punto activo sigue creciendo 1.6×, y lleva `role="tab"` con
+`aria-selected`: la señal nunca dependió solo del color.
+
+### Correcto, sin tocar
+
+Todo el texto cumple sobre el fondo blanco fijo:
+
+| Elemento | Color | Contraste |
+|---|---|---|
+| Eyebrow | `#026F00` | 6.41:1 |
+| La cita | `#333333` | 12.63:1 |
+| Nombre | `#333333` | 12.63:1 |
+| Organización | `#6B6B6B` | 5.33:1 |
+| Las cifras | `#33A343` | 3.25:1 |
+| Etiquetas | `#6B6B6B` | 5.33:1 |
+
+El trazado decorativo del fondo va al 20-32% de opacidad, pero es
+`aria-hidden` y no transmite información, así que el mínimo no le aplica.
+
+---
+
 ## Comprobación transversal: ¿usamos los mismos colores en todas las secciones?
 
 Hecha el 4/9/2026, a petición del cliente.

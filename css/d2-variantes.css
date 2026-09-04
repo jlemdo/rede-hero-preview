@@ -12429,3 +12429,35 @@ span.d2-panel__filtro:hover {
 .d2 .calc .prueba__cifra {
   color: #33A343;
 }
+
+/* ==========================================================================
+   LOS PUNTOS DE NAVEGACION DE REVIEWS (4/9/2026)
+
+   Son controles, asi que WCAG 1.4.11 pide 3:1 contra el fondo. Medido:
+
+     inactivo  #E4E4E4  1.27:1
+     activo    #39B54A  2.66:1
+
+   Ninguno llegaba. Ahora:
+
+     inactivo  #8F8F8F  3.23:1   negro de marca al 55% sobre blanco
+     activo    #026F00  6.41:1   el verde oscuro de la web
+
+   El activo va en #026F00 y no en el #33A343 de las cifras por un motivo
+   medido: con ese verde claro los dos puntos daban 1.01:1 ENTRE SI --casi
+   la misma luminosidad-- y quien no distinga tonos no sabria cual esta
+   activo. Con el oscuro suben a 1.98, el doble de separacion.
+
+   Ademas es el verde que ya usa el eyebrow de esta misma seccion.
+
+   El punto activo sigue creciendo 1.6x: la senal no depende solo del color,
+   y ademas lleva role=tab con aria-selected.
+   ========================================================================== */
+
+.d2 .d2-res-cen__punto {
+  background: #8F8F8F;
+}
+
+.d2 .d2-res-cen__punto.es-activo {
+  background: var(--c-verde-hover, #026F00);
+}
