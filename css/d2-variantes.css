@@ -12241,6 +12241,9 @@ span.d2-panel__filtro:hover {
 .d2 .d2-logos--dos__etiqueta {
   /* A la izquierda, alineado con el margen del contenedor */
   text-align: left;
+  /* 5px mas de aire con los logos: el clamp de la regla base daba 18px y
+     el eyebrow quedaba pegado a la franja. */
+  margin-bottom: clamp(17px, 1.8vw, 23px);
 }
 
 .d2 .d2-logos--dos__centro {
