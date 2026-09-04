@@ -5058,9 +5058,17 @@ span.d2-panel__filtro:hover {
   text-align: center;
 }
 
-/* 62ch es el limite de linea comodo; centrado necesita ademas margin auto */
+/* 70ch y no 46: con 46 el titular caia en 3 lineas y el parrafo en otras 3,
+   y eso hacia la seccion mas alta de lo necesario.
+
+   Medido con las metricas de Open Sans: a 46ch --414px-- son 3 y 3; el
+   titular baja a 2 lineas a partir de 560px y el parrafo a partir de 620.
+   Con 70ch --630px-- quedan 2 y 2 desde los 760px de ventana para arriba.
+
+   Sigue dentro del limite comodo de lectura: el parrafo va centrado y en
+   dos lineas, no es un bloque largo. */
 .d2 .d2-cta-bal__texto {
-  max-width: 46ch;
+  max-width: 70ch;
   margin-inline: auto;
 }
 
