@@ -12002,11 +12002,24 @@ span.d2-panel__filtro:hover {
 .d2 .d2-pie-cierre__agua {
   position: absolute;
   left: 50%;
-  /* Pegado al borde inferior y desbordando hacia abajo: el recorte lo hace
-     el overflow del pie. Un tercio del logo queda fuera. */
-  bottom: -14%;
+
+  /* MEDIDO SOBRE LA REFERENCIA (Capacity):
+       ocupa el 98% del ancho de la ventana --se sale por los lados--
+       arranca al 53% de la altura del pie
+       solo se ve la MITAD SUPERIOR del logotipo
+
+     Nuestra primera version se quedaba en el 83% del ancho, empezaba al 2%
+     de la altura y se leia entera: por eso parecia una imagen de fondo mal
+     puesta en vez de una firma.
+
+     Sin tope en px: la gracia es que crezca con la ventana y desborde. */
+  width: 98vw;
+
+  /* Mas de la mitad por debajo del borde. El logo mide 466x200, asi que un
+     -55% de su propia altura deja fuera algo mas de la mitad. */
+  bottom: -55%;
+
   transform: translateX(-50%);
-  width: min(1100px, 78vw);
   z-index: 0;
 
   /* .07 y no un color: asi la imagen entera se atenua por igual, sin
@@ -12027,9 +12040,11 @@ span.d2-panel__filtro:hover {
 
 /* En movil el pie es mas corto: la marca se recorta mas para no subirse
    encima del aviso legal. */
+/* En movil el pie es mas corto y la marca taparia el aviso legal, asi que
+   se recorta bastante mas. */
 @media (max-width: 700px) {
   .d2 .d2-pie-cierre__agua {
-    width: 88vw;
-    bottom: -18%;
+    width: 130vw;
+    bottom: -62%;
   }
 }
