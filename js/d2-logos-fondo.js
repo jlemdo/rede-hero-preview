@@ -28,7 +28,7 @@
        negro de marca         -> #333333
        negro de marca al 50% sobre negro puro -> #1A1A1A, el de la
          cabecera de la calculadora
-       verde de marca al 22% sobre negro -> el de la seccion de equipo
+       verde de marca al 45% sobre negro -> el de la seccion de equipo
 
      El #333333 se llamaba "Black" y era incoherente: el negro de la web es
      el #1A1A1A de la calculadora. Ahora cada uno lleva el nombre que le
@@ -38,7 +38,7 @@
     { id: 'gris',      et: 'Grey',      color: '#F3F3F3', tono: 'claro' },
     { id: 'grisosc',   et: 'Dark grey', color: '#333333', tono: 'oscuro' },
     { id: 'negro',     et: 'Black',     color: '#1A1A1A', tono: 'oscuro' },
-    { id: 'verde',     et: 'Green',     color: '#2A5C31', tono: 'verde' }
+    { id: 'verde',     et: 'Green',     color: '#1A5121', tono: 'verde' }
   ];
 
   var CLAVE = 'rede-logos-fondo';

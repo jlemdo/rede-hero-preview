@@ -303,6 +303,41 @@ El trazado decorativo del fondo va al 20-32% de opacidad, pero es
 
 ---
 
+## 7. EQUIPO — auditado 4/9/2026
+
+### Corregido: cuatro colores inventados
+
+Todos cumplían contraste (de 4.83 a 7.85), pero ninguno derivaba del manual.
+
+**Un comentario del CSS afirmaba lo contrario:** *"El verde del fondo se
+construye desde el manual: verde de marca al 22% sobre el negro #333333.
+Nada inventado."* Comprobado: ese cálculo da `#345038`, no `#2A5C31`.
+
+| | Antes | Ahora | Contraste |
+|---|---|---|---|
+| Fondo | `#2A5C31` | `#1A5121` — verde al 45% sobre negro | — |
+| Eyebrow | `#B5DBAD` | igual, tinta 40% | 6.11:1 |
+| Entradilla | `#D6E4D8` | `#B5DBAD` — tinta 40% | 6.11:1 |
+| Cargo | `#C8DACB` | `#A4D49B` — tinta 50% | 5.56:1 |
+| Cargo (span) | `#BCD0BF` | `#92CC8B` — tinta 60% | 5.01:1 |
+| Titular y nombres | `#FFFFFF` | igual | 9.36:1 |
+
+**Por qué el fondo baja del 22% al 45% de verde:** con el anterior, las
+tintas 50 y 60 daban 4.28 y 3.86 — por debajo del mínimo. Con este hay
+margen para las tres y se conserva la jerarquía entre título y cargo.
+
+El `fill` del circuito decorativo se ajustó al fondo nuevo.
+
+### De paso: el último color inventado de Marcas
+
+El selector de fondos de Erick usaba `#CFDCD1` para su eyebrow sobre verde,
+porque la tinta oficial no llegaba con el fondo anterior. **Con `#1A5121` la
+tinta 40% da 6.11:1**, así que ese color desaparece.
+
+Marcas y Equipo quedan con **cero colores inventados**.
+
+---
+
 ## Comprobación transversal: ¿usamos los mismos colores en todas las secciones?
 
 Hecha el 4/9/2026, a petición del cliente.
