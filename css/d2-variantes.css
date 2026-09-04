@@ -7609,12 +7609,12 @@ span.d2-panel__filtro:hover {
 
       Medido sobre ese fondo (#3c4b3d, luminancia .0673):
         blanco #FFFFFF ............ 11.02:1   titular
-        verde claro #B0E1B7 ....... 7.48:1    la segunda linea del titular
+        verde 40% #B5DBAD ......... 7.16:1    la segunda linea del titular
         gris claro #D6E4D8 ........ 9.16:1    cuerpo
         verde marca #39B54A ....... 4.13:1    solo decorativo, no texto
 
       El verde de marca a pleno NO llega a 4.5 sobre este fondo, asi que
-      el eyebrow y el enlace usan el verde al 40% (#B0E1B7), que da 7.48.
+      el eyebrow y el enlace usan el verde al 40% (#B5DBAD), que da 7.16.
 
    2. EL FOCO NO ES SOLO COLOR. En el original, el edificio destacado se
       distinguia por ser mas verde. Eso deja fuera a quien no separa bien
@@ -7633,7 +7633,7 @@ span.d2-panel__filtro:hover {
   --mapa-fondo:     var(--comp-problema, #FFFFFF);
   --mapa-texto:     #FFFFFF;
   --mapa-cuerpo:    #D6E4D8;
-  --mapa-acento:    #B0E1B7;   /* verde de marca al 40%: 7.48:1 aqui */
+  --mapa-acento:    #B5DBAD;   /* tinta oficial del manual al 40%: 7.16:1 aqui */
   /* Subido desde #93B99D, que daba 4.27:1 sobre este fondo: por debajo
      del minimo de 4.5. Este da 5.31 y lo cumple. */
   --mapa-tenue:     #A9C8B1;
@@ -8119,7 +8119,7 @@ span.d2-panel__filtro:hover {
    -------------------------------------------------------------------------- */
 
 .d2 .d2-res-ed__num {
-  color: #B0E1B7;
+  color: #B5DBAD;
 }
 
 /* Sobre fondo oscuro, la misma pieza necesita el valor inverso */
@@ -8207,7 +8207,7 @@ span.d2-panel__filtro:hover {
                                   .d2-eyebrow, .eyebrow, .acento,
                                   .d2-equipo-firma__credenciales li,
                                   .d2-equipo-dosier__cred) {
-  color: #B0E1B7;
+  color: #B5DBAD;
 }
 
 /* --------------------------------------------------------------------------
@@ -8323,7 +8323,7 @@ span.d2-panel__filtro:hover {
 }
 
 .d2 [data-comp-tono="oscuro"] a.d2-btn:not(.d2-btn--solido):not(.d2-btn--linea) {
-  color: #B0E1B7;              /* 7.20:1 sobre #333333 */
+  color: #B5DBAD;/* 8.24:1 sobre #333333 */
 }
 
 /* 2. LA ETIQUETA "HOW IT WORKS NOW" — 4.46:1, falla por 0.04
@@ -8579,7 +8579,7 @@ span.d2-panel__filtro:hover {
 .d2 [data-comp-tono="oscuro"] .d2-prob-mapa {
   --mapa-texto:  #FFFFFF;
   --mapa-cuerpo: #E8E8E8;
-  --mapa-acento: #B0E1B7;
+  --mapa-acento: #B5DBAD;
   --mapa-tenue:  #A9C8B1;
 }
 
@@ -8757,7 +8757,7 @@ span.d2-panel__filtro:hover {
 .d2 [data-comp-tono="oscuro"] .d2-prob-mapa {
   --mapa-texto:  #FFFFFF;
   --mapa-cuerpo: #E8E8E8;
-  --mapa-acento: #B0E1B7;                             /* verde 40%, 7.20:1 */
+  --mapa-acento: #B5DBAD;                             /* verde 40% oficial, 8.24:1 */
   --mapa-tenue:  #CCCCCC;                             /* blanco 80%, 7.87:1 */
 }
 
@@ -9090,7 +9090,7 @@ span.d2-panel__filtro:hover {
 }
 
 .d2 [data-comp-tono="oscuro"] :is(.d2-res-cen__eyebrow, .d2-res-cen__cifras b) {
-  color: #B0E1B7;              /* 8.60:1 sobre #333333 */
+  color: #B5DBAD;/* 8.24:1 sobre #333333 */
 }
 
 .d2 [data-comp-tono="oscuro"] :is(.d2-res-cen__firma span,
@@ -9629,12 +9629,12 @@ span.d2-panel__filtro:hover {
                                   .d2-faq-rol__eyebrow, .d2-faq-dato__titulo span,
                                   .d2-faq-dato__ficha-eti, .d2-faq-num__conteo span,
                                   .d2-faq-rol__num) {
-  color: #B0E1B7;
+  color: #B5DBAD;
 }
 
 .d2 [data-comp-tono="oscuro"] :is(.d2-faq-dato__item[open] .d2-faq-dato__n,
                                   .d2-faq-num__item[open] .d2-faq-num__n) {
-  color: #B0E1B7;
+  color: #B5DBAD;
 }
 
 .d2 [data-comp-tono="oscuro"] :is(.d2-faq-dato__item, .d2-faq-num__item,
@@ -9644,12 +9644,12 @@ span.d2-panel__filtro:hover {
 
 .d2 [data-comp-tono="oscuro"] :is(.d2-faq-dato__pie a, .d2-faq-num__pie a,
                                   .d2-faq-rol__pie a) {
-  color: #B0E1B7;
+  color: #B5DBAD;
 }
 
 .d2 [data-comp-tono="oscuro"] :is(.d2-faq-dato__item summary:hover,
                                   .d2-faq-num__item summary:hover) {
-  color: #B0E1B7;
+  color: #B5DBAD;
 }
 
 /* --------------------------------------------------------------------------
@@ -9955,11 +9955,11 @@ span.d2-panel__filtro:hover {
 /* --- Sobre fondo oscuro --- */
 
 .d2 [data-comp-tono="oscuro"] :is(.d2-rutas-sec__eyebrow, .d2-rutas-sec__enlace) {
-  color: #B0E1B7;                        /* 8.60:1 sobre #333333 */
+  color: #B5DBAD;/* 8.24:1 sobre #333333 */
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-rutas-sec__num {
-  color: #B0E1B7;
+  color: #B5DBAD;
   background: var(--comp-rutas, #333333);
 }
 
@@ -10304,7 +10304,7 @@ span.d2-panel__filtro:hover {
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-rutas-sec__paso:hover .d2-rutas-sec__nombre {
-  color: #B0E1B7;
+  color: #B5DBAD;
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-rutas-sec__paso:hover .d2-rutas-sec__marca::after {
@@ -10367,7 +10367,7 @@ span.d2-panel__filtro:hover {
   font-weight: 700;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: #B0E1B7;                       /* 8.60:1 sobre #333333 */
+  color: #B5DBAD;/* 8.24:1 sobre #333333 */
 }
 
 .d2 .d2-cta-ficha__titulo {
@@ -10612,7 +10612,7 @@ span.d2-panel__filtro:hover {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .04em;
-  color: #B0E1B7;
+  color: #B5DBAD;
   border: 1.5px solid rgba(126, 225, 142, .55);
   border-radius: 50%;
   /* El relleno crece desde el centro, igual que en Solutions */
@@ -10651,7 +10651,7 @@ span.d2-panel__filtro:hover {
   font-weight: 700;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: #B0E1B7;
+  color: #B5DBAD;
 }
 
 .d2 .d2-cta-ruta__que {
@@ -10682,7 +10682,7 @@ span.d2-panel__filtro:hover {
   transition: color .3s cubic-bezier(.4, 0, .2, 1);
 }
 
-.d2 .d2-cta-ruta__paso:hover .d2-cta-ruta__que { color: #B0E1B7; }
+.d2 .d2-cta-ruta__paso:hover .d2-cta-ruta__que { color: #B5DBAD; }
 
 @media (max-width: 1040px) {
   .d2 .d2-cta-ruta__cabecera { grid-template-columns: 1fr; align-items: start; }
@@ -10871,7 +10871,7 @@ span.d2-panel__filtro:hover {
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: #B0E1B7;
+  color: #B5DBAD;
 }
 
 .d2 .d2-cta-ruta__que {
@@ -10900,7 +10900,7 @@ span.d2-panel__filtro:hover {
 }
 
 .d2 .d2-cta-ruta__paso:nth-child(3) .d2-cta-ruta__que {
-  color: #B0E1B7;
+  color: #B5DBAD;
 }
 
 /* --- El hover: el hito se carga, como en el resto de la web --- */
@@ -10911,7 +10911,7 @@ span.d2-panel__filtro:hover {
   box-shadow: 0 0 0 7px rgba(126, 225, 142, .20);
 }
 
-.d2 .d2-cta-ruta__paso:hover .d2-cta-ruta__que { color: #B0E1B7; }
+.d2 .d2-cta-ruta__paso:hover .d2-cta-ruta__que { color: #B5DBAD; }
 
 /* --- Sobre fondo claro --- */
 
@@ -10982,8 +10982,8 @@ span.d2-panel__filtro:hover {
    Contrastes medidos sobre ese fondo (#2A5C31, luminancia .0836):
      titular blanco ..........  9.53:1
      entradilla #D6E4D8 ......  7.51:1
-     eyebrow #B0E1B7 .........  6.94:1
-     numeros #B0E1B7 .........  6.94:1
+     eyebrow #B5DBAD .........  6.94:1
+     numeros #B5DBAD .........  6.94:1
      nombres blancos .........  9.53:1
      cargos #C8DACB ..........  7.02:1
    ========================================================================== */
@@ -11039,7 +11039,7 @@ span.d2-panel__filtro:hover {
   font-weight: 700;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: #B0E1B7;
+  color: #B5DBAD;
 }
 
 .d2 .d2-equipo-banda__titulo {
@@ -11105,7 +11105,7 @@ span.d2-panel__filtro:hover {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .12em;
-  color: #B0E1B7;
+  color: #B5DBAD;
 }
 
 /* --- El retrato --- */
@@ -11205,7 +11205,7 @@ span.d2-panel__filtro:hover {
    Contrastes medidos sobre el negro:
      titular blanco ......... 17.40:1
      entradilla #D6D6D6 ..... 11.97:1
-     eyebrow #B0E1B7 ........ 11.85:1
+     eyebrow #B5DBAD ........ 11.85:1
    ========================================================================== */
 
 .d2 .calc {
@@ -11265,7 +11265,7 @@ span.d2-panel__filtro:hover {
   /* .14em, como el eyebrow del mapa y el de Solutions */
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: #B0E1B7;
+  color: #B5DBAD;
 }
 
 /* 720px y no una medida en ch: el titular completo mide 1250px a 50px de
