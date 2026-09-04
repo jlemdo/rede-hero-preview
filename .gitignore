@@ -4,3 +4,16 @@
 
 # Fuente del hero de diseno 3: 6,3 MB. Solo se sirve el JPEG derivado.
 assets/img/d3/building-sketch.png
+
+# Las paginas que no forman parte de la vista previa (4/9/2026).
+#
+# Solo se publica la home. GitHub Pages sirve cualquier .html del
+# repositorio y este tiene .nojekyll, asi que el guion bajo NO bastaria
+# para ocultarlas: hay que dejarlas fuera del repositorio.
+#
+# En su sitio quedan redirectores que llevan a index.html, asi que quien
+# escriba /about.html acaba en la home.
+#
+# El contenido real sigue en tu disco, en _paginas/. Para recuperarlo:
+# copiar de vuelta y quitar estas lineas.
+_paginas/
