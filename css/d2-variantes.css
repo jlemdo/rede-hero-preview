@@ -12276,3 +12276,29 @@ span.d2-panel__filtro:hover {
   /* Con tres, a 380px cada logo se quedaba en 84px: ilegible */
   .d2 .d2-logos--dos__marquesina { --visibles: 2; }
 }
+
+/* ==========================================================================
+   SOLUTIONS: EL ICONO NO PUEDE DESAPARECER EN HOVER (4/9/2026)
+
+   En la composicion Contrast la seccion va en #333333, y al pasar el raton
+   el icono se ponia tambien #333333: contraste 1.00:1, invisible. El
+   circulo se veia vacio.
+
+   Por que pasaba: en tono claro el hover llena el circulo de verde y el
+   icono va oscuro encima, que es correcto. La regla de tono oscuro heredaba
+   ese mismo #333333 sin caer en que ahi es el color del FONDO.
+
+   No basta con cambiar el color del icono: el relleno verde es un radial al
+   72%, asi que en los bordes del circulo sigue habiendo fondo oscuro y el
+   icono cruza las dos zonas. Lo que se corrige es el relleno: en tono
+   oscuro cubre el circulo entero, y entonces el icono oscuro encima del
+   verde da 4.74:1.
+   ========================================================================== */
+
+.d2 [data-comp-tono="oscuro"] .d2-rutas-sec__paso:hover .d2-rutas-sec__num {
+  /* El verde cubre TODO el circulo, no el 72% */
+  --num-carga: 100%;
+  background-color: var(--c-verde-marca, #39B54A);
+  /* Y el icono encima, oscuro: 4.74:1 sobre ese verde */
+  color: #333333;
+}
