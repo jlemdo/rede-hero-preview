@@ -261,7 +261,7 @@
   gap: 6px;
   padding: 10px var(--d2-e2);
   font-size: 1rem;
-  font-weight: var(--fw-semibold, 600);
+  font-weight: var(--fw-medium);
   color: var(--c-texto);
   background: none;
   border: 0;
@@ -565,7 +565,7 @@
   min-height: 44px;
   padding: 0 var(--d2-e4) 0 var(--d2-e3);
   font-size: .8125rem;
-  font-weight: var(--fw-semibold, 600);
+  font-weight: var(--fw-medium);
   font-family: inherit;
   color: var(--c-texto-cuerpo);
   background: var(--d2-tinta);

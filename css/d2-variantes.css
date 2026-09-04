@@ -1212,7 +1212,7 @@ span.d2-panel__filtro:hover {
 .d2-logos--dos__cifra-pie {
   margin: 6px 0 0;
   font-size: .9375rem;
-  font-weight: var(--fw-semibold, 600);
+  font-weight: var(--fw-medium);
   line-height: 1.25;
   color: var(--c-texto);
 }
@@ -1367,7 +1367,7 @@ span.d2-panel__filtro:hover {
 .d2-foco__cifra-pie {
   margin: 5px 0 0;
   font-size: .8125rem;
-  font-weight: var(--fw-semibold, 600);
+  font-weight: var(--fw-medium);
   line-height: 1.25;
   color: var(--c-texto);
 }
@@ -6932,7 +6932,7 @@ span.d2-panel__filtro:hover {
 .d2 .d2-res-ed__nombre {
   display: block;
   font-size: .9375rem;
-  font-weight: var(--fw-semibold, 600);
+  font-weight: var(--fw-medium);
   line-height: 1.35;
   color: var(--c-texto);
 }
@@ -12354,4 +12354,49 @@ span.d2-panel__filtro:hover {
 
 @media (max-width: 1080px) {
   .d2 .d2-rutas-sec__titulo br { display: none; }
+}
+
+/* ==========================================================================
+   MENU MOVIL: EL MISMO VERDE QUE EL RESTO DE BOTONES (4/9/2026)
+
+   El menu movil se quedo con el esquema viejo --verde de marca de fondo y
+   texto blanco-- que en escritorio ya se corrigio. Medido, ese par da
+   2.66:1: muy por debajo del 4.5 que pide WCAG para texto normal.
+
+   Ahora sigue el patron del resto de la web:
+     reposo  #026F00 con texto blanco    6.41:1
+     hover   #39B54A con texto #333333   4.74:1
+
+   Ademas del contraste, gana coherencia: el mismo boton no puede verse de
+   dos colores segun el ancho de la ventana.
+   ========================================================================== */
+
+.d2 .mobile-menu .d2-btn,
+.d2 .mobile-menu .btn {
+  background: var(--c-verde-hover, #026F00);
+  border-color: var(--c-verde-hover, #026F00);
+  color: #FFFFFF;
+}
+
+.d2 .mobile-menu .d2-btn:hover,
+.d2 .mobile-menu .btn:hover,
+.d2 .mobile-menu .d2-btn:focus-visible,
+.d2 .mobile-menu .btn:focus-visible {
+  background: var(--c-verde-marca, #39B54A);
+  border-color: var(--c-verde-marca, #39B54A);
+  color: #333333;
+}
+
+/* El de Client Login va en linea, como en escritorio */
+.d2 .mobile-menu .header__login-btn {
+  background: transparent;
+  border-color: var(--c-verde-hover, #026F00);
+  color: var(--c-verde-hover, #026F00);
+}
+
+.d2 .mobile-menu .header__login-btn:hover,
+.d2 .mobile-menu .header__login-btn:focus-visible {
+  background: var(--c-verde-hover, #026F00);
+  border-color: var(--c-verde-hover, #026F00);
+  color: #FFFFFF;
 }
