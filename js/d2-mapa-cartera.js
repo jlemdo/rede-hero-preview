@@ -17,7 +17,17 @@
 (function () {
   'use strict';
 
-  var mapa = document.querySelector('[data-mapa-cartera]');
+  /* El primero que este VISIBLE, no el primero del documento.
+
+     Desde 4/9/2026 el mapa aparece dos veces: el original en The Problem
+     --seccion oculta con [hidden]-- y una copia en el panel de datos del
+     FAQ. Un querySelector a secas cogia el de The Problem y dejaba muerto
+     el que se ve. */
+  var mapa = null;
+  var candidatos = document.querySelectorAll('[data-mapa-cartera]');
+  for (var n = 0; n < candidatos.length; n++) {
+    if (!candidatos[n].closest('[hidden]')) { mapa = candidatos[n]; break; }
+  }
   if (!mapa) { return; }
 
   var sitios = mapa.querySelectorAll('[data-sitio]');

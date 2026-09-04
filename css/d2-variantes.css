@@ -12092,3 +12092,55 @@ span.d2-panel__filtro:hover {
 @media (prefers-reduced-motion: reduce) {
   .d2 :is(.d2-faq-dato__n, .d2-faq-num__n)::before { transition: none; }
 }
+
+/* ==========================================================================
+   EL MAPA DE CARTERA DENTRO DEL PANEL DE DATOS DEL FAQ (4/9/2026)
+
+   Viene de The Problem, que se oculto. Alli vivia en media pantalla; aqui
+   la columna es la estrecha de una rejilla 1.35fr / 1fr, asi que hay que
+   encajarlo.
+
+   El envoltorio .d2-prob-mapa del marcado no es decorativo: todo el color
+   del mapa --burbujas, reticula, destacado-- esta anidado bajo esa clase.
+   Aqui solo se corrigen las medidas.
+   ========================================================================== */
+
+.d2 .d2-faq-dato__mapa {
+  /* Que no herede el fondo ni el relleno de la seccion original */
+  background: none;
+  padding: 0;
+}
+
+.d2 .d2-faq-dato__mapa .d2-prob-mapa__lienzo {
+  /* 520px era la altura en media pantalla. Aqui la columna es estrecha y
+     el mapa quedaria como una torre. */
+  min-height: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--d2-radio-sm, 6px);
+}
+
+.d2 .d2-faq-dato__mapa .d2-prob-mapa__grafico {
+  width: 100%;
+  height: 100%;
+}
+
+/* El aviso de "cifras ilustrativas" y las etiquetas, un punto mas pequenos:
+   el mapa ocupa menos ancho que en su seccion original. */
+.d2 .d2-faq-dato__mapa .d2-prob-mapa__aviso {
+  font-size: 10.5px;
+}
+
+.d2 .d2-faq-dato__mapa .d2-prob-mapa__etiqueta {
+  font-size: 9.5px;
+}
+
+/* La ficha del sitio seleccionado, ajustada al ancho disponible */
+.d2 .d2-faq-dato__mapa .d2-prob-mapa__ficha {
+  margin-top: 14px;
+  padding: 12px 14px;
+}
+
+@media (max-width: 900px) {
+  /* Con la rejilla ya en una columna, el mapa recupera proporcion */
+  .d2 .d2-faq-dato__mapa .d2-prob-mapa__lienzo { aspect-ratio: 16 / 10; }
+}

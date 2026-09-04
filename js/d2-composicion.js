@@ -60,15 +60,20 @@
     }
   ];
 
-  /* Los tokens, en el mismo orden que el mapa */
-  var TOKENS = ['--comp-hero', '--comp-logos', '--comp-problema', '--comp-calc',
-                '--comp-rutas', '--comp-prueba', '--comp-resenas', '--comp-equipo',
+  /* Los tokens, EN EL ORDEN EN QUE APARECEN EN LA PAGINA.
+
+     Ojo al mover secciones: el mapa asigna por posicion, asi que si el
+     orden de aqui no coincide con el del HTML, cada seccion coge el color
+     que le tocaba a otra. Al subir Solutions detras de Marcas (4/9/2026)
+     rutas y problema quedaban las dos en gris, seguidas. */
+  var TOKENS = ['--comp-hero', '--comp-logos', '--comp-rutas', '--comp-problema',
+                '--comp-calc', '--comp-prueba', '--comp-resenas', '--comp-equipo',
                 '--comp-faq', '--comp-cta', '--comp-footer'];
 
   /* Los carruseles, en el mismo orden: hay que saber que seccion queda
      oscura para invertir su texto. */
-  var CARUSELES = ['caru-hero', 'caru-logos', 'caru-problema', 'caru-calc',
-                   'caru-rutas', 'caru-prueba', 'caru-resenas', 'caru-equipo',
+  var CARUSELES = ['caru-hero', 'caru-logos', 'caru-rutas', 'caru-problema',
+                   'caru-calc', 'caru-prueba', 'caru-resenas', 'caru-equipo',
                    'caru-faq', 'caru-cta', 'caru-footer'];
 
   var CLAVE = 'rede-composicion';

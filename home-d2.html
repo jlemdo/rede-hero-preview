@@ -845,6 +845,428 @@
 
 
 <!-- ==========================================================================
+     SECCION RUTAS / SOLUTIONS — TRES VARIANTES
+
+     El copy va LITERAL del aprobado (secciones/rutas.html): tres rutas,
+     no cuatro ni cinco. El encargo hablaba de "cuatro servicios" y el
+     documento del cliente (copy/word/document.xml) describe CINCO tarjetas
+     con precio --Energy Gap Analysis, Recommissioning, RUN Intelligence,
+     RUN Insights, Energy Management--. Ese reparto de cinco es de la PAGINA
+     Solutions, no del bloque de la home. Aqui se respeta el bloque de la
+     home, que agrupa esas cinco piezas en tres rutas por VERBO
+     (Investigate / Optimize / Manage). No se inventa una cuarta ruta ni se
+     bajan precios de la pagina interior: seria copy nuevo. Queda anotado
+     como pregunta para Erick.
+
+     Las tres variantes cambian el EJE REAL, no la piel:
+       1. AUTOSELECCION  — se entra por la situacion del lector, no por el
+                           servicio. El protagonista es la pregunta.
+       2. ESCALERA       — un unico eje horizontal de compromiso creciente;
+                           las rutas son tramos de una linea continua.
+       3. COMPARATIVA    — matriz de filas: se lee por atributo cruzando las
+                           tres rutas, no ruta por ruta.
+     ========================================================================== -->
+
+<div class="d2-caru" id="caru-rutas" data-caru data-caru-fijo="0">
+
+  <!-- ====================================================================
+       OPCION 1 — LA SECUENCIA
+
+       Sustituye a la version de tres rutas. El cambio de fondo: aquella
+       planteaba la eleccion como tres caminos paralelos --"if you don't
+       know where the costs are", "if your buildings drift"-- y obligaba a
+       autodiagnosticarse antes de entender los servicios.
+
+       Esta los presenta como una SECUENCIA numerada: cada paso responde una
+       pregunta que surge del anterior. Quien no sabe donde esta no tiene que
+       decidir nada; empieza por el 01.
+
+       Cuatro pasos en vez de los cinco del copy aprobado: RUN Intelligence e
+       Insights van juntos como "RUN Energy Monitoring", porque en la home la
+       diferencia entre las dos modalidades es ruido. Se detallan en la
+       pagina de RUN.
+
+       La linea que conecta los circulos es el mismo lenguaje del mapa de
+       cartera: nodos enlazados. No es decoracion, dice que hay un orden.
+       ==================================================================== -->
+  <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Option 1: Sequence">
+    <section class="d2-rutas-sec" aria-labelledby="rutas-sec-titulo">
+      <div class="d2-rutas-sec__inner">
+
+        <!-- La cabecera va a dos columnas: el titular pesa a la izquierda y
+             la entradilla acompana a la derecha, sin competir. -->
+        <div class="d2-rutas-sec__cabecera">
+          <div>
+            <p class="d2-rutas-sec__eyebrow">Energy management solutions</p>
+            <h2 class="d2-rutas-sec__titulo" id="rutas-sec-titulo">
+              From scattered signals to measurable action.
+            </h2>
+          </div>
+          <p class="d2-rutas-sec__lead">
+            Start with the problem in front of you. Rede connects portfolio screening,
+            energy monitoring, building recommissioning and ongoing energy management
+            into one practical path.
+          </p>
+        </div>
+
+        <!-- Una lista ordenada: el orden es informacion, no presentacion.
+             Un lector de pantalla debe oir "1 de 4". -->
+        <ol class="d2-rutas-sec__pasos">
+
+          <li class="d2-rutas-sec__paso">
+            <span class="d2-rutas-sec__marca" aria-hidden="true">
+              <span class="d2-rutas-sec__num">01</span>
+            </span>
+            <p class="d2-rutas-sec__preg">Which buildings are worth auditing?</p>
+            <h3 class="d2-rutas-sec__nombre">Energy Gap Analysis</h3>
+            <p class="d2-rutas-sec__desc">
+              Screen energy use and cost across your portfolio before investing in a
+              detailed commercial building energy audit.
+            </p>
+            <a class="d2-rutas-sec__enlace" href="energy-gap-analysis.html">
+              Explore
+              <svg width="15" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true">
+                <path d="M11 1l5 5-5 5M16 6H1" stroke="currentColor" stroke-width="1.7"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="u-oculto-visual"> the Energy Gap Analysis</span>
+            </a>
+          </li>
+
+          <li class="d2-rutas-sec__paso">
+            <span class="d2-rutas-sec__marca" aria-hidden="true">
+              <span class="d2-rutas-sec__num">02</span>
+            </span>
+            <p class="d2-rutas-sec__preg">Can you see performance across every building?</p>
+            <h3 class="d2-rutas-sec__nombre">RUN Energy Monitoring</h3>
+            <p class="d2-rutas-sec__desc">
+              Organize utility data into one portfolio view so your team can compare
+              performance, track actions and catch energy drift.
+            </p>
+            <a class="d2-rutas-sec__enlace" href="run.html">
+              Explore
+              <svg width="15" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true">
+                <path d="M11 1l5 5-5 5M16 6H1" stroke="currentColor" stroke-width="1.7"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="u-oculto-visual"> RUN Energy Monitoring</span>
+            </a>
+          </li>
+
+          <li class="d2-rutas-sec__paso">
+            <span class="d2-rutas-sec__marca" aria-hidden="true">
+              <span class="d2-rutas-sec__num">03</span>
+            </span>
+            <p class="d2-rutas-sec__preg">Is the building still running as designed?</p>
+            <h3 class="d2-rutas-sec__nombre">Commercial Building Recommissioning</h3>
+            <p class="d2-rutas-sec__desc">
+              Tune schedules, controls, setpoints and equipment sequences to restore
+              performance before considering major replacement.
+            </p>
+            <a class="d2-rutas-sec__enlace" href="recommissioning.html">
+              Explore
+              <svg width="15" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true">
+                <path d="M11 1l5 5-5 5M16 6H1" stroke="currentColor" stroke-width="1.7"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="u-oculto-visual"> Commercial Building Recommissioning</span>
+            </a>
+          </li>
+
+          <li class="d2-rutas-sec__paso">
+            <span class="d2-rutas-sec__marca" aria-hidden="true">
+              <span class="d2-rutas-sec__num">04</span>
+            </span>
+            <p class="d2-rutas-sec__preg">Who keeps the plan moving after the first project?</p>
+            <h3 class="d2-rutas-sec__nombre">Energy Management Services</h3>
+            <p class="d2-rutas-sec__desc">
+              Maintain the action plan, monitor results and catch new problems across a
+              multi-building portfolio without building a full internal energy management
+              function.
+            </p>
+            <a class="d2-rutas-sec__enlace" href="energy-management.html">
+              Explore
+              <svg width="15" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true">
+                <path d="M11 1l5 5-5 5M16 6H1" stroke="currentColor" stroke-width="1.7"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="u-oculto-visual"> Energy Management Services</span>
+            </a>
+          </li>
+
+        </ol>
+
+      </div>
+    </section>
+  </div>
+
+
+  <!-- ======================================================================
+       OPCION 2 — ESCALERA DE COMPROMISO
+
+       Eje de lectura: horizontal y continuo. Las tres rutas dejan de ser
+       tres cajas paralelas y pasan a ser tres tramos de UNA linea, de menor
+       a mayor compromiso. Cambia que se agrupa con que: lo que agrupa ya no
+       es la tarjeta, es el eje.
+
+       Por que se puede ordenar aqui y en la opcion 1 no: esta variante SI
+       afirma un orden, asi que usa <ol>. El orden es de compromiso
+       creciente (un diagnostico puntual, un proyecto, una relacion
+       continua), que es el que el propio catalogo del cliente ya sigue en
+       la pagina Solutions.
+
+       Aviso: Gartner describe la compra B2B como NO lineal --seis "buying
+       jobs" que el comprador revisita en vez de recorrer en orden--. Por
+       eso la escalera se dibuja como eje de compromiso y NO como proceso
+       obligatorio: no hay flechas de "paso 1, paso 2", y cada tramo tiene
+       su propio enlace de entrada. Se puede entrar por el tramo que sea.
+       ====================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Option 2: Ladder" hidden>
+    <section class="d2-rutas-esc" id="solutions">
+      <div class="d2-rutas-esc__inner">
+
+        <div class="d2-rutas-esc__cabecera">
+          <p class="d2-rutas-esc__eyebrow">Solutions</p>
+          <h2 class="d2-rutas-esc__titulo">Every organization&rsquo;s situation is different.</h2>
+          <p class="d2-rutas-esc__lead">
+            The right path depends on what you already know, what your buildings need,
+            and how much support your team has in-house.
+          </p>
+        </div>
+
+        <div class="d2-rutas-esc__eje">
+
+          <!-- El rail es decorativo: el orden ya lo lleva el <ol>. Por eso
+               aria-hidden. El trazo se dibuja al entrar con
+               stroke-dasharray/dashoffset, la misma tecnica del panel del
+               hero, una sola pasada. -->
+          <svg class="d2-rutas-esc__rail" viewBox="0 0 1200 8" preserveAspectRatio="none"
+               aria-hidden="true" focusable="false">
+            <line class="d2-rutas-esc__rail-linea" x1="0" y1="4" x2="1200" y2="4"/>
+          </svg>
+
+          <ol class="d2-rutas-esc__lista">
+
+            <li class="d2-rutas-esc__peldano">
+              <span class="d2-rutas-esc__nodo" aria-hidden="true"></span>
+              <p class="d2-rutas-esc__tag">Investigate</p>
+              <h3 class="d2-rutas-esc__titulo-ruta">Energy Gap Analysis + Site Investigation</h3>
+              <p class="d2-rutas-esc__texto">
+                Start by finding out where the unnecessary energy costs are. EGA looks
+                across a portfolio. Site Investigation brings the same level of focus to
+                one building.
+              </p>
+              <a class="d2-rutas-esc__link" href="#">
+                See Investigate
+                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                  <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </li>
+
+            <li class="d2-rutas-esc__peldano">
+              <span class="d2-rutas-esc__nodo" aria-hidden="true"></span>
+              <p class="d2-rutas-esc__tag">Optimize</p>
+              <h3 class="d2-rutas-esc__titulo-ruta">RCx / C-Op</h3>
+              <p class="d2-rutas-esc__texto">
+                Correct operational drift in schedules, setpoints, controls, and sequences
+                so buildings run closer to the way they were intended to.
+              </p>
+              <a class="d2-rutas-esc__link" href="#">
+                See Optimize
+                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                  <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </li>
+
+            <li class="d2-rutas-esc__peldano">
+              <span class="d2-rutas-esc__nodo" aria-hidden="true"></span>
+              <p class="d2-rutas-esc__tag">Manage</p>
+              <h3 class="d2-rutas-esc__titulo-ruta">Energy Management + RUN</h3>
+              <p class="d2-rutas-esc__texto">
+                Keep performance visible over time through ongoing support, reporting, and
+                the utility data infrastructure to see what is changing.
+              </p>
+              <a class="d2-rutas-esc__link" href="#">
+                See Manage
+                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                  <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </li>
+
+          </ol>
+
+          <!-- Los extremos rotulan el eje. Sin ellos, la linea es adorno:
+               el lector no sabe que magnitud crece de izquierda a derecha.
+               Van fuera de la lista para no colarse en el recuento de
+               elementos que anuncia un lector de pantalla. -->
+          <p class="d2-rutas-esc__extremos">
+            <span class="d2-rutas-esc__extremo">One-time diagnostic</span>
+            <span class="d2-rutas-esc__extremo">Ongoing partnership</span>
+          </p>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================================================================
+       OPCION 3 — COMPARATIVA POR ATRIBUTO
+
+       Eje de lectura girado 90 grados: se lee por FILA cruzando las tres
+       rutas ("cual mira todo el portfolio?"), no columna a columna. Es la
+       unica de las tres que permite comparar el mismo atributo entre rutas
+       sin memorizar.
+
+       Por que existe esta variante: el meta-analisis de Chernev, Bockenholt
+       y Goodman (2015, Journal of Consumer Psychology, 99 observaciones)
+       encuentra que la sobrecarga de eleccion no aparece por el numero de
+       opciones sino cuando se cumplen sus moderadores; dos de ellos son la
+       COMPLEJIDAD DEL CONJUNTO (opciones dificiles de comparar) y la
+       INCERTIDUMBRE DE PREFERENCIA (el que elige no sabe que quiere). Con
+       tres opciones el numero no es el problema; la comparabilidad si. Esta
+       rejilla ataca exactamente ese moderador.
+
+       Es tabla de datos real, no maquetacion: por eso <table> con <th
+       scope>. Un lector de pantalla anuncia la cabecera de fila y de
+       columna en cada celda, que es justo la relacion que se quiere leer.
+       ====================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Option 3: Comparison" hidden>
+    <section class="d2-rutas-cmp" id="solutions">
+      <div class="d2-rutas-cmp__inner">
+
+        <div class="d2-rutas-cmp__cabecera">
+          <p class="d2-rutas-cmp__eyebrow">Solutions</p>
+          <h2 class="d2-rutas-cmp__titulo">Every organization&rsquo;s situation is different.</h2>
+          <p class="d2-rutas-cmp__lead">
+            The right path depends on what you already know, what your buildings need,
+            and how much support your team has in-house.
+          </p>
+        </div>
+
+        <!-- El envoltorio con overflow-x aisla el scroll de la tabla: si en
+             390px la rejilla no cabe, se desplaza ELLA y no la pagina. El
+             contrato prohibe scroll horizontal de pagina, no de un contenedor
+             que lo declara. -->
+        <div class="d2-rutas-cmp__marco">
+          <table class="d2-rutas-cmp__tabla">
+            <caption class="d2-rutas-cmp__caption">
+              The three paths compared by what you already know, what your buildings
+              need, and how much support your team has in-house.
+            </caption>
+            <thead>
+              <tr>
+                <td class="d2-rutas-cmp__esquina"></td>
+                <th scope="col">
+                  <span class="d2-rutas-cmp__tag">Investigate</span>
+                  <span class="d2-rutas-cmp__titulo-ruta">Energy Gap Analysis + Site Investigation</span>
+                </th>
+                <th scope="col">
+                  <span class="d2-rutas-cmp__tag">Optimize</span>
+                  <span class="d2-rutas-cmp__titulo-ruta">RCx / C-Op</span>
+                </th>
+                <th scope="col">
+                  <span class="d2-rutas-cmp__tag">Manage</span>
+                  <span class="d2-rutas-cmp__titulo-ruta">Energy Management + RUN</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Fila unica de descripcion: el copy aprobado da UN parrafo por
+                   ruta y no se trocea, porque trocearlo seria reescribirlo.
+                   Las filas de atributo que faltan (alcance, plazo, precio)
+                   estan PENDIENTE DE ERICK. -->
+              <tr>
+                <th scope="row">What it is</th>
+                <td>
+                  Start by finding out where the unnecessary energy costs are. EGA looks
+                  across a portfolio. Site Investigation brings the same level of focus to
+                  one building.
+                </td>
+                <td>
+                  Correct operational drift in schedules, setpoints, controls, and sequences
+                  so buildings run closer to the way they were intended to.
+                </td>
+                <td>
+                  Keep performance visible over time through ongoing support, reporting, and
+                  the utility data infrastructure to see what is changing.
+                </td>
+              </tr>
+
+              <!-- PENDIENTE DE ERICK — fila "Scope" (portfolio / building /
+                   ongoing), fila "Commitment" y fila "Starting price". La
+                   pagina interior Solutions SI tiene precios aprobados
+                   ($5K la EGA, 1-2% del gasto anual para RUN Intelligence,
+                   Intelligence + $20K/ano para RUN Insights, "contact us" en
+                   RCx y EM), pero esos textos son de OTRA pagina y ademas no
+                   mapean 1:1 sobre estas tres rutas. No se traen sin que
+                   Erick confirme el mapeo. Sin esa fila, esta variante es
+                   una comparativa de una sola dimension y rinde por debajo
+                   de su potencial: es el dato que mas le falta. -->
+
+              <tr>
+                <th scope="row">Where to start</th>
+                <td>
+                  <a class="d2-rutas-cmp__link" href="#">
+                    See Investigate
+                    <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                      <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                </td>
+                <td>
+                  <a class="d2-rutas-cmp__link" href="#">
+                    See Optimize
+                    <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                      <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                </td>
+                <td>
+                  <a class="d2-rutas-cmp__link" href="#">
+                    See Manage
+                    <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
+                      <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="d2-caru__mandos">
+    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Close options">
+      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Previous option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
+      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Sequence</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Ladder</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Comparison</small></button>
+    </div>
+    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
+      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- ==========================================================================
      SECCION 3 — THE PROBLEM
 
      Tres formas de presentar los mismos tres puntos.
@@ -863,7 +1285,10 @@
 <!-- Solo se ofrecen Readings (indice 1) y Map (indice 3). Triptych y
      Comparison siguen en el marcado, escondidas: para recuperarlas basta
      quitar data-caru-solo. Se renumeran como 1 y 2. -->
-<div class="d2-caru" id="caru-problema" data-caru data-caru-solo="1,3">
+<!-- SECCION OCULTA (4/9/2026): The Problem.
+     No se borra, se esconde: quitar el hidden la devuelve entera.
+     Su mapa de cartera se copio al panel de datos del FAQ. -->
+<div class="d2-caru" id="caru-problema" data-caru data-caru-solo="1,3" hidden>
 
   <!-- ====================================================================
        OPCION 1 — TRIPTICO ALINEADO
@@ -2686,426 +3111,7 @@
 </div>
 
 
-<!-- ==========================================================================
-     SECCION RUTAS / SOLUTIONS — TRES VARIANTES
 
-     El copy va LITERAL del aprobado (secciones/rutas.html): tres rutas,
-     no cuatro ni cinco. El encargo hablaba de "cuatro servicios" y el
-     documento del cliente (copy/word/document.xml) describe CINCO tarjetas
-     con precio --Energy Gap Analysis, Recommissioning, RUN Intelligence,
-     RUN Insights, Energy Management--. Ese reparto de cinco es de la PAGINA
-     Solutions, no del bloque de la home. Aqui se respeta el bloque de la
-     home, que agrupa esas cinco piezas en tres rutas por VERBO
-     (Investigate / Optimize / Manage). No se inventa una cuarta ruta ni se
-     bajan precios de la pagina interior: seria copy nuevo. Queda anotado
-     como pregunta para Erick.
-
-     Las tres variantes cambian el EJE REAL, no la piel:
-       1. AUTOSELECCION  — se entra por la situacion del lector, no por el
-                           servicio. El protagonista es la pregunta.
-       2. ESCALERA       — un unico eje horizontal de compromiso creciente;
-                           las rutas son tramos de una linea continua.
-       3. COMPARATIVA    — matriz de filas: se lee por atributo cruzando las
-                           tres rutas, no ruta por ruta.
-     ========================================================================== -->
-
-<div class="d2-caru" id="caru-rutas" data-caru data-caru-fijo="0">
-
-  <!-- ====================================================================
-       OPCION 1 — LA SECUENCIA
-
-       Sustituye a la version de tres rutas. El cambio de fondo: aquella
-       planteaba la eleccion como tres caminos paralelos --"if you don't
-       know where the costs are", "if your buildings drift"-- y obligaba a
-       autodiagnosticarse antes de entender los servicios.
-
-       Esta los presenta como una SECUENCIA numerada: cada paso responde una
-       pregunta que surge del anterior. Quien no sabe donde esta no tiene que
-       decidir nada; empieza por el 01.
-
-       Cuatro pasos en vez de los cinco del copy aprobado: RUN Intelligence e
-       Insights van juntos como "RUN Energy Monitoring", porque en la home la
-       diferencia entre las dos modalidades es ruido. Se detallan en la
-       pagina de RUN.
-
-       La linea que conecta los circulos es el mismo lenguaje del mapa de
-       cartera: nodos enlazados. No es decoracion, dice que hay un orden.
-       ==================================================================== -->
-  <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Option 1: Sequence">
-    <section class="d2-rutas-sec" aria-labelledby="rutas-sec-titulo">
-      <div class="d2-rutas-sec__inner">
-
-        <!-- La cabecera va a dos columnas: el titular pesa a la izquierda y
-             la entradilla acompana a la derecha, sin competir. -->
-        <div class="d2-rutas-sec__cabecera">
-          <div>
-            <p class="d2-rutas-sec__eyebrow">Energy management solutions</p>
-            <h2 class="d2-rutas-sec__titulo" id="rutas-sec-titulo">
-              From scattered signals to measurable action.
-            </h2>
-          </div>
-          <p class="d2-rutas-sec__lead">
-            Start with the problem in front of you. Rede connects portfolio screening,
-            energy monitoring, building recommissioning and ongoing energy management
-            into one practical path.
-          </p>
-        </div>
-
-        <!-- Una lista ordenada: el orden es informacion, no presentacion.
-             Un lector de pantalla debe oir "1 de 4". -->
-        <ol class="d2-rutas-sec__pasos">
-
-          <li class="d2-rutas-sec__paso">
-            <span class="d2-rutas-sec__marca" aria-hidden="true">
-              <span class="d2-rutas-sec__num">01</span>
-            </span>
-            <p class="d2-rutas-sec__preg">Which buildings are worth auditing?</p>
-            <h3 class="d2-rutas-sec__nombre">Energy Gap Analysis</h3>
-            <p class="d2-rutas-sec__desc">
-              Screen energy use and cost across your portfolio before investing in a
-              detailed commercial building energy audit.
-            </p>
-            <a class="d2-rutas-sec__enlace" href="energy-gap-analysis.html">
-              Explore
-              <svg width="15" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true">
-                <path d="M11 1l5 5-5 5M16 6H1" stroke="currentColor" stroke-width="1.7"
-                      stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span class="u-oculto-visual"> the Energy Gap Analysis</span>
-            </a>
-          </li>
-
-          <li class="d2-rutas-sec__paso">
-            <span class="d2-rutas-sec__marca" aria-hidden="true">
-              <span class="d2-rutas-sec__num">02</span>
-            </span>
-            <p class="d2-rutas-sec__preg">Can you see performance across every building?</p>
-            <h3 class="d2-rutas-sec__nombre">RUN Energy Monitoring</h3>
-            <p class="d2-rutas-sec__desc">
-              Organize utility data into one portfolio view so your team can compare
-              performance, track actions and catch energy drift.
-            </p>
-            <a class="d2-rutas-sec__enlace" href="run.html">
-              Explore
-              <svg width="15" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true">
-                <path d="M11 1l5 5-5 5M16 6H1" stroke="currentColor" stroke-width="1.7"
-                      stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span class="u-oculto-visual"> RUN Energy Monitoring</span>
-            </a>
-          </li>
-
-          <li class="d2-rutas-sec__paso">
-            <span class="d2-rutas-sec__marca" aria-hidden="true">
-              <span class="d2-rutas-sec__num">03</span>
-            </span>
-            <p class="d2-rutas-sec__preg">Is the building still running as designed?</p>
-            <h3 class="d2-rutas-sec__nombre">Commercial Building Recommissioning</h3>
-            <p class="d2-rutas-sec__desc">
-              Tune schedules, controls, setpoints and equipment sequences to restore
-              performance before considering major replacement.
-            </p>
-            <a class="d2-rutas-sec__enlace" href="recommissioning.html">
-              Explore
-              <svg width="15" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true">
-                <path d="M11 1l5 5-5 5M16 6H1" stroke="currentColor" stroke-width="1.7"
-                      stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span class="u-oculto-visual"> Commercial Building Recommissioning</span>
-            </a>
-          </li>
-
-          <li class="d2-rutas-sec__paso">
-            <span class="d2-rutas-sec__marca" aria-hidden="true">
-              <span class="d2-rutas-sec__num">04</span>
-            </span>
-            <p class="d2-rutas-sec__preg">Who keeps the plan moving after the first project?</p>
-            <h3 class="d2-rutas-sec__nombre">Energy Management Services</h3>
-            <p class="d2-rutas-sec__desc">
-              Maintain the action plan, monitor results and catch new problems across a
-              multi-building portfolio without building a full internal energy management
-              function.
-            </p>
-            <a class="d2-rutas-sec__enlace" href="energy-management.html">
-              Explore
-              <svg width="15" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true">
-                <path d="M11 1l5 5-5 5M16 6H1" stroke="currentColor" stroke-width="1.7"
-                      stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span class="u-oculto-visual"> Energy Management Services</span>
-            </a>
-          </li>
-
-        </ol>
-
-      </div>
-    </section>
-  </div>
-
-
-  <!-- ======================================================================
-       OPCION 2 — ESCALERA DE COMPROMISO
-
-       Eje de lectura: horizontal y continuo. Las tres rutas dejan de ser
-       tres cajas paralelas y pasan a ser tres tramos de UNA linea, de menor
-       a mayor compromiso. Cambia que se agrupa con que: lo que agrupa ya no
-       es la tarjeta, es el eje.
-
-       Por que se puede ordenar aqui y en la opcion 1 no: esta variante SI
-       afirma un orden, asi que usa <ol>. El orden es de compromiso
-       creciente (un diagnostico puntual, un proyecto, una relacion
-       continua), que es el que el propio catalogo del cliente ya sigue en
-       la pagina Solutions.
-
-       Aviso: Gartner describe la compra B2B como NO lineal --seis "buying
-       jobs" que el comprador revisita en vez de recorrer en orden--. Por
-       eso la escalera se dibuja como eje de compromiso y NO como proceso
-       obligatorio: no hay flechas de "paso 1, paso 2", y cada tramo tiene
-       su propio enlace de entrada. Se puede entrar por el tramo que sea.
-       ====================================================================== -->
-  <div class="d2-caru__diapo" role="tabpanel" aria-label="Option 2: Ladder" hidden>
-    <section class="d2-rutas-esc" id="solutions">
-      <div class="d2-rutas-esc__inner">
-
-        <div class="d2-rutas-esc__cabecera">
-          <p class="d2-rutas-esc__eyebrow">Solutions</p>
-          <h2 class="d2-rutas-esc__titulo">Every organization&rsquo;s situation is different.</h2>
-          <p class="d2-rutas-esc__lead">
-            The right path depends on what you already know, what your buildings need,
-            and how much support your team has in-house.
-          </p>
-        </div>
-
-        <div class="d2-rutas-esc__eje">
-
-          <!-- El rail es decorativo: el orden ya lo lleva el <ol>. Por eso
-               aria-hidden. El trazo se dibuja al entrar con
-               stroke-dasharray/dashoffset, la misma tecnica del panel del
-               hero, una sola pasada. -->
-          <svg class="d2-rutas-esc__rail" viewBox="0 0 1200 8" preserveAspectRatio="none"
-               aria-hidden="true" focusable="false">
-            <line class="d2-rutas-esc__rail-linea" x1="0" y1="4" x2="1200" y2="4"/>
-          </svg>
-
-          <ol class="d2-rutas-esc__lista">
-
-            <li class="d2-rutas-esc__peldano">
-              <span class="d2-rutas-esc__nodo" aria-hidden="true"></span>
-              <p class="d2-rutas-esc__tag">Investigate</p>
-              <h3 class="d2-rutas-esc__titulo-ruta">Energy Gap Analysis + Site Investigation</h3>
-              <p class="d2-rutas-esc__texto">
-                Start by finding out where the unnecessary energy costs are. EGA looks
-                across a portfolio. Site Investigation brings the same level of focus to
-                one building.
-              </p>
-              <a class="d2-rutas-esc__link" href="#">
-                See Investigate
-                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
-                  <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
-                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
-            </li>
-
-            <li class="d2-rutas-esc__peldano">
-              <span class="d2-rutas-esc__nodo" aria-hidden="true"></span>
-              <p class="d2-rutas-esc__tag">Optimize</p>
-              <h3 class="d2-rutas-esc__titulo-ruta">RCx / C-Op</h3>
-              <p class="d2-rutas-esc__texto">
-                Correct operational drift in schedules, setpoints, controls, and sequences
-                so buildings run closer to the way they were intended to.
-              </p>
-              <a class="d2-rutas-esc__link" href="#">
-                See Optimize
-                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
-                  <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
-                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
-            </li>
-
-            <li class="d2-rutas-esc__peldano">
-              <span class="d2-rutas-esc__nodo" aria-hidden="true"></span>
-              <p class="d2-rutas-esc__tag">Manage</p>
-              <h3 class="d2-rutas-esc__titulo-ruta">Energy Management + RUN</h3>
-              <p class="d2-rutas-esc__texto">
-                Keep performance visible over time through ongoing support, reporting, and
-                the utility data infrastructure to see what is changing.
-              </p>
-              <a class="d2-rutas-esc__link" href="#">
-                See Manage
-                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
-                  <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
-                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
-            </li>
-
-          </ol>
-
-          <!-- Los extremos rotulan el eje. Sin ellos, la linea es adorno:
-               el lector no sabe que magnitud crece de izquierda a derecha.
-               Van fuera de la lista para no colarse en el recuento de
-               elementos que anuncia un lector de pantalla. -->
-          <p class="d2-rutas-esc__extremos">
-            <span class="d2-rutas-esc__extremo">One-time diagnostic</span>
-            <span class="d2-rutas-esc__extremo">Ongoing partnership</span>
-          </p>
-
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ======================================================================
-       OPCION 3 — COMPARATIVA POR ATRIBUTO
-
-       Eje de lectura girado 90 grados: se lee por FILA cruzando las tres
-       rutas ("cual mira todo el portfolio?"), no columna a columna. Es la
-       unica de las tres que permite comparar el mismo atributo entre rutas
-       sin memorizar.
-
-       Por que existe esta variante: el meta-analisis de Chernev, Bockenholt
-       y Goodman (2015, Journal of Consumer Psychology, 99 observaciones)
-       encuentra que la sobrecarga de eleccion no aparece por el numero de
-       opciones sino cuando se cumplen sus moderadores; dos de ellos son la
-       COMPLEJIDAD DEL CONJUNTO (opciones dificiles de comparar) y la
-       INCERTIDUMBRE DE PREFERENCIA (el que elige no sabe que quiere). Con
-       tres opciones el numero no es el problema; la comparabilidad si. Esta
-       rejilla ataca exactamente ese moderador.
-
-       Es tabla de datos real, no maquetacion: por eso <table> con <th
-       scope>. Un lector de pantalla anuncia la cabecera de fila y de
-       columna en cada celda, que es justo la relacion que se quiere leer.
-       ====================================================================== -->
-  <div class="d2-caru__diapo" role="tabpanel" aria-label="Option 3: Comparison" hidden>
-    <section class="d2-rutas-cmp" id="solutions">
-      <div class="d2-rutas-cmp__inner">
-
-        <div class="d2-rutas-cmp__cabecera">
-          <p class="d2-rutas-cmp__eyebrow">Solutions</p>
-          <h2 class="d2-rutas-cmp__titulo">Every organization&rsquo;s situation is different.</h2>
-          <p class="d2-rutas-cmp__lead">
-            The right path depends on what you already know, what your buildings need,
-            and how much support your team has in-house.
-          </p>
-        </div>
-
-        <!-- El envoltorio con overflow-x aisla el scroll de la tabla: si en
-             390px la rejilla no cabe, se desplaza ELLA y no la pagina. El
-             contrato prohibe scroll horizontal de pagina, no de un contenedor
-             que lo declara. -->
-        <div class="d2-rutas-cmp__marco">
-          <table class="d2-rutas-cmp__tabla">
-            <caption class="d2-rutas-cmp__caption">
-              The three paths compared by what you already know, what your buildings
-              need, and how much support your team has in-house.
-            </caption>
-            <thead>
-              <tr>
-                <td class="d2-rutas-cmp__esquina"></td>
-                <th scope="col">
-                  <span class="d2-rutas-cmp__tag">Investigate</span>
-                  <span class="d2-rutas-cmp__titulo-ruta">Energy Gap Analysis + Site Investigation</span>
-                </th>
-                <th scope="col">
-                  <span class="d2-rutas-cmp__tag">Optimize</span>
-                  <span class="d2-rutas-cmp__titulo-ruta">RCx / C-Op</span>
-                </th>
-                <th scope="col">
-                  <span class="d2-rutas-cmp__tag">Manage</span>
-                  <span class="d2-rutas-cmp__titulo-ruta">Energy Management + RUN</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Fila unica de descripcion: el copy aprobado da UN parrafo por
-                   ruta y no se trocea, porque trocearlo seria reescribirlo.
-                   Las filas de atributo que faltan (alcance, plazo, precio)
-                   estan PENDIENTE DE ERICK. -->
-              <tr>
-                <th scope="row">What it is</th>
-                <td>
-                  Start by finding out where the unnecessary energy costs are. EGA looks
-                  across a portfolio. Site Investigation brings the same level of focus to
-                  one building.
-                </td>
-                <td>
-                  Correct operational drift in schedules, setpoints, controls, and sequences
-                  so buildings run closer to the way they were intended to.
-                </td>
-                <td>
-                  Keep performance visible over time through ongoing support, reporting, and
-                  the utility data infrastructure to see what is changing.
-                </td>
-              </tr>
-
-              <!-- PENDIENTE DE ERICK — fila "Scope" (portfolio / building /
-                   ongoing), fila "Commitment" y fila "Starting price". La
-                   pagina interior Solutions SI tiene precios aprobados
-                   ($5K la EGA, 1-2% del gasto anual para RUN Intelligence,
-                   Intelligence + $20K/ano para RUN Insights, "contact us" en
-                   RCx y EM), pero esos textos son de OTRA pagina y ademas no
-                   mapean 1:1 sobre estas tres rutas. No se traen sin que
-                   Erick confirme el mapeo. Sin esa fila, esta variante es
-                   una comparativa de una sola dimension y rinde por debajo
-                   de su potencial: es el dato que mas le falta. -->
-
-              <tr>
-                <th scope="row">Where to start</th>
-                <td>
-                  <a class="d2-rutas-cmp__link" href="#">
-                    See Investigate
-                    <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
-                      <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </a>
-                </td>
-                <td>
-                  <a class="d2-rutas-cmp__link" href="#">
-                    See Optimize
-                    <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
-                      <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </a>
-                </td>
-                <td>
-                  <a class="d2-rutas-cmp__link" href="#">
-                    See Manage
-                    <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true">
-                      <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-      </div>
-    </section>
-  </div>
-
-  <div class="d2-caru__mandos">
-    <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Close options">
-      <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    </button>
-    <button class="d2-caru__flecha" type="button" data-caru-ir="-1" aria-label="Previous option">
-      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M7.5 1L1.5 7l6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
-      <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Sequence</small></button>
-      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Ladder</small></button>
-      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Comparison</small></button>
-    </div>
-    <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
-      <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-  </div>
-</div>
 
 
 <!-- ==========================================================================
@@ -4435,10 +4441,84 @@
                aria-hidden porque repite lo que ya dice la respuesta: para un
                lector de pantalla seria una duplicacion, no una ayuda. -->
           <aside class="d2-faq-dato__ficha" aria-hidden="true">
-            <div class="d2-faq-dato__ficha-caja">
-              <p class="d2-faq-dato__ficha-eti" data-ficha-eti>Energy Gap Analysis</p>
-              <p class="d2-faq-dato__ficha-cifra" data-ficha-cifra>$5,000</p>
-              <p class="d2-faq-dato__ficha-nota" data-ficha-nota>Four to six weeks from data access to findings.</p>
+            <!-- EL MAPA DE CARTERA, traido de The Problem (4/9/2026).
+                 La caja de dato que habia aqui cambiaba con cada pregunta
+                 abierta --los data-cifra/eti/nota de cada <details>--. Al
+                 sustituirla por el mapa esa relacion se pierde: el mapa es
+                 una pieza estatica. Los datos siguen en el marcado de cada
+                 pregunta por si se recupera.
+
+                 La caja original, comentada:
+                 <div class="d2-faq-dato__ficha-caja">
+                 <p class="d2-faq-dato__ficha-eti" data-ficha-eti>Energy Gap Analysis</p>
+                 <p class="d2-faq-dato__ficha-cifra" data-ficha-cifra>$5,000</p>
+                 <p class="d2-faq-dato__ficha-nota" data-ficha-nota>Four to six weeks from data access to findings.</p>
+                 </div>
+                 -->
+
+<!-- El envoltorio .d2-prob-mapa es necesario, no decorativo: casi
+                 todo el estilo del mapa --colores de burbuja, reticula,
+                 destacado-- esta anidado bajo esa clase, que en su seccion
+                 original era el contenedor. Sin el, el mapa sale sin color. -->
+            <div class="d2-prob-mapa d2-faq-dato__mapa">
+            <div class="d2-prob-mapa__lienzo" data-mapa-cartera>
+            <div class="d2-prob-mapa__visual">
+
+            <p class="d2-prob-mapa__aviso">For visual representation only. Not actual client data.</p>
+
+            <svg class="d2-prob-mapa__grafico" viewBox="0 0 700 500" role="img"
+            aria-label="Illustrative connected profile of five buildings compared with expected energy performance">
+            <text class="d2-prob-mapa__zona" x="101" y="91">ABOVE EXPECTED USE</text>
+            <text class="d2-prob-mapa__zona" x="101" y="276">BELOW EXPECTED USE</text>
+            <line class="d2-prob-mapa__referencia" x1="86" y1="252" x2="640" y2="252"/>
+            <path class="d2-prob-mapa__perfil" d="M135 340C180 340 200 290 245 290S310 145 355 145 420 220 465 220 530 180 575 180"/>
+
+            <g class="d2-prob-mapa__sitio" data-sitio="central" role="button" tabindex="0"
+            aria-label="Central Office: -8% benchmark variance, 82 kWh per square metre energy use intensity, Low savings potential">
+            <circle class="d2-prob-mapa__burbuja" cx="135" cy="340" r="18"/>
+            <circle class="d2-prob-mapa__nucleo" cx="135" cy="340" r="5"/>
+            <text class="d2-prob-mapa__etiqueta" x="135" y="378"><tspan x="135">CENTRAL</tspan><tspan x="135" dy="11">OFFICE</tspan></text>
+            </g>
+
+            <g class="d2-prob-mapa__sitio" data-sitio="north" role="button" tabindex="0"
+            aria-label="North Campus: -3% benchmark variance, 108 kWh per square metre energy use intensity, Moderate savings potential">
+            <circle class="d2-prob-mapa__burbuja" cx="245" cy="290" r="24"/>
+            <circle class="d2-prob-mapa__nucleo" cx="245" cy="290" r="5"/>
+            <text class="d2-prob-mapa__etiqueta" x="245" y="334"><tspan x="245">NORTH</tspan><tspan x="245" dy="11">CAMPUS</tspan></text>
+            </g>
+
+            <g class="d2-prob-mapa__sitio es-foco" data-sitio="riverside" role="button" tabindex="0"
+            aria-label="Riverside Centre: +18% benchmark variance, 176 kWh per square metre energy use intensity, High savings potential">
+            <circle class="d2-prob-mapa__burbuja" cx="355" cy="145" r="31"/>
+            <circle class="d2-prob-mapa__nucleo" cx="355" cy="145" r="5"/>
+            <text class="d2-prob-mapa__etiqueta" x="355" y="88"><tspan x="355">RIVERSIDE</tspan><tspan x="355" dy="11">CENTRE</tspan></text>
+            </g>
+
+            <g class="d2-prob-mapa__sitio" data-sitio="operations" role="button" tabindex="0"
+            aria-label="Operations Centre: +7% benchmark variance, 194 kWh per square metre energy use intensity, Medium savings potential">
+            <circle class="d2-prob-mapa__burbuja" cx="465" cy="220" r="21"/>
+            <circle class="d2-prob-mapa__nucleo" cx="465" cy="220" r="5"/>
+            <text class="d2-prob-mapa__etiqueta" x="465" y="173"><tspan x="465">OPERATIONS</tspan><tspan x="465" dy="11">CENTRE</tspan></text>
+            </g>
+
+            <g class="d2-prob-mapa__sitio" data-sitio="west" role="button" tabindex="0"
+            aria-label="West Campus: +12% benchmark variance, 146 kWh per square metre energy use intensity, Moderate savings potential">
+            <circle class="d2-prob-mapa__burbuja" cx="575" cy="180" r="16"/>
+            <circle class="d2-prob-mapa__nucleo" cx="575" cy="180" r="5"/>
+            <text class="d2-prob-mapa__etiqueta" x="575" y="138"><tspan x="575">WEST</tspan><tspan x="575" dy="11">CAMPUS</tspan></text>
+            </g>
+            </svg>
+
+            <div class="d2-prob-mapa__ficha" data-mapa-ficha aria-live="polite">
+            <small data-mapa-titulo>Priority opportunity</small>
+            <b data-mapa-nombre>Riverside Centre</b>
+            <div><span>Benchmark variance</span><strong data-mapa-variance>+18%</strong></div>
+            <div><span>Energy use intensity</span><strong data-mapa-intensidad>176 kWh/m&sup2;</strong></div>
+            <div><span>Savings potential</span><strong data-mapa-potencial>High</strong></div>
+            </div>
+
+            </div>
+            </div>
             </div>
 
             <!-- RESUMEN DE PRECIOS RETIRADO (3/9/2026): se quito para aligerar
