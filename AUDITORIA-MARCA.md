@@ -81,6 +81,51 @@ usos pasan a `--fw-medium`, que sí existe y vale lo mismo.
 
 ---
 
+## 2. HERO — auditado 4/9/2026
+
+**Resultado: cumple. No hizo falta tocar nada.**
+
+### Colores
+
+Los cinco que usa salen del manual:
+
+| Color | Qué es | Dónde |
+|---|---|---|
+| `#333333` | Negro de marca | Titular, entradilla, cifras |
+| `#6B6B6B` | Negro al 73% | Etiquetas de las métricas |
+| `#39B54A` | Verde de marca | Acentos |
+| `#B5DBAD` | Verde 40% | Sobre fondo oscuro |
+| `#FFFFFF` | Blanco | Panel y fondo |
+
+El único fuera de guía es **`#026F00`** en el eyebrow, que es la decisión
+global pendiente de aprobar.
+
+### Contraste
+
+Todo cumple sobre fondo blanco: de 5.33:1 el más bajo —la etiqueta de
+métrica— a 12.63:1.
+
+**Se verificó además el fondo con imagen**, que era el riesgo real: la foto
+del edificio va al 50% de opacidad y ocupa desde el 32% del ancho, así que
+se cruza con el final del texto. Medido en el peor caso —píxel más oscuro de
+la imagen, en el punto de mayor solape— el titular da **5.31:1**. Cumple.
+
+Las métricas no corren riesgo: el panel tiene fondo blanco propio.
+
+### Tipografía
+
+Correcta. Todo hereda Open Sans y los pesos salen de tokens
+(`--fw-bold`, `--fw-extrabold`, `--fw-medium`, `--fw-regular`).
+
+### Anotado para el final
+
+- **Ocho tamaños escritos a mano**: `.8125rem`, `.875rem`, `.75rem`,
+  `1.25rem`, `.6875rem` y tres `clamp()` propios. Mismo caso que el header.
+- **El hero conserva su barra de variantes.** Es la única sección junto al
+  FAQ y el footer que sigue con selector. Hay que fijarla antes de entregar.
+
+---
+
 ## Pendiente global (afecta a varias secciones)
 
 - **`#026F00`** — 141 usos. No está en el manual; viene del mockup de Erick.
