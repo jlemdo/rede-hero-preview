@@ -11997,27 +11997,35 @@ span.d2-panel__filtro:hover {
   /* Por encima de la marca: el contenido no puede quedar por detras */
   position: relative;
   z-index: 1;
+  /* Una franja libre debajo para que la marca tenga sitio propio en vez de
+     cruzarse con los legales. Es lo que hace la referencia: el logo vive en
+     su banda, no por detras del texto.
+
+     Con la marca topada al contenedor su alto tambien lo esta: 1200px de
+     ancho / 2.33 = 515px de alto, de los que asoma el 28% = 144px. La
+     franja se queda en 165px, con 21px de margen.
+
+     Medido de 760 a 1920px: siempre quedan entre 17 y 26px de aire entre el
+     ultimo renglon y donde empieza la marca. */
+  padding-bottom: clamp(110px, 13vw, 165px);
 }
 
 .d2 .d2-pie-cierre__agua {
   position: absolute;
   left: 50%;
 
-  /* MEDIDO SOBRE LA REFERENCIA (Capacity):
-       ocupa el 98% del ancho de la ventana --se sale por los lados--
-       arranca al 53% de la altura del pie
-       solo se ve la MITAD SUPERIOR del logotipo
+  /* Del ancho del contenedor, no de la ventana.
 
-     Nuestra primera version se quedaba en el 83% del ancho, empezaba al 2%
-     de la altura y se leia entera: por eso parecia una imagen de fondo mal
-     puesta en vez de una firma.
+     La referencia (Capacity) desborda por los lados al 98% del viewport,
+     pero aqui se decidio que la marca respete la caja de 1280px en la que
+     vive todo el contenido del sitio: asi alinea con el logo de arriba y
+     con los enlaces en vez de salirse por su cuenta.
 
-     Sin tope en px: la gracia es que crezca con la ventana y desborde. */
-  width: 98vw;
+     El calc descuenta el gutter, igual que hace .d2-pie-cierre__inner. */
+  width: min(calc(var(--d2-ancho, 1280px) - var(--d2-gutter, 40px) * 2), calc(100vw - var(--d2-gutter, 40px) * 2));
 
-  /* Mas de la mitad por debajo del borde. El logo mide 466x200, asi que un
-     -55% de su propia altura deja fuera algo mas de la mitad. */
-  bottom: -55%;
+  /* -72%: solo asoma la parte de arriba, el 28% del logo. */
+  bottom: -72%;
 
   transform: translateX(-50%);
   z-index: 0;
@@ -12043,8 +12051,8 @@ span.d2-panel__filtro:hover {
 /* En movil el pie es mas corto y la marca taparia el aviso legal, asi que
    se recorta bastante mas. */
 @media (max-width: 700px) {
-  .d2 .d2-pie-cierre__agua {
-    width: 130vw;
-    bottom: -62%;
-  }
+  /* En movil la caja ya es todo el ancho util, asi que basta con recortar
+     un poco mas para que no se coma el aviso legal. */
+  .d2 .d2-pie-cierre__agua { bottom: -76%; }
+  .d2 .d2-pie-cierre__inner { padding-bottom: clamp(70px, 14vw, 96px); }
 }
