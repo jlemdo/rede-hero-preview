@@ -11677,3 +11677,101 @@ span.d2-panel__filtro:hover {
     transition: none;
   }
 }
+
+/* ==========================================================================
+   MARCAS — EL SELECTOR DE FONDO LOCAL
+
+   Temporal, para que Erick compare la seccion en cinco fondos. Se retira
+   al decidir.
+
+   El JS solo escribe dos cosas: el color en --logos-fondo y el tono en
+   data-logos-tono. Desde aqui se decide que texto usa cada tono, asi que
+   no hay que nombrar cada elemento en el JS.
+
+   Contrastes medidos en los cinco fondos:
+
+                  blanco  gris   gris osc  negro  verde
+     titular ....  12.63  11.39   12.63    17.40   7.85
+     cifra ......  12.63  11.39   12.63    17.40   7.85
+     etiqueta ...   5.33   4.80    6.87     9.46   5.54
+
+   Sobre verde el gris claro #BFBFBF se queda en 4.27 --por debajo del
+   minimo de 4.5-- asi que ese fondo usa #CFDCD1.
+   ========================================================================== */
+
+.d2 .d2-logos--dos {
+  background: var(--logos-fondo, #FFFFFF);
+  transition: background-color .42s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* --- Fondo oscuro: sirve para #333333 y para #1A1A1A --- */
+
+.d2 .d2-logos--dos[data-logos-tono="oscuro"] {
+  --c-texto: #FFFFFF;
+  --c-texto-cuerpo: #E8E8E8;
+  --c-texto-suave: #BFBFBF;
+}
+
+.d2 .d2-logos--dos[data-logos-tono="oscuro"] :is(.d2-logos--dos__titular,
+                                                 .d2-logos--dos__cifra,
+                                                 .d2-logos--dos__cifra-pie) {
+  color: #FFFFFF;
+}
+
+.d2 .d2-logos--dos[data-logos-tono="oscuro"] :is(.d2-logos--dos__etiqueta,
+                                                 .d2-logos--dos__cifra-nota) {
+  color: #BFBFBF;
+}
+
+/* --- Fondo verde --- */
+
+.d2 .d2-logos--dos[data-logos-tono="verde"] {
+  --c-texto: #FFFFFF;
+  --c-texto-cuerpo: #E8E8E8;
+  --c-texto-suave: #CFDCD1;
+}
+
+.d2 .d2-logos--dos[data-logos-tono="verde"] :is(.d2-logos--dos__titular,
+                                                .d2-logos--dos__cifra,
+                                                .d2-logos--dos__cifra-pie) {
+  color: #FFFFFF;
+}
+
+.d2 .d2-logos--dos[data-logos-tono="verde"] :is(.d2-logos--dos__etiqueta,
+                                                .d2-logos--dos__cifra-nota) {
+  color: #CFDCD1;                    /* 5.54:1; #BFBFBF daba 4.27 */
+}
+
+/* Filetes y separadores, que sobre oscuro necesitan invertirse */
+.d2 .d2-logos--dos:is([data-logos-tono="oscuro"], [data-logos-tono="verde"]) {
+  --c-borde: rgba(255, 255, 255, .22);
+  --c-borde-suave: rgba(255, 255, 255, .14);
+}
+
+/* Los logos de cliente son imagenes oscuras: sobre fondo oscuro se
+   invierten para que no desaparezcan. */
+.d2 .d2-logos--dos:is([data-logos-tono="oscuro"], [data-logos-tono="verde"]) img {
+  filter: brightness(0) invert(1);
+  opacity: .85;
+}
+
+/* --- La barra del selector --- */
+
+.d2 .d2-logos-fondos {
+  /* Mas arriba que los mandos de composicion, para que no se solapen */
+  bottom: calc(var(--sp-6, 40px) + 62px);
+}
+
+.d2 .d2-logos-fondos__eti {
+  padding-inline: 4px 2px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--c-texto-suave, #6B6B6B);
+  white-space: nowrap;
+}
+
+.d2 .d2-logos-fondos.esta-minimizado .d2-logos-fondos__eti { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-logos--dos { transition: none; }
