@@ -12062,7 +12062,7 @@ span.d2-panel__filtro:hover {
 */
 
 /* ==========================================================================
-   FAQ MAS LIGERO: PUNTO EN VEZ DE NUMERAL (disenos 1 y 2)
+   FAQ MAS LIGERO: PUNTO EN VEZ DE NUMERAL (diseno 2)
 
    Los 01-10 numeraban preguntas que no tienen orden: nadie las lee en
    secuencia ni vuelve a "la 07". Contar diez cosas ademas hace que la
@@ -12075,7 +12075,7 @@ span.d2-panel__filtro:hover {
    "esta abierto" no depende solo del color, tambien crece.
    ========================================================================== */
 
-.d2 :is(.d2-faq-dato__n, .d2-faq-num__n) {
+.d2 .d2-faq-num__n {
   /* El texto fuera de la vista pero presente para lectores de pantalla:
      display:none lo sacaria tambien del arbol de accesibilidad. */
   font-size: 0;
@@ -12083,7 +12083,7 @@ span.d2-panel__filtro:hover {
   position: relative;
 }
 
-.d2 :is(.d2-faq-dato__n, .d2-faq-num__n)::before {
+.d2 .d2-faq-num__n::before {
   content: "";
   display: block;
   width: 7px;
@@ -12095,18 +12095,18 @@ span.d2-panel__filtro:hover {
 }
 
 /* Al pasar el raton por la pregunta */
-.d2 :is(.d2-faq-dato__item, .d2-faq-num__item) summary:hover :is(.d2-faq-dato__n, .d2-faq-num__n)::before {
+.d2 .d2-faq-num__item summary:hover .d2-faq-num__n::before {
   background: var(--c-texto-suave, #6B6B6B);
 }
 
 /* Abierta: el punto se enciende y crece */
-.d2 :is(.d2-faq-dato__item, .d2-faq-num__item)[open] :is(.d2-faq-dato__n, .d2-faq-num__n)::before {
+.d2 .d2-faq-num__item[open] .d2-faq-num__n::before {
   background: var(--c-verde-marca, #39B54A);
   transform: scale(1.3);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .d2 :is(.d2-faq-dato__n, .d2-faq-num__n)::before { transition: none; }
+  .d2 .d2-faq-num__n::before { transition: none; }
 }
 
 /* ==========================================================================
@@ -12316,3 +12316,17 @@ span.d2-panel__filtro:hover {
    circulo. Se deja sin regla propia para que el hover se vea igual en las
    cuatro composiciones.
    ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   FAQ DISENO 1: NI NUMERAL NI PUNTO (4/9/2026)
+
+   El punto que sustituyo al 01-10 tampoco aporta aqui: la pregunta y su
+   flecha ya dicen que el bloque se abre.
+
+   Se oculta con display:none y el numeral sigue en el marcado: quitar esta
+   regla lo devuelve.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-faq-dato__n {
+  display: none;
+}
