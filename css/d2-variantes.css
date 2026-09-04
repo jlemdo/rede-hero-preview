@@ -9278,10 +9278,16 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-faq-dato__titulo {
   margin: 0;
-  max-width: 22ch;
-  font-size: clamp(32px, 3.6vw, 52px);
-  font-weight: 400;
-  line-height: 1.06;
+  /* 30ch y no 22: con el titular a 36px las lineas son mas cortas, y 22ch
+     lo estrechaba tanto que partia el texto de mas. El <br> del marcado ya
+     decide donde corta. */
+  max-width: 30ch;
+  /* El titular del sistema. Antes media hasta 52px con peso 400: era mas
+     grande que cualquier otro titulo de seccion --todos van a 36px-- y
+     el peso normal lo dejaba fuera del resto de la web, que usa 800. */
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
   letter-spacing: -.03em;
   color: var(--c-texto, #333333);
   /* Evita que la ultima linea quede con una palabra suelta */
@@ -9485,9 +9491,12 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-faq-num__titulo {
   margin: 0 0 18px;
-  font-size: clamp(30px, 3.2vw, 46px);
-  font-weight: 400;
-  line-height: 1.06;
+  /* El titular del sistema. Antes media hasta 46px con peso 400: era mas
+     grande que cualquier otro titulo de seccion --todos van a 36px-- y
+     el peso normal lo dejaba fuera del resto de la web, que usa 800. */
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
   letter-spacing: -.03em;
   color: var(--c-texto, #333333);
 }
@@ -9624,9 +9633,12 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-faq-rol__titulo {
   margin: 0 0 14px;
-  font-size: clamp(30px, 3.1vw, 44px);
-  font-weight: 400;
-  line-height: 1.1;
+  /* El titular del sistema. Antes media hasta 44px con peso 400: era mas
+     grande que cualquier otro titulo de seccion --todos van a 36px-- y
+     el peso normal lo dejaba fuera del resto de la web, que usa 800. */
+  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.15;
   letter-spacing: -.02em;
   color: var(--c-texto, #333333);
   text-wrap: balance;
