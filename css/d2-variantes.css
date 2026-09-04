@@ -8870,7 +8870,12 @@ span.d2-panel__filtro:hover {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background: var(--comp-resenas, #FFFFFF);
+  /* Blanco fijo, fuera del sistema de composicion: esta seccion no sigue a
+     la barra Proposed/Quiet/Contrast/Flat. Se decidio asi para que el aro y
+     el trazado del fondo --que son de esta variante y de ninguna otra-- se
+     lean siempre igual, y para que ocultar la seccion vecina no obligue a
+     recalcular el ritmo de grises de toda la pagina. */
+  background: #FFFFFF;
   padding: clamp(56px, 6vw, 84px) var(--pad-lateral, 28px) clamp(50px, 5vw, 72px);
 }
 
@@ -8905,7 +8910,8 @@ span.d2-panel__filtro:hover {
 }
 
 .d2 .d2-res-cen__lineas circle {
-  fill: var(--comp-resenas, #FFFFFF);
+  /* Del color del fondo, que aqui ya es blanco fijo */
+  fill: #FFFFFF;
   stroke: rgba(57, 181, 74, .32);
   stroke-width: 2px;
 }
@@ -8984,11 +8990,17 @@ span.d2-panel__filtro:hover {
 .d2 .d2-res-cen__cifras b {
   font-size: clamp(30px, 3vw, 48px);
   line-height: 1;
-  /* El verde de marca puro da 2.66:1 sobre blanco y a 48px el minimo es 3.
-     Este es el mas cercano que cumple --3.46 sobre blanco, 3.12 sobre el
-     gris-- y se lee como el verde de la marca, no como el verde oscuro de
-     los enlaces que habia antes. */
-  color: #2E9E3D;
+  /* Negro de marca, como TODAS las cifras grandes de la web: $480K y 2.7M
+     del hero, $4.4M de marcas, $2.94M y 2008 de la seccion de prueba.
+     Ninguna va en verde.
+
+     Aqui hubo un #2E9E3D inventado. Cumplia el 3:1 --3.46 sobre blanco--
+     pero no sale del manual, y medido no hay ningun verde de la guia que
+     sirva a este tamano: el de marca da 2.66 y las tintas van hacia claro,
+     asi que bajan mas todavia (80% = 2.24).
+
+     El verde se queda donde le toca por manual: acento, no cifra. */
+  color: var(--c-texto, #333333);
 }
 
 .d2 .d2-res-cen__cifras span {
@@ -9089,13 +9101,75 @@ span.d2-panel__filtro:hover {
   transform: translateY(-8px);
 }
 
-/* Las cifras NO se animan al cambiar de resena.
+/* Las cifras SI se animan al cambiar de resena.
 
-   Antes se desvanecian con la cita, y era un error de fondo: las tres
-   cifras describen la cartera completa, no el distrito de cada cita. Si
-   parpadean, dan a entender que cambian --que cada testimonio trae sus
-   numeros-- cuando no es asi. Quietas dicen la verdad: son el marco
-   estable dentro del que rotan las voces. */
+   Estuvieron quietas por un motivo correcto: describian la cartera completa
+   y no el distrito de cada cita, asi que parpadear habria dado a entender
+   que cambiaban cuando no lo hacian.
+
+   Ahora cada resena trae sus propias cifras, de modo que el argumento se
+   invierte: quietas mentirian --darian los numeros de un distrito a otro--
+   y moviendose dicen la verdad.
+
+   Mismo cruce que la cita, 300ms, para que se lea como un solo cambio y no
+   como dos cosas moviendose a destiempo. */
+
+.d2 .d2-res-cen__cifras {
+  transition: opacity .3s cubic-bezier(.4, 0, .2, 1),
+              transform .3s cubic-bezier(.4, 0, .2, 1);
+}
+
+.d2 .d2-res-cen.esta-cambiando .d2-res-cen__cifras {
+  opacity: 0;
+  /* Baja 8px, igual que la cita: el bloque entero se mueve en la misma
+     direccion en vez de abrirse en dos. */
+  transform: translateY(-8px);
+}
+
+/* --------------------------------------------------------------------------
+   LA MARCA DE DATO PROVISIONAL
+
+   Dos de las tres resenas llevan cifras de muestra --ver la advertencia en
+   js/d2-res-centrada.js--. Aqui se ven marcadas para que no acaben
+   publicadas por descuido.
+
+   La marca es texto, no solo color: quien no distinga tonos tiene que poder
+   verla igual. Y va en el bloque de cifras, no en cada una, porque el juego
+   entero es provisional.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-res-cen__cifras {
+  position: relative;
+}
+
+.d2 .d2-res-cen.tiene-cifras-muestra .d2-res-cen__cifras::before {
+  content: "sample data — pending confirmation";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #8A5A00;                 /* 4.63:1 sobre el amarillo de abajo */
+  background: #FFF4D6;
+  border: 1px solid #E8C97A;
+  border-radius: 3px;
+}
+
+/* Las cifras de muestra NO se atenuan.
+
+   Se probo bajarlas a .62 para que se distinguieran de un vistazo, y
+   medido daba 2.10:1 sobre blanco: por debajo del 3:1 que pide WCAG para
+   texto grande. La marca de arriba ya hace ese trabajo, y hace falta que
+   las cifras se lean para poder juzgarlas. */
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-res-cen__cifras { transition: none; }
+}
 
 /* --- Sobre fondo oscuro --- */
 

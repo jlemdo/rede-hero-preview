@@ -9,11 +9,19 @@
    concreta-- asi que cambiar la cita sin cambiarlas atribuiria los numeros
    de un distrito a otro.
 
-   ADVERTENCIA PARA ERICK: las cifras de Northland y Fort Vermilion estan
-   marcadas abajo como PENDIENTE. Solo las de SD27 estan confirmadas en el
-   copy aprobado. Hasta que se confirmen, las tres citas muestran las mismas
-   cifras y la etiqueta dice "across our client portfolio", que es cierto y
-   no atribuye nada a nadie.
+   ADVERTENCIA PARA ERICK — HAY DOS JUEGOS DE CIFRAS SIN CONFIRMAR
+
+   Solo las de SD27 estan en el copy aprobado. Las de Northland y Fort
+   Vermilion son VALORES DE MUESTRA para poder ver la animacion, y salen en
+   pantalla con la marca "sample" al lado.
+
+   No se publican asi: hay que pedir los numeros reales a cada distrito, o
+   volver a dejar las tres citas con las cifras de cartera. Poner numeros
+   inventados junto al nombre de una persona real los atribuye a esa
+   persona, y eso no se puede publicar.
+
+   Para sustituirlos: cambiar los valores en RESENAS y quitar el
+   'provisional: true' de esa entrada. La marca desaparece sola.
    ========================================================================== */
 
 (function () {
@@ -24,32 +32,49 @@
 
   var seccion = caja.closest('.d2-res-cen');
 
-  /* El copy es el aprobado, literal.
+  /* El copy de las citas es el aprobado, literal.
 
-     Las cifras: $4.4M y 20 edificios salen del sitio actual; $500K+ es la
-     cifra anual del mismo caso. Van iguales en las tres porque describen la
-     cartera completa, no el distrito de cada cita. En cuanto Erick confirme
-     los numeros por distrito, aqui se separan. */
+     Las cifras de SD27 son las reales: $4.4M y 20 edificios salen del sitio
+     actual y $500K+ es la cifra anual del mismo caso.
+
+     Las otras dos llevan provisional:true --ver la advertencia de arriba--. */
   var RESENAS = [
     {
       cita: 'The Rede team is all about proactively implementing energy solutions. ' +
             'They see a gap and they take care of it.',
       nombre: 'Alex Telford',
-      org: 'SD27 · British Columbia'
+      org: 'SD27 · British Columbia',
+      cifras: [
+        { valor: '20',      etiqueta: 'Buildings connected' },
+        { valor: '$500K+',  etiqueta: 'Annual savings' },
+        { valor: '$4.4M',   etiqueta: 'Cumulative savings' }
+      ]
     },
     {
       cita: 'Before Northland started working with Rede, we had no energy management ' +
             'plan at all. We recognized quickly that we can save money with an energy ' +
             'management program.',
       nombre: 'Wayne Turpin',
-      org: 'Northland School Division'
+      org: 'Northland School Division',
+      provisional: true,
+      cifras: [
+        { valor: '34',      etiqueta: 'Buildings connected' },
+        { valor: '$310K+',  etiqueta: 'Annual savings' },
+        { valor: '$2.1M',   etiqueta: 'Cumulative savings' }
+      ]
     },
     {
       cita: 'For people like myself, money talks. If we can engage someone like Rede ' +
             'to find inefficiencies within our facilities, then we are able to ' +
             'address them.',
       nombre: 'Norman Buhler',
-      org: 'Fort Vermilion School Division'
+      org: 'Fort Vermilion School Division',
+      provisional: true,
+      cifras: [
+        { valor: '12',      etiqueta: 'Buildings connected' },
+        { valor: '$180K+',  etiqueta: 'Annual savings' },
+        { valor: '$950K',   etiqueta: 'Cumulative savings' }
+      ]
     }
   ];
 
@@ -63,6 +88,14 @@
   var cita   = caja.querySelector('[data-cen-cita]');
   var nombre = caja.querySelector('[data-cen-nombre]');
   var org    = caja.querySelector('[data-cen-org]');
+  /* Las tres cifras y sus etiquetas, en orden */
+  var cifras = [1, 2, 3].map(function (n) {
+    return {
+      valor: caja.querySelector('[data-cen-c' + n + ']'),
+      etiqueta: caja.querySelector('[data-cen-e' + n + ']')
+    };
+  });
+
   var puntos = Array.prototype.slice.call(caja.querySelectorAll('[data-cen-a]'));
   var flechas = Array.prototype.slice.call(caja.querySelectorAll('[data-cen-ir]'));
 
@@ -74,6 +107,24 @@
     cita.textContent = '“' + r.cita + '”';
     nombre.textContent = r.nombre;
     org.textContent = r.org;
+
+    /* Las cifras cambian con la cita: son el respaldo de ESE distrito, no
+       un dato de cartera. Dejarlas quietas atribuiria los numeros de uno a
+       otro cada vez que rota. */
+    if (r.cifras) {
+      r.cifras.forEach(function (c, n) {
+        if (!cifras[n] || !cifras[n].valor) { return; }
+        cifras[n].valor.textContent = c.valor;
+        if (cifras[n].etiqueta) { cifras[n].etiqueta.textContent = c.etiqueta; }
+      });
+    }
+
+    /* La marca de dato provisional. Va en el contenedor de las cifras y el
+       CSS decide como se ve: asi no hay que crear ni destruir nodos, que es
+       lo que rompe los lectores de pantalla a mitad de una region viva. */
+    if (seccion) {
+      seccion.classList.toggle('tiene-cifras-muestra', !!r.provisional);
+    }
 
     puntos.forEach(function (p, n) {
       var on = n === i;
