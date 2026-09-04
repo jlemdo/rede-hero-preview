@@ -8990,17 +8990,20 @@ span.d2-panel__filtro:hover {
 .d2 .d2-res-cen__cifras b {
   font-size: clamp(30px, 3vw, 48px);
   line-height: 1;
-  /* Negro de marca, como TODAS las cifras grandes de la web: $480K y 2.7M
-     del hero, $4.4M de marcas, $2.94M y 2008 de la seccion de prueba.
-     Ninguna va en verde.
+  /* Verde de marca al 60% sobre negro. 6.38:1 sobre blanco.
 
-     Aqui hubo un #2E9E3D inventado. Cumplia el 3:1 --3.46 sobre blanco--
-     pero no sale del manual, y medido no hay ningun verde de la guia que
-     sirva a este tamano: el de marca da 2.66 y las tintas van hacia claro,
-     asi que bajan mas todavia (80% = 2.24).
+     El manual solo define tintas hacia CLARO y ninguna sirve aqui: a este
+     tamano hace falta 3:1 y el verde de marca da 2.66, el 80% da 2.24 y de
+     ahi para abajo. Aclarar sobre blanco siempre empeora.
 
-     El verde se queda donde le toca por manual: acento, no cifra. */
-  color: var(--c-texto, #333333);
+     Oscurecer sobre negro es el mismo metodo con el que ya sale el #1A1A1A
+     de la web --negro de marca al 50% sobre negro-- asi que el color sigue
+     siendo derivable del manual, no inventado. Sustituye a un #2E9E3D que
+     no lo era.
+
+     Es el mismo verde oscuro que esta pendiente de decidir para los 141
+     usos del #026F00: si se elige otro, este cambia con el. */
+  color: #226D2C;
 }
 
 .d2 .d2-res-cen__cifras span {
