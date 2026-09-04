@@ -11854,3 +11854,109 @@ span.d2-panel__filtro:hover {
 
 @media (prefers-reduced-motion: reduce) {
   .d2 .d2-logos--dos { transition: none; }
+}
+
+/* ==========================================================================
+   EL PIE — GRIS FIJO, LOGO BLANCO Y LINKEDIN
+
+   El gris sale de la captura del sitio actual: #666666, que es el negro de
+   marca al 75% sobre blanco, asi que se deriva del manual.
+
+   Va fijo y fuera del sistema de composicion --como Reviews-- porque es una
+   decision del cliente, no una variante a comparar.
+
+   OJO CON EL CONTRASTE: este gris es mucho mas claro que el negro que habia
+   antes, y los textos del pie estaban calculados contra el negro. Medido
+   sobre #666666:
+
+     blanco al  62% .... 3.32:1   no llega a 4.5
+     blanco al  74% .... 4.00:1   no llega
+     blanco al  82% .... 4.49:1   se queda a 0.01
+     blanco al  92% .... 5.16:1   cumple
+     blanco al 100% .... 5.74:1   cumple
+
+   Por eso aqui se suben todas. Y el verde de marca no sirve para el hover:
+   da 2.16:1 incluso al 100%, asi que el hover pasa a blanco puro.
+   ========================================================================== */
+
+.d2 :is(.d2-pie-dir, .d2-pie-desp, .d2-pie-cierre) {
+  background: #666666;
+}
+
+/* --- El texto, subido para que cumpla sobre el gris claro --- */
+
+.d2 :is(.d2-pie-dir, .d2-pie-desp, .d2-pie-cierre) :is(p, a, li, span, small, button) {
+  color: rgba(255, 255, 255, .92);      /* 5.16:1 */
+}
+
+.d2 :is(.d2-pie-dir, .d2-pie-desp, .d2-pie-cierre) :is(h2, h3, h4, strong, b) {
+  color: #FFFFFF;                        /* 5.74:1 */
+}
+
+/* Los titulos de columna iban en un blanco muy bajo y sobre este gris se
+   perdian */
+.d2 :is(.d2-pie-dir__titulo, .d2-pie-desp__titulo, .d2-pie-cierre__titulo) {
+  color: #FFFFFF;
+}
+
+/* El aviso legal puede ir mas suave, pero sin bajar del minimo */
+.d2 :is(.d2-pie-dir__legal, .d2-pie-desp__legal, .d2-pie-cierre__legal) {
+  color: rgba(255, 255, 255, .88);      /* 4.89:1 */
+}
+
+/* --- El hover de los enlaces --- */
+
+.d2 :is(.d2-pie-dir, .d2-pie-desp, .d2-pie-cierre) a:hover,
+.d2 :is(.d2-pie-dir, .d2-pie-desp, .d2-pie-cierre) a:focus-visible {
+  /* Blanco puro y no verde: el verde de marca sobre este gris da 2.16:1
+     incluso sin transparencia. El subrayado acompana al cambio de color
+     para que el hover no dependa solo del tono. */
+  color: #FFFFFF;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* --- El logo blanco --- */
+
+.d2 :is(.d2-pie-dir__logo, .d2-pie-desp__logo, .d2-pie-cierre__logo) img {
+  /* El png es 752x200 y el svg que habia era 360x108: distinta proporcion,
+     asi que la altura se deja en auto para que no se deforme. */
+  width: clamp(150px, 16vw, 188px);
+  height: auto;
+}
+
+/* --- El icono de LinkedIn, en lugar de la pronunciacion --- */
+
+.d2 .d2-pie-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: rgba(255, 255, 255, .92);
+  border: 1px solid rgba(255, 255, 255, .38);
+  border-radius: var(--d2-radio-sm, 6px);
+  transition: color .3s cubic-bezier(.4, 0, .2, 1),
+              border-color .3s cubic-bezier(.4, 0, .2, 1),
+              background-color .3s cubic-bezier(.4, 0, .2, 1);
+}
+
+.d2 .d2-pie-social:hover,
+.d2 .d2-pie-social:focus-visible {
+  color: #666666;
+  background: #FFFFFF;
+  border-color: #FFFFFF;
+  /* Sin subrayado: aqui no hay texto que subrayar */
+  text-decoration: none;
+}
+
+/* El parrafo que lo contiene ya no lleva texto, asi que no necesita el
+   interlineado de antes */
+.d2 :is(.d2-pie-dir__pron, .d2-pie-desp__pron, .d2-pie-cierre__pron) {
+  margin-top: 18px;
+  line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-pie-social { transition: none; }
+}
