@@ -17,7 +17,10 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/d2.css">
 <link rel="stylesheet" href="css/d2-variantes.css">
-<link rel="stylesheet" href="css/selector.css">
+<!-- selector.css retirado con el selector de version (3/9/2026): solo
+     define .selector-v y una regla que lo recolocaba en modo edicion.
+     Las otras dos paginas lo siguen cargando.
+<link rel="stylesheet" href="css/selector.css"> -->
 <link rel="stylesheet" href="css/editor.css">
 </head>
 <body class="d2">
@@ -5526,9 +5529,18 @@
 
 
 <!-- ==========================================================================
-     SELECTOR DE VERSION
-     Temporal, para comparar propuestas.
-     ========================================================================== -->
+     SELECTOR DE VERSION — RETIRADO (3/9/2026)
+
+     Era temporal, para comparar las tres propuestas. Elegido el diseno 2,
+     deja de tener sentido: esta pagina ya no es una opcion entre tres.
+
+     Se quita tambien su script, que solo servia para plegarlo.
+
+     Las otras dos paginas --index.html y home-d3.html-- conservan el suyo:
+     ahi todavia sirve para volver aqui.
+
+     Para recuperarlo, descomentar.
+
 <nav class="selector-v" aria-label="Design version">
   <span class="selector-v__etiqueta">Design</span>
   <a href="index.html">1</a>
@@ -5537,6 +5549,7 @@
 </nav>
 
 <script src="js/selector.js"></script>
+     ========================================================================== -->
 <script src="js/main.js"></script>
 <script src="js/d2.js"></script>
 <script src="js/d2-carrusel.js"></script>
