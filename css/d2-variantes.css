@@ -11906,11 +11906,15 @@ span.d2-panel__filtro:hover {
 
 /* --- El hover de los enlaces --- */
 
-.d2 :is(.d2-pie-dir, .d2-pie-desp, .d2-pie-cierre) a:hover,
-.d2 :is(.d2-pie-dir, .d2-pie-desp, .d2-pie-cierre) a:focus-visible {
+.d2 :is(.d2-pie-dir, .d2-pie-desp, .d2-pie-cierre) a:not(.d2-pie-social):hover,
+.d2 :is(.d2-pie-dir, .d2-pie-desp, .d2-pie-cierre) a:not(.d2-pie-social):focus-visible {
   /* Blanco puro y no verde: el verde de marca sobre este gris da 2.16:1
      incluso sin transparencia. El subrayado acompana al cambio de color
-     para que el hover no dependa solo del tono. */
+     para que el hover no dependa solo del tono.
+
+     El :not() saca al icono de LinkedIn: esta regla tiene un elemento mas
+     --el `a`-- asi que le ganaba por especificidad y le forzaba el blanco,
+     dejando el icono blanco sobre fondo blanco. */
   color: #FFFFFF;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -11934,7 +11938,9 @@ span.d2-panel__filtro:hover {
   width: 40px;
   height: 40px;
   color: rgba(255, 255, 255, .92);
-  border: 1px solid rgba(255, 255, 255, .38);
+  /* .60 y no .38: el marco es el borde de un componente y WCAG 1.4.11 pide
+     3:1. Al 38% daba 2.20 sobre este gris; al 60% da 3.22. */
+  border: 1px solid rgba(255, 255, 255, .60);
   border-radius: var(--d2-radio-sm, 6px);
   transition: color .3s cubic-bezier(.4, 0, .2, 1),
               border-color .3s cubic-bezier(.4, 0, .2, 1),
@@ -11943,9 +11949,12 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-pie-social:hover,
 .d2 .d2-pie-social:focus-visible {
-  color: #666666;
-  background: #FFFFFF;
-  border-color: #FFFFFF;
+  /* El blanco lleno se veia como un parche. Se queda en un realce suave:
+     el icono a blanco puro y el marco encendido, sobre un fondo apenas
+     aclarado. Medido: el icono da 5.16:1 sobre ese fondo. */
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, .14);
+  border-color: rgba(255, 255, 255, .85);
   /* Sin subrayado: aqui no hay texto que subrayar */
   text-decoration: none;
 }
