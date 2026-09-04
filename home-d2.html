@@ -999,6 +999,9 @@
                   <line x1="6" y1="52" x2="254" y2="52"/>
                   <line x1="6" y1="80" x2="254" y2="80"/>
                 </g>
+                <!-- El area bajo la linea del problema: hace visible CUANTO
+                     crece, no solo que crece. Va antes para quedar detras. -->
+                <path class="d2-lec__area" d="M12 74 L60 68 L108 58 L156 44 L204 32 L248 22 L248 88 L12 88 Z"/>
                 <path class="d2-lec__sube" d="M12 74 L60 68 L108 58 L156 44 L204 32 L248 22"/>
                 <path class="d2-lec__baja" d="M12 30 L60 38 L108 46 L156 58 L204 68 L248 76"/>
                 <g class="d2-lec__puntos">
@@ -1063,6 +1066,7 @@
                 <!-- El area entre las dos lineas: eso es lo que se paga de mas -->
                 <path class="d2-lec__brecha"
                       d="M12 62 L60 58 L108 50 L156 40 L204 30 L248 22 L248 66 L204 64 L156 62 L108 62 L60 62 L12 64 Z"/>
+                <path class="d2-lec__area" d="M12 62 L60 58 L108 50 L156 40 L204 30 L248 22 L248 88 L12 88 Z"/>
                 <path class="d2-lec__pagado" d="M12 62 L60 58 L108 50 L156 40 L204 30 L248 22"/>
                 <path class="d2-lec__esperado" d="M12 64 L60 62 L108 62 L156 62 L204 64 L248 66"/>
                 <g class="d2-lec__puntos">
@@ -5066,145 +5070,6 @@
      ========================================================================== -->
 
 <section class="d2-pie-caru-marco" aria-label="Footer options">
-
-
-<!-- ==========================================================================
-     LABORATORIO DE GRAFICOS — TEMPORAL
-
-     Cuatro tratamientos de color para el grafico 01. Se retira al elegir.
-
-     El grafico 02 --las barras-- NO se toca: ya estaba bien y no se
-     incluye aqui.
-
-     Una advertencia que conviene tener delante al comparar: rojo y verde
-     juntos dan 1.02-1.24 de contraste ENTRE SI. Para quien no separa bien
-     esos tonos son el mismo color, asi que las cuatro opciones mantienen
-     ademas una diferencia de forma --continua frente a discontinua--. El
-     color decide el tono emocional; la forma hace el trabajo de
-     distinguir.
-     ========================================================================== -->
-
-<section class="lab2" aria-labelledby="lab2-titulo">
-  <div class="lab2__inner">
-
-    <p class="lab2__eyebrow">Temporal &middot; para decidir</p>
-    <h2 class="lab2__titulo" id="lab2-titulo">Cuatro tratamientos del grafico</h2>
-    <p class="lab2__lead">
-      El mismo grafico de "Teams stretched thin" con cuatro paletas. La linea
-      que sube es el problema; la que baja, lo deseable. Debajo va el
-      contraste medido de cada una.
-    </p>
-
-    <div class="lab2__rejilla">
-
-      <div class="lab2__caso lab2--a">
-        <div class="lab2__marco">
-          <svg viewBox="0 0 260 100" aria-hidden="true">
-            <g class="lab2__rejilla-svg">
-              <line x1="12" y1="26" x2="248" y2="26"/>
-              <line x1="12" y1="52" x2="248" y2="52"/>
-              <line x1="12" y1="78" x2="248" y2="78"/>
-            </g>
-            <path class="lab2__baja" d="M12 30 L60 38 L108 46 L156 58 L204 68 L248 76"/>
-            <path class="lab2__sube" d="M12 74 L60 68 L108 58 L156 44 L204 32 L248 22"/>
-            <circle class="lab2__punto" cx="248" cy="22" r="3.5"/>
-          </svg>
-          <p class="lab2__leyenda">
-            <span><i class="lab2__llave lab2__llave--sube"></i>Workload</span>
-            <span><i class="lab2__llave lab2__llave--baja"></i>Time to manage it</span>
-          </p>
-        </div>
-        <p class="lab2__n">01</p>
-        <h3 class="lab2__nombre">Rojo ladrillo</h3>
-        <p class="lab2__desc">El problema en rojo sobrio, la referencia en
-          verde. El contraste emocional es inmediato.</p>
-        <p class="lab2__dato">problema 5.44:1 &middot; referencia 6.41:1</p>
-      </div>
-
-      <div class="lab2__caso lab2--b">
-        <div class="lab2__marco">
-          <svg viewBox="0 0 260 100" aria-hidden="true">
-            <g class="lab2__rejilla-svg">
-              <line x1="12" y1="26" x2="248" y2="26"/>
-              <line x1="12" y1="52" x2="248" y2="52"/>
-              <line x1="12" y1="78" x2="248" y2="78"/>
-            </g>
-            <path class="lab2__baja" d="M12 30 L60 38 L108 46 L156 58 L204 68 L248 76"/>
-            <path class="lab2__sube" d="M12 74 L60 68 L108 58 L156 44 L204 32 L248 22"/>
-            <circle class="lab2__punto" cx="248" cy="22" r="3.5"/>
-          </svg>
-          <p class="lab2__leyenda">
-            <span><i class="lab2__llave lab2__llave--sube"></i>Workload</span>
-            <span><i class="lab2__llave lab2__llave--baja"></i>Time to manage it</span>
-          </p>
-        </div>
-        <p class="lab2__n">02</p>
-        <h3 class="lab2__nombre">Ambar</h3>
-        <p class="lab2__desc">Naranja quemado en vez de rojo. Menos alarma,
-          mas "atencion": encaja con un tono institucional.</p>
-        <p class="lab2__dato">problema 5.18:1 &middot; referencia 6.41:1</p>
-      </div>
-
-      <div class="lab2__caso lab2--c">
-        <div class="lab2__marco">
-          <svg viewBox="0 0 260 100" aria-hidden="true">
-            <g class="lab2__rejilla-svg">
-              <line x1="12" y1="26" x2="248" y2="26"/>
-              <line x1="12" y1="52" x2="248" y2="52"/>
-              <line x1="12" y1="78" x2="248" y2="78"/>
-            </g>
-            <path class="lab2__baja" d="M12 30 L60 38 L108 46 L156 58 L204 68 L248 76"/>
-            <path class="lab2__sube" d="M12 74 L60 68 L108 58 L156 44 L204 32 L248 22"/>
-            <circle class="lab2__punto" cx="248" cy="22" r="3.5"/>
-          </svg>
-          <p class="lab2__leyenda">
-            <span><i class="lab2__llave lab2__llave--sube"></i>Workload</span>
-            <span><i class="lab2__llave lab2__llave--baja"></i>Time to manage it</span>
-          </p>
-        </div>
-        <p class="lab2__n">03</p>
-        <h3 class="lab2__nombre">Rojo con area</h3>
-        <p class="lab2__desc">El rojo mas un relleno tenue bajo la linea del
-          problema. La superficie hace visible cuanto crece.</p>
-        <p class="lab2__dato">problema 5.44:1 &middot; area al 8%</p>
-      </div>
-
-      <div class="lab2__caso lab2--d">
-        <div class="lab2__marco">
-          <svg viewBox="0 0 260 100" aria-hidden="true">
-            <g class="lab2__rejilla-svg">
-              <line x1="12" y1="26" x2="248" y2="26"/>
-              <line x1="12" y1="52" x2="248" y2="52"/>
-              <line x1="12" y1="78" x2="248" y2="78"/>
-            </g>
-            <path class="lab2__baja" d="M12 30 L60 38 L108 46 L156 58 L204 68 L248 76"/>
-            <path class="lab2__sube" d="M12 74 L60 68 L108 58 L156 44 L204 32 L248 22"/>
-            <circle class="lab2__punto" cx="248" cy="22" r="3.5"/>
-          </svg>
-          <p class="lab2__leyenda">
-            <span><i class="lab2__llave lab2__llave--sube"></i>Workload</span>
-            <span><i class="lab2__llave lab2__llave--baja"></i>Time to manage it</span>
-          </p>
-        </div>
-        <p class="lab2__n">04</p>
-        <h3 class="lab2__nombre">Negro y verde</h3>
-        <p class="lab2__desc">Lo que hay ahora: sin color de alarma. Se
-          incluye para comparar con las otras tres.</p>
-        <p class="lab2__dato">problema 12.63:1 &middot; referencia 6.41:1</p>
-      </div>
-
-    </div>
-
-    <p class="lab2__nota">
-      Rojo y verde dan entre si 1.02&ndash;1.24 de contraste: para quien no
-      separa bien esos tonos son el mismo color. Por eso las cuatro mantienen
-      la linea del problema <strong>continua</strong> y la referencia
-      <strong>discontinua</strong>. El color pone el tono; la forma hace el
-      trabajo de distinguir.
-    </p>
-
-  </div>
-</section>
 
 
 <div class="d2-caru" id="caru-footer" data-caru>

@@ -11406,320 +11406,119 @@ span.d2-panel__filtro:hover {
 }
 
 /* ==========================================================================
-   LABORATORIO DE GRAFICOS — TEMPORAL
+   LOS GRAFICOS DE "READINGS": QUE LA FORMA DIGA LO QUE DICE EL TEXTO
 
-   Cuatro tratamientos del grafico 01. Se retira al elegir.
+   Las tres tarjetas describen PROBLEMAS, pero la magnitud problematica se
+   dibujaba en verde de marca, que en esta web es el color del logro de
+   Rede. Una linea que sube diciendo "Workload" leida en el verde del exito
+   comunica lo contrario que el titular.
 
-   Sobre el rojo: el manual NO da su valor. Menciona el rojo/naranja en la
+   Se aplica a los graficos 01 y 03. El 02 --las barras de proveedores-- NO
+   se toca: ahi el problema es la DISPERSION, y eso ya lo dice la
+   separacion entre barras. No hay una magnitud buena y otra mala.
+
+   LO QUE HACE CADA CAPA
+
+     el area      cuanto crece el problema, no solo que crece
+     la linea     continua y roja: la magnitud problematica
+     la referencia  discontinua y verde: lo que deberia pasar
+
+   Tres senales, y solo una es cromatica. Importa porque rojo y verde dan
+   entre si 1.18:1 de contraste: simulado con deuteranopia, ambos se ven
+   como el mismo amarillo-oliva. La forma --continua contra discontinua--
+   es la que hace el trabajo de distinguir; el color pone el tono.
+
+   PENDIENTE CON ERICK: el manual NO da un valor de rojo. Lo menciona en la
    pagina 8 --"refleja el dinamismo de la organizacion"-- pero la lamina de
-   color solo trae verde y negro. Los valores de aqui son propuestas, no
-   colores de marca, y hay que confirmarlos con Erick antes de fijarlos.
+   color solo trae verde y negro. Este #C0392B es una propuesta, no un
+   color de marca. Si Erick lo rechaza, basta cambiar el valor: el diseno
+   funciona igual con el negro de marca.
+
+   Contrastes sobre el blanco de la tarjeta:
+     linea del problema #C0392B ...... 5.44:1
+     referencia #026F00 .............. 6.41:1
+     area al 8% ...................... decorativa, sin requisito
    ========================================================================== */
 
-.d2 .lab2 {
-  background: var(--comp-blanco, #FFFFFF);
-  border-top: 1px dashed var(--c-borde, #E4E4E4);
-  padding-block: clamp(56px, 6vw, 88px);
+/* El area bajo la linea del problema */
+.d2 .d2-lec__area {
+  fill: rgba(192, 57, 43, .08);
+  stroke: none;
 }
 
-.d2 .lab2__inner {
-  max-width: var(--d2-ancho, 1280px);
-  margin-inline: auto;
-  padding-inline: var(--pad-lateral, 28px);
+/* La magnitud del problema: roja, gruesa, continua */
+.d2 .d2-lec__sube,
+.d2 .d2-lec__pagado {
+  stroke: #C0392B;
+  stroke-width: 2.6;
+  stroke-dasharray: none;
 }
 
-.d2 .lab2__eyebrow {
-  margin: 0 0 14px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-.d2 .lab2__titulo {
-  margin: 0 0 12px;
-  font-size: clamp(26px, 2.6vw, 36px);
-  font-weight: 700;
-  letter-spacing: -.02em;
-  color: var(--c-texto, #333333);
-}
-
-.d2 .lab2__lead {
-  margin: 0 0 clamp(34px, 4vw, 52px);
-  max-width: 62ch;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--c-texto-cuerpo, #333333);
-}
-
-.d2 .lab2__rejilla {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(18px, 2.2vw, 30px);
-}
-
-.d2 .lab2__caso { display: flex; flex-direction: column; }
-
-/* El marco reproduce la tarjeta real: fondo claro dentro de la seccion */
-.d2 .lab2__marco {
-  padding: 16px 14px 12px;
-  margin-bottom: 16px;
-  background: #FFFFFF;
-  border: 1px solid var(--c-borde, #E4E4E4);
-  border-radius: var(--d2-radio-md, 16px);
-}
-
-.d2 .lab2__marco svg { display: block; width: 100%; height: auto; }
-
-.d2 .lab2__rejilla-svg line {
-  stroke: #EDEDED;
-  stroke-width: 1;
-}
-
-.d2 .lab2__sube,
-.d2 .lab2__baja {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* La referencia es igual en las cuatro: verde y discontinua */
-.d2 .lab2__baja {
+/* La referencia: verde y discontinua. El verde se reserva para lo
+   deseable, como en el resto de la web. */
+.d2 .d2-lec__baja,
+.d2 .d2-lec__esperado {
   stroke: var(--c-verde-hover, #026F00);
   stroke-width: 2;
   stroke-dasharray: 6 5;
   opacity: .85;
 }
 
-.d2 .lab2__sube { stroke-width: 2.8; }
+/* --- Las claves de la leyenda, con la misma gramatica --- */
 
-.d2 .lab2__leyenda {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 16px;
-  margin: 12px 0 0;
-  font-size: 10.5px;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-.d2 .lab2__leyenda span { display: inline-flex; align-items: center; gap: 6px; }
-
-.d2 .lab2__llave {
-  flex: none;
-  width: 14px;
+.d2 .d2-lec__llave {
+  background: #C0392B;
   height: 3px;
-  border-radius: 2px;
 }
 
-.d2 .lab2__llave--baja {
+/* La clave de la referencia repite el discontinuo de su linea: quien mire
+   la leyenda reconoce cual es cual sin depender del color. */
+.d2 .d2-lec__llave--baja,
+.d2 .d2-lec__llave--plano {
+  background: repeating-linear-gradient(90deg,
+    var(--c-verde-hover, #026F00) 0 5px, transparent 5px 9px);
+  height: 3px;
+}
+
+/* --- Dentro de una tarjeta blanca no se invierte nunca ---
+
+   Aunque la seccion pase a oscuro, el grafico vive en una tarjeta que
+   sigue siendo blanca. Sin estas reglas la linea quedaba blanca sobre
+   blanco: 1.00:1, invisible. */
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-lec__sube, .d2-lec__pagado) {
+  stroke: #C0392B;
+}
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-lec__baja, .d2-lec__esperado) {
+  stroke: var(--c-verde-hover, #026F00);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-lec__llave {
+  background: #C0392B;
+}
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-lec__llave--baja, .d2-lec__llave--plano) {
   background: repeating-linear-gradient(90deg,
     var(--c-verde-hover, #026F00) 0 5px, transparent 5px 9px);
 }
 
-/* --- 01 Rojo ladrillo --- */
-
-.d2 .lab2--a .lab2__sube { stroke: #C0392B; }
-.d2 .lab2--a .lab2__punto { fill: #C0392B; }
-.d2 .lab2--a .lab2__llave--sube { background: #C0392B; }
-
-/* --- 02 Ambar --- */
-
-.d2 .lab2--b .lab2__sube { stroke: #C2410C; }
-.d2 .lab2--b .lab2__punto { fill: #C2410C; }
-.d2 .lab2--b .lab2__llave--sube { background: #C2410C; }
-
-/* --- 03 Rojo con area --- */
-
-.d2 .lab2--c .lab2__sube {
-  stroke: #C0392B;
-  /* El area bajo la linea: hace visible cuanto crece, no solo que crece */
+.d2 [data-comp-tono="oscuro"] .d2-lec__area {
   fill: rgba(192, 57, 43, .08);
 }
 
-.d2 .lab2--c .lab2__punto { fill: #C0392B; }
-.d2 .lab2--c .lab2__llave--sube { background: #C0392B; }
+/* La clave del grafico 02 vuelve al verde de sus barras.
 
-/* --- 04 Negro y verde: lo que hay ahora --- */
-
-.d2 .lab2--d .lab2__sube { stroke: var(--c-texto, #333333); }
-.d2 .lab2--d .lab2__punto { fill: var(--c-texto, #333333); }
-.d2 .lab2--d .lab2__llave--sube { background: var(--c-texto, #333333); }
-
-/* --- El texto de cada caso --- */
-
-.d2 .lab2__n {
-  margin: 0 0 8px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  color: var(--c-verde-hover, #026F00);
+   La regla general de .d2-lec__llave puso rojo a todas, pero ese grafico
+   no se toca: sus barras siguen en verde y la leyenda debe coincidir con
+   lo que dibuja. */
+.d2 .d2-lec__llave--barra {
+  background: rgba(57, 181, 74, .34);
+  height: 10px;
+  width: 8px;
+  border-radius: 2px;
 }
 
-.d2 .lab2__nombre {
-  margin: 0 0 8px;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--c-texto, #333333);
-}
-
-.d2 .lab2__desc {
-  margin: 0 0 auto;
-  padding-bottom: 14px;
-  font-size: 13px;
-  line-height: 1.55;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-.d2 .lab2__dato {
-  margin: 0;
-  font-size: 11px;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-.d2 .lab2__nota {
-  margin: clamp(30px, 3.5vw, 44px) 0 0;
-  max-width: 76ch;
-  padding: 16px 20px;
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--c-texto-cuerpo, #333333);
-  background: var(--d2-relleno, #F2F9F2);
-  border-radius: var(--d2-radio-md, 16px);
-}
-
-@media (max-width: 900px) {
-  .d2 .lab2__rejilla { grid-template-columns: repeat(2, 1fr); row-gap: 34px; }
-}
-
-@media (max-width: 560px) {
-  .d2 .lab2__rejilla { grid-template-columns: 1fr; }
-}
-
-/* ==========================================================================
-   MARCAS — EL SELECTOR DE FONDO LOCAL
-
-   Temporal, para que Erick compare la seccion en cinco fondos. Se retira
-   al decidir.
-
-   El JS solo escribe dos cosas: el color en --logos-fondo y el tono en
-   data-logos-tono. Desde aqui se decide que texto usa cada tono, asi que
-   no hay que nombrar cada elemento en el JS.
-
-   Contrastes medidos en los cinco fondos:
-
-                  blanco  gris   gris osc  negro  verde
-     titular ....  12.63  11.39   12.63    17.40   7.85
-     cifra ......  12.63  11.39   12.63    17.40   7.85
-     etiqueta ...   5.33   4.80    6.87     9.46   5.54
-
-   Sobre verde el gris claro #BFBFBF se queda en 4.27 --por debajo del
-   minimo de 4.5-- asi que ese fondo usa #CFDCD1.
-   ========================================================================== */
-
-.d2 .d2-logos--dos {
-  background: var(--logos-fondo, #FFFFFF);
-  transition: background-color .42s cubic-bezier(.4, 0, .2, 1);
-}
-
-/* --- Fondo oscuro: sirve para #333333 y para #1A1A1A --- */
-
-.d2 .d2-logos--dos[data-logos-tono="oscuro"] {
-  --c-texto: #FFFFFF;
-  --c-texto-cuerpo: #E8E8E8;
-  --c-texto-suave: #BFBFBF;
-}
-
-.d2 .d2-logos--dos[data-logos-tono="oscuro"] :is(.d2-logos--dos__titular,
-                                                 .d2-logos--dos__cifra,
-                                                 .d2-logos--dos__cifra-pie) {
-  color: #FFFFFF;
-}
-
-.d2 .d2-logos--dos[data-logos-tono="oscuro"] :is(.d2-logos--dos__etiqueta,
-                                                 .d2-logos--dos__cifra-nota) {
-  color: #BFBFBF;
-}
-
-/* --- Fondo verde --- */
-
-.d2 .d2-logos--dos[data-logos-tono="verde"] {
-  --c-texto: #FFFFFF;
-  --c-texto-cuerpo: #E8E8E8;
-  --c-texto-suave: #CFDCD1;
-}
-
-.d2 .d2-logos--dos[data-logos-tono="verde"] :is(.d2-logos--dos__titular,
-                                                .d2-logos--dos__cifra,
-                                                .d2-logos--dos__cifra-pie) {
-  color: #FFFFFF;
-}
-
-.d2 .d2-logos--dos[data-logos-tono="verde"] :is(.d2-logos--dos__etiqueta,
-                                                .d2-logos--dos__cifra-nota) {
-  color: #CFDCD1;                    /* 5.54:1; #BFBFBF daba 4.27 */
-}
-
-/* Filetes y separadores, que sobre oscuro necesitan invertirse */
-.d2 .d2-logos--dos:is([data-logos-tono="oscuro"], [data-logos-tono="verde"]) {
-  --c-borde: rgba(255, 255, 255, .22);
-  --c-borde-suave: rgba(255, 255, 255, .14);
-}
-
-/* Los logos de cliente son imagenes oscuras: sobre fondo oscuro se
-   invierten para que no desaparezcan. */
-.d2 .d2-logos--dos:is([data-logos-tono="oscuro"], [data-logos-tono="verde"]) img {
-  filter: brightness(0) invert(1);
-  opacity: .85;
-}
-
-/* --- La barra del selector --- */
-
-.d2 .d2-logos-fondos {
-  /* Mas arriba que los mandos de composicion, para que no se solapen */
-  bottom: calc(var(--sp-6, 40px) + 62px);
-}
-
-.d2 .d2-logos-fondos__eti {
-  padding-inline: 4px 2px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .06em;
-  color: var(--c-texto-suave, #6B6B6B);
-  white-space: nowrap;
-}
-
-.d2 .d2-logos-fondos.esta-minimizado .d2-logos-fondos__eti { display: none; }
-
-@media (prefers-reduced-motion: reduce) {
-  .d2 .d2-logos--dos { transition: none; }
-}
-
-/* ==========================================================================
-   EL SEPARADOR DEL HEADER, CENTRADO EN SU HUECO
-
-   El separador es el border-left del boton de Client Login, asi que el
-   espacio a su izquierda lo pone el margen del contenedor y el de su
-   derecha el padding del boton. Estaban descompensados: 37px a la
-   izquierda y 25 a la derecha.
-
-   Medido con el ultimo enlace real --Contact acaba en x=948, el separador
-   cae en 985 y el icono empieza en 1010--.
-
-   Se igualan a 29px, que es el mismo hueco que separa los enlaces del menu
-   entre si. Asi el separador no introduce un ritmo distinto: es una pausa
-   del mismo compas.
-   ========================================================================== */
-
-@media (min-width: 1000px) {
-  .d2 .header__inner .header__actions {
-    /* El hueco a la IZQUIERDA del separador */
-    margin-inline-start: 0;
-    gap: 22px;
-  }
-
-  .d2 .header__actions .header__login-btn {
-    /* Y el de su DERECHA. 29px iguala al hueco entre enlaces. */
-    padding-inline: 29px 0;
-  }
+.d2 [data-comp-tono="oscuro"] .d2-lec__llave--barra {
+  background: rgba(57, 181, 74, .34);
 }
