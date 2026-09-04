@@ -3190,8 +3190,7 @@ span.d2-panel__filtro:hover {
   50%      { box-shadow: 0 0 0 5px rgba(123, 216, 119, 0); opacity: 1; }
 }
 
-.d2 .calc .perfil__fila:not(.is-lleno):first-child .perfil__punto,
-.d2 .calc .perfil__fila.is-lleno + .perfil__fila:not(.is-lleno) .perfil__punto {
+.d2 .calc .perfil__fila:not(.is-lleno) .perfil__punto {
   background: #7BD877;
   animation: d2-latido 1.8s cubic-bezier(.4, 0, .2, 1) infinite;
 }
@@ -3644,8 +3643,7 @@ span.d2-panel__filtro:hover {
 
 /* El punto que late y el punto lleno: verde de interfaz, no el claro, que
    sobre blanco apenas se ve. */
-.d2 .calc .perfil__fila:not(.is-lleno):first-child .perfil__punto,
-.d2 .calc .perfil__fila.is-lleno + .perfil__fila:not(.is-lleno) .perfil__punto {
+.d2 .calc .perfil__fila:not(.is-lleno) .perfil__punto {
   background: var(--c-verde);
 }
 
@@ -11551,22 +11549,67 @@ span.d2-panel__filtro:hover {
   padding-block: 0;
 }
 
-/* El latido del punto que marca el paso actual */
+/* El latido del punto que marca el paso actual.
+
+   MEDIDO: sobre el blanco del panel del perfil ningun verde claro llega
+   al 3:1 que pide WCAG 1.4.11 para graficos que informan.
+
+     #7BD877  1.76:1     verde de marca  2.66:1     verde 80%  2.18:1
+
+   Y contra su hermano gris #E4E4E4 la diferencia es aun menor: 1.38:1.
+   Es decir, el punto activo se distinguia SOLO por color --incumple
+   ademas 1.4.1 nivel A-- y encima con muy poca diferencia.
+
+   La solucion no puede ser un verde mas oscuro sin cerrar antes la
+   decision del verde oscuro que sigue abierta, asi que aqui se arregla
+   lo que no depende del color: el punto activo es MAS GRANDE y lleva
+   anillo. Tamano y anillo se ven sin distinguir tonos. */
+
 @keyframes d2-latido {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(123, 216, 119, .55); }
-  50%      { box-shadow: 0 0 0 7px rgba(123, 216, 119, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(57, 181, 74, .55); }
+  50%      { box-shadow: 0 0 0 7px rgba(57, 181, 74, 0); }
 }
 
-.d2 .calc .perfil__fila:not(.is-lleno):first-child .perfil__punto,
-.d2 .calc .perfil__fila.is-lleno + .perfil__fila:not(.is-lleno) .perfil__punto {
-  background: #7BD877;
+/* "La primera fila pendiente" NO es "la que sigue a una llena": el usuario
+   puede dejar huecos. Con llenas=[0,2] el hermano adyacente marcaba la 1 Y
+   la 3 --dos puntos grandes a la vez, medido--. Esto marca la primera
+   pendiente y ninguna mas: se descarta toda pendiente que tenga otra
+   pendiente por detras. */
+.d2 .calc .perfil__fila:not(.is-lleno) .perfil__punto {
+  background: var(--c-verde-marca, #39B54A);
+  /* La segunda senal: crece y se rodea. El transform no descoloca la
+     fila --el punto sigue ocupando sus 8px de caja-- asi que el texto
+     de al lado no se mueve al avanzar de paso. */
+  transform: scale(1.35);
+  outline: 1.5px solid var(--c-verde-marca, #39B54A);
+  outline-offset: 2px;
   animation: d2-latido 2.2s cubic-bezier(.4, 0, .2, 1) infinite;
 }
 
-/* Los pasos ya completados dejan de latir y se quedan fijos */
+/* La segunda senal se apaga en toda pendiente que tenga otra pendiente por
+   delante, de modo que solo sobrevive la primera. Es la unica forma de
+   decir "la primera pendiente" en CSS: no existe un combinador hacia
+   atras, asi que se marca a todas y se desmarca a las posteriores. */
+.d2 .calc .perfil__fila:not(.is-lleno) ~ .perfil__fila:not(.is-lleno) .perfil__punto {
+  transform: none;
+  outline: 0;
+  animation: none;
+  background: var(--c-borde, #E4E4E4);
+}
+
+
+/* Los pasos ya completados dejan de latir y vuelven al tamano normal:
+   lo hecho pesa menos que lo que toca ahora.
+
+   El transform y el outline hay que revertirlos a mano. La regla de
+   arriba alcanza a la fila llena mientras es la siguiente a una llena,
+   asi que sin esto quedaban DOS puntos grandes a la vez --medido-- y se
+   perdia la senal de "vas aqui". */
 .d2 .calc .perfil__fila.is-lleno .perfil__punto {
   animation: none;
   background: var(--c-verde-marca, #39B54A);
+  transform: none;
+  outline: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
