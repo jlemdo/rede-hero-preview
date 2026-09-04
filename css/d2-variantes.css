@@ -10052,7 +10052,15 @@ span.d2-panel__filtro:hover {
 
 .d2 [data-comp-tono="oscuro"] .d2-rutas-sec__num {
   color: #B5DBAD;
-  background: var(--comp-rutas, #333333);
+  /* background-COLOR y no el atajo: `background` a secas pone tambien
+     background-image:none, y con eso borraba el radial-gradient que dibuja
+     el llenado del circulo. Como esta regla tiene mas especificidad que la
+     que declara el degradado --(0,3,0) contra (0,2,0)-- en tono oscuro no
+     habia relleno: el hover no se animaba y el circulo quedaba vacio.
+
+     Es el mismo error del hover del hero: un shorthand que borra la capa
+     que no menciona. */
+  background-color: var(--comp-rutas, #333333);
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-rutas-sec__desc {
@@ -12278,32 +12286,22 @@ span.d2-panel__filtro:hover {
 }
 
 /* ==========================================================================
-   SOLUTIONS: EL ICONO NO PUEDE DESAPARECER EN HOVER (4/9/2026)
+   SOLUTIONS: EL ICONO DESAPARECIA EN HOVER SOBRE FONDO OSCURO (4/9/2026)
 
-   En la composicion Contrast la seccion va en #333333, y al pasar el raton
-   el icono se ponia tambien #333333: contraste 1.00:1, invisible. El
-   circulo se veia vacio.
+   En la composicion Contrast el circulo se quedaba vacio al pasar el raton
+   y el icono no se veia.
 
-   Por que pasaba: en tono claro el hover llena el circulo de verde y el
-   icono va oscuro encima, que es correcto. La regla de tono oscuro heredaba
-   ese mismo #333333 sin caer en que ahi es el color del FONDO.
+   CAUSA, encontrada revisando la especificidad: la regla de tono oscuro
+   usaba el atajo `background:` en vez de `background-color`. El atajo pone
+   ademas background-image:none, y con eso borraba el radial-gradient que
+   dibuja el llenado. Como esa regla tiene mas especificidad que la del
+   degradado --(0,3,0) contra (0,2,0)-- en tono oscuro simplemente no habia
+   relleno: ni animacion ni verde detras del icono, que va en #333333 y
+   quedaba del color del fondo.
 
-   No basta con cambiar el color del icono: el relleno verde es un radial al
-   72%, asi que en los bordes del circulo sigue habiendo fondo oscuro y el
-   icono cruza las dos zonas. Lo que se corrige es el relleno: en tono
-   oscuro cubre el circulo entero, y entonces el icono oscuro encima del
-   verde da 4.74:1.
+   Arreglado en la propia regla --ver "background-COLOR y no el atajo" mas
+   arriba--, asi que aqui no hace falta nada: con el degradado funcionando,
+   el 72% del hover base ya cubre el icono, que ocupa el 46% central del
+   circulo. Se deja sin regla propia para que el hover se vea igual en las
+   cuatro composiciones.
    ========================================================================== */
-
-.d2 [data-comp-tono="oscuro"] .d2-rutas-sec__paso:hover .d2-rutas-sec__num {
-  /* El verde cubre TODO el circulo, no el 72%.
-
-     SOLO la variable, sin background-color: el relleno lo dibuja el
-     radial-gradient y --num-carga es lo que se anima --esta declarada con
-     @property, por eso se puede interpolar--. Un background-color verde
-     pintaba el circulo de golpe y tapaba ese degradado, asi que el hover
-     se veia plano, sin llenado. */
-  --num-carga: 100%;
-  /* El icono encima, oscuro: 4.74:1 sobre ese verde */
-  color: #333333;
-}
