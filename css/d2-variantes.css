@@ -9284,11 +9284,20 @@ span.d2-panel__filtro:hover {
   top: 104px;
 }
 
+/* El radio del sistema, como las tarjetas de problema, resenas, prueba y
+   equipo: esta ficha cumple la misma funcion --un bloque de contenido
+   flotando sobre el fondo-- asi que debe verse igual.
+
+   El CTA y la ficha del mapa se quedan en 0 a proposito: alli las esquinas
+   vivas significan algo. El CTA presenta el precio como una linea de
+   presupuesto, y un albaran no tiene esquinas redondeadas; la ficha del
+   mapa es una lectura de instrumento, no una tarjeta. */
 .d2 .d2-faq-dato__ficha-caja {
   padding: clamp(26px, 2.6vw, 38px);
   background: var(--comp-blanco, #FFFFFF);
   border: 1px solid var(--c-borde, #E4E4E4);
   border-top: 4px solid var(--c-verde-marca, #39B54A);
+  border-radius: var(--d2-radio-md, 16px);
 }
 
 .d2 .d2-faq-dato__ficha-eti {
@@ -9655,6 +9664,7 @@ span.d2-panel__filtro:hover {
   margin-top: 18px;
   padding: 22px 24px 20px;
   border: 1px solid var(--c-borde, #E4E4E4);
+  border-radius: var(--d2-radio-md, 16px);
 }
 
 .d2 .d2-faq-dato__resumen-eti {
