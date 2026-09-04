@@ -11969,3 +11969,71 @@ span.d2-panel__filtro:hover {
 @media (prefers-reduced-motion: reduce) {
   .d2 .d2-pie-social { transition: none; }
 }
+
+/* ==========================================================================
+   LA MARCA DE AGUA DEL PIE (variante 3)
+
+   El nombre en grande al fondo, recortado por el borde inferior. Es
+   textura, no informacion: se lee como una firma, no como un titular.
+
+   MEDIDO SOBRE LA REFERENCIA: en el ejemplo de Capacity la marca da 1.14:1
+   contra su fondo --practicamente invisible--. Aqui el blanco al 6% sobre
+   el #666666 da 1.15:1, que es el mismo grado de sutileza.
+
+   Por que tan bajo y no mas visible: si se lee, compite con el logo real
+   que esta arriba y con los enlaces. Tiene que notarse solo cuando ya has
+   terminado de leer el pie.
+
+   No lleva contraste minimo que cumplir porque no transmite nada: va con
+   aria-hidden y el nombre esta en el logo y en el aviso legal.
+   ========================================================================== */
+
+.d2 .d2-pie-cierre {
+  /* Para anclar la marca y recortarla por abajo */
+  position: relative;
+  overflow: hidden;
+}
+
+.d2 .d2-pie-cierre__inner {
+  /* Por encima de la marca: el contenido no puede quedar por detras */
+  position: relative;
+  z-index: 1;
+}
+
+.d2 .d2-pie-cierre__agua {
+  position: absolute;
+  /* Pegada al borde inferior y desbordando: el recorte lo hace el
+     overflow del pie, no un tamano calculado. */
+  left: 0;
+  right: 0;
+  bottom: -.28em;
+  margin: 0;
+  z-index: 0;
+
+  /* 38vw: medido con las metricas de Open Sans Bold, "Rede" llena el ancho
+     exacto de la ventana a 40.4vw --y esa proporcion se mantiene en
+     cualquier pantalla-- asi que 38 lo deja de lado a lado con un margen
+     minimo, como en la referencia.
+
+     Con 16vw quedaba a menos de la mitad del ancho y se leia como una
+     palabra centrada, no como una banda. */
+  font-size: 38vw;
+  font-weight: var(--fw-extrabold);
+  line-height: .8;
+  letter-spacing: -.04em;
+  text-align: center;
+  white-space: nowrap;
+
+  color: rgba(255, 255, 255, .06);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* En pantallas pequenas el pie es mas corto y la marca se comeria el
+   contenido. */
+/* En movil la marca ocupa proporcionalmente lo mismo --el vw se encarga--
+   pero el pie es mas corto, asi que se recorta un poco mas para que no se
+   suba encima del aviso legal. */
+@media (max-width: 700px) {
+  .d2 .d2-pie-cierre__agua { bottom: -.22em; }
+}
