@@ -385,6 +385,47 @@ Ni un elemento, animación o degradado retirado.
 
 ---
 
+## 9. CTA Y FOOTER — auditado 4/9/2026
+
+### Corregido: el borde del botón de línea
+
+Usaba el verde de marca y daba **2.40:1** sobre el gris de sección y **2.66**
+sobre blanco. WCAG 1.4.11 pide 3:1 para el borde de un control, y aquí el
+borde es lo único que delimita el botón.
+
+Pasa a **`#309A3F`** —verde de marca al 85% sobre negro—, el más claro de la
+escala que cumple en los dos fondos: 3.25 y 3.61.
+
+Solo el borde. El texto ya cumplía con `#026F00` (5.78 y 6.41) y el hover no
+se toca.
+
+**Afecta a tres secciones** que comparten este botón: header, hero y CTA.
+
+*Un detalle:* la regla lleva `:not([data-comp-tono="oscuro"])`. Va al final
+del archivo, y sin eso habría pisado el borde blanco del tono oscuro —que ya
+cumplía con 5.02:1— dejando un verde oscuro sobre fondo negro.
+
+### El CTA: correcto
+
+Cambia de fondo según la composición (negro, gris o blanco) y el sistema
+invierte los tokens en cada caso:
+
+| Fondo | Titular | Párrafo |
+|---|---|---|
+| Negro `#333333` | blanco — 12.63:1 | `#E8E8E8` — 10.31:1 |
+| Gris `#F3F3F3` | `#333333` — 11.39:1 | 11.39:1 |
+| Blanco | `#333333` — 12.63:1 | 12.63:1 |
+
+### El footer: correcto
+
+Sobre el gris `#666666` fijo, todo el texto cumple: de 4.89:1 el aviso legal
+a 5.74:1 los títulos.
+
+Los valores se recalcularon al cambiar el fondo de negro a gris, así que las
+reglas antiguas quedaron sobrescritas por las nuevas al final del archivo.
+
+---
+
 ## Comprobación transversal: ¿usamos los mismos colores en todas las secciones?
 
 Hecha el 4/9/2026, a petición del cliente.

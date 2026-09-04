@@ -12474,3 +12474,28 @@ span.d2-panel__filtro:hover {
 .d2 .d2-res-cen__punto.es-activo {
   background: var(--c-verde-hover, #026F00);
 }
+
+/* ==========================================================================
+   EL BORDE DEL BOTON DE LINEA (4/9/2026)
+
+   Usaba el verde de marca y daba 2.40:1 sobre el gris de seccion y 2.66
+   sobre blanco. WCAG 1.4.11 pide 3:1 para el borde de un control, y aqui el
+   borde es lo unico que delimita el boton: sin el no se ve donde empieza.
+
+   Pasa al verde de marca al 85% sobre negro --#309A3F--, el mas claro de la
+   escala que cumple en los dos fondos: 3.25 y 3.61. A la vista sigue siendo
+   el verde de marca.
+
+   Solo el borde. El texto ya cumplia con #026F00 (5.78 y 6.41) y el hover
+   no se toca.
+
+   El :not() es necesario: esta regla va al final del archivo y sin el
+   pisaria el borde blanco del tono oscuro --que ya cumplia con 5.02:1-- y
+   dejaria un verde oscuro sobre fondo negro.
+
+   Afecta al header, al hero y al CTA, que comparten este boton.
+   ========================================================================== */
+
+.d2 :not([data-comp-tono="oscuro"]) .d2-btn--linea {
+  border-color: #309A3F;
+}
