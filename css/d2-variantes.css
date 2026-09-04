@@ -1724,7 +1724,7 @@ span.d2-panel__filtro:hover {
 .d2-prob-lec__titulo,
 .d2-prob-comp__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -1850,7 +1850,7 @@ span.d2-panel__filtro:hover {
 
 .d2-prob-lec__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -2458,7 +2458,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .calc__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -3772,7 +3772,7 @@ span.d2-panel__filtro:hover {
 .d2 .d2-rutas-esc__titulo,
 .d2 .d2-rutas-cmp__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -5068,13 +5068,13 @@ span.d2-panel__filtro:hover {
    Sigue dentro del limite comodo de lectura: el parrafo va centrado y en
    dos lineas, no es un bloque largo. */
 .d2 .d2-cta-bal__texto {
-  max-width: 70ch;
+  max-width: 90ch;
   margin-inline: auto;
 }
 
 .d2 .d2-cta-bal__titulo {
   margin: 0;
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.03em;
@@ -5162,7 +5162,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-cta-con__titulo {
   margin: 0;
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.03em;
@@ -5238,7 +5238,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-cta-car__titulo {
   margin: 0;
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.03em;
@@ -6270,7 +6270,7 @@ span.d2-panel__filtro:hover {
 .d2 .d2-equipo-dosier__titulo,
 .d2 .d2-equipo-firma__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -6747,7 +6747,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-res-tres__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -7196,7 +7196,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-res-ed__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -9285,7 +9285,7 @@ span.d2-panel__filtro:hover {
   /* El titular del sistema. Antes media hasta 52px con peso 400: era mas
      grande que cualquier otro titulo de seccion --todos van a 36px-- y
      el peso normal lo dejaba fuera del resto de la web, que usa 800. */
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.03em;
@@ -9494,7 +9494,7 @@ span.d2-panel__filtro:hover {
   /* El titular del sistema. Antes media hasta 46px con peso 400: era mas
      grande que cualquier otro titulo de seccion --todos van a 36px-- y
      el peso normal lo dejaba fuera del resto de la web, que usa 800. */
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.03em;
@@ -9636,7 +9636,7 @@ span.d2-panel__filtro:hover {
   /* El titular del sistema. Antes media hasta 44px con peso 400: era mas
      grande que cualquier otro titulo de seccion --todos van a 36px-- y
      el peso normal lo dejaba fuera del resto de la web, que usa 800. */
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.02em;
@@ -11144,7 +11144,7 @@ span.d2-panel__filtro:hover {
      a 36px-- y el unico en peso normal cuando el sistema usa 800.
 
      Era ademas parte de la altura que Erick veia de mas. */
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.25rem);
+  font-size: clamp(34px, 3.4vw, 52px);
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.03em;
