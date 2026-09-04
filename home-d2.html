@@ -5392,15 +5392,20 @@
         </div>
       </div>
     
-      <!-- La marca de agua: el nombre en grande, recortado por abajo.
+      <!-- La marca de agua: el LOGO en grande, recortado por abajo.
+
+           Con texto no servia: la tipografia de la web es Open Sans y el
+           logotipo de Rede es Olivier, asi que la palabra escrita a mano no
+           se parecia al logo y se leia como un error.
 
            Va FUERA del __inner para ocupar todo el ancho del pie y no
            quedarse dentro del contenedor de 1280px.
 
-           aria-hidden porque no aporta informacion: el nombre ya esta en el
-           logo de arriba y en el aviso legal. Un lector de pantalla que lo
-           anunciara diria "Rede" tres veces seguidas. -->
-      <p class="d2-pie-cierre__agua" aria-hidden="true">Rede</p>
+           aria-hidden y sin alt: es decoracion. El nombre ya esta en el
+           logo de arriba y en el aviso legal. -->
+      <div class="d2-pie-cierre__agua" aria-hidden="true">
+        <img src="assets/img/rede-marca-agua.png" alt="" width="466" height="200">
+      </div>
 
     </footer>
 
