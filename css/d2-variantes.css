@@ -12134,10 +12134,39 @@ span.d2-panel__filtro:hover {
   font-size: 9.5px;
 }
 
-/* La ficha del sitio seleccionado, ajustada al ancho disponible */
+/* La ficha del sitio seleccionado.
+
+   En su seccion original media 240px sobre un mapa de media pantalla. Aqui
+   la columna da unos 480px, asi que esos mismos 240 se comian el 50% del
+   ancho y el 41% del alto: tapaba las burbujas en vez de acompanarlas.
+
+   Baja a 205px --un 42% del ancho-- y se pega mas a la esquina para dejar
+   respirar el trazado. El texto encoge en la misma proporcion.
+
+   205 y no menos: medido con las metricas de Open Sans, la fila mas ancha
+   --"Energy use intensity / 146 kWh/m2"-- pide 174px de contenido, asi que
+   por debajo de 205 con este padding el valor se apretaria contra la
+   etiqueta. */
 .d2 .d2-faq-dato__mapa .d2-prob-mapa__ficha {
-  margin-top: 14px;
-  padding: 12px 14px;
+  width: 205px;
+  right: 12px;
+  bottom: 12px;
+  padding: 13px;
+}
+
+.d2 .d2-faq-dato__mapa .d2-prob-mapa__ficha > small {
+  font-size: 8.5px;
+}
+
+.d2 .d2-faq-dato__mapa .d2-prob-mapa__ficha > b {
+  /* 22px era el tamano en media pantalla */
+  font-size: 17px;
+}
+
+.d2 .d2-faq-dato__mapa .d2-prob-mapa__ficha > div {
+  margin-top: 6px;
+  padding-top: 6px;
+  font-size: 9.5px;
 }
 
 @media (max-width: 900px) {
