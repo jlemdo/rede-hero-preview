@@ -8360,9 +8360,10 @@ span.d2-panel__filtro:hover {
    Las islas restauran --c-texto a #333333, y el boton solido lo hereda.
    Sobre su relleno verde eso da 4.74:1 y cumple, pero conviene fijarlo para
    que no dependa de la cadena de herencia. */
-.d2 :is(.d2-btn--solido, .btn--primary):not(:hover):not(:focus-visible) {
-  color: #333333;
-}
+/* Aqui habia una regla que forzaba texto gris en reposo. Se escribio para
+   el estilo anterior --verde de marca en reposo, donde el blanco no
+   cumplia-- y con el estilo invertido sobra: ahora el reposo es verde
+   oscuro y el texto va en blanco. Dejarla daba 1.97:1 en el hero. */
 
 /* ==========================================================================
    LAS CUATRO ULTIMAS
@@ -11304,202 +11305,75 @@ span.d2-panel__filtro:hover {
 }
 
 /* ==========================================================================
-   LABORATORIO DE BOTONES — TEMPORAL
+   EL BOTON SOLIDO — ESTILO DEFINITIVO
 
-   Cuatro estilos para comparar antes de decidir. Se retira al elegir.
+   En reposo: verde oscuro con texto BLANCO. Al apuntarlo se ilumina al
+   verde de marca con texto gris.
 
-   Todos usan la misma gramatica de movimiento que el resto de la web:
-   420ms, curva simetrica, entrada y salida iguales.
+   Antes era al reves --verde de marca en reposo, oscureciendose en hover--
+   y tenia dos problemas:
+
+   1. El gesto estaba invertido. El estado de reposo era el llamativo y el
+      hover el apagado: el boton se apagaba al apuntarlo en vez de
+      encenderse.
+   2. El estado que mas se ve --el reposo-- era el que llevaba el gris
+      sobre verde, que es la combinacion que no convencia.
+
+   Ahora el gris solo aparece un instante, mientras el raton esta encima, y
+   sobre el verde de marca a pleno: es cuando mejor funciona.
+
+   POR QUE EL REPOSO NO PUEDE SER VERDE DE MARCA CON TEXTO BLANCO:
+   da 2.66:1 y el minimo es 4.5. El manual lo dice --el verde es color de
+   superficie, no de texto-- asi que cualquier combinacion con blanco exige
+   un verde mas oscuro.
+
+   Medido:
+     reposo  #FFFFFF sobre #026F00 ....... 6.41:1
+     hover   #333333 sobre #39B54A ....... 4.74:1
+
+   Las dos transiciones usan la gramatica del resto de la web: 420ms, curva
+   simetrica, entrada y salida iguales.
    ========================================================================== */
 
-.d2 .lab {
-  background: var(--comp-blanco, #FFFFFF);
-  border-top: 1px dashed var(--c-borde, #E4E4E4);
-  padding-block: clamp(56px, 6vw, 88px);
-}
-
-.d2 .lab__inner {
-  max-width: var(--d2-ancho, 1280px);
-  margin-inline: auto;
-  padding-inline: var(--pad-lateral, 28px);
-}
-
-.d2 .lab__eyebrow {
-  margin: 0 0 14px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-.d2 .lab__titulo {
-  margin: 0 0 12px;
-  font-size: clamp(26px, 2.6vw, 36px);
-  font-weight: 700;
-  letter-spacing: -.02em;
-  color: var(--c-texto, #333333);
-}
-
-.d2 .lab__lead {
-  margin: 0 0 clamp(34px, 4vw, 52px);
-  max-width: 58ch;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--c-texto-cuerpo, #333333);
-}
-
-.d2 .lab__rejilla {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(20px, 2.4vw, 34px);
-}
-
-.d2 .lab__caso {
-  display: flex;
-  flex-direction: column;
-  padding-top: 20px;
-  border-top: 2px solid var(--c-borde, #E4E4E4);
-}
-
-.d2 .lab__n {
-  margin: 0 0 10px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  color: var(--c-verde-hover, #026F00);
-}
-
-.d2 .lab__nombre {
-  margin: 0 0 8px;
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--c-texto, #333333);
-}
-
-.d2 .lab__desc {
-  /* auto abajo empuja el boton al fondo: los cuatro quedan alineados
-     aunque las descripciones midan distinto */
-  margin: 0 0 auto;
-  padding-bottom: 22px;
-  font-size: 13.5px;
-  line-height: 1.55;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-.d2 .lab__dato {
-  margin: 12px 0 0;
-  font-size: 11.5px;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-/* --- La base comun de los cuatro --- */
-
-.d2 .lab__btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 13px 22px;
-  font-size: 15px;
-  font-weight: 700;
-  text-decoration: none;
-  border: 2px solid transparent;
-  border-radius: var(--d2-radio-full, 999px);
-  cursor: pointer;
-  /* La misma curva y los mismos tiempos que el resto de la web: entrada y
-     salida iguales, 420ms. */
+.d2 :is(.d2-btn--solido, .btn--primary, .d2-btn--principal) {
+  background: var(--c-verde-hover, #026F00);
+  border-color: var(--c-verde-hover, #026F00);
+  color: #FFFFFF;
   transition: background-color .42s cubic-bezier(.4, 0, .2, 1),
               border-color .42s cubic-bezier(.4, 0, .2, 1),
               color .3s cubic-bezier(.4, 0, .2, 1);
 }
 
-.d2 .lab__btn svg { transition: transform .3s cubic-bezier(.32, .72, 0, 1); }
-.d2 .lab__btn:hover svg { transform: translateX(3px); }
-
-/* --- 01 Invertido: oscuro que se ilumina --- */
-
-.d2 .lab__btn--1 {
-  background: #026F00;
-  border-color: #026F00;
-  color: #FFFFFF;
-}
-
-.d2 .lab__btn--1:hover {
+.d2 :is(.d2-btn--solido, .btn--primary, .d2-btn--principal):hover,
+.d2 :is(.d2-btn--solido, .btn--primary, .d2-btn--principal):focus-visible {
   background: var(--c-verde-marca, #39B54A);
   border-color: var(--c-verde-marca, #39B54A);
   color: #333333;
 }
 
-/* --- 02 Verde solido: blanco siempre, sin gris --- */
-
-.d2 .lab__btn--2 {
-  background: #026F00;
-  border-color: #026F00;
+/* Sobre seccion oscura vale lo mismo: el verde oscuro se distingue del
+   fondo negro --3.29:1 contra #333333-- y el texto blanco se lee igual. */
+.d2 [data-comp-tono="oscuro"] :is(.d2-btn--solido, .btn--primary):not(:hover):not(:focus-visible) {
+  background: var(--c-verde-hover, #026F00);
   color: #FFFFFF;
 }
 
-.d2 .lab__btn--2:hover {
-  background: #0E5C1A;
-  border-color: #0E5C1A;
-  color: #FFFFFF;
-}
-
-/* --- 03 Negro y verde: el contraste mas alto --- */
-
-.d2 .lab__btn--3 {
-  background: #333333;
-  border-color: #333333;
-  color: #FFFFFF;
-}
-
-.d2 .lab__btn--3:hover {
+.d2 [data-comp-tono="oscuro"] :is(.d2-btn--solido, .btn--primary):hover,
+.d2 [data-comp-tono="oscuro"] :is(.d2-btn--solido, .btn--primary):focus-visible {
   background: var(--c-verde-marca, #39B54A);
-  border-color: var(--c-verde-marca, #39B54A);
   color: #333333;
 }
 
-/* --- 04 Contorno: el mas discreto --- */
-
-.d2 .lab__btn--4 {
-  background: transparent;
-  border-color: #026F00;
-  color: #026F00;
-}
-
-.d2 .lab__btn--4:hover {
-  background: #026F00;
-  border-color: #026F00;
+/* El boton del CTA carrusel llevaba su propia regla de color. Se alinea
+   con el resto en vez de mantener una excepcion. */
+.d2 .d2-btn--solido.d2-cta-car__btn {
   color: #FFFFFF;
 }
 
-/* --- El foco, en los cuatro --- */
-
-.d2 .lab__btn:focus-visible {
-  outline: 3px solid var(--c-verde-marca, #39B54A);
-  outline-offset: 3px;
-}
-
-.d2 .lab__nota {
-  margin: clamp(30px, 3.5vw, 44px) 0 0;
-  max-width: 70ch;
-  padding: 16px 20px;
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--c-texto-suave, #6B6B6B);
-  background: var(--d2-relleno, #F2F9F2);
-  border-radius: var(--d2-radio-md, 16px);
+.d2 .d2-btn--solido.d2-cta-car__btn:hover {
+  color: #333333;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .d2 .lab__btn, .d2 .lab__btn svg { transition: none; }
-}
-
-@media (max-width: 900px) {
-  .d2 .lab__rejilla { grid-template-columns: repeat(2, 1fr); row-gap: 38px; }
-}
-
-@media (max-width: 520px) {
-  .d2 .lab__rejilla { grid-template-columns: 1fr; }
+  .d2 :is(.d2-btn--solido, .btn--primary, .d2-btn--principal) { transition: none; }
 }
