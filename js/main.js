@@ -259,6 +259,124 @@
     btnTexto.textContent = estado.paso === TOTAL ? 'Show benchmark result' : 'Next';
   }
 
+  /* --- Validacion de cada paso -------------------------------------------
+
+     Que se exige en cada paso. El area y el gasto llevan minimo y maximo
+     porque un edificio de 3 pies cuadrados o de mil millones no es un dato
+     real, sino un dedazo o una prueba: dejarlo pasar da una cifra que nadie
+     puede defender delante de un cliente.                                  */
+
+  /* La provincia NO se valida: no es un desplegable sino dos botones
+     --British Columbia / Rest of Canada-- que escriben en un campo oculto
+     que ya viene con 'bc'. Nunca puede estar vacio, asi que una regla ahi
+     solo prometeria una comprobacion que jamas se ejecuta. */
+
+  var REGLAS = {
+    2: [
+      { id: '#c-sector', aviso: 'Choose your sector to continue.' }
+    ],
+    3: [
+      { id: '#c-type', aviso: 'Choose a building type.' },
+      { id: '#c-area', aviso: 'Enter your total area.', min: 100, max: 1e9,
+        fuera: 'Enter an area between 100 and 1,000,000,000 sq ft.' }
+    ],
+    4: [
+      { id: '#c-spend', aviso: 'Enter your annual utility spend.', min: 1, max: 1e9,
+        fuera: 'Enter a spend between $1 and $1,000,000,000.' },
+      { id: '#c-sites', aviso: 'Enter how many sites you manage.', min: 1, max: 10000,
+        fuera: 'Enter a number of sites between 1 and 10,000.' }
+    ]
+  };
+
+  /* Marca o limpia un campo. El aviso se pinta en un <p> creado al vuelo y
+     se enlaza con aria-describedby: quien use lector de pantalla oye el
+     motivo, no solo que algo fallo. El color rojo nunca va solo --hay texto
+     y un icono--, que es lo que pide la norma 1.4.1. */
+  function marcar(campo, mensaje) {
+    var wrap = campo.closest('.campo__wrap') || campo;
+    var caja = campo.closest('.campo') || wrap.parentElement;
+    if (!caja) { return; }
+
+    var aviso = caja.querySelector('.campo__error');
+
+    if (!mensaje) {
+      wrap.classList.remove('tiene-error');
+      campo.removeAttribute('aria-invalid');
+      campo.removeAttribute('aria-describedby');
+      if (aviso) { aviso.remove(); }
+      return;
+    }
+
+    if (!aviso) {
+      aviso = document.createElement('p');
+      aviso.className = 'campo__error';
+      aviso.id = (campo.id || 'campo') + '-error';
+      aviso.setAttribute('role', 'alert');
+      caja.appendChild(aviso);
+    }
+    aviso.textContent = mensaje;
+    wrap.classList.add('tiene-error');
+    campo.setAttribute('aria-invalid', 'true');
+    campo.setAttribute('aria-describedby', aviso.id);
+  }
+
+  /* Revisa un paso. Devuelve el primer campo que falla, o null si esta bien. */
+  function revisar(paso) {
+    var reglas = REGLAS[paso];
+    if (!reglas) { return null; }
+
+    var primero = null;
+
+    reglas.forEach(function (r) {
+      var campo = $(r.id);
+      if (!campo) { return; }
+
+      var bruto = String(campo.value || '').trim();
+
+      if (!bruto) {
+        marcar(campo, r.aviso);
+        if (!primero) { primero = campo; }
+        return;
+      }
+
+      /* Los campos numericos: primero que sea un numero, y luego que este
+         dentro del rango. Son dos avisos distintos porque el problema es
+         distinto: "250000abc" no es que se salga de rango, es que no es un
+         numero, y decir "entre 100 y mil millones" ahi confunde. */
+      if (r.min !== undefined) {
+        var n = numero(bruto);
+
+        if (n === 0 && bruto !== '0') {
+          marcar(campo, 'Enter a number, digits only.');
+          if (!primero) { primero = campo; }
+          return;
+        }
+
+        if (n < r.min || n > r.max) {
+          marcar(campo, r.fuera || r.aviso);
+          if (!primero) { primero = campo; }
+          return;
+        }
+      }
+
+      marcar(campo, '');
+    });
+
+    return primero;
+  }
+
+  /* Al corregir un campo el aviso desaparece solo: mantenerlo mientras el
+     visitante ya esta escribiendo la respuesta correcta es molesto. */
+  ['input', 'change'].forEach(function (evt) {
+    seccion.addEventListener(evt, function (e) {
+      var campo = e.target;
+      if (!campo.matches || !campo.matches('.campo__input')) { return; }
+      var wrap = campo.closest('.campo__wrap');
+      if (!wrap || !wrap.classList.contains('tiene-error')) { return; }
+      if (String(campo.value || '').trim()) { marcar(campo, ''); }
+    }, true);
+  });
+
   function siguiente() {
     // El paso 1 necesita una eleccion; si no la hay, se asume portafolio
     if (estado.paso === 1 && !estado.scope) { elegirScope('multi'); }
@@ -267,8 +385,18 @@
        recorrer: el boton calcula directamente. Sin esto pedia cuatro clics
        para avanzar por pantallas que ya estaban visibles. */
     if (seccion.querySelector('[data-abierto]')) {
+      var falla = revisar(2) || revisar(3) || revisar(4);
+      if (falla) { falla.focus(); return; }
       estado.paso = TOTAL;
       calcular();
+      return;
+    }
+
+    /* No se avanza con el paso a medias. El foco salta al primer campo que
+       falta para que no haya que buscarlo. */
+    var pendiente = revisar(estado.paso);
+    if (pendiente) {
+      pendiente.focus();
       return;
     }
 
@@ -377,7 +505,11 @@
   function elegirScope(valor) {
     estado.scope = valor;
     seccion.querySelectorAll('.opcion').forEach(function (o) {
-      o.classList.toggle('is-elegida', o.dataset.scope === valor);
+      var elegida = o.dataset.scope === valor;
+      o.classList.toggle('is-elegida', elegida);
+      /* aria-pressed y no solo la clase: sin el, un lector de pantalla lee
+         los dos botones igual y no hay forma de saber cual esta elegido. */
+      o.setAttribute('aria-pressed', String(elegida));
     });
     if (valor === 'single') { $('#c-sites').value = '1'; }
   }
@@ -423,9 +555,34 @@
 
   /* --- Utilidades --------------------------------------------------------- */
 
+  /* Un numero a partir de lo que haya escrito el visitante.
+
+     LISTA BLANCA, no lista negra: en vez de ir quitando lo que parece
+     peligroso --que siempre deja algo fuera-- se exige que lo que queda sea
+     un numero entero o decimal y nada mas. Cualquier otra cosa vale 0.
+
+     La version anterior borraba todo salvo digitos y puntos, y eso convertia
+     "1e99" en 199, "${7*7}" en 77 y "-500000" en 500000: un negativo colado
+     como positivo. Tambien dejaba pasar "1.2.3", que Number() vuelve NaN.
+
+     El tope de mil millones evita que pegar veinte digitos produzca un
+     ahorro de billones que nadie puede defender ante un cliente. */
+  var TOPE = 1e9;
+  var SOLO_NUMERO = /^\d+(?:\.\d+)?$/;
+
   function numero(valor) {
-    var n = Number(String(valor || '').replace(/[^0-9.]/g, ''));
-    return isFinite(n) ? n : 0;
+    if (valor === null || valor === undefined) { return 0; }
+
+    /* Se quitan solo los separadores que una persona escribe de forma
+       natural --espacios y comas de millar-- y el simbolo de moneda. Nada
+       mas: si despues de eso no queda un numero limpio, se rechaza entero
+       en lugar de rescatar un trozo. */
+    var limpio = String(valor).replace(/[\s,$]/g, '');
+    if (!limpio || !SOLO_NUMERO.test(limpio)) { return 0; }
+
+    var n = Number(limpio);
+    if (!isFinite(n) || n < 0) { return 0; }
+    return n > TOPE ? TOPE : n;
   }
 
   function dinero(n) {
