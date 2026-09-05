@@ -3,11 +3,15 @@
 Lo que queda abierto y hay que resolver **antes** de subir a la web.
 Cada punto lleva lo medido, para no volver a discutirlo desde cero.
 
-Actualizado: 3 de septiembre de 2026
+Actualizado: 5 de septiembre de 2026
 
 ---
 
-## 0. CIFRAS INVENTADAS EN REVIEWS — LO MAS URGENTE
+## 0. CIFRAS DE MUESTRA EN REVIEWS — DECIDIDO: SE QUEDAN
+
+**Decidido el 5/9/2026.** El cliente optó por publicarlas tal cual. Queda
+documentado aquí por si Erick quiere revisarlo; no hace falta volver a
+plantearlo salvo que él lo pida.
 
 Dos de las tres reseñas muestran **cifras de muestra junto al nombre de una
 persona real**, y desde el 3/9/2026 **nada las distingue en pantalla**: el
@@ -19,10 +23,9 @@ recuadro "sample data" se retiró por petición.
 | Wayne Turpin — Northland | 34 | $310K+ | $2.1M | **INVENTADAS** |
 | Norman Buhler — Fort Vermilion | 12 | $180K+ | $950K | **INVENTADAS** |
 
-Publicar esto atribuye números falsos a personas identificadas de
-organizaciones reales. **No puede salir así.**
+Atribuye números de muestra a personas identificadas de organizaciones reales.
 
-Dos salidas:
+Si algún día se retoma, dos salidas:
 1. Pedir los números reales de cada distrito y sustituirlos
 2. Volver a dejar las tres con las cifras de cartera y la etiqueta
    "across our client portfolio", que es cierta y no atribuye nada
@@ -135,5 +138,6 @@ Antes de publicar hay que repasar en **WebKit y Firefox**, sobre todo:
 - (11) Framework de SEO
 - (17) "Energy management solutions" del diseño de ChatGPT
 - (21) Logo blanco del footer / clics en gris
-- **Lo último de todo:** quitar el selector de diseños para que el diseño 2
-  pase a ser la home
+- **Lo siguiente:** quitar las cinco barras selectoras que siguen visibles
+  --hero, logos, FAQ, footer y la de composiciones-- para que el diseño 2 pase
+  a ser la home sin controles a la vista
