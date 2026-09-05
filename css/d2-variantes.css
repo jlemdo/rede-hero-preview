@@ -3215,16 +3215,106 @@ span.d2-panel__filtro:hover {
   background: rgba(57, 181, 74, .08);
 }
 
-.d2 .calc .campo__input {
+/* EL HALO DEL FOCO VA EN EL MARCO, NO EN EL CAMPO
+
+   El campo son dos cajas: .campo__wrap lleva el borde y el fondo, y dentro
+   va .campo__input. Cuando el halo lo pintaba el input se quedaba corto por
+   los cuatro lados --y mucho mas por la derecha en los campos con sufijo,
+   donde el input termina 58px antes del borde--: se veia un cerco partido
+   por dentro del marco en lugar de rodearlo.
+
+   Ahora lo pinta el marco con :focus-within, que se activa igual al entrar
+   en el input pero abarca la caja entera. */
+
+.d2 .calc .campo__wrap {
   transition: border-color .25s ease,
               box-shadow .25s ease,
               background-color .25s ease;
 }
 
-.d2 .calc .campo__input:focus {
+.d2 .calc .campo__wrap:focus-within {
   border-color: #39B54A;
   box-shadow: 0 0 0 3px rgba(57, 181, 74, .18);
+}
+
+/* El input ya no dibuja nada propio: seria un segundo cerco dentro del
+   primero. */
+.d2 .calc .campo__input:focus,
+.d2 .calc select.campo__input:focus {
   outline: none;
+  box-shadow: none;
+}
+
+/* Sin :focus-within --Safari anterior al 10.1-- se vuelve al halo del input:
+   queda corto, pero es mejor que no marcar el foco en absoluto. */
+@supports not selector(:focus-within) {
+  .d2 .calc .campo__input:focus {
+    border-color: #39B54A;
+    box-shadow: 0 0 0 3px rgba(57, 181, 74, .18);
+  }
+}
+
+/* CUANDO FALTA UN DATO
+
+   Sutil a proposito: solo cambia el color del borde, sin halo ni fondo. El
+   aviso debajo lleva el peso, y es lo unico que dice QUE falta.
+
+   El rojo es #E06C5F y no el #C0392B del resto del sitio porque el panel de
+   la calculadora es #1A1A1A: ese rojo mide 3.20:1 ahi, insuficiente para
+   texto. Este mide 5.37:1 sobre el panel y 4.43:1 como borde sobre el campo.
+
+   El color nunca va solo --hay texto y un signo--, que es lo que exige la
+   norma 1.4.1 y lo que hace que funcione para quien no distingue el rojo. */
+
+.d2 .calc .campo__wrap.tiene-error {
+  border-color: #E06C5F;
+}
+
+/* Con el foco puesto el campo erroneo sigue en rojo: el foco anade el halo
+   --para saber donde esta el cursor-- pero no borra la senal de que algo
+   falta. Pintarlo de verde nada mas recibir el foco decia "correcto" sobre
+   un campo que estaba vacio.
+
+   El aviso desaparece en cuanto se escribe algo, asi que este estado dura
+   lo justo. */
+.d2 .calc .campo__wrap.tiene-error:focus-within {
+  border-color: #E06C5F;
+  box-shadow: 0 0 0 3px rgba(224, 108, 95, .18);
+}
+
+.d2 .calc .campo__error {
+  display: flex;
+  gap: 6px;
+  margin: 6px 0 0;
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+  color: #E06C5F;
+}
+
+/* El signo va en ::before y no en el texto: los lectores de pantalla leen
+   el mensaje limpio, sin un simbolo suelto delante. */
+.d2 .calc .campo__error::before {
+  content: "!";
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: var(--fw-bold);
+  line-height: 12px;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .calc .campo__error {
+    animation: d2-error-entra .22s ease both;
+  }
+}
+
+@keyframes d2-error-entra {
+  from { opacity: 0; transform: translateY(-2px); }
+  to   { opacity: 1; transform: none; }
 }
 
 .d2 .calc .perfil__valor,
