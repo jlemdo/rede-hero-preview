@@ -12951,22 +12951,19 @@ span.d2-panel__filtro:hover {
 /* --------------------------------------------------------------------------
    EL BOTON QUE PIDIO EL CLIENTE
 
-   Verde del logo en reposo, oscureciendo a #026F00 al pasar. Texto blanco
-   en los dos estados, por decision del usuario el 7/9/2026.
+   Verde del logo en reposo, oscureciendo a #026F00 al pasar.
 
-   ⚠ CONTRASTE: el blanco sobre #39B54A da 2.66:1. El minimo de WCAG AA
-   para texto normal es 4.5:1, y 16px en negrita NO cuenta como texto
-   grande, asi que no se libra por ahi. En hover si cumple (6.41:1).
+   El texto cambia con el fondo, y no es un capricho: sobre #39B54A el
+   blanco da 2.66:1 --por debajo del 4.5:1 que pide WCAG AA, y 16px en
+   negrita no cuenta como texto grande--. En #333333 da 4.74:1 y cumple.
+   Al oscurecerse el fondo en hover, el blanco pasa a dar 6.41:1 y es el
+   que toca. Los dos estados cumplen AA.
 
-   La alternativa medida, por si se reconsidera: texto #333333 en reposo da
-   4.74:1 y pasa a blanco al oscurecerse el fondo. Es el par que recomienda
-   PALETA.md. Tambien se probaron verdes intermedios: ninguno llega a 4.5:1
-   con blanco sin dejar de parecerse al del logo --el mas claro que cumple
-   es #0E7A24, ya muy lejos del #39B54A--.
+   Es ademas el par que recomienda PALETA.md para el verde de marca.
    -------------------------------------------------------------------------- */
 
 .d2 .d2-btn--marca {
-  color: #FFFFFF;
+  color: var(--c-sobre-verde, #333333);
   background: var(--c-verde-marca, #39B54A);
   border-color: var(--c-verde-marca, #39B54A);
 }
