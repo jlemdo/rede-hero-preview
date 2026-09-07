@@ -42,7 +42,9 @@
   ];
 
   var CLAVE = 'rede-logos-fondo';
-  var actual = 0;
+  /* Arranca en negro (7/9/2026): es el fondo que eligio el cliente para esta
+     seccion. Antes era 0 --blanco--, que era solo el primero de la lista. */
+  var actual = 3;
 
   try {
     var g = parseInt(sessionStorage.getItem(CLAVE), 10);

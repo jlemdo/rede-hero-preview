@@ -711,7 +711,7 @@
          entrando por la derecha. La pista esta duplicada: es lo que hace
          que el bucle no tenga un salto visible al reiniciar.
          ==================================================================== -->
-    <section class="d2-logos--dos">
+    <section class="d2-logos--dos" data-logos-tono="oscuro" style="--logos-fondo:#1A1A1A">
       <div class="d2-logos--dos__inner">
 
         <!-- COLUMNA RETIRADA (4/9/2026): el titular. La seccion se deja solo
@@ -724,8 +724,22 @@
         </div>
         -->
 
+        <!-- La cifra vuelve (7/9/2026) y ahora va a la IZQUIERDA, sobre
+             fondo oscuro: es la composicion que pidio el cliente. El copy
+             es el que ya teniamos, sin tocar una palabra. -->
+        <div class="d2-logos--dos__der">
+          <p class="d2-logos--dos__cifra">$4.4M</p>
+          <p class="d2-logos--dos__cifra-pie">Cumulative savings</p>
+          <p class="d2-logos--dos__cifra-nota">for one long-term client</p>
+        </div>
+
         <div class="d2-logos--dos__centro">
+          <!-- ETIQUETA RETIRADA (7/9/2026): la composicion que eligio el
+               cliente no la lleva --la cifra de al lado ya dice que son
+               estos logos--. Se deja escrita, no borrada: es copy aprobado
+               y volver a ponerla es descomentar.
           <p class="d2-logos--dos__etiqueta">PUBLIC-SECTOR PORTFOLIOS WE&rsquo;VE WORKED WITH</p>
+          -->
 
           <div class="d2-logos--dos__marquesina">
             <div class="d2-logos--dos__pista">
@@ -747,15 +761,6 @@
           </div>
         </div>
 
-        <!-- COLUMNA RETIRADA (4/9/2026): la cifra. El $4.4M sigue en
-             Reviews, que es donde acompana a la voz del cliente.
-
-<div class="d2-logos--dos__der">
-          <p class="d2-logos--dos__cifra">$4.4M</p>
-          <p class="d2-logos--dos__cifra-pie">Cumulative savings</p>
-          <p class="d2-logos--dos__cifra-nota">for one long-term client</p>
-        </div>
-        -->
 
       </div>
     </section>
@@ -3835,7 +3840,11 @@
      Copy literal del aprobado. Sin acentos en los comentarios.
      ========================================================================== -->
 
-<div class="d2-caru" id="caru-equipo" data-caru data-caru-fijo="3">
+<!-- Dos opciones elegibles (7/9/2026): la banda verde --la que estaba-- y
+     la firma nueva. El cliente quiere comparar las dos, asi que se quita el
+     data-caru-fijo y se limita con data-caru-solo. Los indices son base 0:
+     2 = Signature, 3 = Green band. -->
+<div class="d2-caru" id="caru-equipo" data-caru data-caru-solo="2,3">
 
   <!-- ======================================================================
        OPCION 1 — FICHA
@@ -3843,7 +3852,7 @@
        la foto. Cada persona es una ficha cerrada; la unidad de lectura es
        la persona completa.
        ====================================================================== -->
-  <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Option 1: Cards">
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Option 1: Cards" hidden>
     <section class="d2-equipo-ficha">
       <div class="d2-equipo-ficha__inner">
 
@@ -4033,121 +4042,6 @@
     </section>
   </div>
 
-  <!-- ======================================================================
-       OPCION 3 — FIRMA
-       Eje: la credencial deja de ser un atributo de cada persona y pasa a
-       ser una propiedad de la FIRMA. Un retrato destacado (el fundador, que
-       es quien tiene la historia de 2008) ocupa la izquierda; los otros dos
-       van en una columna estrecha a la derecha; y todas las credenciales
-       del equipo se recogen en una sola linea al pie de la seccion.
-
-       Es lo mismo que hace la portada de una propuesta: una cara, un
-       parrafo, y las siglas del equipo juntas debajo. Ninguna credencial
-       se pierde -- cambian de dueño, del individuo al conjunto.
-       ====================================================================== -->
-  <div class="d2-caru__diapo" role="tabpanel" aria-label="Option 3: Signature" hidden>
-    <section class="d2-equipo-firma">
-      <div class="d2-equipo-firma__inner">
-
-        <div class="d2-equipo-firma__intro">
-          <p class="d2-equipo-firma__eyebrow">People behind Rede</p>
-          <h2 class="d2-equipo-firma__titulo">More than engineers.</h2>
-        </div>
-
-        <div class="d2-equipo-firma__cuerpo">
-
-          <!-- El destacado. No es "el jefe es mas importante": es que su bio
-               es la unica que cuenta el origen de la empresa (2008), y ese
-               parrafo pide mas aire que los otros dos. -->
-          <article class="d2-equipo-firma__principal">
-            <img class="d2-equipo-firma__foto-grande"
-                 src="assets/img/equipo/matthew-redekopp.jpg"
-                 alt="Matthew Redekopp"
-                 width="300" height="420" loading="lazy" decoding="async">
-            <div class="d2-equipo-firma__principal-texto">
-              <p class="d2-equipo-firma__lead">
-                Rede is a small team of engineers, project managers, data analysts, and energy
-                efficiency professionals. We work alongside your team rather than delivering a
-                report and moving on.
-              </p>
-              <h3 class="d2-equipo-firma__nombre d2-equipo-firma__nombre--grande">Matthew Redekopp</h3>
-              <p class="d2-equipo-firma__cargo">Founder and CEO</p>
-              <p class="d2-equipo-firma__bio">
-                Matthew founded Rede in 2008 to serve communities and organizations that
-                larger engineering firms were not reaching. Nearly two decades later, he
-                leads a team helping organizations across Western Canada reduce energy costs
-                and manage buildings more effectively.
-              </p>
-            </div>
-          </article>
-
-          <!-- El resto, en fila vertical. Retrato pequeño y bio completa:
-               el copy va literal, no se recorta para que quepa. -->
-          <ul class="d2-equipo-firma__resto">
-
-            <li class="d2-equipo-firma__mini">
-              <img class="d2-equipo-firma__foto-mini"
-                   src="assets/img/equipo/marco-bieri.jpg"
-                   alt="Marco Bieri"
-                   width="300" height="420" loading="lazy" decoding="async">
-              <div>
-                <h3 class="d2-equipo-firma__nombre">Marco Bieri</h3>
-                <p class="d2-equipo-firma__cargo">Energy Efficiency Engineer</p>
-                <p class="d2-equipo-firma__bio">
-                  Marco brings deep expertise in recommissioning, energy auditing, and building
-                  performance diagnostics, along with a rigorous approach to data analysis and
-                  measurement verification.
-                </p>
-              </div>
-            </li>
-
-            <li class="d2-equipo-firma__mini">
-              <img class="d2-equipo-firma__foto-mini"
-                   src="assets/img/equipo/erica-letchford.jpg"
-                   alt="Erica Letchford"
-                   width="298" height="417" loading="lazy" decoding="async">
-              <div>
-                <h3 class="d2-equipo-firma__nombre">Erica Letchford</h3>
-                <p class="d2-equipo-firma__cargo">Director of Operations</p>
-                <p class="d2-equipo-firma__bio">
-                  Erica has spent nearly two decades working to reduce energy consumption and
-                  operating costs in residential, commercial, and institutional facilities. She
-                  brings a project manager's instinct for keeping the big picture in view while
-                  managing the details.
-                </p>
-              </div>
-            </li>
-
-            <!-- PENDIENTE DE ERICK — cuarta persona.
-                 Va aqui, como un <li> mas de esta columna. La columna crece
-                 hacia abajo sin tocar el destacado de la izquierda, asi que
-                 es la variante que mejor absorbe a la cuarta persona.
-                 Sus siglas hay que anadirlas tambien a la linea de
-                 credenciales del pie. -->
-          </ul>
-        </div>
-
-        <!-- La linea de credenciales de la firma.
-             Aqui estan TODAS las siglas de las tres personas, sin perder
-             ninguna, pero atribuidas al equipo y no a cada cara. Es el dato
-             que puntua el evaluador del RFP (SF-330 seccion E, campos 17 y
-             18: registro profesional y otras cualificaciones).
-             role="list" porque list-style:none le quita la semantica de
-             lista a <ul> en Safari con VoiceOver. -->
-        <ul class="d2-equipo-firma__credenciales" role="list"
-            aria-label="Professional credentials held by the Rede team">
-          <li>P.Eng.</li>
-          <li>M.Eng.</li>
-          <li>M.Sc.</li>
-          <li>CEM</li>
-          <li>LEED AP</li>
-          <li>BID</li>
-        </ul>
-      </div>
-    </section>
-  </div>
-
-
   <!-- ====================================================================
        OPCION 4 — LA BANDA VERDE
 
@@ -4258,6 +4152,144 @@
     </section>
   </div>
 
+  <!-- ======================================================================
+       OPCION 3 — FIRMA
+       Eje: la credencial deja de ser un atributo de cada persona y pasa a
+       ser una propiedad de la FIRMA. Un retrato destacado (el fundador, que
+       es quien tiene la historia de 2008) ocupa la izquierda; los otros dos
+       van en una columna estrecha a la derecha; y todas las credenciales
+       del equipo se recogen en una sola linea al pie de la seccion.
+
+       Es lo mismo que hace la portada de una propuesta: una cara, un
+       parrafo, y las siglas del equipo juntas debajo. Ninguna credencial
+       se pierde -- cambian de dueño, del individuo al conjunto.
+       ====================================================================== -->
+  <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Option 3: Signature">
+    <section class="d2-equipo-firma">
+      <!-- El mismo circuito de la banda verde: es la misma seccion, asi que
+           lleva la misma energia de fondo. El trazado se cambia para que los
+           nodos no caigan detras del retrato grande de la izquierda. -->
+      <svg class="d2-equipo-firma__circuito" viewBox="0 0 1440 620" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M1440 90H1180L1120 150H840"/>
+        <path d="M0 620V500H250L320 430H560"/>
+        <path d="M1440 560H1120L1050 490H820"/>
+        <circle cx="1120" cy="150" r="5"/>
+        <circle cx="320" cy="430" r="5"/>
+        <circle cx="1050" cy="490" r="5"/>
+      </svg>
+      <div class="d2-equipo-firma__inner">
+
+        <!-- Mismo copy que la banda verde (7/9/2026): las dos variantes son
+             la MISMA seccion, solo cambia como se coloca. El lead sube aqui
+             --antes vivia dentro de la columna de Matthew y se leia pegado a
+             su nombre, como si hablara de el y no del equipo--. -->
+        <div class="d2-equipo-firma__intro">
+          <p class="d2-equipo-firma__eyebrow">The Rede team</p>
+          <h2 class="d2-equipo-firma__titulo">Meet the team.</h2>
+          <p class="d2-equipo-firma__lead">
+            Rede is a small team of engineers and energy efficiency professionals.
+            We specialise in institutional facilities and complex building environments,
+            and we care about the organisations and communities we work with.
+          </p>
+        </div>
+
+        <div class="d2-equipo-firma__cuerpo">
+
+          <!-- El destacado. No es "el jefe es mas importante": es que su bio
+               es la unica que cuenta el origen de la empresa (2008), y ese
+               parrafo pide mas aire que los otros dos. -->
+          <article class="d2-equipo-firma__principal">
+            <picture>
+              <source srcset="assets/img/equipo/matthew.webp" type="image/webp">
+              <img class="d2-equipo-firma__foto-grande"
+                   src="assets/img/equipo/matthew.png"
+                   alt="Matthew Redekopp"
+                   width="400" height="400" loading="lazy" decoding="async">
+            </picture>
+            <div class="d2-equipo-firma__principal-texto">
+              <h3 class="d2-equipo-firma__nombre d2-equipo-firma__nombre--grande">Matthew Redekopp</h3>
+              <p class="d2-equipo-firma__cred">P.Eng., CEM, LEED AP</p>
+              <p class="d2-equipo-firma__cargo">Founder and CEO</p>
+              <p class="d2-equipo-firma__bio">
+                Matthew founded Rede in 2008 to serve communities and organizations that
+                larger engineering firms were not reaching. Nearly two decades later, he
+                leads a team helping organizations across Western Canada reduce energy costs
+                and manage buildings more effectively.
+              </p>
+            </div>
+          </article>
+
+          <!-- El resto, en fila vertical. Retrato pequeño y bio completa:
+               el copy va literal, no se recorta para que quepa. -->
+          <ul class="d2-equipo-firma__resto">
+
+            <li class="d2-equipo-firma__mini">
+              <picture>
+                <source srcset="assets/img/equipo/marco.webp" type="image/webp">
+                <img class="d2-equipo-firma__foto-mini"
+                     src="assets/img/equipo/marco.png"
+                     alt="Marco Bieri"
+                     width="400" height="400" loading="lazy" decoding="async">
+              </picture>
+              <div>
+                <h3 class="d2-equipo-firma__nombre">Marco Bieri</h3>
+                <p class="d2-equipo-firma__cred">P.Eng., M.Eng., M.Sc., CEM</p>
+                <p class="d2-equipo-firma__cargo">Energy Efficiency Engineer</p>
+              </div>
+            </li>
+
+            <li class="d2-equipo-firma__mini">
+              <picture>
+                <source srcset="assets/img/equipo/erica.webp" type="image/webp">
+                <img class="d2-equipo-firma__foto-mini"
+                     src="assets/img/equipo/erica.png"
+                     alt="Erica Letchford"
+                     width="400" height="400" loading="lazy" decoding="async">
+              </picture>
+              <div>
+                <h3 class="d2-equipo-firma__nombre">Erica Letchford</h3>
+                <p class="d2-equipo-firma__cred">BID, LEED AP</p>
+                <p class="d2-equipo-firma__cargo">Director of Operations</p>
+              </div>
+            </li>
+
+            <!-- La cuarta persona (7/9/2026).
+                 SIN BIO a proposito: el documento de copy aprobado
+                 --2026-08-01 Website copy language-- la deja como
+                 "[Bio to be developed]", asi que no hay ninguna que poner y
+                 no se inventa. El cargo es el que ya estaba en la maqueta,
+                 pero OJO: tampoco aparece en el copy aprobado, que dice
+                 "[Title]". Confirmar los dos con Erick.
+                 Su foto es cuadrada (400x400) y no 300x420 como el resto:
+                 el CSS la recorta igual con object-fit. -->
+            <li class="d2-equipo-firma__mini">
+              <picture>
+                <source srcset="assets/img/equipo/enrique.webp" type="image/webp">
+                <img class="d2-equipo-firma__foto-mini"
+                     src="assets/img/equipo/enrique.png"
+                     alt="Enrique Contreras"
+                     width="400" height="400" loading="lazy" decoding="async">
+              </picture>
+              <div>
+                <h3 class="d2-equipo-firma__nombre">Enrique Contreras</h3>
+                <p class="d2-equipo-firma__cred">SD M.Sc. (Cand.)</p>
+                <p class="d2-equipo-firma__cargo">Certified Sustainability &amp; Cleantech Specialist</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- SIN linea de credenciales al pie (7/9/2026).
+
+             Las siglas vuelven a cada persona: "cada uno tiene lo suyo".
+             Agrupadas abajo se leian como un lote del equipo y no se sabia
+             quien tiene que. P.Eng. no es lo mismo que M.Sc.: son licencias
+             distintas y quien evalua un RFP mira quien firma. -->
+      </div>
+    </section>
+  </div>
+
+
   <div class="d2-caru__mandos">
     <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Close options">
       <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -4268,8 +4300,8 @@
     <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
       <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Cards</small></button>
       <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Dossier</small></button>
-      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Signature</small></button>
-      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="3"><span>4</span><small>Green band</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Green band</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="3"><span>4</span><small>Signature</small></button>
     </div>
     <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
       <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -5204,6 +5236,100 @@
         pueda escribir desde aqui, tiene que venir de Rede.
      ========================================================================== -->
 
+<!-- ==========================================================================
+     MUESTRARIO DE BOTONES (7/9/2026)
+
+     Va aqui, despues del CTA, para verlos en la web y no en una pagina
+     aparte: un boton solo se juzga junto a lo que tiene al lado.
+
+     No hay ningun estilo inventado. Los cuatro primeros son los que ya usa
+     la web --hero, CTA, cabecera, calculadora-- y el quinto es el que pidio
+     el cliente: verde del logo que oscurece al pasar.
+
+     ES TEMPORAL: se retira al elegir, como las barras de variantes.
+     ========================================================================== -->
+
+<section class="d2-botones" aria-labelledby="botones-titulo">
+  <div class="d2-botones__inner">
+
+    <div class="d2-botones__intro">
+      <p class="d2-botones__eyebrow">Reference</p>
+      <h2 class="d2-botones__titulo" id="botones-titulo">Buttons.</h2>
+      <p class="d2-botones__lead">
+        Every button in use across the site, in its resting and hover state.
+        Hover each one to compare.
+      </p>
+    </div>
+
+    <ul class="d2-botones__lista" role="list">
+
+      <li class="d2-botones__caso">
+        <p class="d2-botones__nombre">1 &middot; Brand green</p>
+        <p class="d2-botones__nota">
+          Logo green at rest, darkening to the deeper green on hover.
+          White text throughout.
+        </p>
+        <div class="d2-botones__muestra">
+          <button class="d2-btn d2-btn--marca" type="button">
+            Book a Call
+            <svg width="17" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true">
+              <path d="M11 1l5 5-5 5M16 6H1" stroke="currentColor" stroke-width="1.7"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </li>
+
+      <li class="d2-botones__caso">
+        <p class="d2-botones__nombre">2 &middot; Solid</p>
+        <p class="d2-botones__nota">
+          The one in the header and the hero. Dark green, lifts on hover.
+        </p>
+        <div class="d2-botones__muestra">
+          <button class="d2-btn d2-btn--solido" type="button">
+            Book a Call
+            <svg width="17" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true">
+              <path d="M11 1l5 5-5 5M16 6H1" stroke="currentColor" stroke-width="1.7"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </li>
+
+      <li class="d2-botones__caso">
+        <p class="d2-botones__nombre">3 &middot; Outline</p>
+        <p class="d2-botones__nota">
+          The secondary one, in Client Login and next to the main CTA. Fills
+          in on hover.
+        </p>
+        <div class="d2-botones__muestra">
+          <button class="d2-btn d2-btn--linea" type="button">Client Login</button>
+        </div>
+      </li>
+
+      <!-- OJO: este es de la OTRA familia de botones (.btn, la de la
+           calculadora) y por eso se ve distinto: radio 6px en vez de la
+           pildora, 17px en vez de 16 y 56px de alto en vez de 52. No es un
+           fallo de esta seccion --es asi en toda la calculadora-- y esta
+           puesto a proposito para que se vea la diferencia. -->
+      <li class="d2-botones__caso d2-botones__caso--oscuro">
+        <p class="d2-botones__nombre">4 &middot; On dark</p>
+        <p class="d2-botones__nota">
+          Over the dark CTA and the calculator. Note it uses the calculator's
+          button family: 6px corner, not the pill. Two systems coexist.
+        </p>
+        <div class="d2-botones__muestra">
+          <!-- Este NO lleva .d2-btn: el fantasma vive en la familia .btn de la
+               calculadora, con sus propios tokens. Mezclarlas lo deja sin
+               fondo ni borde --paso, y no se veia nada--. -->
+          <button class="btn btn--fantasma" type="button">See how it works</button>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
 <section class="d2-pie-caru-marco" aria-label="Footer options">
 
 
@@ -5688,6 +5814,7 @@
 <script src="js/d2-mapa-cartera.js"></script>
 <script src="js/d2-faq.js"></script>
 <script src="js/d2-logos-fondo.js"></script>
+<script src="js/d2-rutas-onda.js"></script>
 <script src="js/d2-calc-entrada.js"></script>
 <script src="js/d2-composicion.js"></script>
 <script src="js/editor-github.js"></script>
