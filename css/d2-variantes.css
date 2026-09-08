@@ -10517,7 +10517,17 @@ span.d2-panel__filtro:hover {
         rgba(57, 181, 74, .35) calc(var(--pulso) + 11%),
         transparent calc(var(--pulso) + 20%)),
       var(--c-borde, #E4E4E4);
+    /* paused y no sin animacion: el guion solo anade .esta-viva y el
+       navegador arranca desde el fotograma 0. Quitando y poniendo la
+       animacion habria un salto. */
     animation: d2PulsoLinea 13s cubic-bezier(.45, 0, .35, 1) infinite;
+    animation-play-state: paused;
+  }
+
+  /* La seccion entro en pantalla: la señal echa a andar. Lo pone
+     d2-rutas-senal.js con un IntersectionObserver. */
+  .d2 .d2-rutas-sec.esta-viva .d2-rutas-sec__marca::after {
+    animation-play-state: running;
   }
 
   /* Cada tramo arranca 0.95s despues del anterior --proporcional al ciclo
@@ -10550,6 +10560,11 @@ span.d2-panel__filtro:hover {
     border-radius: 50%;
     pointer-events: none;
     animation: d2PulsoNodo 13s cubic-bezier(.4, 0, .2, 1) infinite;
+    animation-play-state: paused;
+  }
+
+  .d2 .d2-rutas-sec.esta-viva .d2-rutas-sec__num::before {
+    animation-play-state: running;
   }
 
   .d2 .d2-rutas-sec__paso:nth-child(2) .d2-rutas-sec__num::before { animation-delay: .95s; }
