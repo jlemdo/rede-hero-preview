@@ -1128,6 +1128,18 @@ span.d2-panel__filtro:hover {
   display: flex;
   align-items: center;
   gap: var(--hueco);
+
+  /* width y flex-shrink son lo que hace que el bucle case (8/9/2026).
+
+     Sin ellos el contenedor comprime la pista: la caja medía 965px cuando su
+     contenido son 3225. El `-50%` del keyframe se calcula sobre la CAJA, asi
+     que desplazaba 436px cuando la copia empieza en 1659 --1223px de
+     desfase-- y al reiniciar se veia el salto.
+
+     Con max-content la caja mide lo que mide el contenido, y el 50% cae
+     justo donde arranca la copia: el reinicio deja de notarse. */
+  width: max-content;
+  flex: none;
   /* 52s, no 34s: al subir el alto de los logos a 68px la pista se ensancha
      y con la misma duracion recorreria mas distancia por segundo, o sea
      mas rapido. Mas lento se leen las marcas, que es para lo que estan. */
@@ -1141,7 +1153,14 @@ span.d2-panel__filtro:hover {
    entre las dos mitades; sin ese ajuste el bucle salta medio hueco. */
 @keyframes d2-marquesina {
   from { transform: translateX(0); }
-  to   { transform: translateX(calc(-50% - var(--hueco) / 2)); }
+  /* Medio hueco de MAS, no de menos (8/9/2026, el signo estaba al reves).
+
+     La pista son 14 logos con 13 huecos entre ellos, asi que su mitad cae en
+     "7 logos + 6.5 huecos". Pero la copia empieza en "7 logos + 7 huecos",
+     porque entre la ultima de la primera tanda y la primera de la copia hay
+     un hueco entero. Faltaba justo medio hueco --93px medidos-- y el bucle
+     daba un tiron al reiniciar. */
+  to   { transform: translateX(calc(-50% + var(--hueco) / 2)); }
 }
 
 /* El ancho se lo da el contenedor. Aqui solo se fija el alto, que es lo
