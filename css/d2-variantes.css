@@ -13051,13 +13051,23 @@ span.d2-panel__filtro:hover {
    cover. Ocupa mas ancho porque su contenido llega hasta los cuatro bordes.
    Se ve mejor con el panel oculto --el boton "No panel" de la barra--. */
 .d2 .d2-hero__fondo.es-enc-diagrama {
-  right: -1%;
-  width: 70%;
+  right: 0;
+  width: 62%;
   object-fit: contain;
   object-position: center right;
-  opacity: .75;
-  mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 100%);
+  opacity: .72;
+
+  /* La mascara se difumina por los DOS lados, y no solo por la izquierda
+     como la del render.
+
+     El motivo es `contain`: la imagen NO llena su caja --deja franjas
+     vacias a los lados-- asi que el degradado se gastaba en el hueco en
+     vez de sobre el dibujo, y el borde real quedaba con un corte vertical
+     duro. Con parada al 82% el desvanecido cae donde esta el dibujo.
+
+     Un radial tampoco vale: probado, deja el mismo canto. */
+  mask-image: linear-gradient(to right, transparent 0%, #000 26%, #000 82%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 26%, #000 82%, transparent 100%);
 }
 
 /* La escena del distrito: si es cover, pero anclada abajo para que no le
@@ -13067,4 +13077,9 @@ span.d2-panel__filtro:hover {
   width: 84%;
   object-position: center bottom;
   opacity: .5;
+
+  /* Bajada: con el borde superior a ras del hero la ciudad quedaba pegada
+     al header y el cielo del dibujo no respiraba. */
+  top: 8%;
+  height: 92%;
 }
