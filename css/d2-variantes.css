@@ -12981,3 +12981,57 @@ span.d2-panel__filtro:hover {
   .d2 .d2-btn--marca:hover,
   .d2 .d2-btn--marca:focus-visible { transform: none; }
 }
+
+/* --- Selector de imagen del hero (temporal) --- */
+
+.d2 .d2-hero-imagenes {
+  /* Un escalon por encima del selector de variantes del hero, para que no
+     se pisen: cada barra tiene su altura. */
+  bottom: calc(var(--sp-6, 40px) + 62px);
+}
+
+.d2 .d2-hero-imagenes__eti {
+  padding-inline: 4px 2px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--c-texto-suave, #6B6B6B);
+  white-space: nowrap;
+}
+
+/* El hueco de imagen pendiente. Se pinta con el rayado diagonal, que es
+   justo lo que significa en este sistema: "aqui va material del cliente".
+   No es decoracion --fuera de un placeholder no debe usarse--. */
+.d2 .d2-hero__sin-imagen {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  /* Abajo a la izquierda: a la derecha lo tapaba el panel de datos, y en
+     el centro competia con el titular. */
+  align-items: flex-end;
+  justify-content: flex-start;
+  margin: 0;
+  padding: clamp(20px, 3vw, 34px) clamp(24px, 6vw, 96px);
+  font-size: .8125rem;
+  font-weight: var(--fw-bold);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave, #6B6B6B);
+  background:
+    repeating-linear-gradient(135deg,
+      rgba(2, 51, 0, .05) 0 6px,
+      transparent 6px 12px),
+    var(--d2-relleno, #F3F3F3);
+}
+
+
+
+/* El interruptor del panel, separado de la lista de imagenes por un filete:
+   no es una opcion mas, es otra cosa. */
+.d2 .d2-hero-imagenes__panel {
+  margin-left: 4px;
+  padding-left: 12px;
+  border-left: 1px solid var(--c-borde, #E4E4E4);
+  border-radius: 0 var(--d2-radio-full) var(--d2-radio-full) 0;
+}
