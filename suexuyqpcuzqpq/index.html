@@ -3865,7 +3865,7 @@
      la firma nueva. El cliente quiere comparar las dos, asi que se quita el
      data-caru-fijo y se limita con data-caru-solo. Los indices son base 0:
      2 = Signature, 3 = Green band. -->
-<div class="d2-caru" id="caru-equipo" data-caru data-caru-solo="2,3">
+<div class="d2-caru" id="caru-equipo" data-caru data-caru-solo="2,3,4">
 
   <!-- ======================================================================
        OPCION 1 — FICHA
@@ -4311,6 +4311,80 @@
   </div>
 
 
+  <!-- ======================================================================
+       OPCION 5 — UNA SOLA VOZ
+
+       Eje: en vez de presentar al equipo entero, saca UNA persona y le da
+       la palabra. Es la referencia que trajo el cliente el 8/9/2026.
+
+       Reutiliza el lenguaje de la banda verde y de la firma --mismo fondo
+       #1A5121, mismo circuito de fondo, mismos colores de texto--: es la
+       misma seccion contada de otra forma, no una seccion nueva.
+
+       El copy es el APROBADO, no el de la maqueta: la referencia venia con
+       Lorem Ipsum y con el titular "Why work with REDE?", que no esta en el
+       documento del cliente. Aqui van "Meet the team" y la bio real de
+       Matthew, igual que en las otras variantes.
+       ====================================================================== -->
+  <div class="d2-caru__diapo" role="tabpanel" aria-label="Option 5: One voice" hidden>
+    <section class="d2-equipo-voz">
+      <svg class="d2-equipo-voz__circuito" viewBox="0 0 1440 620" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M1440 90H1180L1120 150H840"/>
+        <path d="M0 620V500H250L320 430H560"/>
+        <path d="M1440 560H1120L1050 490H820"/>
+        <circle cx="1120" cy="150" r="5"/>
+        <circle cx="320" cy="430" r="5"/>
+        <circle cx="1050" cy="490" r="5"/>
+      </svg>
+
+      <div class="d2-equipo-voz__inner">
+
+        <div class="d2-equipo-voz__intro">
+          <p class="d2-equipo-voz__eyebrow">The Rede team</p>
+          <h2 class="d2-equipo-voz__titulo">Meet the team.</h2>
+          <p class="d2-equipo-voz__lead">
+            Rede is a small team of engineers and energy efficiency professionals.
+            We specialise in institutional facilities and complex building environments,
+            and we care about the organisations and communities we work with.
+          </p>
+        </div>
+
+        <article class="d2-equipo-voz__persona">
+          <span class="d2-equipo-voz__marco">
+            <picture>
+              <source srcset="assets/img/equipo/matthew.webp" type="image/webp">
+              <img class="d2-equipo-voz__foto"
+                   src="assets/img/equipo/matthew.png"
+                   alt="Matthew Redekopp"
+                   width="400" height="400" loading="lazy" decoding="async">
+            </picture>
+          </span>
+
+          <div class="d2-equipo-voz__texto">
+            <h3 class="d2-equipo-voz__nombre">Matthew Redekopp</h3>
+            <p class="d2-equipo-voz__cred">P.Eng., CEM, LEED AP</p>
+            <p class="d2-equipo-voz__cargo">Founder and CEO</p>
+            <p class="d2-equipo-voz__bio">
+              Matthew founded Rede in 2008 to serve Indigenous, Northern, and rural
+              communities that larger engineering firms weren&rsquo;t reaching. Nearly two
+              decades later, he leads a team that has helped more than 150 organisations
+              across Western Canada reduce their energy costs and manage their buildings
+              more effectively.
+            </p>
+            <a class="d2-btn d2-btn--linea d2-equipo-voz__btn" href="#">
+              Learn More About Us
+              <svg width="17" height="12" viewBox="0 0 17 12" fill="none" aria-hidden="true">
+                <path d="M11 1l5 5-5 5M16 6H1" stroke="currentColor" stroke-width="1.7"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </div>
+
   <div class="d2-caru__mandos">
     <button class="d2-caru__ocultar" type="button" data-caru-ocultar aria-expanded="true" aria-label="Close options">
       <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5l9 9M10.5 1.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -4323,6 +4397,7 @@
       <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Dossier</small></button>
       <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Green band</small></button>
       <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="3"><span>4</span><small>Signature</small></button>
+      <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="4"><span>5</span><small>One voice</small></button>
     </div>
     <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
       <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
