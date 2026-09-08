@@ -53,7 +53,11 @@
   ];
 
   var CLAVE = 'rede-rutas-onda';
-  var actual = 0;
+
+  /* Arranca en "Noise to flat" (8/9/2026): es la que eligio el cliente, y
+     ademas la que mejor cuenta el titular --de senales dispersas a accion
+     medible--. Antes 0, el latido, que era solo la primera de la lista. */
+  var actual = 3;
 
   try {
     var g = parseInt(sessionStorage.getItem(CLAVE), 10);

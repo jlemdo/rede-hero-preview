@@ -102,7 +102,15 @@
       }
     }
 
+    /* data-caru-inicial="2" arranca en esa opcion en vez de en la primera.
+       Es el indice YA renumerado, o sea el que se ve en los mandos: si
+       data-caru-solo dejo tres, van de 0 a 2.
+
+       Hace falta porque este JS es comun a las once secciones: cambiar el
+       0 de aqui las moveria todas. */
     var actual = 0;
+    var ini = parseInt(caja.getAttribute('data-caru-inicial'), 10);
+    if (!isNaN(ini) && ini >= 0 && ini < diapos.length) { actual = ini; }
 
     /* La eleccion se recuerda mientras dure la visita: al volver a la pagina
        sigue la opcion que se estaba mirando, no la primera. */

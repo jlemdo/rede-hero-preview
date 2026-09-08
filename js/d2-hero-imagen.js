@@ -39,11 +39,16 @@
 
   var CLAVE = 'rede-hero-imagen';
   var CLAVE_PANEL = 'rede-hero-panel';
-  var actual = 0;
-  var panelVisible = true;
+
+  /* Arranca en District y SIN panel (8/9/2026): es lo que eligio el
+     cliente. Antes 0 --Render-- y el panel visible, que era solo el orden
+     de la lista. */
+  var actual = 2;
+  var panelVisible = false;
 
   try {
-    panelVisible = sessionStorage.getItem(CLAVE_PANEL) !== '0';
+    var gp = sessionStorage.getItem(CLAVE_PANEL);
+    if (gp !== null) { panelVisible = gp !== '0'; }
   } catch (e) {}
 
   try {

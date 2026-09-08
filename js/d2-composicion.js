@@ -82,7 +82,9 @@
   /* El token vive en .d2, que gana a :root por especificidad */
   var caja = document.querySelector('.d2') || raiz;
 
-  var actual = 0;
+  /* Arranca en Contrast (8/9/2026), la tercera: es la que eligio el
+     cliente. Antes 0 --Proposed--, que era solo la primera de la lista. */
+  var actual = 2;
   try {
     var g = parseInt(sessionStorage.getItem(CLAVE), 10);
     if (!isNaN(g) && g >= 0 && g < COMPOSICIONES.length) { actual = g; }
