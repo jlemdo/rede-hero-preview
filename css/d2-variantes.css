@@ -428,8 +428,10 @@
      debajo. */
   .d2-hero__fondo {
     right: 0;
+    left: auto;
     width: 100%;
   }
+
 
   /* La regla base baja el render al 22% en movil. Sube al mismo .66 que en
      escritorio para que la cantidad de dibujo que atraviesa el panel sea la
@@ -1107,7 +1109,7 @@ span.d2-panel__filtro:hover {
      que su parte y en el hueco caben mas de los previstos. El alto es lo
      que de verdad regula cuanto ocupan: subiendolo, cada uno se ensancha
      y entran los que se han pedido. */
-  --alto-logo: clamp(48px, 5.2vw, 68px);
+  --alto-logo: clamp(56px, 6.4vw, 84px);
 
   position: relative;
   overflow: hidden;
@@ -12578,6 +12580,16 @@ span.d2-panel__filtro:hover {
      el resto. Era de una sola columna mientras la cifra estuvo retirada. */
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
+
+  /* El hueco pasa de 49px a 92px, en dos pasos pedidos por el usuario.
+     Medido, 49px no era poco, pero el primer logo trae mucho aire propio
+     dentro de su PNG y el conjunto se leia pegado: la cifra y la fila
+     parecian un solo bloque. Con 92px la cifra se lee como dato y los
+     logos como prueba, que son dos cosas distintas.
+
+     Va en clamp para que en pantallas estrechas el hueco ceda antes que el
+     sitio de los logos. */
+  column-gap: clamp(44px, 6.4vw, 92px);
 }
 
 .d2 .d2-logos--dos__centro {
@@ -12591,6 +12603,13 @@ span.d2-panel__filtro:hover {
   grid-row: 1;
   grid-column: 1;
   max-width: 15rem;
+
+  /* Sin padding ni filete a la izquierda (7/9/2026): venian de cuando la
+     cifra iba a la DERECHA, donde el filete la separaba de los logos. Con
+     la cifra a la izquierda ese padding la empujaba 37px y la sacaba del
+     eje del sitio --estaba en 158 y el resto de titulares en 120--. */
+  padding-left: 0;
+  border-left: 0;
 }
 
 .d2 .d2-logos--dos__centro {
@@ -13051,11 +13070,26 @@ span.d2-panel__filtro:hover {
    cover. Ocupa mas ancho porque su contenido llega hasta los cuatro bordes.
    Se ve mejor con el panel oculto --el boton "No panel" de la barra--. */
 .d2 .d2-hero__fondo.es-enc-diagrama {
+  /* Pegada a la izquierda (7/9/2026): con el diagrama arrinconado a la
+     derecha quedaba una banda muerta en medio y la imagen no se integraba.
+     Ahora arranca donde acaba el texto y llega al borde. */
+  /* left al 50%: el titular acaba en 688px de 1440 --el 48%--, asi que
+     desde aqui el diagrama arranca justo despues y no lo pisa. Con el 38%
+     se le montaba encima 141px y "your team." caia sobre los paneles
+     solares. right:2% mete las etiquetas del borde --SMART MONITORING,
+     END USE-- que antes se salian de la ventana. */
   right: 0;
-  width: 62%;
-  object-fit: contain;
-  object-position: center right;
-  opacity: .72;
+  left: 50%;
+  /* width:auto con left Y right puestos no basta: la regla base fija un
+     width, y el ancho gana sobre right, asi que la caja se salia 125px por
+     la derecha. Con width explicito al 50% las dos coordenadas cuadran. */
+  width: 50%;
+  /* Sin object-fit: la caja tiene la proporcion justa para el diagrama, asi
+     que `fill` --el valor por defecto-- lo muestra entero sin recortar ni
+     dejar franjas vacias. Era `contain`, y esas franjas eran las que
+     obligaban a difuminar tanto. */
+  object-fit: fill;
+  opacity: .8;
 
   /* La mascara se difumina por los DOS lados, y no solo por la izquierda
      como la del render.
@@ -13066,20 +13100,59 @@ span.d2-panel__filtro:hover {
      duro. Con parada al 82% el desvanecido cae donde esta el dibujo.
 
      Un radial tampoco vale: probado, deja el mismo canto. */
-  mask-image: linear-gradient(to right, transparent 0%, #000 26%, #000 82%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 26%, #000 82%, transparent 100%);
+  /* Degradado corto y suave: sin las franjas de `contain` el desvanecido ya
+     no tiene que tapar nada, solo integrar el borde. */
+  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 95%, transparent 100%);
 }
 
 /* La escena del distrito: si es cover, pero anclada abajo para que no le
    corte el remate al edificio, y mas ancha para que entre la avenida. */
 .d2 .d2-hero__fondo.es-enc-escena {
-  right: -12%;
-  width: 84%;
-  object-position: center bottom;
-  opacity: .5;
+  /* `contain` y no `cover` (7/9/2026).
 
-  /* Bajada: con el borde superior a ras del hero la ciudad quedaba pegada
-     al header y el cielo del dibujo no respiraba. */
-  top: 8%;
-  height: 92%;
+     Medido: el hero es 1878x637 --ratio 2.95-- y la imagen 1920x1304
+     --1.47--. Con `cover`, para llenar esa franja el navegador la ampliaba
+     y **solo se veia el 50% de su altura**: un trozo del edificio a tamano
+     gigante en vez de la escena. Y no habia object-position que lo
+     salvara, porque el problema es el recorte, no donde cae.
+
+     Con `contain` entra completa: el edificio con sus plantas, los arboles
+     y la plaza con las lineas de datos. Alineada a la derecha, para que la
+     mitad izquierda quede libre para el texto.
+
+     El degradado baja por tramos --.2 al 14%, .8 al 34%-- asi que sobre el
+     titular queda un rastro tenue en vez de un borde. */
+  left: 0;
+  right: 0;
+  width: 100%;
+  object-fit: contain;
+  object-position: right center;
+  opacity: .66;
+  /* Las paradas van del 50% al 74% y NO antes, porque con `contain` el
+     dibujo no llena la caja: alineado a la derecha, empieza justo en el
+     50% --medido: x=940 de 1878--. Con el degradado acabando en el 52% se
+     gastaba casi entero sobre la franja vacia y el dibujo arrancaba a
+     plena opacidad: canto vertical duro a la izquierda. */
+  mask-image: linear-gradient(to right,
+    transparent 50%, rgba(0, 0, 0, .35) 58%, rgba(0, 0, 0, .8) 66%, #000 74%);
+  -webkit-mask-image: linear-gradient(to right,
+    transparent 50%, rgba(0, 0, 0, .35) 58%, rgba(0, 0, 0, .8) 66%, #000 74%);
+}
+
+/* En una sola columna el texto ocupa todo el ancho, asi que el diagrama no
+   puede arrancar al 50%: se le montaba encima. Vuelve a ancho completo y
+   mas tenue, como marca de agua, con el desvanecido de arriba abajo.
+
+   Va al FINAL del archivo a proposito: la regla de escritorio esta en la
+   linea ~13060 y, dentro de la media query pero antes de ella, la pisaba. */
+@media (max-width: 900px) {
+  .d2 .d2-hero__fondo.es-enc-diagrama {
+    left: auto;
+    right: 0;
+    width: 100%;
+    opacity: .3;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
+  }
 }
