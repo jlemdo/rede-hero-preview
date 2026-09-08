@@ -30,10 +30,12 @@
      1448x1086 (1.33), mas cuadradas. object-fit: cover las recorta sin
      deformarlas, pero encuadran distinto. */
   var IMAGENES = [
-    { et: 'Render',   src: 'assets/img/building-render.jpg' },
-    { et: 'Flow',     src: 'assets/img/hero-flujo.jpg' },
-    { et: 'District', src: 'assets/img/hero-distrito.jpg' }
+    { et: 'Render',   src: 'assets/img/building-render.jpg', enc: '' },
+    { et: 'Flow',     src: 'assets/img/hero-flujo.jpg',      enc: 'es-enc-diagrama' },
+    { et: 'District', src: 'assets/img/hero-distrito.jpg',   enc: 'es-enc-escena' }
   ];
+
+  var ENCUADRES = ['es-enc-diagrama', 'es-enc-escena'];
 
   var CLAVE = 'rede-hero-imagen';
   var CLAVE_PANEL = 'rede-hero-panel';
@@ -61,6 +63,13 @@
     var im = IMAGENES[actual];
 
     Array.prototype.forEach.call(fondos, function (img) {
+      /* Cada imagen trae su encuadre: el de la original esta calibrado para
+         una proporcion 1.83 y las otras dos son 1.33. Con el mismo recorte
+         para todas, el diagrama salia cortado por arriba y por abajo y al
+         edificio se le iba el remate. */
+      ENCUADRES.forEach(function (c) { img.classList.remove(c); });
+      if (im.enc) { img.classList.add(im.enc); }
+
       if (im.src) {
         img.src = im.src;
         img.hidden = false;

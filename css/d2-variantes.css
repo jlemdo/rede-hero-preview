@@ -13035,3 +13035,36 @@ span.d2-panel__filtro:hover {
   border-left: 1px solid var(--c-borde, #E4E4E4);
   border-radius: 0 var(--d2-radio-full) var(--d2-radio-full) 0;
 }
+
+/* --------------------------------------------------------------------------
+   ENCUADRE POR IMAGEN DEL HERO
+
+   El de .d2-hero__fondo esta calibrado para el render original, que es
+   1920x1047 (proporcion 1.83). Las dos imagenes nuevas son 1448x1086 (1.33),
+   mucho mas cuadradas: con `cover` y ese mismo recorte, el navegador las
+   agranda para llenar el alto y se come los bordes. En el diagrama eso
+   cortaba las etiquetas de arriba y abajo, y al edificio le quitaba el
+   remate.
+   -------------------------------------------------------------------------- */
+
+/* El diagrama de flujo: o se ve ENTERO o no dice nada, asi que contain y no
+   cover. Ocupa mas ancho porque su contenido llega hasta los cuatro bordes.
+   Se ve mejor con el panel oculto --el boton "No panel" de la barra--. */
+.d2 .d2-hero__fondo.es-enc-diagrama {
+  right: -1%;
+  width: 70%;
+  object-fit: contain;
+  object-position: center right;
+  opacity: .75;
+  mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 100%);
+}
+
+/* La escena del distrito: si es cover, pero anclada abajo para que no le
+   corte el remate al edificio, y mas ancha para que entre la avenida. */
+.d2 .d2-hero__fondo.es-enc-escena {
+  right: -12%;
+  width: 84%;
+  object-position: center bottom;
+  opacity: .5;
+}
