@@ -517,6 +517,27 @@
     display: none;
   }
 
+  /* Tres carruseles llevan su propio desplazamiento lateral al plegarse,
+     escrito con #id --especificidad 1,2,0--, que una regla de clase no
+     puede vencer: el `transform:none` de arriba no les llegaba y la barra
+     de logos se iba a 413px en una pantalla de 390.
+
+     Ese desplazamiento saca media pastilla por el borde derecho, que es un
+     gesto de escritorio. En movil las barras ya estan pegadas al borde con
+     `right`, asi que solo hay que devolverles su centrado vertical --el de
+     logos-- y quitar el resto. */
+  #caru-calc .d2-caru__mandos.esta-minimizado,
+  #caru-calc .d2-caru__mandos.esta-minimizado:hover,
+  #caru-problema .d2-caru__mandos.esta-minimizado,
+  #caru-problema .d2-caru__mandos.esta-minimizado:hover {
+    transform: none;
+  }
+
+  #caru-logos .d2-caru__mandos.esta-minimizado,
+  #caru-logos .d2-caru__mandos.esta-minimizado:hover {
+    transform: translateY(-50%);
+  }
+
   /* Solo el numero: la etiqueta no cabe sin apretar los botones */
   .d2-caru__punto small { display: none; }
   .d2-caru__punto { padding: 0 14px; }
