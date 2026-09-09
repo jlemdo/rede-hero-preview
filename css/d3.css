@@ -947,7 +947,7 @@ footer>small {
     stroke-dashoffset:-76px
   }
 }
-@media (width<=1050px) {
+@media (max-width: 1000px) {
   .nav {
     gap:18px
   }
@@ -1017,7 +1017,7 @@ footer>small {
     justify-content:flex-end
   }
 }
-@media (width<=760px) {
+@media (max-width: 900px) {
   body {
     font-size:15px
   }
@@ -1222,7 +1222,7 @@ footer>small {
 footer .brand {
   min-width:180px
 }
-@media (width<=760px) {
+@media (max-width: 900px) {
   .site-header .brand {
     min-width:178px
   }
@@ -1978,7 +1978,7 @@ footer .brand img {
   margin-top:10px;
   font-size:11px
 }
-@media (width<=1050px) {
+@media (max-width: 1000px) {
   .site-header {
     padding-inline:32px
   }
@@ -2040,7 +2040,7 @@ footer .brand img {
     max-width:620px
   }
 }
-@media (width<=760px) {
+@media (max-width: 900px) {
   .site-header {
     height:78px;
     padding-inline:20px
@@ -2369,12 +2369,12 @@ footer .brand img {
     transform:translate(28px)scale(.96)
   }
 }
-@media (width>=761px) and (width<=1050px) {
+@media (min-width: 901px) and (max-width: 1000px) {
   .operations {
     padding-block:80px
   }
 }
-@media (width<=760px) {
+@media (max-width: 900px) {
   .operations {
     padding-block:70px
   }
@@ -2486,7 +2486,7 @@ footer .brand img {
 .menu-button[aria-expanded="true"] .icono-menu { display: none; }
 .menu-button[aria-expanded="true"] .icono-cerrar { display: block; }
 
-@media (width<=760px) {
+@media (max-width: 900px) {
   .menu-button {
     display: grid;
     place-items: center;

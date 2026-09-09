@@ -83,7 +83,16 @@
   /* 300ms es lo que dura la salida en el CSS. Con movimiento reducido no hay
      espera: el cambio es inmediato. */
   var CRUCE = sinMovimiento ? 0 : 300;
-  var PAUSA = 7000;
+
+  /* 9s y no 7s (8/9/2026, a peticion): las citas son largas --la de
+     Northland pasa de 180 caracteres-- y con 7s se iba antes de terminar de
+     leerla. Ademas ahora las tres cifras entran escalonadas y su cadena
+     ocupa 0.74s del ciclo, asi que el tiempo de lectura real era todavia
+     menor que esos 7s.
+
+     Es el mismo valor en todos los tamanos: la velocidad de lectura no
+     depende del ancho de la pantalla. */
+  var PAUSA = 9000;
 
   var cita   = caja.querySelector('[data-cen-cita]');
   var nombre = caja.querySelector('[data-cen-nombre]');

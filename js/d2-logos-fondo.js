@@ -96,8 +96,15 @@
 
   /* Minimizar, igual que el resto de mandos */
   var ocultar = barra.querySelector('[data-lf-ocultar]');
-  var minimizado = false;
-  try { minimizado = sessionStorage.getItem(CLAVE + '-min') === '1'; } catch (e) {}
+  /* En movil arrancan recogidas, igual que los mandos del carrusel: son
+     controles de PRUEBA y no deben tapar el diseno. Una eleccion ya
+     guardada en la sesion manda sobre esto. */
+  var esMovil = window.matchMedia('(max-width: 640px)').matches;
+  var minimizado;
+  try {
+    var guardado = sessionStorage.getItem(CLAVE + '-min');
+    minimizado = guardado === null ? esMovil : guardado === '1';
+  } catch (e) { minimizado = esMovil; }
 
   function pintarMin() {
     barra.classList.toggle('esta-minimizado', minimizado);

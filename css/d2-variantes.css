@@ -443,25 +443,79 @@
      ya son globales, asi que no hace falta repetirlas. */
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   /* El hero mide 1150px en movil: los mandos abajo quedaban a 500px de
      scroll y nadie los veria. Suben arriba del todo, donde se ven al
      entrar, y se centran. */
-  .d2-caru { display: flex; flex-direction: column; }
+  /* :not([hidden]) es imprescindible: un `display` en una regla normal gana
+     al `display:none` que el navegador da por el atributo hidden, y los
+     carruseles apagados --caru-problema y caru-prueba-- reaparecian por
+     debajo de este ancho. Venia de antes; se vio al unificar breakpoints. */
+  .d2-caru:not([hidden]) { display: flex; flex-direction: column; }
   .d2-caru__diapo { order: 2; }
 
+  /* Flotan sobre la seccion, no la empujan (8/9/2026).
+
+     Estaban en flujo con `position:static` y un margen de 14px: siete
+     barras de 46px sumaban 322px de altura que se repartian entre las
+     secciones y les rompian el alto. Son mandos de PRUEBA --se retiran
+     antes de publicar-- asi que no pueden condicionar como se ve el
+     diseno.
+
+     Flotando no ocupan sitio, y pegados abajo a la derecha quedan lejos
+     del contenido. */
   .d2-caru__mandos {
     order: 1;
-    position: static;
-    align-self: center;
-    margin: 14px 0 2px;
+    position: absolute;
+    right: 12px;
+    bottom: 14px;
+    left: auto;
+    align-self: auto;
+    margin: 0;
     transform: none;
+    /* Mas discretas que en escritorio: son andamiaje, no diseno. */
+    opacity: .82;
   }
 
-  /* Aqui los mandos ya no tapan nada: no hay nada que esconder, y
-     plegados se irian fuera de la pantalla sin forma de traerlos. */
-  .d2-caru__mandos.esta-minimizado { width: auto; padding-inline: 5px; }
-  .d2-caru__ocultar { display: none; }
+  /* El boton de plegar SI se muestra: es lo que pidio el usuario para
+     poder esconderlas. Sin el no habria forma de quitarlas de en medio.
+
+     El ancho hay que repetirlo: la regla de escritorio lo da junto al
+     `display`, y al reactivarlo aqui el boton se estiraba a los 222px del
+     contenedor, que impedia que la barra encogiese al plegarse. */
+  .d2-caru__ocultar {
+    display: grid;
+    flex: none;
+    width: 26px;
+    height: 28px;
+  }
+
+  /* Plegadas quedan como una pastilla pequena en su sitio, sin salirse de
+     la pantalla: el desplazamiento lateral de escritorio la mandaria
+     fuera y no habria forma de recuperarla. */
+  .d2-caru__mandos.esta-minimizado {
+    /* Ancho fijo, no `auto`: los puntos y las flechas siguen ocupando su
+       sitio --estan a opacity 0, no display:none-- y con `auto` mantenian
+       la barra abierta a 234px. Con 36px queda solo el boton. */
+    width: 36px;
+    padding-inline: 5px;
+    transform: none;
+    border-radius: 999px;
+    opacity: .6;
+  }
+
+  /* Plegada, lo de dentro se RETIRA del flujo. Con opacity:0 seguia
+     midiendo --los puntos se salian hasta 526px en una pantalla de 390-- y
+     el documento desbordaba 23px a lo ancho. El overflow:hidden solo los
+     tapaba; no impedia que empujaran el ancho de la pagina. */
+  .d2-caru__mandos.esta-minimizado .d2-caru__puntos,
+  .d2-caru__mandos.esta-minimizado .d2-caru__flecha,
+  .d2-caru__mandos.esta-minimizado .d2-hero-imagenes__eti,
+  .d2-caru__mandos.esta-minimizado .d2-logos-fondos__eti,
+  .d2-caru__mandos.esta-minimizado .d2-rutas-ondas__eti,
+  .d2-caru__mandos.esta-minimizado .d2-hero-imagenes__panel {
+    display: none;
+  }
 
   /* Solo el numero: la etiqueta no cabe sin apretar los botones */
   .d2-caru__punto small { display: none; }
@@ -745,7 +799,7 @@ span.d2-panel__filtro:hover {
 
 /* Por debajo de cierto ancho el header no da para dos botones: se queda el
    principal. Client Login sigue en el menu movil. */
-@media (max-width: 1180px) {
+@media (max-width: 1000px) {
   .d2 .header__actions .header__login-btn { display: none; }
 }
 
@@ -828,51 +882,269 @@ span.d2-panel__filtro:hover {
 
 
 /* --------------------------------------------------------------------------
-   4. EL MENU MOVIL, CON EL MISMO MOVIMIENTO
+   4. EL MENU MOVIL: UN PANEL QUE ENTRA POR LA IZQUIERDA
+
+   Antes se desplegaba hacia abajo empujando la pagina. Como panel lateral
+   cabe la misma informacion que el mega menu de escritorio --icono, nombre
+   y descripcion-- sin que la lista quede kilometrica.
+
+   El movimiento es el de iOS: una curva que sale rapida y frena larga
+   (.32,.72,0,1), la misma que ya usa el mega menu. Asi los dos menus se
+   sienten del mismo sitio.
+
+   85% de ancho y no 100%: el trozo de pagina que asoma a la derecha recuerda
+   que el sitio sigue detras y da donde tocar para cerrar.
    -------------------------------------------------------------------------- */
 
-.d2 .mobile-menu {
+.d2 .menu-velo {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  background: rgba(26, 26, 26, .45);
   opacity: 0;
-  transform: translateY(-10px);
+  visibility: hidden;
+  /* La visibilidad espera a que termine el desvanecido; si no, el velo
+     desaparece de golpe y deja ver el panel saliendo sin fondo. */
+  transition:
+    opacity    .34s cubic-bezier(.32, .72, 0, 1),
+    visibility 0s linear .34s;
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
+}
+
+.d2 .menu-velo.esta-abierto {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .34s cubic-bezier(.32, .72, 0, 1), visibility 0s;
+}
+
+.d2 .mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  max-width: 380px;
+  height: 100%;
+  /* dvh y no vh: en el movil la barra del navegador se recoge al bajar y
+     con vh el panel queda mas alto que la pantalla. */
+  height: 100dvh;
+  padding: 26px var(--padding-x, 22px) 28px;
+  overflow-y: auto;
+  /* El desplazamiento se queda dentro del panel y no arrastra la pagina. */
+  overscroll-behavior: contain;
+  background: var(--c-blanco, #FFFFFF);
+  border-top: 0;
+  box-shadow: 0 0 40px rgba(0, 0, 0, .14);
+  transform: translateX(-100%);
   visibility: hidden;
   transition:
-    opacity   .3s  cubic-bezier(.32, .72, 0, 1),
-    transform .42s cubic-bezier(.32, .72, 0, 1),
+    transform  .42s cubic-bezier(.32, .72, 0, 1),
     visibility 0s linear .42s;
 }
 
 .d2 .mobile-menu.esta-abierto {
-  opacity: 1;
   transform: none;
   visibility: visible;
-  transition:
-    opacity   .32s cubic-bezier(.32, .72, 0, 1),
-    transform .45s cubic-bezier(.32, .72, 0, 1),
-    visibility 0s;
+  transition: transform .45s cubic-bezier(.32, .72, 0, 1), visibility 0s;
 }
 
-/* Los enlaces entran en cascada, de arriba abajo */
-.d2 .mobile-menu nav > *,
-.d2 .mobile-menu__sub > * {
+/* La marca, arriba del todo. Se aparta de la equis con un margen derecho
+   para que no se toquen en pantallas estrechas. */
+.d2 .mobile-menu__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.d2 .mobile-menu__logo {
+  display: block;
+  margin: 0;
+}
+
+.d2 .mobile-menu__logo img {
+  display: block;
+  width: auto;
+  height: 42px;
+}
+
+
+/* El panel tapa el header, asi que la equis vive dentro de el. */
+.d2 .mobile-menu__cerrar {
+  /* Sin position:absolute: lo alinea la fila, no un top a ojo. El margen
+     derecho negativo devuelve el aire optico que se comia la zona tactil
+     de 44px, para que el aspa quede a la misma distancia del borde que el
+     logo del suyo. */
+  flex: none;
+  margin-right: -10px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--c-texto, #1A1A1A);
+  cursor: pointer;
+  transition: background-color .2s ease;
+}
+
+.d2 .mobile-menu__cerrar:hover,
+.d2 .mobile-menu__cerrar:focus-visible {
+  background: rgba(26, 26, 26, .06);
+}
+
+.d2 .mobile-menu nav {
+  display: block;
+  margin-bottom: 24px;
+}
+
+.d2 .mobile-menu__rotulo {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave, #666666);
+}
+
+/* Las cuatro soluciones: la misma ficha del mega menu. */
+.d2 .mobile-menu__sub {
+  display: grid;
+  gap: 2px;
+  margin-bottom: 22px;
+  padding-left: 0;
+  border-left: 0;
+}
+
+.d2 .mobile-menu__sub a {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--d2-e2, 12px);
+  padding: 11px 10px;
+  border-radius: 6px;
+  /* Los mismos tokens del mega menu. Antes iba a 15px/500 y se veia
+     delgado al lado del resto del menu. */
+  font-size: var(--fs-body, 1rem);
+  font-weight: var(--fw-bold, 700);
+  line-height: 1.3;
+  color: var(--c-texto, #1A1A1A);
+  transition: background-color .2s ease;
+}
+
+.d2 .mobile-menu__sub a:hover,
+.d2 .mobile-menu__sub a:focus-visible {
+  background: rgba(57, 181, 74, .08);
+}
+
+/* Igual que en escritorio: el icono va suelto, sin cuadrito de fondo. El
+   marco verde era invento mio y rompia con el mega menu. */
+.d2 .mobile-menu__icono {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-top: 1px;
+  color: var(--c-verde, #39B54A);
+}
+
+.d2 .mobile-menu__icono svg { display: block; }
+
+.d2 .mobile-menu__sub a > span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.d2 .mobile-menu__sub a small {
+  display: block;
+  margin-top: 3px;
+  font-size: .8125rem;
+  font-weight: var(--fw-regular, 400);
+  line-height: 1.45;
+  color: var(--c-texto-suave, #666666);
+}
+
+/* About, Contact y Client Login: separados por una linea, como en el header. */
+.d2 .mobile-menu__raiz {
+  display: block;
+  padding: 13px 10px;
+  border-top: 1px solid var(--c-borde-suave, #EFEFEF);
+  font-size: var(--fs-body, 1rem);
+  font-weight: var(--fw-medium, 600);
+  color: var(--c-texto, #1A1A1A);
+  transition: color .2s ease;
+}
+
+.d2 .mobile-menu__raiz:hover,
+.d2 .mobile-menu__raiz:focus-visible {
+  color: var(--c-verde, #39B54A);
+}
+
+/* "Book a Call" abajo del todo: margin-top:auto lo empuja al pie aunque la
+   lista sea corta. */
+.d2 .mobile-menu > .btn,
+.d2 .mobile-menu > .d2-btn {
+  margin-top: auto;
+}
+
+/* Los bloques entran escalonados detras del panel. El retardo arranca en
+   .12s: antes de eso el panel todavia va por medio camino y el escalonado
+   no se veria. */
+.d2 .mobile-menu__cabecera,
+.d2 .mobile-menu__rotulo,
+.d2 .mobile-menu__sub > *,
+.d2 .mobile-menu__raiz,
+.d2 .mobile-menu > .btn {
   opacity: 0;
-  transform: translateY(-8px);
+  transform: translateX(-12px);
   transition:
     opacity   .3s cubic-bezier(.32, .72, 0, 1),
     transform .34s cubic-bezier(.32, .72, 0, 1);
 }
 
-.d2 .mobile-menu.esta-abierto nav > *,
-.d2 .mobile-menu.esta-abierto .mobile-menu__sub > * {
+.d2 .mobile-menu.esta-abierto :is(.mobile-menu__cabecera,
+                                  .mobile-menu__rotulo,
+                                  .mobile-menu__sub > *,
+                                  .mobile-menu__raiz,
+                                  .btn) {
   opacity: 1;
   transform: none;
 }
 
-.d2 .mobile-menu.esta-abierto nav > *:nth-child(1) { transition-delay: .05s; }
-.d2 .mobile-menu.esta-abierto nav > *:nth-child(2) { transition-delay: .08s; }
-.d2 .mobile-menu.esta-abierto nav > *:nth-child(3) { transition-delay: .11s; }
-.d2 .mobile-menu.esta-abierto nav > *:nth-child(4) { transition-delay: .14s; }
-.d2 .mobile-menu.esta-abierto nav > *:nth-child(5) { transition-delay: .17s; }
-.d2 .mobile-menu.esta-abierto nav > *:nth-child(6) { transition-delay: .20s; }
+.d2 .mobile-menu.esta-abierto .mobile-menu__cabecera    { transition-delay: .12s; }
+.d2 .mobile-menu.esta-abierto .mobile-menu__rotulo      { transition-delay: .15s; }
+.d2 .mobile-menu.esta-abierto .mobile-menu__sub > *:nth-child(1) { transition-delay: .18s; }
+.d2 .mobile-menu.esta-abierto .mobile-menu__sub > *:nth-child(2) { transition-delay: .21s; }
+.d2 .mobile-menu.esta-abierto .mobile-menu__sub > *:nth-child(3) { transition-delay: .24s; }
+.d2 .mobile-menu.esta-abierto .mobile-menu__sub > *:nth-child(4) { transition-delay: .27s; }
+.d2 .mobile-menu.esta-abierto .mobile-menu__raiz:nth-of-type(1)  { transition-delay: .30s; }
+.d2 .mobile-menu.esta-abierto .mobile-menu__raiz:nth-of-type(2)  { transition-delay: .33s; }
+.d2 .mobile-menu.esta-abierto .mobile-menu__raiz:nth-of-type(3)  { transition-delay: .36s; }
+.d2 .mobile-menu.esta-abierto > .btn                             { transition-delay: .39s; }
+
+/* Con el panel abierto la hamburguesa se convierte en una equis por su
+   cuenta, y como el panel trae la suya quedaban dos aspas a la vista. Se
+   desvanece la del header: la de dentro es la que manda. */
+.d2 .burger.esta-activo {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}
+
+
+/* De 1001px para arriba manda el mega menu: el panel no debe existir ni
+   aunque quedara abierto al girar la pantalla. */
+@media (min-width: 1001px) {
+  .d2 .mobile-menu,
+  .d2 .menu-velo { display: none; }
+}
 
 
 /* --------------------------------------------------------------------------
@@ -905,12 +1177,19 @@ span.d2-panel__filtro:hover {
   .d2 .nav__drop__lista > li,
   .d2 .nav__drop__destacado,
   .d2 .mobile-menu,
-  .d2 .mobile-menu nav > *,
+  .d2 .menu-velo,
+  .d2 .mobile-menu__cabecera,
+  .d2 .mobile-menu__rotulo,
   .d2 .mobile-menu__sub > *,
+  .d2 .mobile-menu__raiz,
+  .d2 .mobile-menu > .btn,
   .d2 .nav__caret {
     transition: none;
     transform: none;
   }
+  /* Sin transicion el panel se quedaria a la vista: cerrado tiene que
+     seguir fuera de pantalla, solo que sin deslizamiento. */
+  .d2 .mobile-menu:not(.esta-abierto) { transform: translateX(-100%); }
   .d2 .nav__drop { transform: translate(-50%, 0); }
 }
 
@@ -1259,11 +1538,11 @@ span.d2-panel__filtro:hover {
    Retiradas esas dos columnas (4/9/2026) solo queda ajustar el hueco entre
    logos. La alineacion a la izquierda se elimina: descentraba la etiqueta
    sin un titular al que acompanar. */
-@media (max-width: 1100px) {
+@media (max-width: 1000px) {
   .d2-logos--dos__marquesina { --hueco: clamp(56px, 8vw, 96px); }
 }
 
-@media (max-width: 699px) {
+@media (max-width: 900px) {
   .d2-logos--dos__inner { grid-template-columns: 1fr; }
   .d2-logos--dos__marquesina { --hueco: clamp(44px, 9vw, 96px); }
 
@@ -1569,7 +1848,7 @@ span.d2-panel__filtro:hover {
    -------------------------------------------------------------------------- */
 
 /* Los seis pasan a dos filas de tres mas estrechas */
-@media (max-width: 1180px) {
+@media (max-width: 1000px) {
   .d2-foco__inner {
     grid-template-columns: minmax(0, auto) minmax(220px, 268px) minmax(0, 1fr);
     gap: clamp(16px, 2vw, 26px);
@@ -1578,7 +1857,7 @@ span.d2-panel__filtro:hover {
 
 /* Ya no caben las tres zonas: el titular sube a lo ancho y abajo quedan la
    tarjeta y los logos. */
-@media (max-width: 980px) {
+@media (max-width: 1000px) {
   .d2-foco__inner {
     grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
     row-gap: clamp(16px, 2.4vw, 22px);
@@ -1587,7 +1866,7 @@ span.d2-panel__filtro:hover {
   .d2-foco__texto { grid-column: 1 / -1; }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 640px) {
   .d2-foco__inner { grid-template-columns: 1fr; }
 
   /* La tarjeta se queda en fila: logo y cifra tienen que seguir juntos,
@@ -2263,7 +2542,7 @@ span.d2-panel__filtro:hover {
   .d2-prob-lec__lista > li > p { grid-area: texto; }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   /* Ya no cabe al lado: vuelve a apilarse */
   .d2-prob-lec__lista li {
     grid-template-columns: 1fr;
@@ -2427,10 +2706,10 @@ span.d2-panel__filtro:hover {
    RESPONSIVE
    ========================================================================== */
 
-@media (max-width: 980px) {
+@media (max-width: 1000px) {
 }
 
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .d2-prob-tri__lista { grid-template-columns: 1fr; gap: var(--d2-e4); }
 
   /* Los encabezados de columna dejan de tener sentido cuando las dos
@@ -4316,7 +4595,7 @@ span.d2-panel__filtro:hover {
    860px, que es donde el texto de .875rem empieza a partirse mal.
    ========================================================================== */
 
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .d2 .d2-rutas-sel__lista,
   .d2 .d2-rutas-esc__lista {
     grid-template-columns: 1fr;
@@ -4350,7 +4629,7 @@ span.d2-panel__filtro:hover {
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   .d2 .d2-rutas-sel__ruta {
     padding: var(--d2-e3);
   }
@@ -4926,7 +5205,7 @@ span.d2-panel__filtro:hover {
   gap: 0 clamp(16px, 2.2vw, 28px);
 }
 
-@media (min-width: 860px) {
+@media (min-width: 901px) {
   .d2 .d2-prueba-rec__hito--final .d2-prueba-rec__cuerpo {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -4956,7 +5235,7 @@ span.d2-panel__filtro:hover {
 
    Solo dentro de la consulta de medios: apilado en una columna el orden del
    marcado ya es el correcto, y fijar filas ahi rompería el emparejamiento. */
-@media (min-width: 860px) {
+@media (min-width: 901px) {
   .d2 .d2-prueba-rec__hito--final .d2-prueba-rec__cita {
     grid-row: 3;
     align-self: start;
@@ -5414,7 +5693,7 @@ span.d2-panel__filtro:hover {
    390 menos gutters = 310) y la rejilla de dos columnas.
    ========================================================================== */
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   /* Los carriles se apilan: a dos columnas por debajo de 720 el boton se
      parte en dos lineas y rompe la altura de 52px. */
   .d2 .d2-cta-car__lista {
@@ -5422,7 +5701,7 @@ span.d2-panel__filtro:hover {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   /* Una columna: a 390px dos botones lado a lado dejan ~145px cada uno y
      "Check your opportunity" se parte en tres lineas, rompiendo los 52px
      de alto. Apilados conservan la altura y siguen midiendo lo mismo. */
@@ -6285,7 +6564,7 @@ span.d2-panel__filtro:hover {
 }
 
 /* --- Movil ------------------------------------------------------------ */
-@media (max-width: 560px) {
+@media (max-width: 640px) {
 
   .d2 .d2-pie-dir__nav,
   .d2 .d2-pie-desp__mapa .d2-pie-desp__base-inner {
@@ -6746,14 +7025,14 @@ span.d2-panel__filtro:hover {
 /* Dos columnas antes de apilar (7/9/2026): en una sola la seccion se iba a
    1567px en movil. Con la foto a 124px caben dos de sobra, y solo por debajo
    de 480px se pasa a una. */
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .d2 .d2-equipo-firma__resto {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(20px, 3vw, 28px);
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .d2 .d2-equipo-firma__resto {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -6948,7 +7227,7 @@ span.d2-panel__filtro:hover {
   .d2 .d2-equipo-firma__foto-grande { max-width: 200px; }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   .d2 .d2-equipo-ficha__lista { grid-template-columns: 1fr; }
   .d2 .d2-equipo-ficha__marco { max-width: 300px; }
 }
@@ -7402,7 +7681,7 @@ span.d2-panel__filtro:hover {
    Responsive
    -------------------------------------------------------------------------- */
 
-@media (max-width: 620px) {
+@media (max-width: 640px) {
   /* El numeral pasa encima: al lado se come el ancho de la cita, que es lo
      que hay que leer. */
   .d2 .d2-res-ed__fila {
@@ -7752,7 +8031,7 @@ span.d2-panel__filtro:hover {
 }
 
 /* En pantallas estrechas la barra se centra abajo: a los lados no cabe */
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .d2-fondos {
     left: 50%;
     transform: translateX(-50%);
@@ -8189,7 +8468,7 @@ span.d2-panel__filtro:hover {
 
 /* --- Adaptacion --- */
 
-@media (max-width: 1080px) {
+@media (max-width: 1000px) {
   .d2-prob-mapa__inner {
     grid-template-columns: 1fr;
     gap: 44px;
@@ -8200,7 +8479,7 @@ span.d2-panel__filtro:hover {
   .d2-prob-mapa__lead { max-width: none; }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .d2-prob-mapa__lienzo { min-height: 380px; }
 
   /* Abajo y a todo el ancho: encajada en la esquina taparia dos burbujas */
@@ -9402,16 +9681,40 @@ span.d2-panel__filtro:hover {
    Mismo cruce que la cita, 300ms, para que se lea como un solo cambio y no
    como dos cosas moviendose a destiempo. */
 
-.d2 .d2-res-cen__cifras {
+/* ENTRAN UNA A UNA (8/9/2026)
+
+   Antes las tres cifras se movian como un solo bloque, a la vez que la
+   cita. Ahora entran en cadena --resena, Buildings, Annual, Cumulative--
+   para que se lean en ese orden en vez de aparecer todas de golpe.
+
+   El escalonado va en la ENTRADA y no en la salida: al salir se van juntas
+   y rapido, que es lo que despeja el sitio; escalonar tambien la salida
+   alargaria el cruce al doble y se notaria lento. */
+
+.d2 .d2-res-cen__cifras > div {
   transition: opacity .3s cubic-bezier(.4, 0, .2, 1),
               transform .3s cubic-bezier(.4, 0, .2, 1);
 }
 
-.d2 .d2-res-cen.esta-cambiando .d2-res-cen__cifras {
+/* Cada una espera su turno al entrar. La cita va a 0s --su regla esta
+   arriba-- asi que la cadena arranca justo despues.
+
+   SOLO EN MOVIL: en escritorio las tres cifras van en fila y se ven de un
+   vistazo, asi que entrar en cadena solo retrasaria algo que ya se lee
+   junto. Apiladas si tiene sentido, porque se recorren de arriba abajo. */
+@media (max-width: 640px) {
+  .d2 .d2-res-cen__cifras > div:nth-child(1) { transition-delay: .16s; }
+  .d2 .d2-res-cen__cifras > div:nth-child(2) { transition-delay: .30s; }
+  .d2 .d2-res-cen__cifras > div:nth-child(3) { transition-delay: .44s; }
+}
+
+.d2 .d2-res-cen.esta-cambiando .d2-res-cen__cifras > div {
   opacity: 0;
   /* Baja 8px, igual que la cita: el bloque entero se mueve en la misma
      direccion en vez de abrirse en dos. */
   transform: translateY(-8px);
+  /* Sin retardo al salir: las tres se van a la vez. */
+  transition-delay: 0s;
 }
 
 /* --------------------------------------------------------------------------
@@ -9483,7 +9786,7 @@ span.d2-panel__filtro:hover {
 
 /* --- Adaptacion --- */
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .d2 .d2-res-cen__cifras {
     grid-template-columns: 1fr;
   }
@@ -9884,7 +10187,7 @@ span.d2-panel__filtro:hover {
   }
 }
 
-@media (max-width: 940px) {
+@media (max-width: 1000px) {
   .d2 .d2-faq-num__inner { grid-template-columns: 1fr; gap: 32px; }
   .d2 .d2-faq-num__indice { position: static; }
   .d2 .d2-faq-num__r { padding-left: 0; }
@@ -9991,7 +10294,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-faq-rol__lista dd:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
 
-@media (max-width: 980px) {
+@media (max-width: 1000px) {
   .d2 .d2-faq-rol__cols { grid-template-columns: 1fr; gap: 40px; }
 }
 
@@ -10434,16 +10737,32 @@ span.d2-panel__filtro:hover {
 
 /* --- Adaptacion --- */
 
-@media (max-width: 1080px) {
+@media (max-width: 1000px) {
+  /* La cabecera se apila desde 1000 para abajo, en todas las pantallas. */
   .d2 .d2-rutas-sec__cabecera { grid-template-columns: 1fr; gap: 22px; }
   .d2 .d2-rutas-sec__lead { margin-top: 0; max-width: none; }
+}
 
+/* Solo la franja de DOS columnas. El giro de la linea de abajo no puede
+   alcanzar a movil: alli los pasos van apilados y la linea ya apunta bien,
+   asi que girarla dejaba un trozo de 26px invisible. */
+@media (max-width: 1000px) and (min-width: 641px) {
   .d2 .d2-rutas-sec__pasos { grid-template-columns: repeat(2, 1fr); row-gap: 52px; }
 
   /* Con dos columnas, el filete del segundo sobra */
   .d2 .d2-rutas-sec__paso:nth-child(2n)::after { display: none; }
-  /* Y la linea del segundo no lleva a ningun sitio */
-  .d2 .d2-rutas-sec__paso:nth-child(2n) .d2-rutas-sec__marca::after { display: none; }
+
+  /* En dos columnas la linea del par apunta al vacio: a su derecha no hay
+     nada. Probe girarla 90 grados para que bajase a la fila siguiente,
+     pero la caja mide 379px de ancho y al girarla sobre su centro el trazo
+     se sale de la tarjeta: no se veia nada.
+
+     Se queda oculta, como estaba. Es la unica franja donde no caben las
+     cuatro lineas, y forzarlas costaria reescribir la rejilla. En movil
+     --una columna-- y en escritorio --cuatro-- si estan las cuatro. */
+  .d2 .d2-rutas-sec__paso:nth-child(2n) .d2-rutas-sec__marca::after {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {
@@ -10466,6 +10785,25 @@ span.d2-panel__filtro:hover {
 
   /* La linea horizontal se alarga hasta el borde */
   .d2 .d2-rutas-sec__marca::after { right: 0; }
+
+  /* Los cuatro pasos llevan linea (8/9/2026).
+
+     En dos columnas la del paso par apuntaba al vacio --no habia nada a su
+     derecha-- y por eso se ocultaba. Apilados en una columna cada paso
+     tiene al siguiente debajo, asi que esa regla ya no describe la
+     realidad: solo dejaba dos lineas de cuatro. Se devuelven todas menos
+     la del ultimo, que es donde termina la secuencia. */
+  .d2 .d2-rutas-sec__paso:nth-child(2n) .d2-rutas-sec__marca::after {
+    display: block;
+  }
+
+  /* El cuarto tambien la lleva, por decision del usuario: apilados, los
+     cuatro puntos se leen iguales entre si. Su linea no conecta con nada
+     --es el ultimo-- pero visualmente cierra la columna. */
+  .d2 .d2-rutas-sec__paso:last-child .d2-rutas-sec__marca::after {
+    display: block;
+  }
+
   .d2 .d2-rutas-sec__marca { margin-bottom: 26px; }
   .d2 .d2-rutas-sec__preg { margin-bottom: 22px; }
   .d2 .d2-rutas-sec__desc { padding-bottom: 20px; }
@@ -10554,6 +10892,22 @@ span.d2-panel__filtro:hover {
      cuatro destellos sueltos. */
   .d2 .d2-rutas-sec__paso:nth-child(2) .d2-rutas-sec__marca::after { animation-delay: .95s; }
   .d2 .d2-rutas-sec__paso:nth-child(3) .d2-rutas-sec__marca::after { animation-delay: 1.9s; }
+
+  /* El cuarto solo tiene linea en movil --en escritorio cierra la
+     secuencia sin ella--, asi que nunca se le dio turno y se quedaba en 0s:
+     arrancaba a la vez que el primero y, estando abajo del todo, la
+     secuencia parecia ir al reves. Con 2.85s cierra la cadena en orden.
+
+     Va en su @media para no tocar escritorio, donde su linea no existe. */
+  @media (max-width: 640px) {
+    .d2 .d2-rutas-sec__paso:nth-child(4) .d2-rutas-sec__marca::after {
+      animation-delay: 2.85s;
+    }
+  }
+  /* El cuarto no lleva linea propia --cierra la secuencia--, pero el
+     tercero si la tiene en una sola columna, asi que la cadena de tres
+     tramos se recorre entera de arriba abajo. */
+
 
   @keyframes d2PulsoLinea {
     0%    { --pulso: -30%; }
@@ -10974,7 +11328,7 @@ span.d2-panel__filtro:hover {
   color: var(--c-verde-hover, #026F00);
 }
 
-@media (max-width: 940px) {
+@media (max-width: 1000px) {
   .d2 .d2-cta-ficha__inner { grid-template-columns: 1fr; gap: 34px; }
   .d2 .d2-cta-ficha__lead { max-width: none; }
 }
@@ -11140,7 +11494,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-cta-ruta__paso:hover .d2-cta-ruta__que { color: #B5DBAD; }
 
-@media (max-width: 1040px) {
+@media (max-width: 1000px) {
   .d2 .d2-cta-ruta__cabecera { grid-template-columns: 1fr; align-items: start; }
   .d2 .d2-cta-ruta__accion { text-align: left; }
   .d2 .d2-cta-ruta__pasos { grid-template-columns: repeat(2, 1fr); row-gap: 46px; }
@@ -11148,7 +11502,7 @@ span.d2-panel__filtro:hover {
   .d2 .d2-cta-ruta__paso:nth-child(2n) .d2-cta-ruta__marca::after { display: none; }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 640px) {
   .d2 .d2-cta-ruta__pasos { grid-template-columns: 1fr; row-gap: 38px; }
   .d2 .d2-cta-ruta__paso,
   .d2 .d2-cta-ruta__paso + .d2-cta-ruta__paso { padding-inline: 0; }
@@ -11394,7 +11748,7 @@ span.d2-panel__filtro:hover {
 
 /* --- Adaptacion --- */
 
-@media (max-width: 1040px) {
+@media (max-width: 1000px) {
   .d2 .d2-cta-ruta__pasos { grid-template-columns: 1fr 1fr; row-gap: 42px; }
   /* Con dos filas, una banda continua mentiria sobre la secuencia */
   .d2 .d2-cta-ruta__pasos::before { content: none; }
@@ -11412,7 +11766,7 @@ span.d2-panel__filtro:hover {
   }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 640px) {
   .d2 .d2-cta-ruta__pasos { grid-template-columns: 1fr; row-gap: 34px; }
   .d2 .d2-cta-ruta__paso { padding-right: 0; }
   .d2 .d2-cta-ruta__desc { max-width: none; }
@@ -11672,7 +12026,7 @@ span.d2-panel__filtro:hover {
   .d2 .d2-equipo-banda__lista::before { content: none; }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 640px) {
   .d2 .d2-equipo-banda__lista { grid-template-columns: 1fr; row-gap: 38px; }
   .d2 .d2-equipo-banda__marco { max-width: 200px; }
 }
@@ -12430,7 +12784,7 @@ span.d2-panel__filtro:hover {
   height: auto;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .d2 .d2-pie-cierre__agua { bottom: -76%; }
   .d2 .d2-pie-cierre__inner { padding-bottom: clamp(70px, 14vw, 96px); }
 }
@@ -12656,9 +13010,18 @@ span.d2-panel__filtro:hover {
    ancho. Se apilan, cifra arriba y logos debajo, cada uno con su linea
    completa. */
 @media (max-width: 900px) {
+  /* El relleno baja de 26px a 18px y el hueco entre bloques de 18 a 14:
+     son 24px que pasan integros a los logos sin tocar ni un tamano de
+     letra. Con el texto en dos lineas la seccion ya no necesita tanto
+     aire para no verse apretada. */
+  .d2 .d2-logos--dos {
+    padding-top: clamp(21px, 3vw, 26px);
+    padding-bottom: clamp(21px, 3vw, 26px);
+  }
+
   .d2 .d2-logos--dos__inner {
     grid-template-columns: minmax(0, 1fr);
-    row-gap: clamp(18px, 3vw, 26px);
+    row-gap: clamp(13px, 2.2vw, 18px);
   }
 
   .d2 .d2-logos--dos__der,
@@ -12668,6 +13031,78 @@ span.d2-panel__filtro:hover {
 
   .d2 .d2-logos--dos__der  { grid-row: 1; max-width: none; }
   .d2 .d2-logos--dos__centro { grid-row: 2; }
+
+  /* ----------------------------------------------------------------------
+     LA CIFRA, EN UNA FILA (8/9/2026)
+
+     Apiladas, las tres lineas se llevaban 89px de los 217 de la seccion
+     --el 41%-- y dejaban los logos en 112x56, mas pequenos que en
+     escritorio. Y el texto solo usaba la mitad izquierda: el resto del
+     negro quedaba vacio.
+
+     Puesta la cifra al lado de su texto, el bloque baja a la altura de dos
+     lineas y ese alto se lo quedan los logos. Es la misma composicion que
+     en escritorio --cifra a la izquierda, contenido a la derecha--, solo
+     que aqui el vecino es su propio pie en vez de la marquesina.
+     ---------------------------------------------------------------------- */
+  .d2 .d2-logos--dos__der {
+    display: grid;
+    /* Al margen izquierdo, como el resto de la pagina: en movil seis de
+       las ocho secciones arrancan en x=20-28. Centrado, este bloque
+       empezaba en x=70 y era el unico que rompia ese eje al bajar. Las
+       dos secciones que si van centradas --calculadora y CTA-- lo estan
+       por ser llamadas a la accion, que es otra cosa.
+
+       Ademas es como va en escritorio: asi la seccion no cambia de
+       caracter segun la pantalla. */
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: clamp(14px, 3.4vw, 22px);
+    /* El filete y sus 16px de padding venian de la version apilada, donde
+       hacian de separacion entre cifra y logos. El hueco de la rejilla ya
+       cumple esa funcion: aqui solo restaban alto. */
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .d2 .d2-logos--dos__cifra {
+    grid-row: 1 / span 2;
+    grid-column: 1;
+    /* Sube de 28px a 34px: al dejar de competir por el alto con las dos
+       lineas de texto hay sitio, y la cifra es el dato que sostiene la
+       seccion. Sigue por debajo del techo de 40px del sistema. */
+    font-size: clamp(2rem, 1.5rem + 2.2vw, 2.5rem);
+  }
+
+  .d2 .d2-logos--dos__cifra-pie {
+    grid-row: 1;
+    grid-column: 2;
+    /* Sin margen superior: lo alinea la rejilla, y el que traia lo bajaba
+       respecto a la cifra. */
+    margin-top: 0;
+    align-self: end;
+  }
+
+  .d2 .d2-logos--dos__cifra-nota {
+    grid-row: 2;
+    grid-column: 2;
+    align-self: start;
+  }
+
+  /* El alto recuperado va a los logos: de 56px a 68-78px.
+
+     El tope real no es el alto sino el ANCHO. Los logos guardan su
+     proporcion, asi que subir el alto los ensancha tambien, y
+     greater-victoria --693x200-- llegaba a 249px dentro de una franja de
+     350: se salia por el lado. Por eso el alto sube con mesura y el
+     numero de logos a la vista se ajusta abajo, en el bloque que ya
+     gobierna --visibles. */
+  .d2 .d2-logos--dos__marquesina {
+    --alto-logo: clamp(80px, 18vw, 92px);
+  }
+
+  /* Los logos, al mismo eje que la cifra. */
+  .d2 .d2-logos--dos__centro { text-align: left; }
 }
 
 /* --------------------------------------------------------------------------
@@ -12702,23 +13137,43 @@ span.d2-panel__filtro:hover {
   --visibles: 4;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1000px) {
   .d2 .d2-logos--dos__marquesina {
     max-width: 78%;
     --visibles: 3;
   }
 }
 
-@media (max-width: 699px) {
+@media (max-width: 900px) {
   .d2 .d2-logos--dos__marquesina {
     max-width: 100%;
     --visibles: 3;
   }
 }
 
-@media (max-width: 460px) {
-  /* Con tres, a 380px cada logo se quedaba en 84px: ilegible */
-  .d2 .d2-logos--dos__marquesina { --visibles: 2; }
+@media (max-width: 640px) {
+  /* Con dos, y ya con el alto en 68px, greater-victoria --el mas apaisado
+     de los cinco-- se iba a 215px de una franja de 350 y desbordaba.
+
+     Vuelven a ser tres, pero ahora NO quedan en 84px como cuando se probo
+     antes: el alto manda sobre el ancho --los logos van a su proporcion--
+     y con 68px de alto el mas ancho se queda en 145px. El hueco cede para
+     que los tres entren. */
+  .d2 .d2-logos--dos__marquesina {
+    --visibles: 3;
+    --hueco: clamp(26px, 6.5vw, 72px);
+  }
+
+  /* El max-width de la regla base es un PORCENTAJE, y se mide contra la
+     pista --que es max-content y mucho mas ancha que la franja--, no
+     contra lo que se ve. Por eso dejaba pasar 236px en una franja de 350.
+
+     Un tope en vw si se mide contra la pantalla: greater-victoria baja a
+     ~145px y los tres logos caben. Los demas no llegan al tope y se
+     quedan como estan. */
+  .d2 .d2-logos--dos__marquesina img {
+    max-width: 44vw;
+  }
 }
 
 /* ==========================================================================
@@ -12767,8 +13222,15 @@ span.d2-panel__filtro:hover {
    a ancho completo, asi que el texto se reparte mejor solo--.
    -------------------------------------------------------------------------- */
 
-@media (max-width: 1080px) {
-  .d2 .d2-rutas-sec__titulo br { display: none; }
+@media (max-width: 1000px) {
+  /* El <br> se desactiva para que el texto fluya, pero con display:none
+     desaparece SIN dejar separacion y las palabras se pegaban: se leia
+     "signals tomeasurable action". Como elemento en linea vacio no rompe
+     la linea y el espacio del marcado se conserva. */
+  .d2 .d2-rutas-sec__titulo br {
+    display: inline;
+    content: " ";
+  }
 }
 
 /* ==========================================================================
@@ -13381,7 +13843,7 @@ span.d2-panel__filtro:hover {
   border-color: #FFFFFF;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .d2 .d2-equipo-voz__persona {
     grid-template-columns: minmax(0, 1fr);
     gap: clamp(22px, 4vw, 30px);
@@ -13389,4 +13851,105 @@ span.d2-panel__filtro:hover {
 
   /* Apilado, el retrato no necesita tanto ancho */
   .d2 .d2-equipo-voz__marco { max-width: 200px; }
+}
+
+/* ==========================================================================
+   ZONAS TACTILES EN MOVIL (8/9/2026)
+
+   Apple pide 44x44 puntos y WCAG 2.5.5 lo mismo. Medido a 390px de ancho
+   habia 32 enlaces y botones por debajo --el mas pequeno de 10px--, y en un
+   movil se fallan al pulsar.
+
+   Se agranda el AREA, no el elemento: un ::after superpuesto y centrado. Asi
+   el dibujo no se mueve ni un pixel. Ampliar con padding y margen negativo
+   no vale: en inline-flex descoloca la alineacion, y ya paso una vez.
+
+   Solo por debajo de 900px: en escritorio se apunta con raton y 44px de alto
+   en un enlace de texto rompe el ritmo vertical.
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .d2 :is(.d2-rutas-sec__enlace,
+          .d2-res-cen__punto,
+          .d2-res-cen__flecha,
+          .d2-pie-dir__login,
+          .d2-pie-social,
+          .d2-pie-dir__logo,
+          .header__logo,
+          .d2-faq-dato__pie a,
+          .d2-pie-dir__col a,
+          .d2-pie-dir__enlaces a,
+          .d2-pie-dir__legales a) {
+    position: relative;
+  }
+
+  .d2 :is(.d2-rutas-sec__enlace,
+          .d2-res-cen__punto,
+          .d2-res-cen__flecha,
+          .d2-pie-dir__login,
+          .d2-pie-social,
+          .d2-pie-dir__logo,
+          .header__logo,
+          .d2-faq-dato__pie a,
+          .d2-pie-dir__col a,
+          .d2-pie-dir__enlaces a,
+          .d2-pie-dir__legales a)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* Ancho y alto FIJOS de 44: con width:100% el pseudoelemento hereda el
+       tamano del elemento y no agranda nada, que fue el primer intento. El
+       max() deja que crezca si el elemento ya es mayor. */
+    width: max(100%, 44px);
+    height: 44px;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Los puntos del carrusel de resenas van a 10px de alto y muy juntos: con
+     44px de area se solaparian y el toque caeria en el vecino. */
+  .d2 .d2-res-cen__puntos { gap: 14px; }
+}
+
+/* ==========================================================================
+   TAMANO MINIMO DE TEXTO EN MOVIL (8/9/2026)
+
+   Medido a 390px habia 16 textos por debajo de 12px, alguno a 8.5. A ese
+   tamano el texto deja de leerse comodo en un movil, y quien tenga la vista
+   cansada no lo lee en absoluto.
+
+   El suelo es 12px y no 16: son etiquetas y datos secundarios --eyebrows,
+   avisos del mapa, cifras pequenas--, no cuerpo de texto. Subirlos a 16
+   los pondria al nivel del parrafo y romperia la jerarquia, que es lo que
+   estas piezas aportan.
+
+   Solo por debajo de 900px: en escritorio se lee mas cerca y de una pantalla
+   mas grande, y ahi el 11px de un eyebrow cumple su papel.
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .d2 :is(.eyebrow,
+          .d2-equipo-voz__eyebrow,
+          .d2-botones__eyebrow,
+          .d2-pie-dir__titulo,
+          .d2-prob-mapa__aviso,
+          .d2-equipo-voz__cred) {
+    font-size: 12px;
+  }
+
+  /* Las etiquetas y cifras del mapa de cartera, que son las mas pequenas */
+  .d2 .d2-prob-mapa :is(small, strong) {
+    font-size: 12px;
+  }
+
+  /* El pie de las metricas del hero */
+  .d2 .d2-metrica span,
+  .d2 .d2-panel small {
+    font-size: 12px;
+  }
+
+  /* Las etiquetas bajo las cifras de Reviews: iban a 11px */
+  .d2 .d2-res-cen__cifras span {
+    font-size: 12px;
+  }
 }

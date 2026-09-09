@@ -208,7 +208,19 @@
       var minimizado = false;
       var CLAVE_P = CLAVE + '-minimizado';
 
-      try { minimizado = sessionStorage.getItem(CLAVE_P) === '1'; } catch (e) {}
+      /* En movil arrancan recogidas: siete barras de 46px sumaban 322px
+         empujando las secciones hacia abajo y rompiendo su altura. Son
+         mandos de PRUEBA --se retiran antes de publicar-- asi que no deben
+         condicionar como se ve el diseno.
+
+         Si ya hay una eleccion guardada en la sesion se respeta: quien las
+         abrio a proposito no quiere que se le vuelvan a cerrar. */
+      var esMovil = window.matchMedia('(max-width: 640px)').matches;
+
+      try {
+        var guardado = sessionStorage.getItem(CLAVE_P);
+        minimizado = guardado === null ? esMovil : guardado === '1';
+      } catch (e) { minimizado = esMovil; }
 
       function pintarMinimizado() {
         mandos.classList.toggle('esta-minimizado', minimizado);

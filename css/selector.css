@@ -49,7 +49,7 @@
 
 .modo-edicion .selector-v { bottom: 90px; }
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .selector-v__etiqueta { display: none; }
   .modo-edicion .selector-v { bottom: 134px; }
 }
@@ -103,7 +103,7 @@
   .selector-v:not(.esta-plegado):hover:focus-within { opacity: 1; }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .selector-v { font-size: 12px; }
   .selector-v a { min-width: 38px; }
 }

@@ -310,7 +310,7 @@
   .respuesta .enlace-flecha { width: 100%; justify-content: center; }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   .prueba-sec .cita__texto::before { margin-left: 0; float: none; }
 }
 
@@ -348,7 +348,7 @@
    sigue en una linea, como estaba.
    ========================================================================== */
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   .calc__btn {
     white-space: normal;
     text-align: center;

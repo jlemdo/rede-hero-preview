@@ -270,29 +270,109 @@
 
   var burger = document.querySelector('.burger');
   var movil = document.getElementById('mobile-menu');
+  var velo = document.getElementById('menu-velo');
 
   if (burger && movil) {
+    /* El guion antiguo --main.js-- ya dejo su escucha en el boton. Clonarlo
+       la borra: dos escuchas alternarian el menu dos veces por toque y no
+       se abriria nunca. */
     var limpioB = burger.cloneNode(true);
     burger.parentNode.replaceChild(limpioB, burger);
     burger = limpioB;
 
+    /* El panel tapa el header entero, asi que su boton de cerrar tiene que
+       vivir dentro. Se crea aqui y no en el HTML porque sin este guion no
+       habria forma de cerrarlo: un boton muerto es peor que ninguno. */
+    var cerrarBtn = document.createElement('button');
+    cerrarBtn.type = 'button';
+    cerrarBtn.className = 'mobile-menu__cerrar';
+    cerrarBtn.setAttribute('aria-label', 'Close menu');
+    cerrarBtn.innerHTML =
+      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+      '<path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.9" ' +
+      'stroke-linecap="round"/></svg>';
+    /* Logo y aspa comparten fila: asi se centran entre si en vez de
+       colocarse cada uno por su cuenta --antes quedaban a 17px de
+       desfase--. La fila se crea aqui porque el aspa tambien nace aqui. */
+    var logo = movil.querySelector('.mobile-menu__logo');
+    var cabecera = document.createElement('div');
+    cabecera.className = 'mobile-menu__cabecera';
+    movil.insertBefore(cabecera, movil.firstChild);
+    if (logo) { cabecera.appendChild(logo); }
+    cabecera.appendChild(cerrarBtn);
+
     var abiertoM = false;
+    var desplazado = 0;
+
+    /* Lo que puede recibir el foco dentro del panel. Se recalcula en cada
+       apertura y no una sola vez: asi no depende del orden de carga de los
+       guiones ni de que el boton de cerrar ya exista. */
+    function focosDe(el) {
+      return Array.prototype.filter.call(
+        el.querySelectorAll('a[href], button:not([disabled])'),
+        function (x) { return x.offsetParent !== null; }
+      );
+    }
 
     function pintarM(v) {
       abiertoM = v;
       burger.setAttribute('aria-expanded', v ? 'true' : 'false');
       burger.setAttribute('aria-label', v ? 'Close menu' : 'Open menu');
       burger.classList.toggle('esta-activo', v);
-      v ? abrir(movil) : cerrar(movil);
 
-      /* Con el menu abierto, el fondo no debe poder desplazarse */
-      document.body.style.overflow = v ? 'hidden' : '';
+      v ? abrir(movil) : cerrar(movil);
+      if (velo) { v ? abrir(velo) : cerrar(velo); }
+
+      /* position:fixed en el cuerpo y no solo overflow:hidden: en iOS el
+         overflow por si mismo no frena el desplazamiento y la pagina sigue
+         corriendo por detras del panel. Al fijarlo se pierde la posicion,
+         asi que se guarda antes y se devuelve al cerrar. */
+      if (v) {
+        desplazado = window.pageYOffset || document.documentElement.scrollTop;
+        document.body.style.position = 'fixed';
+        document.body.style.top = (-desplazado) + 'px';
+        document.body.style.width = '100%';
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+
+        /* La hoja declara `html { scroll-behavior: smooth }`, asi que este
+           scrollTo se ANIMABA: al soltar el position:fixed la pagina caia a
+           y=0 y volvia subiendo hasta la posicion guardada. Se veia como un
+           sube y baja de casi un segundo cada vez que se cerraba el menu.
+
+           Se desactiva el suavizado solo para este salto --que no es una
+           navegacion, es devolver la pagina donde estaba-- y se restaura
+           inmediatamente para no tocar el resto de anclas. */
+        var raiz = document.documentElement;
+        var suave = raiz.style.scrollBehavior;
+        raiz.style.scrollBehavior = 'auto';
+        window.scrollTo(0, desplazado);
+        raiz.style.scrollBehavior = suave;
+      }
+
+      if (v) {
+        var f = focosDe(movil);
+        if (f.length) { f[0].focus(); }
+      }
     }
 
     burger.addEventListener('click', function (e) {
       e.stopPropagation();
       pintarM(!abiertoM);
     });
+
+    cerrarBtn.addEventListener('click', function () {
+      pintarM(false);
+      burger.focus();
+    });
+
+    if (velo) {
+      velo.addEventListener('click', function () { pintarM(false); });
+    }
 
     /* Al elegir un destino se cierra: si no, tapa la seccion a la que se
        acaba de saltar */
@@ -301,9 +381,29 @@
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && abiertoM) {
+      if (!abiertoM) { return; }
+
+      if (e.key === 'Escape') {
         pintarM(false);
         burger.focus();
+        return;
+      }
+
+      /* El foco no debe salirse del panel: detras hay una pagina entera de
+         enlaces que quien navega con teclado no puede ver. */
+      if (e.key === 'Tab') {
+        var f = focosDe(movil);
+        if (!f.length) { return; }
+        var primero = f[0];
+        var ultimo = f[f.length - 1];
+
+        if (e.shiftKey && document.activeElement === primero) {
+          e.preventDefault();
+          ultimo.focus();
+        } else if (!e.shiftKey && document.activeElement === ultimo) {
+          e.preventDefault();
+          primero.focus();
+        }
       }
     });
 

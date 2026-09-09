@@ -198,7 +198,7 @@
 
 /* --- Movil --------------------------------------------------------------- */
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
   .barra-edicion {
     flex-direction: column;
     align-items: stretch;
