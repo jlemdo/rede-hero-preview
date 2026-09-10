@@ -14314,9 +14314,13 @@ span.d2-panel__filtro:hover {
 /* --- La leyenda --- */
 
 .d2 .d2-hero__leyenda {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 14px;
+  /* Rejilla de dos columnas y no flex: con cuatro entradas de ancho
+     distinto, el flex dejaba tres arriba y una suelta abajo. Asi quedan
+     dos y dos, alineadas. */
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  justify-content: start;
+  gap: 5px 16px;
   margin: 12px 0 0;
   padding: 0;
   list-style: none;
@@ -14345,6 +14349,26 @@ span.d2-panel__filtro:hover {
 }
 
 .d2 .d2-hero__punto--real { background: var(--c-verde-hover, #026F00); }
+
+/* Target: el mismo verde apagado de su linea. Faltaba en la leyenda --se
+   dibujaban tres lineas y solo se nombraban dos-- asi que la del medio
+   quedaba sin identificar. */
+.d2 .d2-hero__punto--meta { background: #5E9660; }
+
+/* Los anos, bajo el grafico. Solo el primero y el ultimo: los once no caben
+   legibles en un panel de 400px, y con los extremos ya se responde la
+   pregunta que importa --cuanto tiempo--.
+
+   Van en HTML y NO dentro del SVG: ahi escalaban con el lienzo y acababan a
+   7px en escritorio y 6px en movil, la mitad del minimo de 12px que respeta
+   el resto de la web. Fuera conservan su tamano real. */
+.d2 .d2-hero__anos {
+  display: flex;
+  justify-content: space-between;
+  margin: 2px 2px 0;
+  font-size: 12px;
+  color: var(--c-texto-suave, #6B6B6B);
+}
 
 /* En movil el hero se apila y el panel pasa a ancho completo: a 84% de una
    columna estrecha el grafico se queda ilegible. */
