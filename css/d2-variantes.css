@@ -9555,6 +9555,28 @@ span.d2-panel__filtro:hover {
   color: var(--c-texto-suave, #6B6B6B);
 }
 
+/* Un punto entre el cargo y la organizacion: sin el, "Director of
+   Operations SD27 British Columbia" se lee como una sola cosa. Va en
+   ::before del ultimo para no tocar el marcado, y el gap de la fila hace
+   el resto de la separacion. */
+.d2 .d2-res-cen__firma [data-cen-cargo] + [data-cen-org]::before {
+  content: "·";
+  margin-right: 14px;
+  color: var(--c-borde, #C9C9C9);
+}
+
+/* Apilados en movil el punto sobra: cada dato va en su linea. */
+@media (max-width: 640px) {
+  .d2 .d2-res-cen__firma {
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .d2 .d2-res-cen__firma [data-cen-cargo] + [data-cen-org]::before {
+    content: none;
+  }
+}
+
 /* --- Las tres cifras --- */
 
 .d2 .d2-res-cen__cifras {
@@ -13972,5 +13994,314 @@ span.d2-panel__filtro:hover {
   /* Las etiquetas bajo las cifras de Reviews: iban a 11px */
   .d2 .d2-res-cen__cifras span {
     font-size: 12px;
+  }
+}
+
+
+/* ==========================================================================
+   LA CASILLA DE CONSENTIMIENTO (9/9/2026)
+
+   Pedida por el cliente para los tres caminos del formulario. No habia
+   ninguna casilla en el proyecto, asi que se escribe siguiendo los mismos
+   tokens que el resto de campos: mismo verde, mismo radio de 6px, mismo
+   borde.
+
+   Se usa la casilla NATIVA con `appearance:none` en vez de esconderla
+   detras de un span: asi conserva el foco del teclado, el estado
+   indeterminado y la lectura correcta del lector de pantalla, y solo se le
+   cambia la piel.
+   ========================================================================== */
+
+.d2 .campo--casilla .casilla {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.d2 .campo--casilla .casilla__input {
+  /* La caja, dibujada sobre el control nativo */
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  /* 2px de margen arriba: alinea la caja con la primera linea del texto,
+     que va a 13px y no empieza en el borde de su caja. */
+  margin: 2px 0 0;
+  border: 1px solid var(--c-borde, #C9C9C9);
+  border-radius: 4px;
+  background: var(--c-blanco, #FFFFFF);
+  cursor: pointer;
+  transition: background-color .18s ease, border-color .18s ease;
+}
+
+.d2 .campo--casilla .casilla__input:hover {
+  border-color: var(--c-verde, #39B54A);
+}
+
+/* Marcada: fondo verde y el tic dibujado como imagen de fondo. En SVG y no
+   con un pseudoelemento porque `appearance:none` deja el control sin
+   ::before ni ::after propios en algunos navegadores. */
+.d2 .campo--casilla .casilla__input:checked {
+  border-color: var(--c-verde, #39B54A);
+  background-color: var(--c-verde, #39B54A);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8.5l3 3 6-6' stroke='%23FFFFFF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 14px 14px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.d2 .campo--casilla .casilla__input:focus-visible {
+  outline: 2px solid var(--c-verde, #39B54A);
+  outline-offset: 2px;
+}
+
+/* Sin marcar y con el formulario enviado: el navegador la marca como
+   invalida. Se avisa con el borde, nunca solo con el color --norma 1.4.1--:
+   el texto del navegador acompana. */
+.d2 .campo--casilla .casilla__input:invalid:not(:focus) {
+  border-color: var(--c-borde, #C9C9C9);
+}
+
+.d2 .campo--casilla .casilla__texto {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* La casilla no lleva la caja gris de los demas campos: es una linea de
+   texto con un control, no un campo de escritura. */
+.d2 .campo--casilla {
+  margin-top: 4px;
+  margin-bottom: 14px;
+}
+
+
+/* ==========================================================================
+   RESERVAR CITA TRAS ENVIAR (9/9/2026, Parte 6)
+
+   Aparece bajo la confirmacion, y solo si hay enlace de Meetings puesto en
+   los ajustes. El boton reutiliza .btn--linea: es una accion secundaria,
+   no compite con lo que se acaba de hacer.
+   ========================================================================== */
+
+.d2 .tras-envio__reserva {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--c-borde-suave, #EFEFEF);
+}
+
+.d2 .tras-envio__reserva .captura__texto {
+  margin-bottom: 12px;
+}
+
+/* El calendario de HubSpot. Alto minimo para que no salga una franja
+   aplastada mientras carga: el iframe llega sin dimensiones y la caja se
+   quedaria en cero hasta que responde el servidor. */
+.d2 .reserva-zona {
+  margin-top: 14px;
+  min-height: 420px;
+}
+
+.d2 .reserva-zona[hidden] { display: none; }
+
+.d2 .reserva-zona iframe {
+  width: 100%;
+  min-height: 420px;
+  border: 0;
+}
+
+/* En movil el calendario necesita mas alto: HubSpot lo apila en una sola
+   columna y con 420px queda con scroll propio dentro del iframe, que se
+   pelea con el de la pagina. */
+@media (max-width: 640px) {
+  .d2 .reserva-zona,
+  .d2 .reserva-zona iframe { min-height: 560px; }
+}
+
+
+/* ==========================================================================
+   EL PANEL DEL HERO CON EL GRAFICO (9/9/2026)
+
+   Responde a dos puntos del feedback a la vez: donde va el panel respecto a
+   la imagen (10) y que el grafico de la figura 1 vaya dentro (17).
+
+   El panel es ESTRECHO y no llena su columna. El cliente lo dijo mirando la
+   imagen 1: "it's most successful with image #1, where you can see it
+   spilling all around the panel". Con la imagen 3, que es la que eligieron,
+   hay que dejar que la ilustracion respire alrededor en vez de taparla.
+   ========================================================================== */
+
+.d2 .d2-hero__panel {
+  /* Ocupa la segunda columna del hero, pero no entera: 84% deja ver la
+     ilustracion por los lados. */
+  justify-self: center;
+  width: min(84%, 420px);
+  padding: 22px 20px 18px;
+  border: 1px solid var(--c-borde-suave, #EFEFEF);
+  border-radius: 12px;
+  /* Casi opaco, no del todo: se intuye el edificio por detras y el panel no
+     se lee como una tarjeta pegada encima. */
+  background: rgba(255, 255, 255, .93);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  box-shadow: 0 10px 34px rgba(2, 51, 0, .10);
+}
+
+.d2 .d2-hero__panel-eyebrow {
+  margin: 0;
+  font-size: 12px;
+  font-weight: var(--fw-bold, 700);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .d2-hero__panel-cifra {
+  margin: 4px 0 0;
+  /* 40px es el techo del sistema para una cifra. */
+  font-size: clamp(30px, 3.4vw, 40px);
+  font-weight: var(--fw-extrabold, 800);
+  line-height: 1;
+  letter-spacing: -.03em;
+  color: var(--c-texto, #333333);
+}
+
+.d2 .d2-hero__panel-nota {
+  margin: 5px 0 14px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* --- El grafico --- */
+
+.d2 .hero-gr {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.d2 .hero-gr__rejilla line {
+  stroke: var(--c-borde-suave, #EFEFEF);
+  stroke-width: 1;
+}
+
+/* Las barras: el verde de marca. En la figura del cliente son amarillas
+   --el color por defecto de Excel-- pero aqui mandan los colores de Rede. */
+.d2 .hero-gr__barras rect {
+  fill: var(--c-verde, #39B54A);
+  /* Crecen desde abajo al entrar en pantalla. transform-origin en el fondo
+     del lienzo, no en la barra: en SVG el origen es del sistema de
+     coordenadas y con "bottom" cada barra se escalaria desde su propio
+     centro. */
+  transform: scaleY(0);
+  transform-origin: 0 266px;
+  transform-box: view-box;
+  animation: hero-gr-sube .55s cubic-bezier(.32, .72, 0, 1) forwards;
+  animation-delay: calc(.5s + var(--i) * .045s);
+}
+
+@keyframes hero-gr-sube {
+  to { transform: scaleY(1); }
+}
+
+.d2 .hero-gr__linea {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* El trazo se dibuja de izquierda a derecha. 1400 cubre de sobra el
+     largo real de cualquiera de las tres. */
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation: hero-gr-traza 1.3s cubic-bezier(.32, .72, 0, 1) forwards;
+}
+
+@keyframes hero-gr-traza {
+  to { stroke-dashoffset: 0; }
+}
+
+/* "Do nothing" es la linea de referencia: gris, discreta, queda arriba. */
+.d2 .hero-gr__linea--nada {
+  stroke: var(--c-borde, #C9C9C9);
+  animation-delay: .1s;
+}
+
+/* La meta, punteada: es un objetivo, no un hecho. */
+.d2 .hero-gr__linea--meta {
+  stroke: rgba(57, 181, 74, .45);
+  stroke-dasharray: 5 4;
+  animation: none;
+  opacity: 0;
+  animation: hero-gr-aparece .5s ease .9s forwards;
+}
+
+@keyframes hero-gr-aparece {
+  to { opacity: 1; }
+}
+
+/* Lo que de verdad paso: el verde oscuro, el trazo con mas peso. */
+.d2 .hero-gr__linea--real {
+  stroke: var(--c-verde-hover, #026F00);
+  stroke-width: 2.4;
+  animation-delay: .35s;
+}
+
+/* --- La leyenda --- */
+
+.d2 .d2-hero__leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .d2-hero__leyenda li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.d2 .d2-hero__punto {
+  width: 10px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--c-borde, #C9C9C9);
+}
+
+.d2 .d2-hero__punto--ahorro {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: var(--c-verde, #39B54A);
+}
+
+.d2 .d2-hero__punto--real { background: var(--c-verde-hover, #026F00); }
+
+/* En movil el hero se apila y el panel pasa a ancho completo: a 84% de una
+   columna estrecha el grafico se queda ilegible. */
+@media (max-width: 900px) {
+  .d2 .d2-hero__panel {
+    width: 100%;
+    max-width: 420px;
+    justify-self: start;
+  }
+}
+
+/* Sin movimiento: el grafico se ve entero desde el principio. */
+@media (prefers-reduced-motion: reduce) {
+  .d2 .hero-gr__barras rect,
+  .d2 .hero-gr__linea {
+    animation: none;
+    transform: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
   }
 }

@@ -42,9 +42,15 @@
   ];
 
   var CLAVE = 'rede-logos-fondo';
-  /* Arranca en negro (7/9/2026): es el fondo que eligio el cliente para esta
-     seccion. Antes era 0 --blanco--, que era solo el primero de la lista. */
-  var actual = 3;
+  /* Arranca en gris oscuro (9/9/2026). El feedback decia "no consensus among
+     the team: two prefer grey, one prefers green, definitely not white", y de
+     los dos grises de la lista se eligio este --el otro es el #F3F3F3 claro--
+     porque mantiene los logos en blanco y el salto desde el negro anterior es
+     suave.
+
+     Antes era 3 --negro-- y antes de eso 0 --blanco, que era solo el primero
+     de la lista--. */
+  var actual = 2;
 
   try {
     var g = parseInt(sessionStorage.getItem(CLAVE), 10);

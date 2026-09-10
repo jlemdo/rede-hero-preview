@@ -43,6 +43,7 @@
       cita: 'The Rede team is all about proactively implementing energy solutions. ' +
             'They see a gap and they take care of it.',
       nombre: 'Alex Telford',
+      cargo: 'Director of Operations',
       org: 'SD27 · British Columbia',
       cifras: [
         { valor: '20',      etiqueta: 'Buildings connected' },
@@ -55,6 +56,7 @@
             'plan at all. We recognized quickly that we can save money with an energy ' +
             'management program.',
       nombre: 'Wayne Turpin',
+      cargo: 'Superintendent',
       org: 'Northland School Division',
       provisional: true,
       cifras: [
@@ -68,6 +70,7 @@
             'to find inefficiencies within our facilities, then we are able to ' +
             'address them.',
       nombre: 'Norman Buhler',
+      cargo: 'Secretary Treasurer',
       org: 'Fort Vermilion School Division',
       provisional: true,
       cifras: [
@@ -97,6 +100,7 @@
   var cita   = caja.querySelector('[data-cen-cita]');
   var nombre = caja.querySelector('[data-cen-nombre]');
   var org    = caja.querySelector('[data-cen-org]');
+  var cargo  = caja.querySelector('[data-cen-cargo]');
   /* Las tres cifras y sus etiquetas, en orden */
   var cifras = [1, 2, 3].map(function (n) {
     return {
@@ -116,6 +120,10 @@
     cita.textContent = '“' + r.cita + '”';
     nombre.textContent = r.nombre;
     org.textContent = r.org;
+    /* El cargo lo pidio el cliente (feedback 9/9/2026): "include ROLE of
+       person quoted, not just organization". Un cargo dice desde donde
+       habla quien opina, y eso pesa mas que el nombre solo. */
+    if (cargo) { cargo.textContent = r.cargo || ''; }
 
     /* Las cifras cambian con la cita: son el respaldo de ESE distrito, no
        un dato de cartera. Dejarlas quietas atribuiria los numeros de uno a

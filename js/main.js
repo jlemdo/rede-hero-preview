@@ -207,20 +207,183 @@
     other:        { label: 'Other',                             costPerFt2: 2.18, savingsPct: 5.7, implementCostFt2: 0.21, payback: 1.7 }
   };
 
-  var estado = { paso: 1, scope: '' };
-  var TOTAL = 4;
+  var estado = {
+    paso: 1,
+    scope: '',
+    /* Respuestas de la precalificacion (9/9/2026). */
+    tamano: '',      // 'si' / 'no'  -- el filtro de 25.000 pies
+    provincia: '',   // 'BC', 'AB'...  decide si se ven los pasos 3 y 4
+    ciudad: '',
+    utility: '',     // 'si' / 'no'  -- cliente de BC Hydro o FortisBC
+    funding: '',     // historial de subvenciones
+    descartado: false
+  };
+  /* Ocho pasos desde el 9/9/2026: cuatro de precalificacion mas los cuatro
+     de siempre. Nadie los ve los ocho --hay saltos segun las respuestas--,
+     de eso se encargan siguientePaso() y pasoAnterior(). */
+  var TOTAL = 8;
 
   var $ = function (sel) { return seccion.querySelector(sel); };
 
   /* --- Rellenar el selector de tipo de edificio --------------------------- */
 
   var selTipo = $('#c-type');
-  Object.keys(BENCHMARKS).forEach(function (clave) {
-    var op = document.createElement('option');
-    op.value = clave;
-    op.textContent = BENCHMARKS[clave].label;
-    selTipo.appendChild(op);
-  });
+
+  /* --- Que tipos de edificio ve cada sector -------------------------------
+
+     Antes salian los trece a la vez: un distrito escolar podia elegir
+     "Shopping mall" y llevarse un calculo que no tiene nada que ver con su
+     realidad. El cliente lo reporto el 9/9/2026.
+
+     Cada sector define:
+       tipos   -- las opciones que se muestran
+       fijo    -- el benchmark queda clavado en ese valor pase lo que pase.
+                  Sirve para K-12 y postsecundaria: se les PREGUNTA si el
+                  sitio es academico o no --dato util para el equipo de
+                  ventas-- pero la respuesta NO cambia el calculo. Es
+                  deliberado, no un fallo: no hay datos C-Op separados para
+                  cada uno.
+       ayuda   -- el texto bajo el desplegable. El general dice "elige la
+                  coincidencia mas cercana", y eso solo es cierto cuando la
+                  eleccion cambia el resultado. */
+  var SECTORES = {
+    k12: {
+      fijo: 'school',
+      tipos: [
+        { valor: 'school',   label: 'Academic site' },
+        { valor: 'school',   label: 'Non-academic site' }
+      ],
+      ayuda: 'Both site types use the same School benchmark from the ' +
+             'historical C-Op data. Your answer helps our team understand ' +
+             'your portfolio.'
+    },
+    postsec: {
+      fijo: 'university',
+      tipos: [
+        { valor: 'university', label: 'Academic site' },
+        { valor: 'university', label: 'Non-academic site' }
+      ],
+      ayuda: 'Both site types use the same University or college benchmark ' +
+             'from the historical C-Op data. Your answer helps our team ' +
+             'understand your portfolio.'
+    },
+    health: {
+      tipos: ['hospital', 'nursingHome', 'extendedCare']
+    },
+    commercial: {
+      tipos: ['largeOffice', 'mediumOffice', 'foodRetail', 'shoppingMall',
+              'hotel', 'recreation', 'murb']
+    },
+    housing: {
+      /* Un operador de vivienda solo tiene un tipo posible: el paso se
+         salta entero y se rellena solo --eso lo hace la navegacion--. La
+         lista se deja igualmente en un solo tipo por si el paso llega a
+         verse. */
+      fijo: 'murb',
+      salta: true,
+      tipos: ['murb']
+    },
+    muni: {
+      /* No hay datos C-Op de edificios municipales --parques de bomberos,
+         naves de obras publicas--, asi que no se puede dar un benchmark.
+         En vez del desplegable va un campo libre y el camino termina en una
+         propuesta de llamada. Hasta que eso este montado, la lista se deja
+         vacia: mostrar los trece invitaria a elegir un benchmark que no
+         corresponde. */
+      libre: true,
+      sinBenchmark: true,
+      tipos: []
+    },
+    other: {
+      /* Sin filtrar: es el cajon de sastre. */
+      tipos: null
+    }
+  };
+
+  /* La ayuda que trae el marcado, para poder volver a ella. */
+  var ayudaTipo = document.getElementById('ayuda-tipo') ||
+                  (selTipo.closest('.paso-calc') || document).querySelector('.paso-calc__ayuda');
+  var AYUDA_GENERAL = ayudaTipo ? ayudaTipo.textContent : '';
+
+  function opcionesDe(sector) {
+    var cfg = SECTORES[sector];
+
+    /* Sin sector elegido, o sector sin filtro: la lista completa. */
+    if (!cfg || cfg.tipos === null || cfg.tipos === undefined) {
+      /* null o sin definir = sin filtro. Una lista vacia NO entra aqui:
+         significa que ese sector no ofrece tipos. */
+      return Object.keys(BENCHMARKS).map(function (k) {
+        return { valor: k, label: BENCHMARKS[k].label };
+      });
+    }
+
+    return cfg.tipos.map(function (t) {
+      /* Una entrada puede ser la clave del benchmark a secas, o traer su
+         propia etiqueta cuando el texto no coincide con el benchmark
+         --"Academic site" apunta a "school"--. */
+      if (typeof t === 'string') {
+        return { valor: t, label: BENCHMARKS[t].label };
+      }
+      return t;
+    });
+  }
+
+  function pintarTipos(sector) {
+    var cfg = SECTORES[sector] || {};
+    var previo = selTipo.value;
+
+    selTipo.innerHTML = '';
+    opcionesDe(sector).forEach(function (o, i) {
+      var op = document.createElement('option');
+      op.value = o.valor;
+      op.textContent = o.label;
+      /* Dos opciones pueden compartir benchmark --academico y no
+         academico-- y el navegador las trataria como la misma. El indice
+         las distingue para poder saber cual eligio. */
+      op.dataset.i = i;
+      selTipo.appendChild(op);
+    });
+
+    /* Se conserva lo que ya habia elegido si sigue estando disponible. */
+    var sigue = Array.prototype.some.call(selTipo.options, function (o) {
+      return o.value === previo;
+    });
+    if (sigue) { selTipo.value = previo; }
+
+    if (ayudaTipo) {
+      ayudaTipo.textContent = cfg.ayuda || AYUDA_GENERAL;
+    }
+
+    /* Tres formas de ensenar este paso:
+
+         libre    ayuntamientos. Sin lista posible, se pide una descripcion.
+         salta    un solo tipo --vivienda--: el desplegable sobra y se
+                  rellena solo. La superficie SI se sigue pidiendo, asi que
+                  la pantalla no se puede saltar entera.
+         normal   el desplegable de siempre. */
+    var cajaTipo  = seccion.querySelector('[data-campo="tipo"]');
+    var cajaLibre = seccion.querySelector('[data-campo="libre"]');
+    var libre = seccion.querySelector('#c-desc');
+
+    if (cajaTipo)  { cajaTipo.hidden  = !!(cfg.libre || cfg.salta); }
+    if (cajaLibre) { cajaLibre.hidden = !cfg.libre; }
+    if (libre) { libre.tabIndex = cfg.libre ? 0 : -1; }
+
+    /* Con un solo tipo se elige solo: es el unico que hay. */
+    if (cfg.salta && cfg.fijo) { selTipo.value = cfg.fijo; }
+
+    if (ayudaTipo && cfg.libre) {
+      ayudaTipo.textContent = 'We do not have C-Op benchmark data for ' +
+        'municipal buildings, so this one goes straight to a conversation ' +
+        'with the team.';
+    }
+    if (ayudaTipo && cfg.salta) {
+      ayudaTipo.textContent = 'Housing portfolios use the Multi-unit ' +
+        'residential building benchmark from the historical C-Op data.';
+    }
+  }
+
+  pintarTipos('');
   /* Se preselecciona school --el sector principal de Rede-- pero eso NO
      cuenta como eleccion del usuario: el perfil solo marca la fila cuando
      alguien toca el selector o pasa por ese paso. Antes salia marcada
@@ -248,15 +411,42 @@
        de progreso ni contador: no hay pasos que contar. Sin esta guarda el
        modulo se caia ahi y dejaba la calculadora muerta. */
     if (barra) {
-      barra.style.width = (estado.paso / TOTAL * 100) + '%';
+      /* Sobre los pasos visibles, no sobre los ocho: quien se salta tres
+         pantallas veria la barra atascada, como si no avanzara. */
+      barra.style.width = (ordinalDe(estado.paso) / pasosVisibles() * 100) + '%';
       if (barra.parentElement) {
         barra.parentElement.setAttribute('aria-valuenow', estado.paso);
       }
     }
-    if (contador) { contador.textContent = estado.paso; }
+    if (contador) { contador.textContent = ordinalDe(estado.paso); }
 
     btnAtras.hidden = estado.paso === 1;
-    btnTexto.textContent = estado.paso === TOTAL ? 'Show benchmark result' : 'Next';
+    /* El ultimo paso de ESTA persona, que no siempre es el 8: quien se lo
+       salta veia "Next" en la ultima pantalla, sin nada detras. */
+    /* Solo es el ultimo si no queda ninguna pantalla por delante. */
+    var esUltimo = estado.paso >= TOTAL || siguientePaso(estado.paso) > TOTAL;
+    var sec = $('#c-sector');
+    var cfgSec = sec ? SECTORES[sec.value] : null;
+
+    if (!esUltimo) {
+      btnTexto.textContent = 'Next';
+    } else if (cfgSec && cfgSec.sinBenchmark) {
+      /* Un ayuntamiento no recibe cifra: prometerle un "benchmark result"
+         seria enganarle. */
+      btnTexto.textContent = 'See what we can do';
+    } else {
+      btnTexto.textContent = 'Show benchmark result';
+    }
+    /* El total tambien se ajusta: si son seis pantallas, la etiqueta debe
+       decir seis. */
+    var totalEti = document.getElementById('paso-total');
+    if (totalEti) { totalEti.textContent = pasosVisibles(); }
+
+    /* La barra anuncia su maximo a los lectores de pantalla: si dice 8 y
+       solo hay 6 pantallas, el progreso que oyen no cuadra con el que ven. */
+    if (barra && barra.parentElement) {
+      barra.parentElement.setAttribute('aria-valuemax', pasosVisibles());
+    }
   }
 
   /* --- Validacion de cada paso -------------------------------------------
@@ -272,17 +462,38 @@
      solo prometeria una comprobacion que jamas se ejecuta. */
 
   var REGLAS = {
+    /* Precalificacion (9/9/2026). Los pasos 1 y 3 son botones, no campos:
+       se validan aparte, en `siguiente()`. */
     2: [
+      { id: '#c-prov', aviso: 'Choose your province or territory.' },
+      { id: '#c-city', aviso: 'Enter your city or district.' }
+    ],
+    4: [
+      { id: '#c-funding', aviso: 'Choose one option to continue.' }
+    ],
+    6: [
       { id: '#c-sector', aviso: 'Choose your sector to continue.' }
     ],
-    3: [
+    7: [
+      /* Los tres se validan solo si estan a la vista: revisar() se salta
+         los campos ocultos, asi que el desplegable no bloquea al
+         ayuntamiento ni la descripcion al resto. */
+      { id: '#c-desc', aviso: 'Tell us what kind of building this is.' },
       { id: '#c-type', aviso: 'Choose a building type.' },
       { id: '#c-area', aviso: 'Enter your total area.', min: 100, max: 1e9,
         fuera: 'Enter an area between 100 and 1,000,000,000 sq ft.' }
     ],
-    4: [
+    8: [
+      /* opcional:true -- el campo lleva placeholder "Optional" y el cliente
+         reporto (9/9/2026) que aun asi daba error al dejarlo vacio. Vacio
+         se acepta; si se escribe algo, se sigue comprobando que sea un
+         numero y que este en rango, porque un gasto de "abc" o de doce
+         mil millones tampoco sirve. */
       { id: '#c-spend', aviso: 'Enter your annual utility spend.', min: 1, max: 1e9,
+        opcional: true,
         fuera: 'Enter a spend between $1 and $1,000,000,000.' },
+      /* No se pide cuando esta oculto --un solo edificio--: revisar()
+         se salta las reglas cuyo campo no esta a la vista. */
       { id: '#c-sites', aviso: 'Enter how many sites you manage.', min: 1, max: 10000,
         fuera: 'Enter a number of sites between 1 and 10,000.' }
     ]
@@ -331,9 +542,17 @@
       var campo = $(r.id);
       if (!campo) { return; }
 
+      /* Un campo oculto no se valida: pedir un dato que nadie ve deja el
+         paso bloqueado sin explicacion posible. */
+      if (campo.offsetParent === null) { marcar(campo, ''); return; }
+
       var bruto = String(campo.value || '').trim();
 
       if (!bruto) {
+        /* Un campo opcional vacio no es un error: se limpia cualquier
+           aviso anterior y se sigue. */
+        if (r.opcional) { marcar(campo, ''); return; }
+
         marcar(campo, r.aviso);
         if (!primero) { primero = campo; }
         return;
@@ -377,9 +596,112 @@
     }, true);
   });
 
+  /* --- LOS SALTOS DE LA PRECALIFICACION (9/9/2026, Parte 1) --------------
+
+     Ocho pasos, pero nadie los ve los ocho. Segun lo que responda, unos se
+     saltan:
+
+       1  tamano       No  -> se acaba aqui: formulario de contacto
+       2  ubicacion    fuera de BC -> salta al 5
+       3  BC Hydro     No  -> salta al 5
+       4  subvenciones siempre sigue al 5
+       5..8  el flujo de siempre
+
+     El salto se decide en `siguientePaso()` y `pasoAnterior()`, que son las
+     unicas dos funciones que saben del recorrido. Asi, si manana cambia una
+     regla, se cambia en un sitio y no en cinco.
+
+     ATRAS tiene que deshacer el MISMO camino que se hizo hacia delante: si
+     alguien de Alberta salto del 2 al 5, atras debe llevarle al 2 y no al
+     4, que nunca vio. */
+
+  function seSalta(paso) {
+    /* Pasos 3 y 4 solo para la Columbia Britanica. */
+    if (paso === 3) { return estado.provincia !== 'BC'; }
+
+    /* El 4 pide historial de subvenciones y solo tiene sentido para quien
+       es cliente de BC Hydro o FortisBC. */
+    if (paso === 4) { return estado.provincia !== 'BC' || estado.utility !== 'si'; }
+
+    /* El 8 pide gasto y numero de sitios, que alimentan el calculo. Un
+       ayuntamiento no recibe calculo --no hay datos C-Op de edificios
+       municipales-- asi que preguntarlo seria pedir por pedir. */
+    if (paso === 8) {
+      var sec = $('#c-sector');
+      var cfg = sec ? SECTORES[sec.value] : null;
+      return !!(cfg && cfg.sinBenchmark);
+    }
+
+    return false;
+  }
+
+  function siguientePaso(desde) {
+    var n = desde + 1;
+    while (n <= TOTAL && seSalta(n)) { n += 1; }
+    return n;
+  }
+
+  function pasoAnterior(desde) {
+    var n = desde - 1;
+    while (n >= 1 && seSalta(n)) { n -= 1; }
+    return n;
+  }
+
+  /* Cuantos pasos vera de verdad esta persona: es lo que tiene que contar
+     la barra de progreso. Contar siempre 8 haria que se quedara parada en
+     los saltos, como si no avanzara. */
+  function pasosVisibles() {
+    var n = 0;
+    for (var i = 1; i <= TOTAL; i++) { if (!seSalta(i)) { n += 1; } }
+    return n;
+  }
+
+  function ordinalDe(paso) {
+    var n = 0;
+    for (var i = 1; i <= paso; i++) { if (!seSalta(i)) { n += 1; } }
+    return n;
+  }
+
+  /* Aviso para los pasos que se responden con botones. El texto va bajo
+     las opciones y se anuncia con role=alert, igual que los de los campos:
+     quien use lector de pantalla oye el motivo, no solo que algo fallo. */
+  function avisarEleccion(paso) {
+    var caja = seccion.querySelector('[data-paso="' + paso + '"]');
+    if (!caja) { return; }
+
+    var aviso = caja.querySelector('.campo__error');
+    if (!aviso) {
+      aviso = document.createElement('p');
+      aviso.className = 'campo__error';
+      aviso.setAttribute('role', 'alert');
+      var ops = caja.querySelector('.opciones');
+      if (ops) { ops.parentNode.insertBefore(aviso, ops.nextSibling); }
+      else { caja.appendChild(aviso); }
+    }
+    aviso.textContent = 'Choose one option to continue.';
+
+    var primero = caja.querySelector('.opcion');
+    if (primero) { primero.focus(); }
+  }
+
   function siguiente() {
     // El paso 1 necesita una eleccion; si no la hay, se asume portafolio
-    if (estado.paso === 1 && !estado.scope) { elegirScope('multi'); }
+    /* El paso del ambito ahora es el 5. */
+    if (estado.paso === 5 && !estado.scope) { elegirScope('multi'); }
+
+    /* Los pasos 1 y 3 son botones, no campos: REGLAS no puede validarlos.
+       Sin elegir no se avanza, porque de esa respuesta depende el camino
+       entero. */
+    if (estado.paso === 1 && !estado.tamano) { avisarEleccion(1); return; }
+    if (estado.paso === 3 && !estado.utility) { avisarEleccion(3); return; }
+
+    /* Un "no" en el filtro de tamano termina el recorrido: no hay benchmark
+       que calcular. Se salta directo al formulario de contacto. */
+    if (estado.paso === 1 && estado.tamano === 'no') {
+      estado.paso = TOTAL;
+      calcular();
+      return;
+    }
 
     /* Si la variante muestra los cuatro campos a la vez no hay pasos que
        recorrer: el boton calcula directamente. Sin esto pedia cuatro clics
@@ -400,8 +722,9 @@
       return;
     }
 
-    if (estado.paso < TOTAL) {
-      estado.paso += 1;
+    var siguienteReal = siguientePaso(estado.paso);
+    if (siguienteReal <= TOTAL) {
+      estado.paso = siguienteReal;
       pintarPaso();
     } else {
       calcular();
@@ -410,7 +733,7 @@
 
   function atras() {
     if (estado.paso > 1) {
-      estado.paso -= 1;
+      estado.paso = pasoAnterior(estado.paso);
       pintarPaso();
     }
   }
@@ -511,8 +834,115 @@
          los dos botones igual y no hay forma de saber cual esta elegido. */
       o.setAttribute('aria-pressed', String(elegida));
     });
-    if (valor === 'single') { $('#c-sites').value = '1'; }
+    /* "Number of sites" solo tiene sentido con varios edificios: con uno
+       la respuesta es 1 y preguntarla sobra. Se oculta el campo entero
+       --su etiqueta incluida-- y se fija el valor. (Feedback 9/9/2026,
+       Parte 3.) */
+    var sitios = $('#c-sites');
+    if (sitios) {
+      var caja = sitios.closest('.campo');
+      if (valor === 'single') {
+        sitios.value = '1';
+        if (caja) { caja.hidden = true; }
+        /* hidden saca la caja del flujo, pero el campo seguiria recibiendo
+           el tabulador en navegadores viejos. */
+        sitios.tabIndex = -1;
+      } else {
+        if (caja) { caja.hidden = false; }
+        sitios.tabIndex = 0;
+        /* El 1 que se puso al elegir "un edificio" no debe quedarse de
+           relleno si luego se cambia a varios: seria un dato que el
+           visitante no ha dado. */
+        if (sitios.value === '1') { sitios.value = ''; }
+      }
+    }
   }
+
+
+  /* --- Las cuatro pantallas de precalificacion --------------------------- */
+
+  /* Boton de dos opciones --si/no--: marca la elegida y guarda la respuesta.
+     Es el mismo gesto que el paso del ambito, asi que se reutiliza el
+     aspecto .opcion y solo cambia el atributo que se lee. */
+  function conectarEleccion(atributo, alElegir) {
+    var botones = seccion.querySelectorAll('[data-' + atributo + ']');
+    Array.prototype.forEach.call(botones, function (b) {
+      b.addEventListener('click', function () {
+        var valor = b.getAttribute('data-' + atributo);
+        Array.prototype.forEach.call(botones, function (o) {
+          var elegida = o === b;
+          o.classList.toggle('is-elegida', elegida);
+          /* aria-pressed y no solo la clase: sin el, un lector de pantalla
+             lee los dos botones igual y no hay forma de saber cual esta
+             elegido. */
+          o.setAttribute('aria-pressed', String(elegida));
+        });
+        alElegir(valor);
+      });
+    });
+  }
+
+  /* Paso 1: el filtro de tamano. Un "no" termina el recorrido aqui mismo:
+     no hay benchmark que calcular para un edificio que nunca sera proyecto,
+     pero si conviene recoger el contacto. */
+  conectarEleccion('tamano', function (v) {
+    estado.tamano = v;
+    if (v === 'no') {
+      estado.descartado = true;
+      seccion.dispatchEvent(new CustomEvent('rede:camino', { detail: 'descartado' }));
+    } else {
+      estado.descartado = false;
+      seccion.dispatchEvent(new CustomEvent('rede:camino', { detail: 'cualificado' }));
+    }
+  });
+
+  /* Paso 2: la ubicacion. La provincia decide si se veran los pasos 3 y 4. */
+  (function () {
+    var prov = $('#c-prov');
+    var city = $('#c-city');
+    if (prov) {
+      prov.addEventListener('change', function () {
+        estado.provincia = prov.value;
+        /* Al cambiar de provincia, lo respondido sobre la comercializadora
+           deja de valer: si alguien pasa de BC a Alberta, su "si soy de BC
+           Hydro" ya no tiene sentido. */
+        if (prov.value !== 'BC') { estado.utility = ''; }
+        refrescarPerfil();
+        /* La provincia cambia cuantas pantallas quedan por delante, asi que
+           el contador y la barra se rehacen ya: si no, dirian "of 6" hasta
+           el siguiente clic. */
+        pintarPaso();
+      });
+    }
+    if (city) {
+      city.addEventListener('input', function () {
+        estado.ciudad = city.value;
+      });
+    }
+  }());
+
+  /* Paso 3: comercializadora. Un "no" salta el 4, que solo pregunta por
+     subvenciones de BC Hydro y FortisBC. */
+  conectarEleccion('utility', function (v) {
+    estado.utility = v;
+    /* Un "no" retira la pantalla de subvenciones: el total baja en uno. */
+    pintarPaso();
+  });
+
+  /* Paso 4: historial de subvenciones. Se guarda pero no cambia el camino:
+     el cliente lo quiere como dato para el equipo comercial. */
+  (function () {
+    var f = $('#c-funding');
+    if (!f) { return; }
+    f.addEventListener('change', function () { estado.funding = f.value; });
+  }());
+
+  /* La descripcion libre de los ayuntamientos. */
+  (function () {
+    var d = $('#c-desc');
+    if (!d) { return; }
+    d.addEventListener('input', function () { estado.descripcion = d.value; });
+  }());
 
   seccion.querySelectorAll('.opcion').forEach(function (o) {
     o.addEventListener('click', function () {
@@ -550,6 +980,145 @@
     if (!el) { return; }
     el.addEventListener('change', refrescarPerfil);
     el.addEventListener('input', refrescarPerfil);
+  });
+
+  /* Al cambiar de sector se rehace la lista de tipos: cada sector ve solo
+     los suyos. */
+  (function () {
+    var sec = $('#c-sector');
+    if (!sec) { return; }
+    sec.addEventListener('change', function () {
+      pintarTipos(sec.value);
+      refrescarPerfil();
+
+      /* El sector decide el camino del formulario del final: un
+         ayuntamiento no recibe benchmark, asi que su formulario es otro.
+         Se avisa por evento porque SECTORES y ponerCamino viven en
+         ambitos distintos. */
+      var cfg = SECTORES[sec.value];
+      var camino = (cfg && cfg.sinBenchmark) ? 'municipal' : 'cualificado';
+      seccion.dispatchEvent(new CustomEvent('rede:camino', { detail: camino }));
+    });
+  }());
+
+
+  /* --- Separadores de millar mientras se escribe --------------------------
+
+     Superficie y gasto llegan a las centenas de miles: sin comas, revisar
+     lo que uno mismo ha escrito es incomodo --1850000 frente a 1,850,000--.
+
+     Solo esos dos campos. El numero de sitios y los telefonos se quedan en
+     crudo: son cifras cortas y agrupar un telefono lo estropea.
+
+     DOS REGLAS que hacen que esto funcione:
+
+     1. El caret se lee en la PRIMERA linea, antes de tocar nada. Asignar
+        .value destruye la seleccion del campo, asi que cualquier lectura
+        posterior devuelve 0 o el final. Fue justo el fallo de la primera
+        version: el cursor saltaba al final al escribir en medio.
+
+     2. Se ancla por NUMERO DE DIGITOS a la izquierda, no por posicion de
+        caracter: al reagrupar cambian las comas y un indice absoluto deja
+        de valer.
+
+     numero() ya limpia las comas antes de calcular, asi que esto no toca el
+     resultado, solo lo que se ve. */
+
+  function digitosDe(texto) {
+    return String(texto).replace(/[^0-9]/g, '');
+  }
+
+  function agrupar(digitos) {
+    if (!digitos) { return ''; }
+    /* Un "007" escrito por error queda en "7", pero un cero solo se
+       respeta. */
+    digitos = digitos.replace(/^0+(?=[0-9])/, '');
+    return digitos.replace(/\B(?=([0-9]{3})+(?![0-9]))/g, ',');
+  }
+
+  function esDigito(codigo) {
+    return codigo >= 48 && codigo <= 57;
+  }
+
+  function digitosHasta(texto, pos) {
+    var n = 0;
+    for (var i = 0; i < pos && i < texto.length; i++) {
+      if (esDigito(texto.charCodeAt(i))) { n++; }
+    }
+    return n;
+  }
+
+  function trasDigitos(texto, n) {
+    if (n <= 0) { return 0; }
+    var vistos = 0;
+    for (var i = 0; i < texto.length; i++) {
+      if (esDigito(texto.charCodeAt(i))) {
+        vistos++;
+        if (vistos === n) { return i + 1; }
+      }
+    }
+    return texto.length;
+  }
+
+  function conectarMiles(campo) {
+    campo.addEventListener('input', function (ev) {
+      /* Lo primero, antes de escribir nada. */
+      var antes = campo.value;
+      var caret = campo.selectionStart;
+      if (caret === null || caret === undefined) { caret = antes.length; }
+
+      var tipo = ev.inputType || '';
+      var digitos = digitosDe(antes);
+      var izquierda = digitosHasta(antes, caret);
+
+      /* Borrar con el cursor pegado a una coma: el navegador se lleva la
+         coma, no un digito. Como las comas se regeneran solas, la tecla no
+         haria nada y el campo pareceria congelado. Se consume ademas el
+         digito de al lado. */
+      if (tipo === 'deleteContentBackward' &&
+          antes.charAt(caret) === ',' && izquierda > 0) {
+        digitos = digitos.slice(0, izquierda - 1) + digitos.slice(izquierda);
+        izquierda = izquierda - 1;
+      }
+
+      if (tipo === 'deleteContentForward' && antes.charAt(caret - 1) === ',') {
+        digitos = digitos.slice(0, izquierda) + digitos.slice(izquierda + 1);
+      }
+
+      var texto = agrupar(digitos);
+      if (texto === antes) { return; }
+
+      var total = digitosDe(texto).length;
+      if (izquierda > total) { izquierda = total; }
+
+      campo.value = texto;
+
+      /* En JS a secas setSelectionRange es sincrono: no hace falta diferir
+         con setTimeout ni requestAnimationFrame --eso viene de React y aqui
+         solo provoca un parpadeo del caret al final--. Solo se recoloca si
+         el campo tiene el foco: si no, no hay cursor que conservar. */
+      if (document.activeElement !== campo) { return; }
+      var destino = trasDigitos(texto, izquierda);
+      campo.setSelectionRange(destino, destino);
+    });
+
+    /* Safari rellena con autofill sin disparar un `input` fiable, asi que
+       se reformatea tambien al salir del campo. */
+    campo.addEventListener('change', function () {
+      var texto = agrupar(digitosDe(campo.value));
+      if (texto !== campo.value) { campo.value = texto; }
+    });
+  }
+
+  ['#c-area', '#c-spend'].forEach(function (sel) {
+    var el = $(sel);
+    if (!el) { return; }
+    /* inputmode y no type=number: con type=number el navegador rechaza las
+       comas, saca una ruedecilla que aqui no pinta nada, y ademas
+       selectionStart devuelve null --Firefox-- o lanza error --Chrome--,
+       que dejaria sin efecto todo lo de arriba. */
+    el.setAttribute('inputmode', 'numeric');
+    conectarMiles(el);
   });
 
 
@@ -770,15 +1339,166 @@
   var form = seccion.querySelector('[data-hubspot]');
   if (!form) { return; }
 
+  /* Lo ultimo que se envio, para el calendario de reservas. */
+  var datosEnviados = {};
+
+  /* --- LOS TRES CAMINOS DEL FORMULARIO (9/9/2026, Parte 4) ---------------
+
+     Antes habia un solo formulario para todos, con el boton "Send me the
+     deeper look". Pero ese texto solo tiene sentido cuando de verdad hay un
+     analisis que mandar: un ayuntamiento no recibe benchmark, y un edificio
+     descartado por tamano tampoco.
+
+     Tres caminos, cada uno con sus campos, su boton y su mensaje:
+
+       cualificado  K-12, postsec, salud, comercial, vivienda, otros.
+                    Sale el benchmark. Se piden todos los datos porque el
+                    equipo va a preparar un analisis de verdad.
+
+       municipal    Ayuntamientos. No hay datos C-Op de parques de bomberos
+                    ni de naves municipales, asi que no se puede dar una
+                    cifra. Formulario ligero y propuesta de llamada.
+
+       descartado   Edificios de menos de 25.000 pies --lo decidira la
+                    pantalla 1 de la Parte 1--. Tampoco hay benchmark, pero
+                    si conviene recoger el contacto.
+
+     El consentimiento es obligatorio en los tres. */
+
+  var CAMINOS = {
+    cualificado: {
+      boton: 'Send me the deeper look',
+      pide: ['h-name', 'h-org', 'h-role', 'h-direct', 'h-email', 'h-phone'],
+      legal: 'Only used to prepare your analysis.'
+    },
+    municipal: {
+      boton: 'Set up a call',
+      pide: ['h-name', 'h-email'],
+      legal: 'Only used to arrange the call.'
+    },
+    descartado: {
+      boton: 'Have a team member reach out',
+      pide: ['h-name', 'h-email', 'h-phone', 'h-org', 'h-prov', 'h-city'],
+      legal: 'Only used to get in touch.'
+    }
+  };
+
+  var caminoActual = 'cualificado';
+
+  function ponerCamino(nombre) {
+    var cfg = CAMINOS[nombre];
+    if (!cfg || !form) { return; }
+    caminoActual = nombre;
+
+    var pedidos = {};
+    cfg.pide.forEach(function (id) { pedidos[id] = true; });
+
+    /* Se recorren TODOS los campos del formulario y se decide uno a uno.
+       Asi no hay que acordarse de ocultar lo que sobra: lo que no esta en
+       la lista del camino, se va. */
+    Array.prototype.forEach.call(form.querySelectorAll('.campo'), function (caja) {
+      var campo = caja.querySelector('input, select, textarea');
+      if (!campo || campo.type === 'hidden' || campo.type === 'checkbox') { return; }
+
+      var visible = !!pedidos[campo.id];
+      caja.hidden = !visible;
+
+      /* required se quita al ocultar: un campo invisible y obligatorio
+         bloquea el envio sin que se pueda ver por que. El navegador ni
+         siquiera puede enfocarlo para senalarlo. */
+      if (visible) {
+        campo.setAttribute('required', '');
+        campo.removeAttribute('tabindex');
+      } else {
+        campo.removeAttribute('required');
+        campo.value = '';
+        campo.tabIndex = -1;
+      }
+    });
+
+    var textoBoton = form.querySelector('[data-boton-envio]');
+    if (textoBoton) { textoBoton.textContent = cfg.boton; }
+
+    var legal = form.querySelector('.captura__legal');
+    if (legal) { legal.textContent = cfg.legal; }
+
+    form.setAttribute('data-camino', nombre);
+  }
+
+  /* Que camino corresponde segun lo elegido. De momento solo depende del
+     sector; la pantalla del tamano --Parte 1-- anadira 'descartado'. */
+  function caminoDe(sector) {
+    var cfg = SECTORES[sector];
+    if (cfg && cfg.sinBenchmark) { return 'municipal'; }
+    return 'cualificado';
+  }
+
+  ponerCamino('cualificado');
+
+  /* Lo dispara el selector de sector, mas arriba. */
+  seccion.addEventListener('rede:camino', function (ev) {
+    ponerCamino(ev.detail);
+  });
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!form.checkValidity()) { form.reportValidity(); return; }
 
-    // TODO: conectar con HubSpot. Por ahora solo se confirma en pantalla.
     var datos = {};
     new FormData(form).forEach(function (v, k) { datos[k] = v; });
-    if (window.console) { console.log('[Rede] Pendiente de enviar a HubSpot:', datos); }
+    /* Se guardan para prerrellenar el calendario de Meetings: quien acaba
+       de dar su nombre y su correo no tiene por que escribirlos otra vez. */
+    datosEnviados = datos;
 
+    /* El texto del consentimiento se lee de la PANTALLA, no de una constante
+       en el codigo: asi lo que se guarda en HubSpot es exactamente lo que
+       vio la persona. Si alguien cambia el texto del HTML, lo que viaja
+       cambia con el y no hay forma de que se desincronicen. */
+    var elConsent = document.getElementById('texto-consentimiento');
+    var textoConsent = elConsent
+      ? elConsent.textContent.replace(/\s+/g, ' ').trim()
+      : '';
+
+    var btn = form.querySelector('button[type="submit"]');
+
+    function bloquear(si) {
+      if (!btn) { return; }
+      btn.disabled = si;
+      /* aria-busy para que un lector de pantalla anuncie la espera: sin el
+         solo se oiria un boton que dejo de responder. */
+      btn.setAttribute('aria-busy', si ? 'true' : 'false');
+    }
+
+    bloquear(true);
+
+    RedeHubSpot.enviar(datos, textoConsent, function () {
+      bloquear(false);
+      confirmar();
+    }, function (codigo, detalle) {
+      bloquear(false);
+
+      /* Se avisa en pantalla en vez de dar por bueno un envio que fallo:
+         quien deja sus datos tiene que saber si han llegado. */
+      var aviso = form.querySelector('.captura__fallo');
+      if (!aviso) {
+        aviso = document.createElement('p');
+        aviso.className = 'campo__error captura__fallo';
+        aviso.setAttribute('role', 'alert');
+        form.insertBefore(aviso, btn);
+      }
+      aviso.textContent = (codigo === 429)
+        ? 'Too many requests right now. Please try again in a moment.'
+        : 'We could not send that. Please try again, or call us on 778.327.6851.';
+
+      if (window.console) {
+        console.warn('[Rede] HubSpot ' + codigo + ': ' + detalle);
+      }
+    });
+  });
+
+  /* Lo que se ve al terminar. Sale del manejador porque tambien lo usa el
+     camino sin configurar. */
+  function confirmar() {
     var caja = document.createElement('div');
     caja.className = 'captura--enviada';
     caja.setAttribute('role', 'status');
@@ -800,7 +1520,35 @@
 
     // Respaldo para navegadores sin :has() (Safari < 15.4, Firefox antiguo)
     if (flip) { flip.classList.add('enviado'); }
-  });
+
+    /* --- Reservar cita (Parte 6) ---------------------------------------
+
+       Se ofrece DESPUES de enviar, como pidio el cliente: "Want to skip
+       ahead? Book a time with our team."
+
+       Solo aparece si hay enlace de Meetings configurado. Sin el, el
+       boton no se pinta: mas vale no ofrecer nada que ofrecer algo que
+       lleva a una pagina vacia. */
+    if (!RedeHubSpot.hayMeetings()) { return; }
+
+    var invita = document.createElement('div');
+    invita.className = 'tras-envio__reserva';
+    invita.innerHTML =
+      '<p class="captura__texto">Want to skip ahead? Book a time with our team.</p>' +
+      '<button class="btn btn--linea btn--block" type="button">Book a time</button>' +
+      '<div class="reserva-zona" hidden></div>';
+    caja.appendChild(invita);
+
+    var botonR = invita.querySelector('button');
+    var zonaR = invita.querySelector('.reserva-zona');
+
+    botonR.addEventListener('click', function () {
+      /* El calendario se trae solo al pulsar: es un iframe con cookies de
+         terceros y no tiene por que cargarse antes de hacer falta. */
+      RedeHubSpot.abrirMeetings(zonaR, datosEnviados);
+      botonR.hidden = true;
+    });
+  }
 
     pintarPaso();
   });

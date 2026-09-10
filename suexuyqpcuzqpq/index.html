@@ -21,6 +21,15 @@
      puede tocar sin romperla. <base> las resuelve todas de golpe, las del
      marcado y las del JS. -->
 
+
+
+
+
+
+
+
+
+
 <base href="../">
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -320,6 +329,70 @@
             </a>
           </div>
         </div>
+
+          <!-- ==================================================================
+          EL PANEL DEL HERO (feedback 9/9/2026, puntos 10 y 17)
+
+          Dos peticiones que se resuelven juntas:
+
+            10. "Can we adjust the location of the image so it works better
+                with the panel? Go to smaller panel if needed."
+            17. "Image in panel. See Figure 1 below. High level metrics are
+                great."
+
+          El grafico es una REPLICA de la figura 1 del documento, no la
+          imagen: aquella es una captura de Excel, con sus colores y su
+          tipografia. Rehecho en SVG escala sin pixelarse, se puede animar y
+          lleva los colores de Rede.
+
+          Los datos salen de medir la figura pixel a pixel y calibrar con el
+          dato conocido: el documento dice $4,438,000 de ahorro acumulado y
+          la ultima barra da $4,440,000. Es la misma cifra que ya publica la
+          banda de logos --$4.4M-- asi que no se expone ningun dato nuevo.
+
+          El panel es estrecho a proposito: el cliente dice que la
+          composicion funciona mejor "where you can see it spilling all
+          around the panel", asi que la ilustracion tiene que seguir
+          viendose alrededor.
+          ================================================================== -->
+          <aside class="d2-hero__panel d2-entra" aria-labelledby="hero-panel-t">
+            <p class="d2-hero__panel-eyebrow" id="hero-panel-t">Cumulative savings</p>
+            <p class="d2-hero__panel-cifra">$4.4M</p>
+            <p class="d2-hero__panel-nota">One school district, over 12 years</p>
+
+            <svg class="hero-gr" viewBox="0 0 560 300" role="img" aria-labelledby="hero-gr-t hero-gr-d" preserveAspectRatio="xMidYMid meet">
+              <title id="hero-gr-t">Cumulative savings for one school district</title>
+              <desc id="hero-gr-d">Bar and line chart. Avoided costs stack up to 4.4 million dollars over twelve years, while energy use stays below the do-nothing baseline.</desc>
+              <g class="hero-gr__rejilla">
+                <line x1="6" y1="266" x2="554" y2="266"/>
+                <line x1="6" y1="206.0" x2="554" y2="206.0"/>
+                <line x1="6" y1="146.0" x2="554" y2="146.0"/>
+                <line x1="6" y1="86.0" x2="554" y2="86.0"/>
+                <line x1="6" y1="26" x2="554" y2="26"/>
+              </g>
+              <g class="hero-gr__barras">
+                <rect x="69.8" y="260.7" width="21.9" height="5.3" rx="2" style="--i:1"><title>14/15: $110,000 saved</title></rect>
+                <rect x="119.6" y="210.8" width="21.9" height="55.2" rx="2" style="--i:2"><title>15/16: $1,150,000 saved</title></rect>
+                <rect x="169.4" y="200.7" width="21.9" height="65.3" rx="2" style="--i:3"><title>16/17: $1,360,000 saved</title></rect>
+                <rect x="219.2" y="186.8" width="21.9" height="79.2" rx="2" style="--i:4"><title>17/18: $1,650,000 saved</title></rect>
+                <rect x="269.0" y="167.6" width="21.9" height="98.4" rx="2" style="--i:5"><title>18/19: $2,050,000 saved</title></rect>
+                <rect x="318.9" y="140.2" width="21.9" height="125.8" rx="2" style="--i:6"><title>19/20: $2,620,000 saved</title></rect>
+                <rect x="368.7" y="115.8" width="21.9" height="150.2" rx="2" style="--i:7"><title>20/21: $3,130,000 saved</title></rect>
+                <rect x="418.5" y="88.9" width="21.9" height="177.1" rx="2" style="--i:8"><title>21/22: $3,690,000 saved</title></rect>
+                <rect x="468.3" y="78.3" width="21.9" height="187.7" rx="2" style="--i:9"><title>22/23: $3,910,000 saved</title></rect>
+                <rect x="518.1" y="52.9" width="21.9" height="213.1" rx="2" style="--i:10"><title>23/24: $4,440,000 saved</title></rect>
+              </g>
+              <path class="hero-gr__linea hero-gr__linea--nada" d="M30.9 117.2 L80.7 154.0 L130.5 160.4 L180.4 131.6 L230.2 56.4 L280.0 46.8 L329.8 53.2 L379.6 80.4 L429.5 75.6 L479.3 83.6 L529.1 102.8"/>
+              <path class="hero-gr__linea hero-gr__linea--meta" d="M30.9 117.2 L80.7 176.4 L130.5 205.2 L180.4 200.4 L230.2 146.0 L280.0 149.2 L329.8 171.6 L379.6 211.6 L429.5 218.0 L479.3 213.2 L529.1 234.0"/>
+              <path class="hero-gr__linea hero-gr__linea--real" d="M30.9 117.2 L80.7 166.8 L130.5 195.6 L180.4 192.4 L230.2 131.6 L280.0 139.6 L329.8 186.0 L379.6 187.6 L429.5 181.2 L479.3 182.8 L529.1 211.6"/>
+            </svg>
+
+            <ul class="d2-hero__leyenda">
+              <li><span class="d2-hero__punto d2-hero__punto--ahorro" aria-hidden="true"></span>Avoided cost</li>
+              <li><span class="d2-hero__punto d2-hero__punto--nada" aria-hidden="true"></span>Do nothing</li>
+              <li><span class="d2-hero__punto d2-hero__punto--real" aria-hidden="true"></span>Actual</li>
+            </ul>
+          </aside>
 
         <!-- El panel de datos, el objeto que el cliente ya aprobo -->
         <div class="d2-panel d2-entra">
@@ -785,7 +858,7 @@
          entrando por la derecha. La pista esta duplicada: es lo que hace
          que el bucle no tenga un salto visible al reiniciar.
          ==================================================================== -->
-    <section class="d2-logos--dos" data-logos-tono="oscuro" style="--logos-fondo:#1A1A1A">
+    <section class="d2-logos--dos" data-logos-tono="oscuro" style="--logos-fondo:#333333">
       <div class="d2-logos--dos__inner">
 
         <!-- COLUMNA RETIRADA (4/9/2026): el titular. La seccion se deja solo
@@ -804,7 +877,7 @@
         <div class="d2-logos--dos__der">
           <p class="d2-logos--dos__cifra">$4.4M</p>
           <p class="d2-logos--dos__cifra-pie">Cumulative savings</p>
-          <p class="d2-logos--dos__cifra-nota">for one long-term client</p>
+          <p class="d2-logos--dos__cifra-nota">for one long-term client, over&nbsp;12&nbsp;years</p>
         </div>
 
         <div class="d2-logos--dos__centro">
@@ -891,7 +964,7 @@
           <div class="d2-foco__prueba-dato">
             <p class="d2-foco__cifra">$4.4M</p>
             <p class="d2-foco__cifra-pie">Cumulative savings</p>
-            <p class="d2-foco__cifra-nota">for one long-term client</p>
+            <p class="d2-foco__cifra-nota">for one long-term client, over&nbsp;12&nbsp;years</p>
           </div>
         </div>
 
@@ -1016,7 +1089,7 @@
                 </svg>
               </span>
             </span>
-            <p class="d2-rutas-sec__preg">Which buildings are worth auditing?</p>
+            <p class="d2-rutas-sec__preg">Which buildings need attention?</p>
             <h3 class="d2-rutas-sec__nombre">Energy Gap Analysis</h3>
             <p class="d2-rutas-sec__desc">
               Screen energy use and cost across your portfolio before investing in a
@@ -2804,15 +2877,135 @@
           <div class="pasos" id="pasos" >
 
           <div class="pasos__cabecera">
-          <p class="pasos__contador">Step <span id="paso-n">1</span> of 4</p>
+          <p class="pasos__contador">Step <span id="paso-n">1</span> of <span id="paso-total">8</span></p>
           <div class="barra" role="progressbar" aria-valuemin="1" aria-valuemax="4"
           aria-valuenow="1" aria-label="Progress">
           <span class="barra__fill" id="barra"></span>
           </div>
           </div>
 
-          <!-- PASO 1 -->
+          <!-- ============================================================
+          PRECALIFICACION (feedback 9/9/2026, Parte 1)
+
+          Cuatro pantallas antes de la pregunta de siempre. La idea del
+          cliente: filtrar los edificios demasiado pequenos para llegar a
+          ser proyecto ANTES de que nadie invierta tiempo, ni el suyo ni el
+          nuestro.
+
+          El orden importa y fue una correccion suya: preguntar primero por
+          la UBICACION y solo despues por la comercializadora. Poner "eres
+          cliente de BC Hydro" como primera pregunta perdia a cualquiera de
+          fuera de la Columbia Britanica antes de que supiera si la pregunta
+          le aplicaba siquiera.
+          ============================================================ -->
+
+          <!-- PASO 1: el filtro de tamano -->
           <div class="paso-calc is-activo" data-paso="1">
+          <h3 class="paso-calc__titulo">Is your building at least 25,000 sq ft?</h3>
+          <p class="paso-calc__ayuda">
+          Recommissioning pays for itself on larger buildings. Below that size
+          the numbers rarely work.
+          </p>
+          <div class="opciones">
+          <button class="opcion" type="button" data-tamano="si">
+          <span class="opcion__titulo">Yes</span>
+          <span class="opcion__texto">25,000 sq ft or more.</span>
+          </button>
+          <button class="opcion" type="button" data-tamano="no">
+          <span class="opcion__titulo">No</span>
+          <span class="opcion__texto">Smaller than that.</span>
+          </button>
+          </div>
+          </div>
+
+          <!-- PASO 2: donde esta el edificio.
+          Se pregunta SIEMPRE, sea o no de la Columbia Britanica: es el dato
+          que necesita el equipo comercial para saber que subvenciones
+          provinciales o de comercializadora pueden aplicar. -->
+          <div class="paso-calc" data-paso="2">
+          <h3 class="paso-calc__titulo">Where is your building located?</h3>
+          <p class="paso-calc__ayuda">
+          Grant programs vary by province and by utility, so this tells us
+          which ones might apply to you.
+          </p>
+          <div class="campos">
+          <div class="campo">
+          <label class="campo__label" for="c-prov">Province or territory</label>
+          <div class="campo__wrap">
+          <select class="campo__input" id="c-prov">
+          <option value="">Select one</option>
+          <option value="BC">British Columbia</option>
+          <option value="AB">Alberta</option>
+          <option value="SK">Saskatchewan</option>
+          <option value="MB">Manitoba</option>
+          <option value="ON">Ontario</option>
+          <option value="QC">Quebec</option>
+          <option value="NB">New Brunswick</option>
+          <option value="NS">Nova Scotia</option>
+          <option value="PE">Prince Edward Island</option>
+          <option value="NL">Newfoundland and Labrador</option>
+          <option value="YT">Yukon</option>
+          <option value="NT">Northwest Territories</option>
+          <option value="NU">Nunavut</option>
+          </select>
+          </div>
+          </div>
+          <div class="campo">
+          <label class="campo__label" for="c-city">City or district</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="c-city" type="text"
+          autocomplete="address-level2" placeholder="Vancouver">
+          </div>
+          </div>
+          </div>
+          </div>
+
+          <!-- PASO 3: la comercializadora. Solo para quien dijo Columbia
+          Britanica en el paso 2; al resto se le salta. -->
+          <div class="paso-calc" data-paso="3">
+          <h3 class="paso-calc__titulo">Are you a BC Hydro or FortisBC customer?</h3>
+          <p class="paso-calc__ayuda">
+          Their programs fund a large share of recommissioning work in the
+          province.
+          </p>
+          <div class="opciones">
+          <button class="opcion" type="button" data-utility="si">
+          <span class="opcion__titulo">Yes</span>
+          <span class="opcion__texto">BC Hydro, FortisBC or both.</span>
+          </button>
+          <button class="opcion" type="button" data-utility="no">
+          <span class="opcion__titulo">No</span>
+          <span class="opcion__texto">Another provider.</span>
+          </button>
+          </div>
+          </div>
+
+          <!-- PASO 4: historial de subvenciones. Solo para clientes de BC
+          Hydro o FortisBC. Sin explicar por que se pregunta: lo pidio asi
+          el cliente. -->
+          <div class="paso-calc" data-paso="4">
+          <h3 class="paso-calc__titulo">
+          Have you received funding from a utility provider for recommissioning
+          or C-Op work before?
+          </h3>
+          <div class="campos">
+          <div class="campo">
+          <label class="campo__label" for="c-funding">Previous funding</label>
+          <div class="campo__wrap">
+          <select class="campo__input" id="c-funding">
+          <option value="">Select one</option>
+          <option value="lt5">Yes, less than 5 years ago</option>
+          <option value="5to10">Yes, 5 to 10 years ago</option>
+          <option value="gt10">Yes, more than 10 years ago</option>
+          <option value="never">Never</option>
+          </select>
+          </div>
+          </div>
+          </div>
+          </div>
+
+          <!-- PASO 5 (antes 1) -->
+          <div class="paso-calc" data-paso="5">
           <h3 class="paso-calc__titulo">How many buildings are in scope?</h3>
           <p class="paso-calc__ayuda">
           A portfolio needs comparison across buildings. A single facility needs a
@@ -2831,7 +3024,7 @@
           </div>
 
           <!-- PASO 2 -->
-          <div class="paso-calc" data-paso="2">
+          <div class="paso-calc" data-paso="6">
           <h3 class="paso-calc__titulo">What kind of organization is this?</h3>
           <p class="paso-calc__ayuda">
           This helps us understand your operating context before we look at the
@@ -2869,15 +3062,29 @@
           </div>
 
           <!-- PASO 3 -->
-          <div class="paso-calc" data-paso="3">
+          <div class="paso-calc" data-paso="7">
           <h3 class="paso-calc__titulo">Which building type is the closest match?</h3>
           <p class="paso-calc__ayuda">
           Choose the closest available match from historical C-Op building categories.
           </p>
-          <div class="campo">
+          <div class="campo" data-campo="tipo">
           <label class="campo__label" for="c-type">Building type</label>
           <div class="campo__wrap">
           <select class="campo__input" id="c-type"></select>
+          </div>
+          </div>
+
+          <!-- Para ayuntamientos: no hay datos C-Op de parques de bomberos ni
+          de naves de obras publicas, asi que no se puede ofrecer una lista
+          de tipos. En su lugar se pide una descripcion, que le sirve al
+          equipo comercial para preparar la llamada. (Feedback 9/9/2026,
+          Parte 2.) -->
+          <div class="campo" data-campo="libre" hidden>
+          <label class="campo__label" for="c-desc">Describe the building</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="c-desc" type="text"
+          placeholder="Fire hall, public works yard, community centre..."
+          autocomplete="off">
           </div>
           </div>
           <div class="campo">
@@ -2894,7 +3101,7 @@
           </div>
 
           <!-- PASO 4 -->
-          <div class="paso-calc" data-paso="4">
+          <div class="paso-calc" data-paso="8">
           <h3 class="paso-calc__titulo">What is your annual utility spend?</h3>
           <p class="paso-calc__ayuda">
           Use electricity and fuel combined if available. If you are not sure, we
@@ -3112,7 +3319,7 @@
           </div>
           </div>
 
-          <div class="campo campo--claro">
+          <div class="campo campo--claro" data-campo="org">
           <label class="campo__label" for="h-org">Organization</label>
           <div class="campo__wrap">
           <input class="campo__input" id="h-org" name="company" type="text"
@@ -3128,11 +3335,49 @@
           </div>
           </div>
 
-          <div class="campo campo--claro">
-          <label class="campo__label" for="h-phone">Phone <span class="campo__opt">(optional)</span></label>
+          <!-- Cargo: lo pidio el cliente (feedback 9/9/2026, Parte 4). Un
+          director de operaciones y un tecnico no son el mismo lead. -->
+          <div class="campo campo--claro" data-solo="cualificado">
+          <label class="campo__label" for="h-role">Role</label>
           <div class="campo__wrap">
-          <input class="campo__input" id="h-phone" name="phone" type="tel"
-          inputmode="tel" autocomplete="tel">
+          <input class="campo__input" id="h-role" name="jobtitle" type="text"
+          autocomplete="organization-title" required>
+          </div>
+          </div>
+
+          <!-- Dos telefonos y ya no opcionales: el equipo comercial necesita
+          poder llamar. La linea directa solo en el camino cualificado. -->
+          <div class="campo campo--claro" data-solo="cualificado">
+          <label class="campo__label" for="h-direct">Direct line</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-direct" name="hs_phone_number" type="tel"
+          inputmode="tel" autocomplete="tel" required>
+          </div>
+          </div>
+
+          <div class="campo campo--claro" data-campo="movil">
+          <label class="campo__label" for="h-phone">Mobile phone</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-phone" name="mobilephone" type="tel"
+          inputmode="tel" autocomplete="tel" required>
+          </div>
+          </div>
+
+          <!-- Provincia y ciudad: SOLO en el camino de descartado por tamano
+          --Parte 1, pantalla 1--. Ocultos en el resto. -->
+          <div class="campo campo--claro" data-solo="descartado" hidden>
+          <label class="campo__label" for="h-prov">Province</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-prov" name="state" type="text"
+          autocomplete="address-level1">
+          </div>
+          </div>
+
+          <div class="campo campo--claro" data-solo="descartado" hidden>
+          <label class="campo__label" for="h-city">City</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="h-city" name="city" type="text"
+          autocomplete="address-level2">
           </div>
           </div>
 
@@ -3146,8 +3391,25 @@
           <input type="hidden" name="sites" value="">
           <input type="hidden" name="benchmark_opportunity" value="">
 
+          <!-- Consentimiento. Obligatorio en los TRES caminos.
+
+          El texto es el que mando el cliente y es PROVISIONAL: su equipo lo
+          esta revisando. Importa que sea literal, porque es lo que se guarda
+          en HubSpot como prueba del consentimiento --y en Canada esto cae
+          bajo CASL--. Si cambia en pantalla, hay que cambiarlo tambien en el
+          guion que lo envia. -->
+          <div class="campo campo--claro campo--casilla">
+          <label class="casilla">
+          <input class="casilla__input" type="checkbox" id="h-consent" name="consent" required>
+          <span class="casilla__texto" id="texto-consentimiento">I consent to receive
+          electronic communications from Rede Energy Solutions about energy
+          management services, program updates, and related content. I can
+          withdraw this consent at any time.</span>
+          </label>
+          </div>
+
           <button class="btn btn--primary btn--block" type="submit">
-          Send me the deeper look
+          <span data-boton-envio>Send me the deeper look</span>
           <svg class="btn__arrow" width="18" height="12" viewBox="0 0 18 12" aria-hidden="true">
           <path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor"
           stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -3809,6 +4071,7 @@
 
             <div class="d2-res-cen__firma">
               <b data-cen-nombre>Alex Telford</b>
+              <span data-cen-cargo>Director of Operations</span>
               <span data-cen-org>SD27 &middot; British Columbia</span>
             </div>
           </div>
@@ -4549,7 +4812,7 @@
                 <span class="d2-faq-dato__q">What does the Energy Gap Analysis cost?</span>
               </summary>
               <div class="d2-faq-dato__r">
-                <p><strong>$5,000.</strong> It takes four to six weeks from data access to the presentation of findings.</p>
+                <p><strong>$5,000.</strong> That&rsquo;s a discounted rate for first timers. It takes four to six weeks from data access to the presentation of findings.</p>
                 <p>We analyze one to two years of utility bills across your portfolio, benchmark each facility against its peers, and give you a specific figure for recoverable savings.</p>
               </div>
             </details>
@@ -4609,8 +4872,8 @@
                 <span class="d2-faq-dato__q">What if our buildings are older, or we have no modern controls?</span>
               </summary>
               <div class="d2-faq-dato__r">
-                <p>Recommissioning needs a modern building automation system with detailed controls coverage. Without it there is nothing to correct remotely.</p>
-                <p>If that is not your situation, the Gap Analysis is still the right starting point. It works from utility bills alone and tells you which buildings deserve attention first, whatever their age.</p>
+                <p>Older buildings are not a dead end. Recommissioning needs a modern building automation system to work from, but if you do not have one we can help you install controls, and we can certainly run a full energy audit.</p>
+                <p>Either way, the Gap Analysis is still the right starting point. It works from utility bills alone and tells you which buildings deserve attention first, whatever their age.</p>
               </div>
             </details>
 
@@ -5350,9 +5613,13 @@
      Nada inventado: donde falta un dato, falta. Ninguna variante rellena
      huecos con texto de relleno ni con cifras.
 
-     1. Los datos de contacto (778.327.6851 / matthew@getrede.ca / 535
-        D'Artisan Lane) vienen de la guia de marca de 2015. El comentario
-        del pie actual ya avisa: "confirmar vigencia". Sin confirmar.
+     1. La DIRECCION ya esta confirmada (feedback del 9/9/2026): es
+        PO Box 23, Bowen Island, BC V0N 1G0. La anterior --535 D'Artisan
+        Lane, V0N 1G2-- venia de la guia de marca de 2015 y era incorrecta:
+        cambiaba la calle Y el codigo postal.
+
+        El telefono (778.327.6851) y el correo (matthew@getrede.ca) salen
+        de esa misma guia de 2015 y SIGUEN SIN CONFIRMAR.
 
      2. "Privacy policy" y "Terms of use" apuntan a href="#": no existen
         las paginas. Se dejan enlazados porque el copy aprobado los lleva,
@@ -5548,8 +5815,8 @@
               <li><a href="mailto:matthew@getrede.ca">matthew@getrede.ca</a></li>
             </ul>
             <address class="d2-pie-dir__direccion">
-              535 D&rsquo;Artisan Lane<br>
-              Bowen Island, BC V0N 1G2
+              PO Box 23<br>
+              Bowen Island, BC V0N 1G0
             </address>
           </div>
         </nav>
@@ -5648,8 +5915,8 @@
           </ul>
 
           <address class="d2-pie-desp__direccion">
-            535 D&rsquo;Artisan Lane<br>
-            Bowen Island, BC V0N 1G2
+            PO Box 23<br>
+            Bowen Island, BC V0N 1G0
           </address>
         </div>
       </div>
@@ -5759,7 +6026,7 @@
           <a class="d2-pie-cierre__dato" href="tel:+17783276851">778.327.6851</a>
           <a class="d2-pie-cierre__dato" href="mailto:matthew@getrede.ca">matthew@getrede.ca</a>
           <address class="d2-pie-cierre__direccion">
-            535 D&rsquo;Artisan Lane, Bowen Island, BC V0N 1G2
+            PO Box 23, Bowen Island, BC V0N 1G0
           </address>
         </div>
 
@@ -5955,6 +6222,39 @@
      los selectores ya habrian leido el valor viejo. -->
 <script src="js/d2-reset-elecciones.js"></script>
 <script src="js/selector.js"></script>
+<!-- ==========================================================================
+     HUBSPOT
+
+     Tres datos que da el cliente. Mientras esten vacios la calculadora
+     funciona igual: confirma en pantalla y avisa por consola, sin romperse.
+
+       portalId     Hub ID de la cuenta. Numero de 7 u 8 cifras. En HubSpot:
+                    esquina superior derecha, o Settings > Account Defaults.
+
+       formId       GUID del formulario, con guiones. En Marketing > Forms,
+                    abrir el formulario: esta en la URL tras /form/.
+
+       meetingsUrl  El calendario de reservas. Es OTRO producto: tener el
+                    portalId no basta. En Sales > Meetings Scheduler,
+                    elegir la reunion > Embed > Copy code. Hace falta acceso
+                    de Sales o Service para ver esa opcion.
+
+     ANTES DE DARLO POR BUENO, dos cosas que hay que mirar en la cuenta y
+     que tumban el envio entero sin que se vea desde aqui:
+
+       1. Cada propiedad personalizada tiene que estar ANADIDA AL FORMULARIO,
+          no solo creada en el CRM.
+       2. reCAPTCHA tiene que estar DESACTIVADO en ese formulario: con el
+          activo, HubSpot rechaza todos los envios hechos por API.
+     ========================================================================== -->
+<script>
+  window.REDE_HUBSPOT = {
+    portalId: '',
+    formId: '',
+    meetingsUrl: ''
+  };
+</script>
+<script src="js/d2-hubspot.js"></script>
 <script src="js/main.js"></script>
 <script src="js/d2.js"></script>
 <script src="js/d2-carrusel.js"></script>
