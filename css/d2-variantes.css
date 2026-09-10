@@ -436,7 +436,9 @@
   /* La regla base baja el render al 22% en movil. Sube al mismo .66 que en
      escritorio para que la cantidad de dibujo que atraviesa el panel sea la
      misma en los dos sitios. */
-  .d2-hero.es-variante-c .d2-hero__fondo { opacity: .66; }
+  /* El .66 es para el render al LADO del texto. Apilado va detras, asi
+     que la opacidad la fija la regla de es-enc-escena de mas abajo. */
+  .d2-hero.es-variante-c .d2-hero__fondo:not(.es-enc-escena) { opacity: .66; }
 
   /* Los MISMOS valores que en escritorio: es la misma variante, y si aqui
      se ve mas solida no se puede comparar. Las reglas de panel y metricas
@@ -13693,6 +13695,50 @@ span.d2-panel__filtro:hover {
     opacity: .3;
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
             mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
+  }
+
+  /* La escena, a su tamano en movil (10/9/2026).
+
+     Se veia diminuta y perdida en el centro. La regla de escritorio usa
+     `contain` por un motivo correcto alli --el hueco es una franja
+     apaisada y `cover` recortaba media imagen-- pero apilado el hueco es
+     VERTICAL: 390x1085, proporcion 0.36 frente al 1.47 de la imagen. Al
+     caber entera por ancho quedaba en una banda de 265px flotando en un
+     contenedor de mil.
+
+     Aqui `cover` es lo correcto: llena el ancho y recorta por alto, que es
+     lo natural cuando las proporciones no coinciden. Anclada abajo para
+     conservar la base del edificio con la gente, que es lo que da escala;
+     al centro se quedaba con forjados intermedios, lineas sin referencia.
+
+     Y la mascara pasa a vertical. La horizontal separaba el dibujo del
+     texto cuando iban en columnas; apilados el texto va ARRIBA, asi que
+     desvaneciendo por la izquierda solo se borraba media imagen. */
+  .d2 .d2-hero__fondo.es-enc-escena {
+    left: auto;
+    right: 0;
+    width: 100%;
+    /* No ocupa el alto entero del hero: con `cover` sobre 1085px el zoom
+       era tal que solo se veian forjados interiores, sin edificio
+       reconocible. Limitada a 62% la ampliacion es mucho menor y la
+       escena se lee. */
+    height: 62%;
+    top: auto;
+    bottom: 0;
+    object-fit: cover;
+    /* Anclada abajo: conserva la base con los arboles y la gente, que es
+       lo que da escala. Al centro quedaban lineas sin referencia. */
+    object-position: 50% 100%;
+    /* Mas tenue que en escritorio --alli el render va al LADO del texto y
+       aqui DEBAJO-- pero no tanto como para que desaparezca: .48 deja ver
+       el edificio sin restar legibilidad al titular. */
+    opacity: .48;
+    /* El prefijado va DESPUES del estandar, no antes. La regla de
+       escritorio lo declara en ese orden, y Chrome aplica el ultimo que
+       lee: con el -webkit- delante, la mascara horizontal de escritorio
+       seguia ganando y borraba la mitad izquierda de la imagen. */
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
   }
 }
 
