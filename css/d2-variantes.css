@@ -14138,7 +14138,10 @@ span.d2-panel__filtro:hover {
   /* Ocupa la segunda columna del hero, pero no entera: 84% deja ver la
      ilustracion por los lados. */
   justify-self: center;
-  width: min(84%, 420px);
+  /* 440 y no 420: con el ancho anterior la leyenda de cuatro entradas se
+     quedaba a 1px de no caber en una fila. Veinte pixeles mas dan holgura
+     sin comerse la ilustracion, que sigue viendose alrededor. */
+  width: min(86%, 440px);
   padding: 22px 20px 18px;
   border: 1px solid var(--c-borde-suave, #EFEFEF);
   border-radius: 12px;
@@ -14314,13 +14317,13 @@ span.d2-panel__filtro:hover {
 /* --- La leyenda --- */
 
 .d2 .d2-hero__leyenda {
-  /* Rejilla de dos columnas y no flex: con cuatro entradas de ancho
-     distinto, el flex dejaba tres arriba y una suelta abajo. Asi quedan
-     dos y dos, alineadas. */
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  justify-content: start;
-  gap: 5px 16px;
+  /* Flex y no rejilla fija: con dos columnas las cuatro entradas partian en
+     dos filas aunque cupieran en una --suman 377px y disponen de 393--. Asi
+     van en linea cuando hay sitio y se reparten solas cuando no, que es lo
+     que pasa en movil. */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 13px;
   margin: 12px 0 0;
   padding: 0;
   list-style: none;
