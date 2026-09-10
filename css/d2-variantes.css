@@ -14241,7 +14241,10 @@ span.d2-panel__filtro:hover {
 /* Las barras: el verde de marca. En la figura del cliente son amarillas
    --el color por defecto de Excel-- pero aqui mandan los colores de Rede. */
 .d2 .hero-gr__barras rect {
-  fill: var(--c-verde, #39B54A);
+  /* Verde claro, no el pleno: las barras son el fondo de la historia --el
+     dinero que se va acumulando-- y las lineas son la lectura. Con el
+     verde de marca competian y las curvas se perdian detras. */
+  fill: rgba(57, 181, 74, .55);
   /* Crecen desde abajo al entrar en pantalla. transform-origin en el fondo
      del lienzo, no en la barra: en SVG el origen es del sistema de
      coordenadas y con "bottom" cada barra se escalaria desde su propio
@@ -14275,14 +14278,22 @@ span.d2-panel__filtro:hover {
 
 /* "Do nothing" es la linea de referencia: gris, discreta, queda arriba. */
 .d2 .hero-gr__linea--nada {
-  stroke: var(--c-borde, #C9C9C9);
+  /* #9A9A9A y no #E4E4E4: el anterior daba contraste 1.27 sobre el panel
+     blanco, o sea invisible. El minimo para un elemento grafico es 3, y
+     con #9A9A9A se quedaba en 2.81. Este da 3.5 sin robarle protagonismo
+     a la linea verde. */
+  stroke: #8E8E8E;
+  stroke-dasharray: 6 4;
   animation-delay: .1s;
 }
 
 /* La meta, punteada: es un objetivo, no un hecho. */
 .d2 .hero-gr__linea--meta {
-  stroke: rgba(57, 181, 74, .45);
-  stroke-dasharray: 5 4;
+  /* Del 45% de opacidad --contraste 2.66-- a un verde solido mas oscuro.
+     Sigue siendo la linea mas discreta de las tres, pero se ve. */
+  stroke: #5E9660;
+  stroke-dasharray: 2 4;
+  stroke-linecap: round;
   animation: none;
   opacity: 0;
   animation: hero-gr-aparece .5s ease .9s forwards;
@@ -14295,7 +14306,8 @@ span.d2-panel__filtro:hover {
 /* Lo que de verdad paso: el verde oscuro, el trazo con mas peso. */
 .d2 .hero-gr__linea--real {
   stroke: var(--c-verde-hover, #026F00);
-  stroke-width: 2.4;
+  /* La mas gruesa de las tres: es el dato que importa. */
+  stroke-width: 2.8;
   animation-delay: .35s;
 }
 
