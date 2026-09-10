@@ -14176,6 +14176,55 @@ span.d2-panel__filtro:hover {
   color: var(--c-texto-suave, #6B6B6B);
 }
 
+/* --- Las dos metricas --- */
+
+.d2 .d2-hero__metricas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 16px;
+  margin: 0 0 14px;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--c-borde-suave, #EFEFEF);
+}
+
+.d2 .d2-hero__metricas dt {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.3;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .d2-hero__metricas dd {
+  margin: 2px 0 0;
+  font-size: 19px;
+  font-weight: var(--fw-bold, 700);
+  line-height: 1.2;
+  color: var(--c-texto, #333333);
+}
+
+.d2 .d2-hero__metricas dd small {
+  font-size: 12px;
+  font-weight: var(--fw-medium, 600);
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* El descenso, en verde: es la buena noticia del dato. En su propia linea
+   para que no compita con la cifra. */
+.d2 .d2-hero__delta {
+  display: block;
+  margin-top: 1px;
+  font-size: 11.5px;
+  font-weight: var(--fw-medium, 600);
+  color: var(--c-verde-hover, #026F00);
+}
+
+/* En pantallas estrechas las dos metricas se apilan: a media columna de un
+   panel de 350px, "2.7M kWh" y su descenso no caben en linea. */
+@media (max-width: 480px) {
+  .d2 .d2-hero__metricas { grid-template-columns: 1fr; gap: 10px; }
+}
+
+
 /* --- El grafico --- */
 
 .d2 .hero-gr {
