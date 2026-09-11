@@ -164,9 +164,26 @@ Tres correcciones deliberadas:
 
 ---
 
-## ⚠ Los datos de la tarjeta son inventados
+## ✅ Los datos de la tarjeta ya son reales (11/9/2026)
 
-$480K, 2.7M kWh, 14%, 11% vienen del mockup y **no son datos reales**.
+**Resuelto.** El panel del hero mostraba $480K, 2.7M kWh, 14% y 11%, que
+venían del mockup y **no eran datos reales**. Se sustituyeron por dos
+cifras derivadas de la figura 1 que mandó el cliente:
+
+- **6.8M ekWh** evitados en 2023/24 — es la diferencia entre su línea
+  "do nothing" (28.2M) y la real (21.4M)
+- **24% por debajo del baseline** — ese mismo cálculo en porcentaje
+
+Las dos salen de medir sus propias series, así que son verificables contra
+el documento que él mismo envió.
+
+Se retiró además el $4.4M del panel: ya vive en la banda de logos y
+repetirlo restaba a las dos cosas.
+
+<details>
+<summary>El aviso original, para contexto</summary>
+
+$480K, 2.7M kWh, 14%, 11% venían del mockup y **no eran datos reales**.
 
 Los datos reales que sí tenemos del brief:
 - **$2.94M** en costos innecesarios identificados (Gap Analysis)
@@ -175,6 +192,8 @@ Los datos reales que sí tenemos del brief:
 Con un público que compra precisamente por rigor de datos, mostrar cifras inventadas
 como si fueran reales es un riesgo de credibilidad. Decidir con el cliente: datos
 reales anonimizados, o marcarlo claramente como ejemplo ilustrativo.
+
+</details>
 
 ---
 

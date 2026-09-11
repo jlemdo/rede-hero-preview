@@ -14243,6 +14243,14 @@ span.d2-panel__filtro:hover {
 
 /* --- Las dos metricas --- */
 
+/* Dos columnas cuando solo hay dos metricas: con `repeat(3, 1fr)` la
+   tercera columna quedaba vacia y las dos cifras se apretaban a la
+   izquierda. */
+.d2 .d2-hero__metricas--dos {
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 4px 20px !important;
+}
+
 .d2 .d2-hero__metricas {
   /* Tres columnas (11/9/2026): el acumulado se une a las dos anuales en
      vez de ir solo arriba. Son la misma clase de dato y juntas se comparan;
