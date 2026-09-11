@@ -14796,83 +14796,50 @@ span.d2-panel__filtro:hover {
 /* ==========================================================================
    EL MAPA DE BARRIOS
 
-   Variante del mapa de cartera sobre un plano. Hereda de .d2-prob-mapa todo
-   lo que no cambia --el lienzo, la reticula, la ficha, la adaptacion a
-   movil-- y solo redefine lo suyo: el plano de calles y el color de las
-   burbujas.
+   Diez sitios sobre el plano REAL de Grande Prairie. Hereda de
+   .d2-prob-mapa lo que no cambia y redefine el plano y las burbujas.
 
-   LO QUE CAMBIA RESPECTO AL MAPA DE CARTERA
+   EL COLOR AQUI NO MIDE, IDENTIFICA
 
-   Alli las cinco burbujas van sobre una curva y el eje vertical significa
-   desviacion. Aqui la posicion es GEOGRAFICA --cada burbuja cae donde esta
-   el barrio-- asi que la desviacion tiene que decirse de otra forma: con el
-   color.
+   En la primera version el color era una escala de intensidad --verde a
+   ambar segun la desviacion-- y funcionaba, pero apoyaba un dato que era
+   inventado. Ahora son los colores de la propia herramienta del cliente,
+   muestreados de su captura, y cada uno solo distingue un barrio de otro.
+   Van en el marcado, en un style por burbuja, porque son un dato del sitio
+   y no un estado de la interfaz.
 
-   EL COLOR SIGNIFICA, NO DECORA
-
-   Cinco niveles, del verde de marca al ambar, declarados en data-nivel:
-
-     0  rinde por debajo de lo esperado   verde de marca
-     1  en linea                          verde apagado
-     2  algo por encima                   arena
-     3  claramente por encima             ambar
-     4  muy por encima                    ambar fuerte
-
-   La referencia que mando Erick usaba once colores sin relacion entre si
-   --mostaza, terracota, morado, rojo-- porque los asigna una herramienta de
-   BI por orden de aparicion. Replicarlos habria metido diez colores nuevos
-   en el manual sin que ninguno quisiera decir nada.
-
-   El tamano sigue diciendo consumo, como en el original.
-
-   EL COLOR NO ES LA UNICA SENAL (WCAG 1.4.1)
-
-   Quien no distinga verde de ambar sigue teniendo el tamano de la burbuja,
-   la cifra de la ficha y el aria-label de cada sitio. El destacado ademas
-   suma grosor y halo, no solo color.
+   Lo que SI mide es el tamano: cuanta energia consume cada sitio.
    ========================================================================== */
 
-.d2-mapa-zonas {
-  /* La escala de intensidad. En un solo sitio para poder ajustarla sin
-     perseguir valores por toda la hoja.
+/* --- El plano: los limites de los barrios --- */
 
-     El verde es el de marca; el ambar sale de girar ese verde hacia el
-     calido manteniendo la luminosidad, asi que convive con el en vez de
-     pelearse. No es un color de alerta de sistema: aqui nada esta roto,
-     solo hay sitios que merecen mirarse antes que otros. */
-  --zona-0: #39B54A;   /* verde de marca */
-  --zona-1: #6FA86B;
-  --zona-2: #A89A5E;
-  --zona-3: #C9913F;
-  --zona-4: #D97E2B;   /* ambar fuerte */
+/* Los 57 barrios que no estan en el grafico. Dan el contorno de la ciudad
+   --que es lo que hace que esto se lea como un mapa-- sin competir con
+   los diez que si llevan dato. */
+.d2-mapa-zonas__fondo {
+  fill: #00000008;
+  stroke: #00000014;
+  stroke-width: .8px;
 }
 
-/* --- El plano de calles --- */
-
-.d2-mapa-zonas__plano path {
-  fill: none;
-  stroke: #FFFFFF1F;
-  stroke-width: 1px;
-}
-
-/* Las dos vias principales, algo mas marcadas: sin ellas el plano es una
-   cuadricula y no se lee como una ciudad. */
-.d2-mapa-zonas__via {
-  stroke: #FFFFFF38 !important;
-  stroke-width: 2.25px !important;
-}
-
-/* El rio, en el verde tenue del resto del grafico */
-.d2-mapa-zonas__rio {
-  stroke: #7DE4934D !important;
-  stroke-width: 2px !important;
+/* El area de cada barrio del grafico, en su propio color. El circulo se
+   apoya en ella: sin esto los circulos flotaban y no se entendia que
+   region era cada uno. */
+.d2-mapa-zonas__area {
+  fill: var(--zona-fill, #6F7374);
+  fill-opacity: .13;
+  stroke: var(--zona-fill, #6F7374);
+  stroke-opacity: .45;
+  stroke-width: 1.1px;
+  stroke-linejoin: round;
+  transition: fill-opacity .18s, stroke-opacity .18s;
 }
 
 .d2-mapa-zonas__ciudad {
-  fill: #FFFFFF16;
-  font-size: 26px;
+  fill: #00000010;
+  font-size: 27px;
   font-weight: 700;
-  letter-spacing: .04em;
+  letter-spacing: .08em;
   text-anchor: middle;
 }
 
@@ -14880,152 +14847,62 @@ span.d2-panel__filtro:hover {
 
 .d2-mapa-zonas__sitio { cursor: pointer; outline: none; }
 
-/* El relleno lleva alpha para que se vean las de debajo cuando se solapan,
-   que es lo que pasa en el mapa de referencia y ayuda a leer la densidad. */
+/* El relleno lleva alpha para que se vean las de debajo cuando se
+   solapan: es lo que deja leer la densidad de un vistazo. */
 .d2-mapa-zonas__burbuja {
-  fill: var(--zona-fill, #39B54A);
-  fill-opacity: .34;
-  stroke: var(--zona-fill, #39B54A);
+  fill: var(--zona-fill, #6F7374);
+  fill-opacity: .62;
+  stroke: var(--zona-fill, #6F7374);
   stroke-width: 1.5px;
-  transition: fill-opacity .18s, stroke .18s, stroke-width .18s, filter .18s;
-}
-
-.d2-mapa-zonas__nucleo {
-  fill: var(--zona-fill, #39B54A);
-  stroke: none;
+  transition: fill-opacity .18s, stroke-width .18s, filter .18s;
 }
 
 .d2-mapa-zonas__etiqueta {
-  fill: var(--mapa-tenue);
-  font-size: 7px;
-  letter-spacing: .06em;
-  text-anchor: middle;
+  fill: var(--c-texto-suave, #6B6B6B);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .04em;
   pointer-events: none;
+  transition: fill .18s;
 }
-
-/* El nivel elige el color. Va por atributo y no por clase porque es un
-   dato --cuanto se desvia-- y no un estado de la interfaz. */
-.d2-mapa-zonas__sitio[data-nivel="0"] { --zona-fill: var(--zona-0); }
-.d2-mapa-zonas__sitio[data-nivel="1"] { --zona-fill: var(--zona-1); }
-.d2-mapa-zonas__sitio[data-nivel="2"] { --zona-fill: var(--zona-2); }
-.d2-mapa-zonas__sitio[data-nivel="3"] { --zona-fill: var(--zona-3); }
-.d2-mapa-zonas__sitio[data-nivel="4"] { --zona-fill: var(--zona-4); }
 
 /* --- Los estados, con los mismos tiempos que el mapa de cartera --- */
 
 .d2-mapa-zonas__sitio:hover .d2-mapa-zonas__burbuja {
-  fill-opacity: .52;
+  fill-opacity: .8;
   stroke-width: 3px;
 }
 
-/* El destacado. Tres senales a la vez --grosor, halo y etiqueta blanca--
-   para que no dependa de distinguir un color de otro (WCAG 1.4.1). */
-.d2-mapa-zonas__sitio.es-foco .d2-mapa-zonas__burbuja {
-  fill-opacity: .58;
-  stroke: #FFFFFF;
-  stroke-width: 3.5px;
-  filter: drop-shadow(0 0 12px #FFFFFF4D);
+.d2-mapa-zonas__sitio:hover .d2-mapa-zonas__area,
+.d2-mapa-zonas__sitio.es-foco .d2-mapa-zonas__area {
+  fill-opacity: .28;
+  stroke-opacity: .85;
 }
 
-.d2-mapa-zonas__sitio.es-foco .d2-mapa-zonas__nucleo { fill: #FFFFFF; }
+/* El destacado. Tres senales a la vez --opacidad, grosor y etiqueta en
+   negro-- para que no dependa de distinguir un color de otro. */
+.d2-mapa-zonas__sitio.es-foco .d2-mapa-zonas__burbuja {
+  fill-opacity: .88;
+  stroke: var(--c-texto, #333333);
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 2px 10px #00000038);
+}
 
 .d2-mapa-zonas__sitio.es-foco .d2-mapa-zonas__etiqueta {
-  fill: #FFFFFF;
-  font-weight: 700;
+  fill: var(--c-texto, #333333);
 }
 
 .d2-mapa-zonas__sitio:focus-visible .d2-mapa-zonas__burbuja {
-  stroke: #FFFFFF;
-  stroke-width: 3px;
-}
-
-/* --- Adaptacion --- */
-
-@media (max-width: 900px) {
-  /* El nombre de la ciudad estorba cuando el mapa se encoge: las
-     etiquetas de las burbujas le pasan por encima. */
-  .d2-mapa-zonas__ciudad { display: none; }
-
-  /* Las etiquetas, algo mas grandes. No llegan a los 12px que pide el
-     resto de la web --a ese tamano no caben once nombres entre las
-     burbujas-- y es una excepcion consciente: son nombres de APOYO, no el
-     dato. El dato esta en la ficha de debajo, a tamano completo, y en el
-     aria-label de cada burbuja. */
-  .d2-mapa-zonas__etiqueta { font-size: 11px; }
-}
-
-/* --- SOBRE FONDO CLARO ---
-
-   El mapa vive en el panel de datos del FAQ, que es blanco. Las reglas de
-   arriba estan escritas para el fondo oscuro de The Problem --calles en
-   blanco translucido, destacado en blanco puro-- y sobre blanco
-   desaparecen: un #FFFFFF1F sobre #FFFFFF no es nada.
-
-   Se invierte lo que tiene que invertirse y NADA mas: las burbujas
-   conservan su color, que es el que lleva el significado. */
-
-.d2 .d2-mapa-zonas .d2-mapa-zonas__plano path { stroke: #00000014; }
-.d2 .d2-mapa-zonas .d2-mapa-zonas__via { stroke: #00000026 !important; }
-.d2 .d2-mapa-zonas .d2-mapa-zonas__rio { stroke: #39B54A4D !important; }
-.d2 .d2-mapa-zonas .d2-mapa-zonas__ciudad { fill: #0000000F; }
-
-/* La etiqueta, en el gris de texto de la web: el --mapa-tenue de la
-   variante clara es #525252 y a 9.5px sobre blanco se lee justo. */
-.d2 .d2-mapa-zonas .d2-mapa-zonas__etiqueta {
-  fill: var(--c-texto-suave, #6B6B6B);
-}
-
-/* El destacado sobre claro: el aro blanco de la version oscura se pierde,
-   asi que lo marca el gris de texto --que contrasta con cualquiera de los
-   cinco colores de la escala-- y el halo pasa a ser una sombra. */
-.d2 .d2-mapa-zonas .d2-mapa-zonas__sitio.es-foco .d2-mapa-zonas__burbuja {
-  stroke: var(--c-texto, #333333);
-  stroke-width: 2.5px;
-  filter: drop-shadow(0 2px 9px #0000002E);
-}
-
-.d2 .d2-mapa-zonas .d2-mapa-zonas__sitio.es-foco .d2-mapa-zonas__nucleo {
-  fill: var(--c-texto, #333333);
-}
-
-.d2 .d2-mapa-zonas .d2-mapa-zonas__sitio.es-foco .d2-mapa-zonas__etiqueta {
-  fill: var(--c-texto, #333333);
-}
-
-.d2 .d2-mapa-zonas .d2-mapa-zonas__sitio:focus-visible .d2-mapa-zonas__burbuja {
   stroke: var(--c-texto, #333333);
   stroke-width: 3px;
 }
 
-/* El aviso pasa a vivir en el flujo, bajo el plano: en la esquina
-   superior derecha chocaba con la burbuja de Summit y ahi no hay hueco
-   libre a ningun ancho. */
-.d2 .d2-mapa-zonas .d2-prob-mapa__aviso {
-  position: static;
-  order: 2;
-  margin: 8px 0 0;
-  text-align: right;
-  white-space: normal;
-}
+/* --- Colocacion ---
 
-/* --- La ficha no puede tapar el mapa ---
-
-   Encajada en la esquina inferior derecha cubria tres burbujas, y una de
-   ellas era la destacada: la ficha describia un sitio que no se veia.
-
-   Pasa debajo del plano, a todo el ancho. Se pierde el efecto de tarjeta
-   flotante, pero el mapa se ve entero, que es para lo que esta. */
-.d2 .d2-mapa-zonas .d2-prob-mapa__ficha {
-  position: static;
-  order: 3;
-  width: auto;
-  margin-top: 12px;
-}
+   Ya no hay ficha, asi que el mapa ocupa el bloque entero. El aviso queda
+   debajo: lleva la atribucion a OpenStreetMap, que la licencia exige. */
 
 .d2 .d2-mapa-zonas .d2-prob-mapa__visual {
-  /* Vuelve al flujo normal. Estaba en `absolute inset:0`, pensado para un
-     lienzo de altura fija; al quitarle la proporcion al lienzo se quedo
-     sin nada que llenar y el SVG salia con 0px de alto. */
   position: static;
   display: flex;
   flex-direction: column;
@@ -15040,9 +14917,32 @@ span.d2-panel__filtro:hover {
   aspect-ratio: 7 / 5;
 }
 
-/* El lienzo deja de ser 4/3 fijo: ahora tiene que dar sitio al plano Y a
-   la ficha, y con la proporcion clavada la ficha quedaba recortada. */
+.d2 .d2-mapa-zonas .d2-prob-mapa__aviso {
+  position: static;
+  margin: 10px 0 0;
+  /* A la izquierda y no a la derecha: son dos frases y alineadas a la
+     derecha la segunda linea quedaba colgando. */
+  text-align: left;
+  white-space: normal;
+  line-height: 1.5;
+}
+
 .d2 .d2-faq-dato__mapa.d2-mapa-zonas .d2-prob-mapa__lienzo {
   aspect-ratio: auto;
   overflow: visible;
+}
+
+/* --- Adaptacion --- */
+
+@media (max-width: 900px) {
+  /* El nombre de la ciudad estorba cuando el mapa se encoge: las
+     etiquetas de los barrios le pasan por encima. */
+  .d2-mapa-zonas__ciudad { display: none; }
+
+  /* Las etiquetas, algo mas grandes. No llegan a los 12px que pide el
+     resto de la web --a ese tamano no caben diez nombres entre las
+     burbujas-- y es una excepcion consciente: son nombres de APOYO. El
+     mapa no depende de leerlos para entenderse. */
+  .d2-mapa-zonas__etiqueta { font-size: 13px; }
+
 }
