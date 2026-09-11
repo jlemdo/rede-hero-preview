@@ -17,3 +17,8 @@ assets/img/d3/building-sketch.png
 # El contenido real sigue en tu disco, en _paginas/. Para recuperarlo:
 # copiar de vuelta y quitar estas lineas.
 _paginas/
+
+# Las fotos del equipo retocadas con IA (11/9/2026). El feedback las
+# rechaza y se sustituyeron por los originales; se guardan fuera del
+# repositorio por si hiciera falta rastrear de donde salieron.
+_retirado/

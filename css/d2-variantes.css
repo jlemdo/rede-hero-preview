@@ -14576,3 +14576,195 @@ span.d2-panel__filtro:hover {
 @media (max-width: 640px) {
   .d2-hero-tamano[hidden] { display: none !important; }
 }
+
+
+/* ==========================================================================
+   LOS RETRATOS DEL EQUIPO (11/9/2026)
+
+   Vuelven las fotos originales del cliente. Las anteriores estaban
+   retocadas con IA y el feedback las descarta: "prefer not to have AI
+   altered images".
+
+   Al pasar el raton, tres de ellas cambian por una foto de su aficion.
+   Enrique no tiene, asi que se queda quieto.
+
+   EL ENCUADRE
+
+   Las fotos son verticales --ratio 0.71-- y el hueco es un circulo. Con
+   `cover` se recorta por los lados y se conserva el alto, que es lo
+   correcto: `contain` dejaria la cara diminuta con franjas vacias.
+
+   Pero el punto de recorte NO puede ser el mismo para todas. Las de
+   aficion son fotos de verdad, con la persona donde cayo: Matthew arriba
+   a la derecha en la avioneta, Erica de cuerpo entero en el huerto. Un
+   recorte centrado le cortaria la cabeza. Por eso cada una lleva su
+   `object-position`, medido sobre la foto.
+   ========================================================================== */
+
+.d2 .d2-equipo-retrato {
+  position: relative;
+  display: block;
+  /* El circulo va AQUI, no heredado.
+
+     Antes ponia `border-radius: inherit`, pero el padre es un <picture>
+     sin radio: el circulo lo lleva el <img>, que es hijo. Heredaba 0 y
+     entonces este envoltorio --que si recorta, por el overflow-- cortaba
+     en cuadrado. Eso partia el circulo por los cuatro lados, y al ampliar
+     la foto de aficion con `scale` se veia el cuadrado entero.
+
+     El aspect-ratio asegura que la caja sea cuadrada: un 50% sobre un
+     rectangulo daria una elipse. */
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+/* El anillo, como en One Voice: lo pinta el ENVOLTORIO.
+
+   Un box-shadow se dibuja fuera del borde, asi que el recorte del propio
+   elemento no lo toca --pero si se come el de sus hijos. En One Voice el
+   anillo lo pone un <span> ancestro y por eso siempre se vio; en
+   Signature lo ponia el <img>, que queda dentro, y desaparecia.
+
+   Se traslada aqui y se apaga el del <img> para no pintarlo dos veces.
+   El valor es el mismo de la regla original, no uno nuevo. */
+.d2 .d2-equipo-firma__mini .d2-equipo-retrato,
+.d2 .d2-equipo-firma__principal .d2-equipo-retrato {
+  box-shadow: 0 0 0 2px rgba(176, 225, 183, .5);
+  /* Anillo Y movimiento juntos: el translateY lo llevaba el <img>, pero
+     la regla del cruce le dejo la transicion en solo `opacity` y el
+     salto dejo de animarse. Aqui viajan los dos al mismo ritmo, y sube
+     el circulo entero en vez de la foto dentro de un marco quieto. */
+  transition: box-shadow .42s cubic-bezier(.4, 0, .2, 1),
+              transform .42s cubic-bezier(.4, 0, .2, 1);
+}
+
+.d2 .d2-equipo-retrato > .d2-equipo-firma__foto-mini,
+.d2 .d2-equipo-retrato > .d2-equipo-firma__foto-grande {
+  box-shadow: none;
+}
+
+/* El movimiento lo hace el envoltorio: si subieran los dos, serian 6px. */
+.d2 .d2-equipo-firma__mini:hover .d2-equipo-retrato > img,
+.d2 .d2-equipo-firma__principal:hover .d2-equipo-retrato > img {
+  transform: none;
+}
+
+/* Al apuntar se enciende, igual que antes hacia el <img>. */
+.d2 .d2-equipo-firma__mini:hover .d2-equipo-retrato,
+.d2 .d2-equipo-firma__principal:hover .d2-equipo-retrato {
+  box-shadow: 0 0 0 3px var(--c-verde-marca, #39B54A),
+              0 0 0 9px rgba(57, 181, 74, .18);
+  transform: translateY(-3px);
+}
+
+/* Las dos fotos ocupan el mismo sitio: la de aficion encima, oculta. */
+.d2 .d2-equipo-retrato .es-aficion {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  /* La que ENTRA: 700ms con una curva de salida suave --arranca en
+     seguida y frena al final. La de abajo se apaga con un retraso de
+     80ms, asi que durante el cruce siempre hay una capa sosteniendo la
+     imagen y no se ve el lavado de cuando las dos estan a medias. Es lo
+     que hacen los cruces de video. */
+  transition: opacity .7s cubic-bezier(.22, .61, .36, 1);
+}
+
+/* El cruce. Tambien con :focus-within, para quien navega con teclado. */
+.d2 .d2-equipo-retrato:hover .es-aficion,
+.d2 .d2-equipo-retrato:focus-within .es-aficion {
+  opacity: 1;
+}
+
+/* El retrato de debajo se desvanece a la vez: sin esto se ven las dos
+   superpuestas durante la transicion, porque la de arriba no es opaca
+   hasta el final. */
+/* La que SALE: misma duracion, 80ms mas tarde. */
+.d2 .d2-equipo-retrato img:not(.es-aficion) {
+  transition: opacity .7s cubic-bezier(.22, .61, .36, 1) .08s;
+}
+
+.d2 .d2-equipo-retrato:hover img:not(.es-aficion),
+.d2 .d2-equipo-retrato:focus-within img:not(.es-aficion) {
+  opacity: 0;
+}
+
+/* --- El encuadre de cada foto ---
+
+   Los retratos llevan la cara en el tercio superior, asi que el recorte
+   sube del 50% al 30%: centrado cortaria la frente y dejaria medio torso.
+
+   Las de aficion van una a una porque la persona cae en un sitio distinto
+   en cada foto. Los valores salen de mirarlas, no de calcularlos. */
+
+.d2 [src*="equipo/matthew.jpg"],
+.d2 [src*="equipo/marco.jpg"],
+.d2 [src*="equipo/erica.jpg"],
+.d2 [src*="equipo/enrique"] {
+  object-fit: cover;
+  object-position: 50% 28%;
+}
+
+/* En la avioneta, mirando a camara desde la derecha del encuadre. */
+.d2 [src*="matthew-hover"] {
+  object-fit: cover;
+  object-position: 72% 26%;
+}
+
+/* Las dos de cuerpo entero necesitan ACERCARSE, no solo elegir franja.
+
+   `cover` recorta por los lados pero conserva todo el alto, asi que con
+   object-position solo se decide que parte se ve. En un circulo de 68px
+   --las miniaturas de la variante Signature-- la cara quedaba de tres
+   pixeles y no se reconocia a nadie.
+
+   Con `scale` se amplia dentro de la caja y el transform-origin marca
+   sobre que punto: ahi es donde esta la cara. */
+
+/* El acercamiento va en `scale` y NO en `transform`.
+
+   Son dos propiedades distintas y el navegador las compone: asi el
+   translateY(-3px) del hover --que levanta el retrato-- sigue funcionando
+   sin borrar el encuadre. Metidos los dos en `transform`, el ultimo en
+   aplicarse gana y el acercamiento desaparecia justo al apuntar.
+
+   Las coordenadas salen de medir donde esta la cara en cada archivo, no
+   de estimarla mirando la foto. */
+
+/* Esquiando: cara medida en x=54%, y=16%. */
+.d2 [src*="marco-hover"] {
+  object-fit: cover;
+  object-position: 54% 18%;
+  scale: 2.1;
+  transform-origin: 54% 18%;
+}
+
+/* En el huerto: cara medida en x=58%, y=10%. Necesita mas acercamiento
+   que Marco porque la figura sale entera y mas lejos. */
+.d2 [src*="erica-hover"] {
+  object-fit: cover;
+  object-position: 58% 10%;
+  scale: 2.6;
+  transform-origin: 58% 10%;
+}
+
+/* El envoltorio ya recorta --overflow:hidden-- asi que la ampliacion no
+   se sale del circulo. */
+
+/* Sin movimiento: el cambio es inmediato, sin desvanecido. */
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-equipo-retrato,
+  .d2 .d2-equipo-retrato .es-aficion,
+  .d2 .d2-equipo-retrato img:not(.es-aficion) { transition: none; }
+
+  /* El desplazamiento tampoco: quien pide menos movimiento no deberia
+     ver saltar el circulo. El anillo sigue encendiendose --es un cambio
+     de color, no movimiento. */
+  .d2 .d2-equipo-firma__mini:hover .d2-equipo-retrato,
+  .d2 .d2-equipo-firma__principal:hover .d2-equipo-retrato {
+    transform: none;
+  }
+}
