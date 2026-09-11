@@ -1396,8 +1396,16 @@
     if (!cfg || !form) { return; }
     caminoActual = nombre;
 
-    var pedidos = {};
-    cfg.pide.forEach(function (id) { pedidos[id] = true; });
+    /* Se compara por el FINAL del id, no por el id completo: en WordPress
+       cada instancia lleva un prefijo --rc1-h-name-- y una comparacion
+       exacta no casaba con ninguno, dejando el formulario sin campos. */
+    function pedido(id) {
+      for (var i = 0; i < cfg.pide.length; i++) {
+        var n = cfg.pide[i];
+        if (id === n || id.slice(-(n.length + 1)) === '-' + n) { return true; }
+      }
+      return false;
+    }
 
     /* Se recorren TODOS los campos del formulario y se decide uno a uno.
        Asi no hay que acordarse de ocultar lo que sobra: lo que no esta en
@@ -1406,7 +1414,7 @@
       var campo = caja.querySelector('input, select, textarea');
       if (!campo || campo.type === 'hidden' || campo.type === 'checkbox') { return; }
 
-      var visible = !!pedidos[campo.id];
+      var visible = pedido(campo.id);
       caja.hidden = !visible;
 
       /* required se quita al ocultar: un campo invisible y obligatorio
