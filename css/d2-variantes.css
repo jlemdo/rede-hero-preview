@@ -14378,7 +14378,7 @@ span.d2-panel__filtro:hover {
      blanco, o sea invisible. El minimo para un elemento grafico es 3, y
      con #9A9A9A se quedaba en 2.81. Este da 3.5 sin robarle protagonismo
      a la linea verde. */
-  stroke: #A8A8A8;
+  stroke: var(--c-borde, #E4E4E4);
   /* Guion largo, trazo fino: es la linea de referencia, la que dice donde
      estaria el consumo sin hacer nada. */
   stroke-dasharray: 7 5;
