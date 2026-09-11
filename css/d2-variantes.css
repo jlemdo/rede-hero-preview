@@ -14694,15 +14694,38 @@ span.d2-panel__filtro:hover {
 
 /* --- El encuadre de cada foto ---
 
-   Los retratos llevan la cara en el tercio superior, asi que el recorte
-   sube del 50% al 30%: centrado cortaria la frente y dejaria medio torso.
+   Cada retrato lleva el suyo. Antes los cuatro compartian un 28% y con
+   eso la coronilla rozaba el borde en tres de ellos; Enrique se salvaba
+   porque su foto ya es cuadrada y no se recorta por arriba.
 
-   Las de aficion van una a una porque la persona cae en un sitio distinto
-   en cada foto. Los valores salen de mirarlas, no de calcularlos. */
+   Los valores dejan el MISMO aire sobre la cabeza: un 6% del diametro.
+   En porcentaje y no en pixeles, porque el mismo hueco absoluto se ve
+   muy distinto en un circulo de 240px que en uno de 88px.
 
-.d2 [src*="equipo/matthew.jpg"],
-.d2 [src*="equipo/marco.jpg"],
-.d2 [src*="equipo/erica.jpg"],
+   Salen de medir en que altura del archivo empieza la cabeza --la
+   primera fila que se aparta del fondo liso-- y calcular desde ahi, no
+   de irlos moviendo a ojo hasta que parezca bien.
+
+   Las de aficion, mas abajo, si van a ojo: ahi no hay fondo liso que
+   medir y la persona cae en un sitio distinto en cada foto. */
+
+.d2 [src*="equipo/matthew.jpg"] {
+  object-fit: cover;
+  object-position: 50% 6%;
+}
+
+.d2 [src*="equipo/marco.jpg"] {
+  object-fit: cover;
+  object-position: 50% 9%;
+}
+
+.d2 [src*="equipo/erica.jpg"] {
+  object-fit: cover;
+  object-position: 50% 10%;
+}
+
+/* Enrique no necesita ajuste: su foto es cuadrada, asi que `cover` no
+   recorta nada por arriba y el object-position no cambia lo que se ve. */
 .d2 [src*="equipo/enrique"] {
   object-fit: cover;
   object-position: 50% 28%;
