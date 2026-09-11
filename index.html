@@ -259,13 +259,13 @@
      ganadora y se retira el resto.
      ========================================================================== -->
 
-<div class="d2-caru" id="caru-hero" data-caru>
+<div class="d2-caru" id="caru-hero" data-caru data-caru-fijo="0">
 
   <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Option 1: Hero original">
     <section class="d2-hero">
 
-      <img class="d2-hero__fondo" src="assets/img/building-render.jpg"
-           alt="" aria-hidden="true" width="1920" height="1047" fetchpriority="high">
+      <img class="d2-hero__fondo es-enc-escena" src="assets/img/hero-distrito.jpg"
+           alt="" aria-hidden="true" width="1920" height="1304" fetchpriority="high">
 
       <div class="d2-hero__inner">
 
@@ -6040,7 +6040,10 @@
 <script src="js/d2-logos-fondo.js"></script>
 <script src="js/d2-rutas-onda.js"></script>
 <script src="js/d2-rutas-senal.js"></script>
-<script src="js/d2-hero-imagen.js"></script>
+<!-- El selector de tamano del panel del hero. Sustituye a los dos que
+     habia --variantes e imagen de fondo--: esas decisiones estan tomadas.
+     Es de PRUEBA y se retira antes de publicar. -->
+<script src="js/d2-hero-tamano.js"></script>
 <script src="js/d2-calc-entrada.js"></script>
 <script src="js/d2-composicion.js"></script>
 <script src="js/editor-github.js"></script>

@@ -14202,8 +14202,18 @@ span.d2-panel__filtro:hover {
   justify-self: center;
   /* 440 y no 420: con el ancho anterior la leyenda de cuatro entradas se
      quedaba a 1px de no caber en una fila. Veinte pixeles mas dan holgura
-     sin comerse la ilustracion, que sigue viendose alrededor. */
-  width: min(86%, 440px);
+     sin comerse la ilustracion, que sigue viendose alrededor.
+
+     --panel-escala lo pone el selector de tamano, que es de PRUEBA: vale 1
+     mientras nadie lo toque, asi que la regla se comporta igual que antes
+     de existir.
+
+     El tope es el 100% de su COLUMNA --568px en escritorio-- y no un
+     porcentaje menor: con el 86% anterior el panel se quedaba en 488 y el
+     factor de 1.4 no llegaba a verse. La columna ya es el limite natural,
+     porque pasar de ahi invadiria la del texto. */
+  width: calc(440px * var(--panel-escala, 1));
+  max-width: 100%;
   padding: 22px 20px 18px;
   border: 1px solid var(--c-borde-suave, #EFEFEF);
   border-radius: 12px;
@@ -14540,4 +14550,29 @@ span.d2-panel__filtro:hover {
 @media (max-width: 480px) {
   .d2 .hero-gr__anos text,
   .d2 .hero-gr__escala text { font-size: 22px; }
+}
+
+
+/* La barra del selector de tamano del panel. Mismo aspecto que el resto de
+   mandos de prueba; se retira con ellos antes de publicar. */
+.d2-hero-tamano__eti {
+  font-size: 11px;
+  font-weight: var(--fw-bold, 700);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave, #6B6B6B);
+  white-space: nowrap;
+}
+
+.d2-caru__mandos.esta-minimizado .d2-hero-tamano__eti { display: none; }
+
+/* En movil no aparece: el panel ya ocupa el ancho disponible y no hay nada
+   que agrandar.
+
+   Hace falta la regla de CSS ademas del atributo `hidden` del guion: las
+   reglas de .d2-caru__mandos declaran `display:flex`, y un `display` en
+   una regla normal GANA al display:none que el navegador da por hidden.
+   Es la misma trampa que ya paso con los carruseles apagados. */
+@media (max-width: 640px) {
+  .d2-hero-tamano[hidden] { display: none !important; }
 }
