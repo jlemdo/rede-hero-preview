@@ -14857,12 +14857,22 @@ span.d2-panel__filtro:hover {
   transition: fill-opacity .18s, stroke-width .18s, filter .18s;
 }
 
+/* La etiqueta va ENCIMA de su circulo, como en la referencia.
+
+   Con trece burbujas grandes y juntas no queda hueco libre alrededor:
+   colocarlas fuera daba once choques. Para que se lean sobre el color va
+   un contorno del tono del fondo, con `paint-order: stroke` --sin eso el
+   trazo se pinta sobre la letra y la engorda hasta cerrarla. */
 .d2-mapa-zonas__etiqueta {
-  fill: var(--c-texto-suave, #6B6B6B);
-  font-size: 9px;
+  fill: var(--c-texto, #333333);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: .04em;
+  letter-spacing: .02em;
   pointer-events: none;
+  paint-order: stroke;
+  stroke: #F7F7F7;
+  stroke-width: 2.6px;
+  stroke-linejoin: round;
   transition: fill .18s;
 }
 
@@ -14908,13 +14918,17 @@ span.d2-panel__filtro:hover {
   flex-direction: column;
 }
 
-/* La altura la da la proporcion del viewBox --700x500-- y no el
-   contenedor: asi el plano no se deforma a ningun ancho. */
+/* La altura la da la proporcion del viewBox y no el contenedor, asi el
+   plano no se deforma a ningun ancho.
+
+   700x741 no es un capricho: es la forma que tiene el grupo de sitios.
+   Con un lienzo 7:5 fijo sobraba la mitad del ancho y las burbujas se
+   veian diminutas --ocupaban el 45% del lienzo, ahora el 82%. */
 .d2 .d2-mapa-zonas .d2-prob-mapa__grafico {
   position: relative;
   width: 100%;
   height: auto;
-  aspect-ratio: 7 / 5;
+  aspect-ratio: 700 / 741;
 }
 
 .d2 .d2-mapa-zonas .d2-prob-mapa__aviso {
