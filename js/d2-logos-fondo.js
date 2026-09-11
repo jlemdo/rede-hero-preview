@@ -1,7 +1,7 @@
 /* ==========================================================================
    SELECTOR DE FONDO DE LA SECCION DE MARCAS
 
-   Un control local para que Erick pruebe la seccion en cinco fondos sin
+   Un control local para que Erick pruebe la seccion en tres fondos sin
    tocar el resto de la web. Es temporal: se retira al decidir.
 
    Por que no reutilizar el selector de composicion global: ese cambia las
@@ -9,7 +9,7 @@
    seccion de marcas no sigue al token de composicion, asi que el control
    global no la alcanzaria.
 
-   Los cinco fondos salen del manual. El detalle de cada uno esta junto a
+   Los tres fondos salen del manual. El detalle de cada uno esta junto a
    la lista, mas abajo.
    ========================================================================== */
 
@@ -22,20 +22,23 @@
   var seccion = caru.querySelector('.d2-logos--dos');
   if (!seccion) { return; }
 
-  /* Cinco fondos, todos derivables del manual:
-       blanco
-       negro de marca al 6%   -> el gris de la composicion
-       negro de marca         -> #333333
+  /* Los tres, derivados del manual:
+       negro de marca                         -> #333333
        negro de marca al 50% sobre negro puro -> #1A1A1A, el de la
          cabecera de la calculadora
-       verde de marca al 45% sobre negro -> el de la seccion de equipo
+       verde de marca al 45% sobre negro      -> el de la seccion de equipo
 
      El #333333 se llamaba "Black" y era incoherente: el negro de la web es
      el #1A1A1A de la calculadora. Ahora cada uno lleva el nombre que le
      corresponde. */
+  /* Tres opciones (11/9/2026). Antes eran cinco; se retiran las dos claras
+     porque no son candidatas: el feedback descarta el blanco --"definitely
+     not white"-- y el gris claro era el OTRO de los dos grises, del que ya
+     se eligio el oscuro.
+
+     Quedan renumeradas de 1 a 3 en la barra: los indices son los de esta
+     lista, asi que al quitar entradas del principio se renumeran solas. */
   var FONDOS = [
-    { id: 'blanco',    et: 'White',     color: '#FFFFFF', tono: 'claro' },
-    { id: 'gris',      et: 'Grey',      color: '#F3F3F3', tono: 'claro' },
     { id: 'grisosc',   et: 'Dark grey', color: '#333333', tono: 'oscuro' },
     { id: 'negro',     et: 'Black',     color: '#1A1A1A', tono: 'oscuro' },
     { id: 'verde',     et: 'Green',     color: '#1A5121', tono: 'verde' }
@@ -48,9 +51,9 @@
      porque mantiene los logos en blanco y el salto desde el negro anterior es
      suave.
 
-     Antes era 3 --negro-- y antes de eso 0 --blanco, que era solo el primero
-     de la lista--. */
-  var actual = 2;
+     Antes era 3 --negro-- y antes de eso 0 --blanco--. Al quedarse la lista
+     en tres, el gris oscuro pasa a ser el indice 0. */
+  var actual = 0;
 
   try {
     var g = parseInt(sessionStorage.getItem(CLAVE), 10);
