@@ -4708,65 +4708,134 @@
                  </div>
                  -->
 
-<!-- El envoltorio .d2-prob-mapa es necesario, no decorativo: casi
-                 todo el estilo del mapa --colores de burbuja, reticula,
-                 destacado-- esta anidado bajo esa clase, que en su seccion
-                 original era el contenedor. Sin el, el mapa sale sin color. -->
-            <div class="d2-prob-mapa d2-faq-dato__mapa">
-            <div class="d2-prob-mapa__lienzo" data-mapa-cartera>
+<!-- ============================================================
+                 MAPA DE BARRIOS
+
+                 La misma tesis que el mapa de cartera, dicha sobre un plano:
+                 la factura dice cuanto gasto cada edificio, pero no CUAL de
+                 todos merece la primera visita. Aqui se ve de un vistazo
+                 --una burbuja grande y ambar es un edificio grande gastando
+                 de mas-- antes de leer una sola cifra.
+
+                 Dos dimensiones a la vez, que es lo que no cabe en una tabla:
+                   tamano  cuanta energia consume el sitio
+                   color   cuanto se desvia de lo esperado
+
+                 El color va por escala de intensidad --del verde de marca al
+                 ambar-- y no por variedad decorativa: asi SIGNIFICA algo y no
+                 hacen falta once colores nuevos en el manual. El nivel se
+                 declara en data-nivel y el CSS elige el color desde ahi.
+
+                 Los barrios son los de Grande Prairie, Alberta. Las cifras
+                 son ilustrativas y el aviso de la esquina lo dice.
+                 ============================================================ -->
+            <div class="d2-prob-mapa d2-mapa-zonas d2-faq-dato__mapa">
+            <div class="d2-prob-mapa__lienzo d2-mapa-zonas__lienzo" data-mapa-zonas>
             <div class="d2-prob-mapa__visual">
+
+            <svg class="d2-prob-mapa__grafico" viewBox="0 0 700 500" role="img"
+                 aria-label="Illustrative map of eleven building sites across a city, sized by energy use and coloured by how far each one deviates from its expected performance">
+
+              <!-- El plano: calles y manzanas. Decorativo, da el contexto de
+                   que esto es un mapa y no un diagrama de dispersion. -->
+              <g class="d2-mapa-zonas__plano" aria-hidden="true">
+                <path d="M126 60V300M126 344V470M259 34V214M259 252V470M392 96V470M520 34V300M520 340V446M629 118V392"/>
+                <path d="M60 128H340M384 128H660M60 232H236M60 330H388M430 330H640M96 420H612"/>
+                <path class="d2-mapa-zonas__via" d="M392 34C392 120 356 150 356 214S404 300 404 372 372 430 372 470"/>
+                <path class="d2-mapa-zonas__via" d="M60 232H236C280 232 300 214 344 214H660"/>
+                <path class="d2-mapa-zonas__rio" d="M474 34C486 110 512 168 498 232S446 340 466 404 470 452 462 470"/>
+              </g>
+
+              <!-- El nombre de la ciudad, al fondo del todo -->
+              <text class="d2-mapa-zonas__ciudad" x="352" y="243"><tspan x="352">GRANDE</tspan><tspan x="352" dy="26">PRAIRIE</tspan></text>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="royal-oaks" data-nivel="3" role="button" tabindex="0"
+                 aria-label="Royal Oaks: +14% benchmark variance, 171 kilowatt hours per square metre energy use intensity, High savings potential">
+                <circle class="d2-mapa-zonas__burbuja" cx="314.4" cy="92.0" r="29.9"/>
+                <circle class="d2-mapa-zonas__nucleo" cx="314.4" cy="92.0" r="4"/>
+                <text class="d2-mapa-zonas__etiqueta" x="314.4" y="48.0"><tspan x="314.4">ROYAL</tspan><tspan x="314.4" dy="10">OAKS</tspan></text>
+              </g>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="avondale" data-nivel="0" role="button" tabindex="0"
+                 aria-label="Avondale: minus 6% benchmark variance, 96 kilowatt hours per square metre energy use intensity, Low savings potential">
+                <circle class="d2-mapa-zonas__burbuja" cx="327.6" cy="149.4" r="27.0"/>
+                <circle class="d2-mapa-zonas__nucleo" cx="327.6" cy="149.4" r="4"/>
+                <text class="d2-mapa-zonas__etiqueta" x="327.6" y="190.4"><tspan x="327.6">AVON</tspan><tspan x="327.6" dy="10">DALE</tspan></text>
+              </g>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="summit" data-nivel="4" role="button" tabindex="0"
+                 aria-label="Summit: +21% benchmark variance, 188 kilowatt hours per square metre energy use intensity, High savings potential">
+                <circle class="d2-mapa-zonas__burbuja" cx="460.3" cy="133.3" r="33.3"/>
+                <circle class="d2-mapa-zonas__nucleo" cx="460.3" cy="133.3" r="4"/>
+                <text class="d2-mapa-zonas__etiqueta" x="460.3" y="180.6"><tspan x="460.3">SUM</tspan><tspan x="460.3" dy="10">MIT</tspan></text>
+              </g>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="lakeland" data-nivel="2" role="button" tabindex="0"
+                 aria-label="Lakeland: +9% benchmark variance, 142 kilowatt hours per square metre energy use intensity, Moderate savings potential">
+                <circle class="d2-mapa-zonas__burbuja" cx="551.7" cy="107.5" r="24.7"/>
+                <circle class="d2-mapa-zonas__nucleo" cx="551.7" cy="107.5" r="4"/>
+                <text class="d2-mapa-zonas__etiqueta" x="551.7" y="68.0"><tspan x="551.7">LAKE</tspan><tspan x="551.7" dy="10">LAND</tspan></text>
+              </g>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="crystal-heights" data-nivel="0" role="button" tabindex="0"
+                 aria-label="Crystal Heights: minus 4% benchmark variance, 104 kilowatt hours per square metre energy use intensity, Low savings potential">
+                <circle class="d2-mapa-zonas__burbuja" cx="516.1" cy="170.7" r="31.6"/>
+                <circle class="d2-mapa-zonas__nucleo" cx="516.1" cy="170.7" r="4"/>
+                <text class="d2-mapa-zonas__etiqueta" x="516.1" y="216.3"><tspan x="516.1">CRYSTAL</tspan><tspan x="516.1" dy="10">HEIGHTS</tspan></text>
+              </g>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="westpointe" data-nivel="0" role="button" tabindex="0"
+                 aria-label="Westpointe: minus 9% benchmark variance, 88 kilowatt hours per square metre energy use intensity, Low savings potential">
+                <circle class="d2-mapa-zonas__burbuja" cx="189.1" cy="354.6" r="24.1"/>
+                <circle class="d2-mapa-zonas__nucleo" cx="189.1" cy="354.6" r="4"/>
+                <text class="d2-mapa-zonas__etiqueta" x="189.1" y="313.5"><tspan x="189.1">WEST</tspan><tspan x="189.1" dy="10">POINTE</tspan></text>
+              </g>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="mission-heights" data-nivel="3" role="button" tabindex="0"
+                 aria-label="Mission Heights: +17% benchmark variance, 176 kilowatt hours per square metre energy use intensity, High savings potential">
+                <circle class="d2-mapa-zonas__burbuja" cx="251.1" cy="339.1" r="41.4"/>
+                <circle class="d2-mapa-zonas__nucleo" cx="251.1" cy="339.1" r="4"/>
+                <text class="d2-mapa-zonas__etiqueta" x="251.1" y="280.7"><tspan x="251.1">MISSION</tspan><tspan x="251.1" dy="10">HEIGHTS</tspan></text>
+              </g>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="stone-ridge" data-nivel="1" role="button" tabindex="0"
+                 aria-label="Stone Ridge: +5% benchmark variance, 128 kilowatt hours per square metre energy use intensity, Moderate savings potential">
+                <circle class="d2-mapa-zonas__burbuja" cx="324.7" cy="410.9" r="24.1"/>
+                <circle class="d2-mapa-zonas__nucleo" cx="324.7" cy="410.9" r="4"/>
+                <text class="d2-mapa-zonas__etiqueta" x="324.7" y="369.8"><tspan x="324.7">STONE</tspan><tspan x="324.7" dy="10">RIDGE</tspan></text>
+              </g>
+
+              <g class="d2-mapa-zonas__sitio es-foco" data-zona="railway" data-nivel="4" role="button" tabindex="0"
+                 aria-label="Railway Industrial: +26% benchmark variance, 214 kilowatt hours per square metre energy use intensity, High savings potential">
+                <circle class="d2-mapa-zonas__burbuja" cx="428.7" cy="353.4" r="43.7"/>
+                <circle class="d2-mapa-zonas__nucleo" cx="428.7" cy="353.4" r="4"/>
+                <text class="d2-mapa-zonas__etiqueta" x="428.7" y="292.7"><tspan x="428.7">RAILWAY</tspan><tspan x="428.7" dy="10">INDUSTRIAL</tspan></text>
+              </g>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="creekside" data-nivel="0" role="button" tabindex="0"
+                 aria-label="Creekside: minus 2% benchmark variance, 112 kilowatt hours per square metre energy use intensity, Low savings potential">
+                <circle class="d2-mapa-zonas__burbuja" cx="447.1" cy="404.0" r="26.4"/>
+                <circle class="d2-mapa-zonas__nucleo" cx="447.1" cy="404.0" r="4"/>
+                <text class="d2-mapa-zonas__etiqueta" x="487.0" y="404.0" text-anchor="start"><tspan x="487.0">CREEK</tspan><tspan x="487.0" dy="10">SIDE</tspan></text>
+              </g>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="countryside" data-nivel="2" role="button" tabindex="0"
+                 aria-label="Countryside South: +11% benchmark variance, 154 kilowatt hours per square metre energy use intensity, Moderate savings potential">
+                <circle class="d2-mapa-zonas__burbuja" cx="437.4" cy="458.6" r="36.2"/>
+                <circle class="d2-mapa-zonas__nucleo" cx="437.4" cy="458.6" r="4"/>
+                <text class="d2-mapa-zonas__etiqueta" x="437.4" y="506.0"><tspan x="437.4">COUNTRY</tspan><tspan x="437.4" dy="10">SIDE SOUTH</tspan></text>
+              </g>
+
+            </svg>
 
             <p class="d2-prob-mapa__aviso">For visual representation only. Not actual client data.</p>
 
-            <svg class="d2-prob-mapa__grafico" viewBox="0 0 700 500" role="img"
-            aria-label="Illustrative connected profile of five buildings compared with expected energy performance">
-            <text class="d2-prob-mapa__zona" x="101" y="91">ABOVE EXPECTED USE</text>
-            <text class="d2-prob-mapa__zona" x="101" y="276">BELOW EXPECTED USE</text>
-            <line class="d2-prob-mapa__referencia" x1="86" y1="252" x2="640" y2="252"/>
-            <path class="d2-prob-mapa__perfil" d="M135 340C180 340 200 290 245 290S310 145 355 145 420 220 465 220 530 180 575 180"/>
-
-            <g class="d2-prob-mapa__sitio" data-sitio="central" role="button" tabindex="0"
-            aria-label="Central Office: -8% benchmark variance, 82 kWh per square metre energy use intensity, Low savings potential">
-            <circle class="d2-prob-mapa__burbuja" cx="135" cy="340" r="18"/>
-            <circle class="d2-prob-mapa__nucleo" cx="135" cy="340" r="5"/>
-            <text class="d2-prob-mapa__etiqueta" x="135" y="378"><tspan x="135">CENTRAL</tspan><tspan x="135" dy="11">OFFICE</tspan></text>
-            </g>
-
-            <g class="d2-prob-mapa__sitio" data-sitio="north" role="button" tabindex="0"
-            aria-label="North Campus: -3% benchmark variance, 108 kWh per square metre energy use intensity, Moderate savings potential">
-            <circle class="d2-prob-mapa__burbuja" cx="245" cy="290" r="24"/>
-            <circle class="d2-prob-mapa__nucleo" cx="245" cy="290" r="5"/>
-            <text class="d2-prob-mapa__etiqueta" x="245" y="334"><tspan x="245">NORTH</tspan><tspan x="245" dy="11">CAMPUS</tspan></text>
-            </g>
-
-            <g class="d2-prob-mapa__sitio es-foco" data-sitio="riverside" role="button" tabindex="0"
-            aria-label="Riverside Centre: +18% benchmark variance, 176 kWh per square metre energy use intensity, High savings potential">
-            <circle class="d2-prob-mapa__burbuja" cx="355" cy="145" r="31"/>
-            <circle class="d2-prob-mapa__nucleo" cx="355" cy="145" r="5"/>
-            <text class="d2-prob-mapa__etiqueta" x="355" y="88"><tspan x="355">RIVERSIDE</tspan><tspan x="355" dy="11">CENTRE</tspan></text>
-            </g>
-
-            <g class="d2-prob-mapa__sitio" data-sitio="operations" role="button" tabindex="0"
-            aria-label="Operations Centre: +7% benchmark variance, 194 kWh per square metre energy use intensity, Medium savings potential">
-            <circle class="d2-prob-mapa__burbuja" cx="465" cy="220" r="21"/>
-            <circle class="d2-prob-mapa__nucleo" cx="465" cy="220" r="5"/>
-            <text class="d2-prob-mapa__etiqueta" x="465" y="173"><tspan x="465">OPERATIONS</tspan><tspan x="465" dy="11">CENTRE</tspan></text>
-            </g>
-
-            <g class="d2-prob-mapa__sitio" data-sitio="west" role="button" tabindex="0"
-            aria-label="West Campus: +12% benchmark variance, 146 kWh per square metre energy use intensity, Moderate savings potential">
-            <circle class="d2-prob-mapa__burbuja" cx="575" cy="180" r="16"/>
-            <circle class="d2-prob-mapa__nucleo" cx="575" cy="180" r="5"/>
-            <text class="d2-prob-mapa__etiqueta" x="575" y="138"><tspan x="575">WEST</tspan><tspan x="575" dy="11">CAMPUS</tspan></text>
-            </g>
-            </svg>
-
-            <div class="d2-prob-mapa__ficha" data-mapa-ficha aria-live="polite">
-            <small data-mapa-titulo>Priority opportunity</small>
-            <b data-mapa-nombre>Riverside Centre</b>
-            <div><span>Benchmark variance</span><strong data-mapa-variance>+18%</strong></div>
-            <div><span>Energy use intensity</span><strong data-mapa-intensidad>176 kWh/m&sup2;</strong></div>
-            <div><span>Savings potential</span><strong data-mapa-potencial>High</strong></div>
+            <div class="d2-prob-mapa__ficha" data-zonas-ficha aria-live="polite">
+            <small data-zonas-titulo>Priority opportunity</small>
+            <b data-zonas-nombre>Railway Industrial</b>
+            <div><span>Benchmark variance</span><strong data-zonas-variance>+26%</strong></div>
+            <div><span>Energy use intensity</span><strong data-zonas-intensidad>214 kWh/m&sup2;</strong></div>
+            <div><span>Savings potential</span><strong data-zonas-potencial>High</strong></div>
             </div>
 
             </div>
@@ -5948,6 +6017,7 @@
 <script src="js/d2-resenas.js"></script>
 <script src="js/d2-res-centrada.js"></script>
 <script src="js/d2-mapa-cartera.js"></script>
+  <script src="js/d2-mapa-zonas.js"></script>
 <script src="js/d2-faq.js"></script>
 <script src="js/d2-logos-fondo.js"></script>
 <script src="js/d2-rutas-onda.js"></script>
