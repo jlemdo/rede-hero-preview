@@ -13723,13 +13723,18 @@ span.d2-panel__filtro:hover {
     left: auto;
     right: 0;
     width: 100%;
+    /* Arriba y no abajo (11/9/2026): apilado, el render tiene que quedar
+       detras del titular y los botones, no del panel. Ahi el grafico pide
+       fondo limpio para leerse, y el edificio competia con el. */
+    top: 0;
+    bottom: auto;
     /* No ocupa el alto entero del hero: con `cover` sobre 1085px el zoom
        era tal que solo se veian forjados interiores, sin edificio
        reconocible. Limitada a 62% la ampliacion es mucho menor y la
        escena se lee. */
-    height: 62%;
-    top: auto;
-    bottom: 0;
+    /* Hasta donde empieza el panel, mas un poco: el render acompana al
+       texto y se desvanece justo antes de la tarjeta. */
+    height: 58%;
     object-fit: cover;
     /* Anclada abajo: conserva la base con los arboles y la gente, que es
        lo que da escala. Al centro quedaban lineas sin referencia. */
@@ -13737,13 +13742,19 @@ span.d2-panel__filtro:hover {
     /* Mas tenue que en escritorio --alli el render va al LADO del texto y
        aqui DEBAJO-- pero no tanto como para que desaparezca: .48 deja ver
        el edificio sin restar legibilidad al titular. */
-    opacity: .48;
+    /* Mas tenue que antes: ahora queda justo detras del titular y el
+       parrafo, no bajo una zona vacia, asi que tiene que ceder para no
+       restarles legibilidad. */
+    opacity: .34;
     /* El prefijado va DESPUES del estandar, no antes. La regla de
        escritorio lo declara en ese orden, y Chrome aplica el ultimo que
        lee: con el -webkit- delante, la mascara horizontal de escritorio
        seguia ganando y borraba la mitad izquierda de la imagen. */
-    mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
+    /* Se desvanece por ABAJO, donde arranca el panel, y queda solido
+       arriba detras del titular. Antes era al reves porque el render iba
+       abajo. */
+    mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
   }
 }
 
@@ -14233,9 +14244,12 @@ span.d2-panel__filtro:hover {
 /* --- Las dos metricas --- */
 
 .d2 .d2-hero__metricas {
+  /* Tres columnas (11/9/2026): el acumulado se une a las dos anuales en
+     vez de ir solo arriba. Son la misma clase de dato y juntas se comparan;
+     separadas, la de arriba pesaba mas de lo que le toca. */
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px 12px;
   margin: 0 0 14px;
   padding: 12px 0 0;
   border-top: 1px solid var(--c-borde-suave, #EFEFEF);
@@ -14254,6 +14268,14 @@ span.d2-panel__filtro:hover {
   font-weight: var(--fw-bold, 700);
   line-height: 1.2;
   color: var(--c-texto, #333333);
+}
+
+/* El acumulado es el dato que abre el panel, asi que va un punto por
+   encima de los otros dos. Sin pasarse: en tres columnas de 130px una
+   cifra mas grande parte la linea. */
+.d2 .d2-hero__metricas-alta {
+  font-size: 23px !important;
+  letter-spacing: -.02em;
 }
 
 .d2 .d2-hero__metricas dd small {
@@ -14275,7 +14297,19 @@ span.d2-panel__filtro:hover {
 /* En pantallas estrechas las dos metricas se apilan: a media columna de un
    panel de 350px, "2.7M kWh" y su descenso no caben en linea. */
 @media (max-width: 480px) {
-  .d2 .d2-hero__metricas { grid-template-columns: 1fr; gap: 10px; }
+  /* Las tres siguen en fila: las cifras son cortas y lo que no cabia era
+     la etiqueta de dos palabras, que aqui parte en dos lineas. Apiladas,
+     el panel crecia 90px y empujaba el grafico fuera de la pantalla. */
+  .d2 .d2-hero__metricas {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px 8px;
+  }
+
+  .d2 .d2-hero__metricas dt { font-size: 10.5px; }
+  .d2 .d2-hero__metricas dd { font-size: 16px; }
+  .d2 .d2-hero__metricas-alta { font-size: 19px !important; }
+  .d2 .d2-hero__delta { font-size: 10.5px; }
+
 }
 
 
@@ -14416,11 +14450,34 @@ span.d2-panel__filtro:hover {
    Van en HTML y NO dentro del SVG: ahi escalaban con el lienzo y acababan a
    7px en escritorio y 6px en movil, la mitad del minimo de 12px que respeta
    el resto de la web. Fuera conservan su tamano real. */
-.d2 .d2-hero__anos {
-  display: flex;
-  justify-content: space-between;
-  margin: 2px 2px 0;
-  font-size: 12px;
+/* Los anos, uno bajo cada barra, y la escala de la derecha.
+
+   Van DENTRO del SVG --no como HTML debajo-- porque tienen que quedar
+   alineados con su barra y con su linea de rejilla. Fuera habria que
+   recalcular posiciones en cada ancho.
+
+   Eso obliga a vigilar el tamano: el SVG escala, asi que 11px en el
+   lienzo de 560 se ven a 7.8px reales en un panel de 400. Se compensa
+   declarandolos mas grandes de lo que pareceria necesario. */
+.d2 .hero-gr__anos text {
+  font-family: inherit;
+  /* 17 en el lienzo = 12 reales: el SVG va de 560 a ~398, factor 0.71.
+     Con 15 se quedaban en 10.7, por debajo del minimo de la web. */
+  font-size: 17px;
+  fill: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .hero-gr__escala text {
+  font-family: inherit;
+  font-size: 17px;
+  fill: var(--c-texto-suave, #6B6B6B);
+}
+
+/* La nota que aclara que son cursos y no anos naturales. El apostrofo de
+   '14 podria leerse como 2014 a secas. */
+.d2 .d2-hero__nota-anos {
+  margin: 0 0 10px;
+  font-size: 11.5px;
   color: var(--c-texto-suave, #6B6B6B);
 }
 
@@ -14443,4 +14500,17 @@ span.d2-panel__filtro:hover {
     stroke-dashoffset: 0;
     opacity: 1;
   }
+}
+
+
+/* El SVG se encoge mas en movil --de 560 a ~310, factor 0.55-- asi que las
+   etiquetas necesitan mas cuerpo en el lienzo para llegar a los 12px
+   reales.
+
+   Va al FINAL del archivo a proposito: la regla general esta mas arriba y,
+   teniendo las dos la misma especificidad, gana la ultima. Puesta dentro
+   del bloque de movil pero antes de ella, no tenia efecto. */
+@media (max-width: 480px) {
+  .d2 .hero-gr__anos text,
+  .d2 .hero-gr__escala text { font-size: 22px; }
 }
