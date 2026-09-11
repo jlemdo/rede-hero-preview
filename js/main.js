@@ -229,6 +229,23 @@
 
   var selTipo = $('#c-type');
 
+  /* En que paso vive cada campo. Se LEE del marcado y no se escribe a mano:
+     los pasos ya se han renumerado una vez --de cuatro a ocho-- y los
+     numeros sueltos por el codigo se quedaron obsoletos sin que nada
+     fallara. El perfil daba por elegido un tipo de edificio que nadie
+     habia tocado.
+
+     Si no se encuentra el campo se devuelve un numero alto: mas vale no
+     ensenar el dato que ensenarlo antes de tiempo. */
+  function pasoDe(sel) {
+    var campo = $(sel);
+    var caja = campo && campo.closest('[data-paso]');
+    return caja ? parseInt(caja.getAttribute('data-paso'), 10) : 99;
+  }
+
+  var PASO_TIPO = pasoDe('#c-type');
+  var PASO_SITIOS = pasoDe('#c-sites');
+
   /* --- Que tipos de edificio ve cada sector -------------------------------
 
      Antes salian los trece a la vez: un distrito escolar podia elegir
@@ -784,13 +801,23 @@
       ponerFila('sector', txt);
     }
 
-    /* Basta con que haya tipo elegido. Antes se exigia ademas estar en el
-       paso 3, pero las variantes abiertas no recorren pasos: el tipo se
-       quedaba sin rellenar y el contador atascado en 3 de 4. */
-    /* El paso 3 es el del tipo de edificio: al salir de el se da por
-       elegido aunque no se haya tocado el desplegable. */
+    /* El tipo solo cuenta cuando el visitante ha PASADO por su pantalla.
+
+       Antes la condicion era `estado.paso > 3`, el numero del paso del
+       tipo en la numeracion antigua. Al pasar a ocho pasos --el tipo es
+       ahora el 7-- eso daba por elegido el valor por defecto desde el
+       paso 4, y el perfil mostraba "Building type: School" en la pantalla
+       del ambito, sin que nadie lo hubiera tocado.
+
+       PASO_TIPO se lee del marcado en vez de escribirse a mano: asi
+       renumerar los pasos otra vez no vuelve a romper esto.
+
+       Las variantes abiertas --las que ensenan los cuatro campos a la vez
+       y no recorren pasos-- se detectan por [data-abierto] y ahi el tipo
+       cuenta desde el principio: no hay pantalla por la que pasar. */
     var clave = selTipo.value;
-    if (clave && (tipoElegido || estado.paso > 3)) {
+    var abierta = !!seccion.querySelector('[data-abierto]');
+    if (clave && (tipoElegido || abierta || estado.paso >= PASO_TIPO)) {
       var b = BENCHMARKS[clave];
       ponerFila('tipo', b.label);
 
@@ -812,8 +839,13 @@
     var gastoPerfil = numero($('#c-spend').value);
     if (gastoPerfil) { ponerFila('spend', dinero(gastoPerfil)); }
 
+    /* El numero de sitios solo si el visitante ha llegado a su pantalla.
+
+       Con "One building" el guion escribe un 1 en el campo --la respuesta
+       es evidente y el campo se oculta-- pero eso no es un dato que haya
+       dado nadie: el perfil mostraba "Sites: 1 site" desde el paso 5. */
     var sitiosPerfil = numero($('#c-sites').value);
-    if (sitiosPerfil) {
+    if (sitiosPerfil && (abierta || estado.paso >= PASO_SITIOS)) {
       ponerFila('sites', sitiosPerfil === 1 ? '1 site' : sitiosPerfil + ' sites');
     }
 
