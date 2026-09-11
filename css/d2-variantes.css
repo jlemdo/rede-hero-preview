@@ -14811,6 +14811,67 @@ span.d2-panel__filtro:hover {
    Lo que SI mide es el tamano: cuanta energia consume cada sitio.
    ========================================================================== */
 
+/* --- Las vias ---
+
+   Dan esqueleto al mapa: sin ellas el plano son manchas flotando. Son la
+   geometria real de OpenStreetMap --la 43, la 100 Avenue, la 116-- y van
+   DEBAJO de los barrios y de los circulos, porque son contexto y no dato.
+
+   Las terciarias se descartaron: 13 KB y 499 trazos para una trama que a
+   este tamano se ve como una mancha gris. */
+
+.d2-mapa-zonas__vias path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Las secundarias: la trama de la ciudad */
+.d2-mapa-zonas__via2 { stroke: #0000001C; stroke-width: 1.2px; }
+
+/* Autopista, troncales y primarias. Mas marcadas, que son las que se
+   reconocen en un plano. */
+.d2-mapa-zonas__via1 { stroke: #00000033; stroke-width: 2.4px; }
+
+.d2-mapa-zonas__rio  { stroke: #39B54A26; stroke-width: 1.6px; }
+
+/* Los nombres de las calles. Son lo que responde a "que lugar es esto":
+   sin ellos el plano podria ser cualquier ciudad. Van girados con su
+   trazado, como en los mapas de verdad, y con el mismo contorno claro que
+   las etiquetas de sitio para que se lean sobre las lineas. */
+.d2-mapa-zonas__calles text {
+  /* El contraste, que era el problema de verdad.
+
+     Estaba en #0000006E --negro al 43%-- y sobre el contorno claro daba
+     3,14:1, por debajo del minimo de 4,5 de WCAG. Un texto a ese
+     contraste se lee como una mancha por grande que sea; parecia
+     cuestion de tamano y no lo era. Al 70% da 8,27:1.
+
+     El tamano tambien sube. Va en unidades del viewBox --700 de ancho--
+     y el SVG se pinta a 493 px, asi que todo se encoge por 0,70: con 22
+     salen unos 15 px reales, los de una etiqueta principal de mapa. */
+  fill: #000000B3;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  text-anchor: middle;
+  paint-order: stroke;
+  /* El contorno, mas grueso al subir la letra: tiene que seguir
+     separandola de las lineas del plano. */
+  stroke: #F7F7F7;
+  stroke-width: 4.2px;
+  stroke-linejoin: round;
+}
+
+/* El nombre de la ciudad, al fondo del todo */
+.d2-mapa-zonas__ciudad {
+  fill: #00000012;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-anchor: middle;
+}
+
 /* --- El plano: los limites de los barrios --- */
 
 /* Los 57 barrios que no estan en el grafico. Dan el contorno de la ciudad

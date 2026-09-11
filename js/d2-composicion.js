@@ -125,7 +125,19 @@
     try { sessionStorage.setItem(CLAVE, String(actual)); } catch (e) {}
   }
 
-  /* --- La barra, con el mismo aspecto que la de las variantes --- */
+  /* --- La barra --- */
+
+  /* RETIRADA (11/9/2026). Erick eligio Contrast y la decision esta
+     tomada, asi que el selector ya no pinta nada en pantalla.
+
+     El modulo sigue vivo a proposito: es el que aplica los tokens de
+     color a las once secciones. Borrarlo dejaria la web sin composicion.
+     Lo unico que se evita es dibujar los botones.
+
+     Para recuperarlos, quitar este return. */
+  var botones = [];          /* pintar() la recorre; sin esto, revienta */
+  pintar(actual);
+  return;
 
   var barra = document.createElement('div');
   barra.className = 'd2-caru__mandos d2-fondos';
@@ -148,7 +160,7 @@
 
   document.body.appendChild(barra);
 
-  var botones = barra.querySelectorAll('[data-comp-a]');
+  botones = barra.querySelectorAll('[data-comp-a]');
 
   Array.prototype.forEach.call(botones, function (b, n) {
     b.addEventListener('click', function () { pintar(n); });
