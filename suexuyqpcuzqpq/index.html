@@ -4754,132 +4754,144 @@
                  </div>
                  -->
 
-                                    <!-- ============================================================
-                 MAPA DE BARRIOS
+                                                                                    <!-- ============================================================
+                 MAPA DE SITIOS
 
-                 Diez sitios sobre el plano REAL de Grande Prairie, Alberta.
+                 Los trece sitios de la referencia que mando Erick, sobre el
+                 plano real de Grande Prairie, Alberta.
 
-                 POR QUE SE REHIZO
+                 COMO SE SUPO DONDE VA CADA UNO
 
-                 La primera version dibujaba calles inventadas y colocaba
-                 los barrios midiendo una captura de pantalla. Se comprobo
-                 contra OpenStreetMap: caian a 64px de media de donde estan
-                 --hasta 119px-- sobre un lienzo de 700. No era un mapa
-                 aproximado, era falso, y quien conozca la ciudad lo nota.
+                 La captura no trae coordenadas, asi que se calibro: se
+                 tomaron las etiquetas que el propio mapa base dibuja
+                 --ARBOUR HILLS, LAKELAND, GATEWAY...-- y se cruzaron con
+                 sus coordenadas reales. Eso da la transformacion de pixel
+                 de captura a latitud y longitud, con 168 m de error medio.
 
-                 Ademas los circulos flotaban sin nada debajo, asi que no
-                 se entendia que region era cada uno. Ahora cada barrio
-                 lleva su LIMITE REAL dibujado y el circulo se apoya en el.
+                 Un primer intento daba 501 m y no valia: ajustaba los dos
+                 ejes por separado y sobre centros de barrio en vez de
+                 sobre etiquetas del mapa. Con 501 m de error y barrios de
+                 600-900 m, cada sitio podia caer en el barrio de al lado.
 
-                 EL DATO
+                 Con los 168 m, los trece caen dentro de un barrio oficial
+                 y coinciden con las etiquetas que lleva la captura.
 
-                 Limites de barrio del portal abierto de la Ciudad de Grande
-                 Prairie, cuya licencia permite uso comercial de forma
-                 expresa. Los 57 barrios restantes van como trama de fondo:
-                 dan el contorno de la ciudad sin competir con los diez.
+                 SON EDIFICIOS, NO BARRIOS
 
-                 La atribucion va bajo el mapa, que es lo que exige la
-                 licencia.
+                 Dos pares comparten barrio, y el sitio 13 esta dentro del
+                 12. Un barrio no se dibuja dos veces; un edificio dentro de
+                 otro terreno si. Por eso el circulo marca un SITIO y la
+                 etiqueta nombra el barrio donde esta.
 
-                 QUE DICE EL GRAFICO
+                 Los limites son del portal de datos abiertos de la Ciudad
+                 de Grande Prairie, cuya licencia permite uso comercial de
+                 forma expresa y exige la atribucion que va debajo.
 
                  El tamano del circulo es cuanta energia consume el sitio.
-                 El color solo identifica el barrio --son los colores de la
-                 propia captura del cliente, muestreados de la imagen.
-
-                 No hay cifras por barrio a proposito. Las que habia
-                 --desviacion, intensidad, potencial-- eran inventadas, y
-                 junto a un mapa real se leen como datos reales. El grafico
-                 dice ahora lo unico que puede sostener: donde esta cada
-                 sitio y cual consume mas.
+                 El color solo distingue uno de otro: son los colores de la
+                 propia captura de Erick, muestreados de la imagen.
                  ============================================================ -->
             <div class="d2-prob-mapa d2-mapa-zonas d2-faq-dato__mapa">
             <div class="d2-prob-mapa__lienzo d2-mapa-zonas__lienzo" data-mapa-zonas>
             <div class="d2-prob-mapa__visual">
 
             <svg class="d2-prob-mapa__grafico" viewBox="0 0 700 500" role="img"
-                 aria-label="Map of Grande Prairie, Alberta, showing ten neighbourhoods with a circle on each one sized by how much energy that site uses">
+                 aria-label="Map of Grande Prairie, Alberta, showing thirteen building sites, each circle sized by how much energy that site uses">
 
-              <g transform="translate(89.4 4.2)">
-              <!-- El resto de la ciudad, como trama -->
-              <path class="d2-mapa-zonas__fondo" d="M394.2 252.0L383.7 242.4L383.7 249.7L372.0 249.7L372.0 246.6L331.0 246.5L331.0 248.6L328.6 248.6L328.1 237.6L324.5 237.6L322.9 232.1L323.1 222.2L324.8 219.2L328.4 218.9L328.4 210.7L330.8 210.7L330.8 213.0L350.9 213.0L351.1 205.3L374.4 205.2L386.6 227.7L388.4 229.1L394.5 228.6L394.2 252.0ZM172.6 139.7L191.1 139.7L191.1 146.4L205.1 146.4L205.1 138.9L216.4 138.9L216.4 182.7L178.4 182.8L178.4 176.8L172.7 176.8L172.6 139.7ZM483.9 51.4L527.2 51.3L527.2 95.0L483.9 95.0L483.9 51.4ZM484.3 226.5L483.9 199.3L527.2 199.3L525.6 226.1L484.3 226.5ZM394.3 6.2L394.4 49.5L374.0 49.7L368.0 6.2L394.3 6.2ZM483.4 402.6L462.0 402.5L461.9 386.8L452.1 359.5L461.5 359.5L461.5 363.1L481.9 363.1L481.9 359.5L483.4 359.5L483.4 402.6ZM351.6 187.6L351.6 182.2L339.6 182.2L339.5 139.7L343.1 138.0L369.0 139.4L371.8 194.2L374.0 204.1L351.9 204.4L351.6 187.6ZM499.6 228.1L527.2 228.2L527.2 271.8L499.6 271.8L499.6 228.1ZM381.3 448.1L380.3 438.3L377.4 435.0L373.2 434.2L371.4 435.8L364.1 427.7L363.7 424.9L366.4 420.7L358.8 414.4L357.4 405.6L394.6 404.8L394.6 448.2L381.3 448.1ZM483.4 315.6L526.9 315.8L526.9 359.7L483.4 359.5L483.4 315.6ZM383.7 249.7L393.5 266.4L397.4 284.4L408.0 312.6L406.8 314.4L351.2 314.3L350.6 246.5L372.0 246.6L372.0 249.7L383.7 249.7ZM412.2 136.7L370.5 136.7L368.8 99.9L372.1 78.3L396.3 77.0L407.9 83.8L416.3 83.8L419.2 92.3L421.0 116.7L413.0 131.7L412.2 136.7ZM127.4 303.9L127.4 271.8L170.2 271.8L170.3 287.9L127.4 303.9ZM258.6 359.5L259.4 402.7L189.3 403.9L174.5 403.8L173.2 402.5L173.3 374.8L205.9 374.9L205.9 384.4L216.5 384.4L216.5 359.4L258.6 359.5ZM436.5 387.4L438.4 394.4L438.6 402.7L352.6 403.1L352.5 397.4L355.2 392.1L354.2 389.2L358.3 385.9L356.2 377.8L351.0 370.4L350.7 359.4L411.4 359.4L424.4 355.6L436.5 387.4ZM216.3 94.9L216.3 88.5L206.8 83.6L203.3 83.5L198.6 90.0L193.2 86.7L196.0 76.1L200.0 73.4L200.1 71.0L195.4 71.1L191.3 77.6L184.0 78.0L180.0 72.6L179.2 67.7L180.8 67.1L184.1 71.2L187.7 71.7L189.0 68.6L188.2 63.2L187.0 63.1L185.8 67.7L183.8 66.8L181.6 61.7L175.5 56.1L173.9 51.3L260.3 51.3L259.7 125.9L267.0 148.3L257.9 162.6L258.1 167.2L259.5 168.3L258.2 182.6L216.4 182.7L216.3 94.9ZM-5.6 272.0L-5.5 232.9L5.1 232.9L5.1 231.2L38.2 230.4L82.2 231.3L81.8 271.7L-5.6 272.0ZM83.3 225.6L83.3 182.7L126.5 182.8L126.5 223.5L95.0 224.0L95.0 225.6L83.3 225.6ZM488.3 228.1L499.6 228.1L499.6 271.8L484.0 271.7L484.0 252.3L488.4 252.3L488.3 228.1ZM394.5 252.8L416.0 313.1L414.5 310.6L409.6 312.2L398.9 283.5L395.2 266.3L385.0 248.0L383.7 242.4L394.5 252.8ZM395.0 448.2L394.6 404.8L438.6 404.9L438.6 448.2L395.0 448.2ZM170.2 271.8L127.4 271.8L127.4 268.6L132.5 267.0L132.5 265.3L126.7 259.5L127.3 230.5L168.0 229.4L169.7 231.1L170.2 271.8ZM301.3 230.0L303.9 230.2L303.9 238.6L297.9 238.7L297.9 240.5L305.6 239.3L303.9 248.5L284.2 248.6L284.2 245.5L262.9 253.4L261.5 182.6L265.2 182.6L267.9 192.3L276.9 197.2L283.6 200.4L287.4 197.7L300.4 202.4L301.0 207.5L302.6 207.5L302.6 210.7L301.0 210.7L301.0 215.1L302.6 216.7L301.3 230.0ZM478.0 271.7L483.4 271.7L483.4 359.5L481.9 359.5L481.9 363.1L461.5 363.1L461.5 358.2L450.8 358.2L441.0 331.8L440.4 315.5L454.2 321.4L461.5 326.5L461.5 272.9L478.0 271.7ZM217.6 224.9L216.4 224.9L216.4 182.7L258.2 182.6L258.1 205.0L259.8 216.9L258.9 224.5L248.1 225.9L217.6 224.9ZM482.7 51.6L482.8 136.7L439.6 136.7L439.5 120.0L443.5 120.1L451.6 116.9L454.6 107.8L460.4 102.5L465.9 93.6L465.3 84.2L462.1 80.9L456.8 79.7L434.1 83.4L426.6 83.1L418.0 77.3L418.8 75.3L425.6 65.8L424.6 64.2L425.8 63.3L427.1 64.6L431.6 62.1L430.7 60.5L432.5 59.8L431.2 51.6L482.7 51.6ZM423.4 228.0L438.4 228.1L438.5 271.6L420.0 271.6L395.6 240.6L395.6 228.0L423.4 228.0ZM442.6 406.1L450.1 405.5L450.1 448.3L442.6 448.3L442.6 406.1ZM415.1 182.6L438.4 182.4L438.4 226.4L388.0 226.6L375.3 203.0L372.6 181.7L415.1 182.6ZM527.2 199.3L483.9 199.3L483.9 182.9L527.2 182.9L527.2 199.3ZM529.3 139.0L572.2 138.9L572.2 209.0L570.6 209.0L570.2 226.5L528.3 226.5L529.3 139.0ZM349.6 371.6L342.4 370.2L341.0 359.4L332.8 358.2L333.8 355.8L336.6 356.4L336.7 353.9L340.7 353.9L339.4 348.7L335.9 347.0L336.4 343.2L333.9 341.2L334.6 337.6L330.1 334.4L329.7 332.0L331.5 329.4L329.9 327.1L330.3 322.2L333.0 317.4L332.1 316.5L349.0 317.0L349.6 371.6ZM107.4 358.3L107.8 326.2L109.5 319.9L113.7 313.4L120.8 308.2L166.3 291.1L166.3 295.1L170.3 293.7L170.1 312.7L167.7 314.4L169.8 318.2L170.5 357.3L107.4 358.3ZM238.7 462.0L189.8 462.6L189.7 405.7L259.4 405.2L259.4 448.4L238.6 448.3L238.7 462.0ZM171.9 182.8L216.4 182.7L216.0 225.6L171.2 225.6L171.9 182.8ZM482.0 226.5L440.0 226.4L440.6 206.6L453.5 206.2L473.2 195.8L482.3 194.4L482.0 226.5ZM-51.1 232.6L-8.1 232.9L-7.2 257.5L-17.9 261.9L-27.1 268.7L-27.0 272.0L-51.1 270.4L-51.1 232.6ZM483.4 271.7L526.9 271.8L526.9 315.8L483.4 315.6L483.4 271.7ZM304.7 49.0L304.8 6.2L342.3 6.2L342.7 2.9L346.5 -0.8L346.5 6.2L348.1 6.2L348.2 46.6L345.1 48.6L304.7 49.0ZM415.0 358.7L350.7 359.4L350.6 316.5L409.5 316.6L424.4 355.6L415.0 358.7ZM127.3 182.8L171.9 182.8L171.2 225.6L129.0 225.6L126.5 223.5L127.3 182.8ZM307.5 130.5L305.3 130.5L304.3 51.0L346.5 51.0L347.2 123.2L346.1 128.2L342.9 132.7L343.7 133.5L336.3 137.0L307.6 137.2L307.5 130.5ZM450.1 492.2L441.8 492.2L441.9 449.9L450.1 449.9L450.1 492.2ZM127.3 230.5L126.7 259.5L132.5 265.3L132.5 267.9L127.4 268.6L127.4 271.8L83.3 271.7L84.3 230.4L127.3 230.5ZM436.5 139.5L438.4 139.9L438.2 182.6L372.6 181.7L371.3 138.9L436.5 139.5ZM216.5 359.4L215.4 359.4L215.4 328.4L206.0 328.4L206.0 314.6L173.0 313.9L172.7 231.4L184.2 230.1L213.4 230.6L217.8 231.9L222.8 230.0L259.1 230.0L259.5 359.0L216.5 359.4ZM50.3 116.9L127.3 116.9L127.3 182.8L83.3 182.7L83.3 225.6L-5.8 225.6L-5.9 155.7L-50.0 155.8L-50.0 118.3L-33.8 118.3L-27.7 112.1L-7.0 112.1L-7.0 117.1L50.3 116.9ZM527.2 139.0L483.9 138.9L483.9 95.0L527.2 95.0L527.2 139.0ZM494.4 404.8L516.2 404.9L516.2 448.5L514.9 448.5L516.8 457.2L514.1 466.3L512.2 468.0L512.4 475.6L508.3 480.4L508.8 484.1L506.9 488.3L502.9 492.4L452.3 492.2L452.3 448.3L483.4 448.4L483.4 404.8L494.4 404.8ZM368.8 136.7L351.6 136.6L351.5 6.2L366.4 6.2L372.6 51.1L394.4 51.3L394.4 77.0L370.5 78.3L367.2 101.5L368.8 136.7ZM127.2 6.0L170.4 6.0L170.4 93.9L83.3 93.9L83.2 6.0L127.2 6.0ZM330.7 296.4L332.8 282.6L324.5 282.6L320.3 279.9L323.0 274.5L327.4 276.8L330.8 270.4L328.0 266.1L324.6 266.1L323.9 258.0L318.4 257.0L319.6 253.0L321.7 248.8L331.0 248.6L331.0 246.5L349.5 246.5L349.0 313.9L330.3 314.3L331.6 310.1L330.7 296.4ZM463.1 271.6L440.7 271.5L441.0 228.7L483.4 228.1L483.4 271.7L463.1 271.6ZM172.7 32.9L172.6 13.7L177.8 12.3L177.8 6.0L249.9 6.2L249.9 17.7L259.6 17.7L261.4 17.7L261.4 6.2L304.8 6.2L304.4 49.0L172.6 49.4L172.7 32.9Z" aria-hidden="true"/>
+              <path class="d2-mapa-zonas__fondo" d="M395.1 252.1L384.4 242.3L384.4 249.7L372.5 249.7L372.5 246.5L330.8 246.5L330.8 248.6L328.4 248.6L327.8 237.4L324.2 237.4L322.6 231.8L322.8 221.8L324.5 218.7L328.2 218.4L328.2 210.1L330.6 210.1L330.6 212.5L351.0 212.5L351.3 204.6L375.0 204.5L387.3 227.4L389.0 227.4L389.2 228.8L395.4 228.3L395.1 252.1ZM169.8 137.9L188.5 137.9L188.5 144.7L202.8 144.7L202.8 137.1L214.3 137.1L214.3 181.6L175.7 181.7L175.7 175.6L169.8 175.6L169.8 137.9ZM486.2 48.1L530.3 48.0L530.3 92.5L486.3 92.5L486.2 48.1ZM486.7 226.1L486.3 198.5L530.3 198.5L528.7 225.8L486.7 226.1ZM395.2 2.1L395.2 46.2L374.6 46.4L368.5 2.2L395.2 2.1ZM485.8 405.2L464.0 405.1L464.0 389.1L453.9 361.4L463.5 361.4L463.5 365.0L484.2 365.1L484.2 361.4L485.8 361.4L485.8 405.2ZM351.8 186.6L351.8 181.1L339.5 181.1L339.5 137.9L343.1 136.2L369.4 137.6L372.3 193.3L374.5 203.4L352.1 203.7L351.8 186.6ZM502.3 227.8L530.3 227.9L530.3 272.3L502.3 272.2L502.3 227.8ZM382.0 451.5L380.9 441.5L378.0 438.1L373.7 437.4L371.9 439.0L364.5 430.7L364.1 427.8L366.8 423.6L359.1 417.3L357.7 408.3L395.5 407.5L395.5 451.5L382.0 451.5ZM485.8 316.8L530.0 316.9L530.0 361.6L485.8 361.4L485.8 316.8ZM384.4 249.7L394.4 266.7L398.3 285.0L409.1 313.7L407.9 315.5L351.3 315.5L350.7 246.5L372.5 246.5L372.5 249.7L384.4 249.7ZM413.4 134.9L371.0 134.8L369.3 97.4L372.7 75.5L397.2 74.2L409.0 81.0L417.5 81.0L420.5 89.7L422.3 114.5L414.2 129.8L413.4 134.9ZM123.8 304.9L123.8 272.2L167.4 272.2L167.4 288.6L123.8 304.9ZM257.2 361.4L258.0 405.3L186.7 406.5L171.7 406.5L170.4 405.1L170.5 377.0L203.7 377.0L203.7 386.7L214.4 386.7L214.4 361.3L257.2 361.4ZM214.2 92.4L214.2 85.8L204.5 80.9L200.9 80.8L196.2 87.3L190.7 84.0L193.6 73.3L197.6 70.5L197.7 68.0L193.0 68.1L188.8 74.8L181.4 75.2L177.3 69.7L176.5 64.7L178.1 64.1L181.4 68.3L185.1 68.7L186.5 65.6L185.6 60.1L184.4 60.0L183.2 64.7L181.1 63.8L178.9 58.6L172.7 52.9L171.1 48.0L259.0 48.0L258.3 123.9L265.8 146.6L256.5 161.2L256.7 165.9L258.1 167.0L256.8 181.6L214.3 181.6L214.2 92.4ZM-11.4 272.4L-11.4 232.7L-0.5 232.7L-0.5 231.0L33.1 230.2L77.8 231.0L77.4 272.2L-11.4 272.4ZM78.9 225.3L78.9 181.6L122.9 181.7L122.9 223.1L90.8 223.6L90.8 225.3L78.9 225.3ZM490.8 227.8L502.3 227.8L502.3 272.2L486.4 272.2L486.4 252.4L490.8 252.4L490.8 227.8ZM395.4 252.9L417.3 314.2L415.7 311.6L410.8 313.3L399.8 284.1L396.1 266.6L385.7 248.0L384.4 242.3L395.4 252.9ZM167.4 272.2L123.8 272.2L123.8 268.9L129.0 267.3L129.0 265.6L123.1 259.7L123.7 230.2L165.1 229.1L166.8 230.8L167.4 272.2ZM300.6 229.8L303.3 229.9L303.3 238.5L297.2 238.5L297.2 240.4L305.0 239.2L303.3 248.5L283.2 248.6L283.2 245.5L261.6 253.5L260.2 181.5L263.9 181.6L266.7 191.3L275.8 196.3L282.6 199.6L286.5 196.9L299.7 201.7L300.3 206.9L302.0 206.9L302.0 210.1L300.3 210.1L300.3 214.5L302.0 216.2L300.6 229.8ZM480.3 272.1L485.8 272.2L485.8 361.4L484.2 361.4L484.2 365.1L463.5 365.0L463.5 360.1L452.7 360.0L442.6 333.2L442.0 316.7L456.1 322.7L463.5 327.9L463.5 273.3L480.3 272.1ZM294.6 448.8L292.1 451.6L262.7 451.7L261.4 450.6L262.1 408.4L326.4 407.3L326.3 412.8L321.4 414.7L320.1 420.6L313.0 424.0L310.3 429.4L310.5 434.2L305.1 436.4L294.6 448.8ZM485.8 451.8L454.2 451.7L454.1 407.6L485.8 407.7L485.8 451.8ZM215.6 224.6L214.3 224.6L214.3 181.6L256.8 181.6L256.7 204.3L258.4 216.4L257.5 224.1L246.5 225.5L215.6 224.6ZM485.0 48.3L485.2 134.9L441.2 134.9L441.1 117.9L445.2 118.0L453.4 114.8L456.5 105.5L462.4 100.1L468.0 91.0L467.4 81.5L464.1 78.1L458.7 76.9L435.7 80.6L428.0 80.3L419.3 74.5L420.1 72.4L427.1 62.7L426.0 61.2L427.2 60.2L428.6 61.6L433.1 59.0L432.2 57.4L434.1 56.7L432.7 48.3L485.0 48.3ZM424.7 227.7L440.1 227.7L440.1 272.1L421.3 272.0L396.5 240.4L396.5 227.7L424.7 227.7ZM444.3 408.8L451.9 408.1L451.9 451.7L444.3 451.6L444.3 408.8ZM416.3 181.5L440.0 181.3L440.1 226.1L388.8 226.3L375.9 202.3L373.1 180.6L416.3 181.5ZM530.3 198.5L486.3 198.5L486.3 181.8L530.3 181.8L530.3 198.5ZM532.5 137.2L576.1 137.1L576.1 208.4L574.4 208.4L574.1 226.2L531.4 226.2L531.4 137.1L532.5 137.2ZM349.7 373.7L342.4 372.3L341.0 361.2L332.6 360.1L333.6 357.7L336.5 358.2L336.6 355.7L340.7 355.7L339.3 350.4L335.8 348.7L336.3 344.8L333.8 342.8L334.5 339.2L329.9 335.9L329.4 333.5L331.4 330.8L329.7 328.4L330.8 327.5L330.2 323.4L332.8 318.6L332.0 317.7L349.1 318.1L349.7 373.7ZM103.5 360.2L103.8 327.6L105.6 321.1L109.9 314.5L117.1 309.3L163.4 291.9L163.4 295.9L167.4 294.4L167.2 313.8L164.8 315.5L166.9 319.4L167.6 359.1L103.5 360.2ZM236.9 465.6L187.2 466.2L187.2 408.3L258.0 407.8L258.0 451.7L236.9 451.7L236.9 465.6ZM169.1 181.7L214.3 181.6L213.9 225.2L168.3 225.3L169.1 181.7ZM484.4 226.1L441.7 226.1L442.2 206.0L455.4 205.6L475.4 194.9L484.6 193.5L484.4 226.1ZM-57.7 232.4L-13.9 232.7L-13.1 257.6L-23.9 262.2L-33.3 269.1L-33.2 272.4L-57.7 270.8L-57.7 232.4ZM485.8 272.2L530.0 272.3L530.0 316.9L485.8 316.8L485.8 272.2ZM304.1 45.7L304.2 2.2L342.3 2.2L342.8 -1.2L346.5 -5.0L346.5 2.2L348.2 2.2L348.3 43.2L345.2 45.3L304.1 45.7ZM463.5 273.3L463.5 325.7L442.0 313.9L441.9 278.6L442.7 273.5L463.5 273.3ZM504.0 405.4L485.8 405.3L485.8 361.4L530.0 361.6L529.6 402.0L526.5 405.5L504.0 405.4ZM123.7 181.7L169.1 181.7L168.3 225.3L125.4 225.3L122.9 223.1L123.7 181.7ZM306.9 128.6L304.7 128.6L303.7 47.7L346.6 47.8L347.3 121.1L346.2 126.2L342.9 130.8L343.7 131.6L336.2 135.2L307.0 135.4L306.9 128.6ZM452.0 496.3L443.5 496.3L443.6 453.3L451.9 453.3L452.0 496.3ZM123.7 230.2L123.1 259.7L129.0 265.6L129.0 268.3L123.8 268.9L123.8 272.2L79.0 272.2L80.0 230.2L123.7 230.2ZM45.4 114.8L123.7 114.7L123.7 181.7L78.9 181.6L78.9 225.3L-11.6 225.3L-11.7 154.2L-56.5 154.2L-56.5 116.1L-40.1 116.1L-33.9 109.9L-12.8 109.9L-12.8 114.9L45.4 114.8ZM496.9 407.5L519.2 407.6L519.2 451.9L517.8 451.9L519.7 460.7L517.0 470.0L515.1 471.8L515.2 479.4L511.1 484.3L511.6 488.0L509.7 492.4L505.7 496.5L454.2 496.3L454.2 451.7L485.8 451.8L485.8 407.4L496.9 407.5ZM369.3 134.8L351.7 134.7L351.6 2.2L366.8 2.2L373.1 47.8L395.2 48.1L395.3 74.2L371.0 75.5L367.6 99.1L369.3 134.8ZM418.3 73.8L409.1 66.2L403.9 55.7L403.5 48.3L432.7 48.3L434.1 56.7L432.2 57.4L433.1 59.0L428.6 61.6L427.2 60.2L426.0 61.2L427.1 62.7L419.3 74.5L418.3 73.8ZM123.6 2.0L167.6 2.0L167.6 91.3L78.9 91.3L78.9 2.0L123.6 2.0ZM330.5 297.3L332.7 283.2L324.2 283.2L319.9 280.4L322.7 275.0L327.2 277.3L330.6 270.8L327.8 266.5L324.3 266.5L323.6 258.1L318.1 257.1L319.2 253.1L321.4 248.9L330.8 248.6L330.8 246.5L349.6 246.5L349.1 315.0L330.1 315.4L331.4 311.1L330.5 297.3ZM465.1 272.0L442.3 271.9L442.6 228.4L485.7 227.8L485.8 272.2L465.1 272.0ZM169.8 29.3L169.8 9.8L175.0 8.4L175.1 2.0L248.4 2.2L248.4 13.9L258.2 13.9L260.0 13.9L260.0 2.2L304.2 2.2L303.7 45.7L169.7 46.1L169.8 29.3Z" aria-hidden="true"/>
 
               <text class="d2-mapa-zonas__ciudad" x="350" y="256">GRANDE PRAIRIE</text>
 
-              <g class="d2-mapa-zonas__sitio" data-zona="royal-oaks" style="--zona-fill:#8B7B88"
+              <g class="d2-mapa-zonas__sitio" data-zona="s1" style="--zona-fill:#897986"
                  role="button" tabindex="0" aria-label="Royal Oaks">
-                <path class="d2-mapa-zonas__area" d="M305.2 120.8L305.3 130.5L307.5 130.5L307.6 137.2L285.0 137.7L276.2 141.3L270.3 146.6L269.1 145.8L262.2 125.0L262.1 51.7L304.3 51.7L305.2 120.8Z"/>
-                <circle class="d2-mapa-zonas__burbuja" cx="287.8" cy="101.7" r="30"/>
-                <text class="d2-mapa-zonas__etiqueta" x="287.8" y="145.7" text-anchor="middle">ROYAL OAKS</text>
+                <path class="d2-mapa-zonas__area" d="M304.6 118.7L304.7 128.6L306.9 128.6L307.0 135.4L284.1 135.9L275.1 139.5L269.1 144.9L267.9 144.2L260.8 123.0L260.8 48.4L303.7 48.4L304.6 118.7Z"/>
+                <circle class="d2-mapa-zonas__burbuja" cx="298.6" cy="107.1" r="17.7"/>
+                <text class="d2-mapa-zonas__etiqueta" x="298.6" y="82.4" text-anchor="middle">ROYAL OAKS</text>
               </g>
 
-              <g class="d2-mapa-zonas__sitio" data-zona="avondale" style="--zona-fill:#6E8C96"
+              <g class="d2-mapa-zonas__sitio" data-zona="s2" style="--zona-fill:#AB8A7D"
+                 role="button" tabindex="0" aria-label="Copperwood">
+                <path class="d2-mapa-zonas__area" d="M530.3 137.2L486.3 137.1L486.3 92.5L530.3 92.5L530.3 137.2Z"/>
+                <circle class="d2-mapa-zonas__burbuja" cx="505.2" cy="121.3" r="14.9"/>
+                <text class="d2-mapa-zonas__etiqueta" x="505.2" y="99.4" text-anchor="middle">COPPERWOOD</text>
+              </g>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="s3" style="--zona-fill:#C4B16E"
+                 role="button" tabindex="0" aria-label="Mountview">
+                <path class="d2-mapa-zonas__area" d="M438.1 137.7L440.0 138.1L439.8 181.5L409.9 181.7L373.1 180.6L371.1 137.6L371.8 137.1L438.1 137.7Z"/>
+                <circle class="d2-mapa-zonas__burbuja" cx="425.7" cy="145.7" r="21.1"/>
+                <text class="d2-mapa-zonas__etiqueta" x="425.7" y="178.8" text-anchor="middle">MOUNTVIEW</text>
+              </g>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="s4" style="--zona-fill:#6D8B95"
                  role="button" tabindex="0" aria-label="Avondale">
-                <path class="d2-mapa-zonas__area" d="M328.4 218.9L326.8 218.9L326.8 215.1L324.8 215.1L324.8 212.7L319.0 212.7L319.0 209.6L322.8 209.6L322.8 207.5L321.7 207.5L321.2 205.2L321.2 201.8L320.1 201.8L320.1 198.6L314.0 198.6L314.0 196.6L312.3 196.6L312.3 191.1L305.5 191.1L305.0 183.3L287.2 182.7L281.7 180.7L281.7 179.8L279.0 179.5L277.8 174.3L281.8 172.3L281.8 171.1L278.4 162.8L274.5 158.4L271.9 151.9L270.7 151.9L277.0 144.8L283.1 141.6L287.7 140.7L334.3 140.5L339.5 139.7L339.5 183.3L349.4 184.0L349.5 213.0L330.8 213.0L330.8 210.7L328.4 210.7L328.4 218.9Z"/>
-                <circle class="d2-mapa-zonas__burbuja" cx="322.5" cy="191.2" r="27"/>
-                <text class="d2-mapa-zonas__etiqueta" x="322.5" y="232.2" text-anchor="middle">AVONDALE</text>
+                <path class="d2-mapa-zonas__area" d="M328.2 218.4L326.5 218.4L326.5 214.5L324.5 214.5L324.5 212.1L318.6 212.1L318.6 208.9L322.5 208.9L322.5 206.9L321.4 206.9L320.8 204.5L320.8 201.0L319.7 201.0L319.7 197.8L313.5 197.8L313.5 195.8L311.8 195.7L311.8 190.2L304.9 190.2L304.4 182.2L286.3 181.6L280.6 179.6L280.7 178.7L277.9 178.4L276.7 173.1L280.8 171.0L280.8 169.8L277.3 161.4L273.3 156.9L270.7 150.3L269.5 150.4L275.9 143.0L282.2 139.8L286.8 138.9L334.2 138.7L339.5 137.9L339.5 182.2L349.6 182.9L349.6 212.5L330.6 212.5L330.6 210.1L328.2 210.1L328.2 218.4Z"/>
+                <circle class="d2-mapa-zonas__burbuja" cx="310.5" cy="157.9" r="16.0"/>
+                <text class="d2-mapa-zonas__etiqueta" x="310.5" y="185.9" text-anchor="middle">AVONDALE</text>
               </g>
 
-              <g class="d2-mapa-zonas__sitio" data-zona="lakeland" style="--zona-fill:#AB8B7E"
-                 role="button" tabindex="0" aria-label="Lakeland">
-                <path class="d2-mapa-zonas__area" d="M417.0 76.7L410.9 72.7L408.0 69.2L402.8 58.8L402.5 51.6L431.2 51.6L431.2 55.4L432.5 59.8L430.7 60.5L431.6 62.1L427.1 64.6L425.8 63.3L424.6 64.2L425.6 65.8L422.2 69.4L418.0 77.3L417.0 76.7Z"/>
-                <circle class="d2-mapa-zonas__burbuja" cx="416.9" cy="62.6" r="25"/>
-                <text class="d2-mapa-zonas__etiqueta" x="416.9" y="101.6" text-anchor="middle">LAKELAND</text>
-              </g>
-
-              <g class="d2-mapa-zonas__sitio" data-zona="crystal-heights" style="--zona-fill:#679592"
+              <g class="d2-mapa-zonas__sitio" data-zona="s5" style="--zona-fill:#659390"
                  role="button" tabindex="0" aria-label="Crystal Heights">
-                <path class="d2-mapa-zonas__area" d="M450.8 206.6L440.0 206.1L440.6 183.9L440.0 139.5L482.8 139.5L482.8 193.9L473.2 195.8L455.2 205.6L450.8 206.6Z"/>
-                <circle class="d2-mapa-zonas__burbuja" cx="458.7" cy="191.0" r="32"/>
-                <text class="d2-mapa-zonas__etiqueta" x="458.7" y="150.0" text-anchor="middle">CRYSTAL HEIGHTS</text>
+                <path class="d2-mapa-zonas__area" d="M452.7 206.0L441.7 205.4L442.3 182.9L441.6 179.0L441.6 137.7L485.2 137.7L485.2 193.0L475.4 194.9L457.1 204.9L452.7 206.0Z"/>
+                <circle class="d2-mapa-zonas__burbuja" cx="475.4" cy="176.1" r="17.7"/>
+                <text class="d2-mapa-zonas__etiqueta" x="475.4" y="205.8" text-anchor="middle">CRYSTAL HEIGHTS</text>
               </g>
 
-              <g class="d2-mapa-zonas__sitio" data-zona="creekside" style="--zona-fill:#73A1AF"
-                 role="button" tabindex="0" aria-label="Creekside">
-                <path class="d2-mapa-zonas__area" d="M461.5 272.9L461.5 324.4L455.1 319.9L440.4 312.8L440.3 278.1L441.1 273.1L461.5 272.9Z"/>
-                <circle class="d2-mapa-zonas__burbuja" cx="453.6" cy="285.1" r="26"/>
-                <text class="d2-mapa-zonas__etiqueta" x="453.6" y="325.1" text-anchor="middle">CREEKSIDE</text>
+              <g class="d2-mapa-zonas__sitio" data-zona="s6" style="--zona-fill:#CE9F8D"
+                 role="button" tabindex="0" aria-label="Richmond Industrial Park">
+                <path class="d2-mapa-zonas__area" d="M214.4 361.3L213.3 361.3L213.3 329.8L203.7 329.8L203.7 315.7L171.0 315.7L170.2 315.0L169.9 231.2L173.6 229.9L181.5 229.8L211.2 230.3L215.7 231.7L220.8 229.7L257.7 229.7L257.7 288.1L258.5 288.5L258.1 360.9L214.4 361.3Z"/>
+                <circle class="d2-mapa-zonas__burbuja" cx="243.0" cy="324.3" r="22.8"/>
+                <text class="d2-mapa-zonas__etiqueta" x="244.0" y="284.0" text-anchor="middle">RICHMOND INDUSTRIAL PARK</text>
               </g>
 
-              <g class="d2-mapa-zonas__sitio" data-zona="signature-falls" style="--zona-fill:#BCA865"
-                 role="button" tabindex="0" aria-label="Signature Falls">
-                <path class="d2-mapa-zonas__area" d="M501.3 402.8L483.4 402.7L483.4 359.5L526.9 359.7L526.5 399.5L523.4 402.9L501.3 402.8Z"/>
-                <circle class="d2-mapa-zonas__burbuja" cx="504.3" cy="392.3" r="33"/>
-                <text class="d2-mapa-zonas__etiqueta" x="504.3" y="350.3" text-anchor="middle">SIGNATURE FALLS</text>
-              </g>
-
-              <g class="d2-mapa-zonas__sitio" data-zona="westpointe" style="--zona-fill:#6F7374"
+              <g class="d2-mapa-zonas__sitio" data-zona="s7" style="--zona-fill:#6E7273"
                  role="button" tabindex="0" aria-label="Westpointe">
-                <path class="d2-mapa-zonas__area" d="M183.2 316.7L206.0 316.7L206.0 328.4L215.4 328.4L215.4 366.7L216.5 366.9L216.5 384.4L205.9 384.4L205.9 374.9L173.3 374.8L173.1 317.8L174.2 316.7L183.2 316.7Z"/>
-                <circle class="d2-mapa-zonas__burbuja" cx="192.8" cy="356.5" r="24"/>
-                <text class="d2-mapa-zonas__etiqueta" x="192.8" y="394.5" text-anchor="middle">WESTPOINTE</text>
+                <path class="d2-mapa-zonas__area" d="M180.5 317.9L203.8 317.8L203.7 329.8L213.3 329.8L213.3 368.7L214.4 368.9L214.4 386.7L203.7 386.7L203.7 377.0L170.5 377.0L170.3 319.0L171.4 317.9L180.5 317.9Z"/>
+                <circle class="d2-mapa-zonas__burbuja" cx="191.3" cy="336.5" r="14.9"/>
+                <text class="d2-mapa-zonas__etiqueta" x="191.3" y="363.4" text-anchor="middle">WESTPOINTE</text>
               </g>
 
-              <g class="d2-mapa-zonas__sitio" data-zona="mission-heights" style="--zona-fill:#D0A18F"
-                 role="button" tabindex="0" aria-label="Mission Heights">
-                <path class="d2-mapa-zonas__area" d="M305.5 316.5L313.5 316.5L315.0 320.2L317.7 322.7L315.1 329.1L315.5 334.2L309.5 334.5L308.4 333.8L306.3 335.4L307.6 338.7L310.4 341.5L314.1 341.3L316.9 342.3L319.3 347.4L322.6 349.9L327.2 357.2L326.7 364.5L329.6 365.3L331.9 372.3L336.6 374.7L334.0 376.9L335.4 382.7L338.0 385.5L340.3 385.9L337.2 391.4L338.8 398.8L334.6 401.3L315.7 402.8L263.3 402.4L262.1 316.8L305.5 316.5Z"/>
-                <circle class="d2-mapa-zonas__burbuja" cx="305.8" cy="353.5" r="41"/>
-                <text class="d2-mapa-zonas__etiqueta" x="305.8" y="303.5" text-anchor="middle">MISSION HEIGHTS</text>
+              <g class="d2-mapa-zonas__sitio" data-zona="s8" style="--zona-fill:#72787A"
+                 role="button" tabindex="0" aria-label="Patterson Place">
+                <path class="d2-mapa-zonas__area" d="M416.3 360.6L412.6 361.3L350.8 361.2L350.8 317.7L410.7 317.8L425.8 357.5L416.3 360.6Z"/>
+                <circle class="d2-mapa-zonas__burbuja" cx="399.9" cy="336.5" r="25.0"/>
+                <text class="d2-mapa-zonas__etiqueta" x="399.9" y="304.5" text-anchor="middle">PATTERSON PLACE</text>
               </g>
 
-              <g class="d2-mapa-zonas__sitio" data-zona="stone-ridge" style="--zona-fill:#975555"
-                 role="button" tabindex="0" aria-label="Stone Ridge">
-                <path class="d2-mapa-zonas__area" d="M295.4 445.5L292.9 448.3L264.0 448.3L264.0 447.2L262.7 447.2L262.7 410.5L263.4 405.7L326.7 404.7L326.5 410.1L321.7 412.0L320.4 417.8L315.7 419.1L313.5 421.1L310.8 426.4L311.0 431.1L308.4 431.2L305.7 433.2L303.7 436.9L295.4 445.5Z"/>
-                <circle class="d2-mapa-zonas__burbuja" cx="302.3" cy="417.5" r="24"/>
-                <text class="d2-mapa-zonas__etiqueta" x="302.3" y="455.5" text-anchor="middle">STONE RIDGE</text>
+              <g class="d2-mapa-zonas__sitio" data-zona="s9" style="--zona-fill:#927676"
+                 role="button" tabindex="0" aria-label="Mission Heights, site 1 of 2">
+                <path class="d2-mapa-zonas__area" d="M304.9 317.6L313.1 317.6L314.5 321.5L317.3 324.0L314.6 330.4L315.1 335.7L309.0 336.0L307.8 335.2L305.7 336.9L307.1 340.2L309.8 343.1L313.6 342.9L316.5 343.9L318.9 349.0L322.3 351.6L326.9 359.0L326.4 366.5L329.4 367.2L331.7 374.4L336.6 376.9L333.9 379.0L335.3 385.0L337.9 387.8L340.3 388.3L337.1 393.8L338.8 401.4L334.5 403.9L315.3 405.5L262.0 405.0L260.8 318.0L304.9 317.6Z"/>
+                <circle class="d2-mapa-zonas__burbuja" cx="304.5" cy="369.0" r="15.5"/>
+                <text class="d2-mapa-zonas__etiqueta" x="304.5" y="346.5" text-anchor="middle">MISSION HEIGHTS</text>
               </g>
 
-              <g class="d2-mapa-zonas__sitio" data-zona="countryside-south" style="--zona-fill:#A3A2A7"
-                 role="button" tabindex="0" aria-label="Countryside South">
-                <path class="d2-mapa-zonas__area" d="M483.4 448.4L452.3 448.3L452.3 404.9L483.4 405.0L483.4 448.4Z"/>
-                <circle class="d2-mapa-zonas__burbuja" cx="473.8" cy="438.2" r="36"/>
-                <text class="d2-mapa-zonas__etiqueta" x="428.8" y="442.2" text-anchor="end">COUNTRYSIDE SOUTH</text>
+              <g class="d2-mapa-zonas__sitio" data-zona="s10" style="--zona-fill:#6F9DAB"
+                 role="button" tabindex="0" aria-label="South Patterson Place">
+                <path class="d2-mapa-zonas__area" d="M438.1 389.7L440.1 396.9L440.2 405.3L352.8 405.7L352.7 399.9L355.4 394.6L354.4 391.5L357.0 388.4L358.6 388.2L356.4 380.0L351.2 372.4L350.8 361.2L412.6 361.3L425.8 357.5L438.1 389.7Z"/>
+                <circle class="d2-mapa-zonas__burbuja" cx="415.8" cy="383.2" r="17.1"/>
+                <text class="d2-mapa-zonas__etiqueta" x="439.9" y="386.7" text-anchor="start">SOUTH PATTERSON PLACE</text>
               </g>
 
+              <g class="d2-mapa-zonas__sitio" data-zona="s11" style="--zona-fill:#B57372"
+                 role="button" tabindex="0" aria-label="Mission Heights, site 2 of 2">
+                <circle class="d2-mapa-zonas__burbuja" cx="308.5" cy="389.3" r="14.3"/>
               </g>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="s12" style="--zona-fill:#9BA9B1"
+                 role="button" tabindex="0" aria-label="Country Club Estates, site 1 of 2">
+                <path class="d2-mapa-zonas__area" d="M395.8 451.5L395.5 407.5L440.2 407.5L440.2 451.6L395.8 451.5Z"/>
+                <circle class="d2-mapa-zonas__burbuja" cx="403.9" cy="429.9" r="18.8"/>
+                <text class="d2-mapa-zonas__etiqueta" x="378.1" y="433.4" text-anchor="end">COUNTRY CLUB ESTATES</text>
+              </g>
+
+              <g class="d2-mapa-zonas__sitio" data-zona="s13" style="--zona-fill:#9F9EA2"
+                 role="button" tabindex="0" aria-label="Country Club Estates, site 2 of 2">
+                <circle class="d2-mapa-zonas__burbuja" cx="406.8" cy="439.5" r="9.0"/>
+              </g>
+
             </svg>
 
-            <p class="d2-prob-mapa__aviso">Illustrative site locations. Contains information licensed under the Open Data License &ndash; City of Grande Prairie.</p>
+            <p class="d2-prob-mapa__aviso">Contains information licensed under the Open Data License &ndash; City of Grande Prairie.</p>
 
             </div>
             </div>
