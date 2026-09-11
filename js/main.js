@@ -827,7 +827,11 @@
 
   function elegirScope(valor) {
     estado.scope = valor;
-    seccion.querySelectorAll('.opcion').forEach(function (o) {
+    /* [data-scope] y no .opcion a secas: las pantallas de precalificacion
+       usan el mismo aspecto de boton pero con data-tamano o data-utility.
+       Sin acotar, aqui se comparaba undefined === undefined --que da
+       true-- y se marcaban TODAS las opciones de la seccion. */
+    seccion.querySelectorAll('.opcion[data-scope]').forEach(function (o) {
       var elegida = o.dataset.scope === valor;
       o.classList.toggle('is-elegida', elegida);
       /* aria-pressed y no solo la clase: sin el, un lector de pantalla lee
@@ -865,7 +869,9 @@
      Es el mismo gesto que el paso del ambito, asi que se reutiliza el
      aspecto .opcion y solo cambia el atributo que se lee. */
   function conectarEleccion(atributo, alElegir) {
-    var botones = seccion.querySelectorAll('[data-' + atributo + ']');
+    /* .opcion delante: sin el, el selector tambien cogeria cualquier otro
+       elemento que use ese atributo para otra cosa. */
+    var botones = seccion.querySelectorAll('.opcion[data-' + atributo + ']');
     Array.prototype.forEach.call(botones, function (b) {
       b.addEventListener('click', function () {
         var valor = b.getAttribute('data-' + atributo);
@@ -944,7 +950,7 @@
     d.addEventListener('input', function () { estado.descripcion = d.value; });
   }());
 
-  seccion.querySelectorAll('.opcion').forEach(function (o) {
+  seccion.querySelectorAll('.opcion[data-scope]').forEach(function (o) {
     o.addEventListener('click', function () {
       /* Solo marca la eleccion. Antes saltaba de paso a los 220ms, y eso
          incumple WCAG 3.2.2: quien recorre las opciones con el teclado
