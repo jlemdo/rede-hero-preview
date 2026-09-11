@@ -14378,17 +14378,36 @@ span.d2-panel__filtro:hover {
      blanco, o sea invisible. El minimo para un elemento grafico es 3, y
      con #9A9A9A se quedaba en 2.81. Este da 3.5 sin robarle protagonismo
      a la linea verde. */
-  stroke: #8E8E8E;
-  stroke-dasharray: 6 4;
+  stroke: #A8A8A8;
+  /* Guion largo, trazo fino: es la linea de referencia, la que dice donde
+     estaria el consumo sin hacer nada. */
+  stroke-dasharray: 7 5;
+  stroke-width: 1.6;
   animation-delay: .1s;
 }
 
 /* La meta, punteada: es un objetivo, no un hecho. */
 .d2 .hero-gr__linea--meta {
-  /* Del 45% de opacidad --contraste 2.66-- a un verde solido mas oscuro.
-     Sigue siendo la linea mas discreta de las tres, pero se ve. */
-  stroke: #5E9660;
-  stroke-dasharray: 2 4;
+  /* Gris oscuro y no verde (11/9/2026). Con el verde anterior, "Target" y
+     "Actual" tenian 1.83 de contraste ENTRE ELLAS: dos verdes casi
+     iguales que solo se separaban por el punteado.
+
+     En la figura del cliente esta linea es naranja, pero ese color no se
+     puede usar: el manual lo menciona sin dar su valor en ninguna de sus
+     13 paginas, y esta pendiente pedirselo. El manual si dice que la
+     marca vive "in the range of green and grey", asi que la meta se va al
+     gris y el verde queda para una sola linea: la real.
+
+     El TONO importa tanto como el color: un gris oscuro tenia la misma
+     luminosidad que el verde --1.08 entre ellos-- y en blanco y negro
+     habrian sido la misma linea. Los tres tonos escalan ahora de claro
+     a oscuro: referencia, meta y real, que es el orden en que
+     importan. */
+  stroke: #6B6B6B;
+  /* Punteada y fina: es un objetivo, no un hecho. El punto corto la
+     distingue del guion largo de la referencia sin mirar el color. */
+  stroke-dasharray: 1.5 3.5;
+  stroke-width: 1.8;
   stroke-linecap: round;
   animation: none;
   opacity: 0;
@@ -14449,7 +14468,7 @@ span.d2-panel__filtro:hover {
 /* Target: el mismo verde apagado de su linea. Faltaba en la leyenda --se
    dibujaban tres lineas y solo se nombraban dos-- asi que la del medio
    quedaba sin identificar. */
-.d2 .d2-hero__punto--meta { background: #5E9660; }
+.d2 .d2-hero__punto--meta { background: #6B6B6B; }
 
 /* Los anos, bajo el grafico. Solo el primero y el ultimo: los once no caben
    legibles en un panel de 400px, y con los extremos ya se responde la
