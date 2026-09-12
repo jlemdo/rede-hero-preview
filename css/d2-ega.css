@@ -37,16 +37,23 @@
 .d2 .d2-ega-hero {
   background: var(--c-blanco, #FFFFFF);
   border-bottom: 1px solid var(--c-borde, #E4E4E4);
+  /* La ilustracion sangra a la derecha y ademas mide un 112% de su
+     hueco: sin esto la suma abre una barra de scroll horizontal. Lo que
+     sobra por el borde se corta, que ahi no hay dibujo. */
+  overflow: hidden;
 }
 
 .d2 .d2-ega-hero__inner {
   display: grid;
-  /* Dos columnas iguales, como la home: alli el hero reparte 568 y 568.
-     Con 1fr/.92fr la ilustracion salia mas pequena de lo que le toca. */
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  /* La imagen manda. El texto ocupaba la mitad del ancho y aun asi
+     necesitaba cuatro lineas de titular, asi que el hero crecia hasta
+     829 px --200 mas que el de la home-- para rodear una ilustracion
+     pequena. Estrechando la columna de texto el titular cabe en tres
+     lineas Y la imagen gana 240 px. */
+  grid-template-columns: minmax(0, 610px) minmax(0, 1fr);
   align-items: center;
-  gap: 56px;
-  padding-block: 76px 84px;
+  gap: 32px;
+  padding-block: 56px 60px;
 }
 
 /* Las migas: donde estoy y como vuelvo. En el wireframe el padre estaba
@@ -68,12 +75,15 @@
 .d2 .d2-ega-hero__migas a:hover { text-decoration: underline; }
 
 .d2 .d2-ega-hero__titulo {
-  margin: 14px 0 20px;
+  margin: 12px 0 18px;
   font-size: var(--fs-h1);
   line-height: 1.04;
   letter-spacing: -.03em;
   font-weight: 800;
   color: var(--c-texto, #333333);
+  /* Sin esto, "Know which buildings are worth an energy audit." parte en
+     cuatro lineas y el hero se estira. */
+  text-wrap: balance;
 }
 
 /* El verde cae en "energy audit.", que es donde el titular hace pie.
@@ -83,8 +93,8 @@
 .d2 .d2-ega-hero__titulo span { color: var(--c-verde-hover, #026F00); }
 
 .d2 .d2-ega-hero__lead {
-  margin: 0 0 30px;
-  max-width: 54ch;
+  margin: 0 0 26px;
+  max-width: 46ch;
   font-size: var(--fs-body-lg);
   line-height: 1.6;
   color: var(--c-texto-cuerpo, #333333);
@@ -94,7 +104,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-bottom: 26px;
+  margin-bottom: 22px;
 }
 
 /* La nota de "sin coste ni compromiso". El punto verde la marca como
@@ -103,9 +113,9 @@
   display: flex;
   gap: 11px;
   margin: 0;
-  max-width: 56ch;
+  max-width: 48ch;
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.55;
   color: var(--c-texto-suave, #6B6B6B);
 }
 
@@ -116,6 +126,20 @@
   margin-top: 7px;
   border-radius: 50%;
   background: var(--c-verde-marca, #39B54A);
+}
+
+/* La imagen se sale de su columna hacia la derecha, hasta el borde de la
+   ventana. Es lo que hace el wireframe original y aqui resuelve el
+   problema de fondo: el titular necesita 620 px para caber en tres
+   lineas, y dentro del contenedor a la imagen solo le quedarian 612.
+   Sangrando gana los 80 px del padding lateral y todo lo que la pantalla
+   tenga por encima de 1280. */
+.d2 .d2-ega-hero__arte {
+  /* Hasta el borde de la ventana. El hueco esta atado al contenedor de
+     1280, asi que en una pantalla de 1440 la imagen se quedaba en 662 px
+     con 80 de aire a la derecha. Con esto se lleva el padding lateral Y
+     lo que la ventana tenga por encima del contenedor. */
+  margin-right: min(0px, calc((var(--d2-ancho, 1280px) - 100vw) / 2 - var(--pad-lateral, 28px)));
 }
 
 .d2 .d2-ega-hero__arte img {
@@ -453,7 +477,14 @@
   }
 
   /* La ilustracion, primero: dice de que va la pagina antes que el texto */
-  .d2 .d2-ega-hero__arte { order: -1; }
+  .d2 .d2-ega-hero__arte {
+    order: -1;
+    /* Sin dos columnas, la sangria y el desbordamiento solo cortan la
+       imagen por la derecha. Aqui ocupa el ancho y ya esta. */
+    margin-right: 0;
+  }
+
+  .d2 .d2-ega-hero__arte img { width: 100%; }
 
   .d2 :is(.d2-ega-pasos__cab, .d2-ega-fondos__cab) {
     grid-template-columns: 1fr;
