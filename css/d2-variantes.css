@@ -14887,13 +14887,15 @@ span.d2-panel__filtro:hover {
    apoya en ella: sin esto los circulos flotaban y no se entendia que
    region era cada uno. */
 .d2-mapa-zonas__area {
-  fill: var(--zona-fill, #6F7374);
-  fill-opacity: .13;
-  stroke: var(--zona-fill, #6F7374);
-  stroke-opacity: .45;
+  /* Gris en reposo. El color solo aparece en el sitio seleccionado, asi
+     que dice CUAL estas mirando en vez de ser decorativo. */
+  fill: #6F7374;
+  fill-opacity: .11;
+  stroke: #6F7374;
+  stroke-opacity: .4;
   stroke-width: 1.1px;
   stroke-linejoin: round;
-  transition: fill-opacity .18s, stroke-opacity .18s;
+  transition: fill .18s, stroke .18s, fill-opacity .18s, stroke-opacity .18s;
 }
 
 .d2-mapa-zonas__ciudad {
@@ -14911,11 +14913,12 @@ span.d2-panel__filtro:hover {
 /* El relleno lleva alpha para que se vean las de debajo cuando se
    solapan: es lo que deja leer la densidad de un vistazo. */
 .d2-mapa-zonas__burbuja {
-  fill: var(--zona-fill, #6F7374);
-  fill-opacity: .62;
-  stroke: var(--zona-fill, #6F7374);
+  fill: #6F7374;
+  fill-opacity: .5;
+  stroke: #6F7374;
   stroke-width: 1.5px;
-  transition: fill-opacity .18s, stroke-width .18s, filter .18s;
+  transition: fill .18s, stroke .18s, fill-opacity .18s,
+              stroke-width .18s, filter .18s;
 }
 
 /* La etiqueta va ENCIMA de su circulo, como en la referencia.
@@ -14939,24 +14942,34 @@ span.d2-panel__filtro:hover {
 
 /* --- Los estados, con los mismos tiempos que el mapa de cartera --- */
 
+/* Al apuntar, verde de marca. El mismo que los botones y el logo. */
 .d2-mapa-zonas__sitio:hover .d2-mapa-zonas__burbuja {
-  fill-opacity: .8;
+  fill: var(--c-verde-marca, #39B54A);
+  stroke: var(--c-verde-marca, #39B54A);
+  fill-opacity: .72;
   stroke-width: 3px;
 }
 
 .d2-mapa-zonas__sitio:hover .d2-mapa-zonas__area,
 .d2-mapa-zonas__sitio.es-foco .d2-mapa-zonas__area {
-  fill-opacity: .28;
-  stroke-opacity: .85;
+  fill: var(--c-verde-marca, #39B54A);
+  stroke: var(--c-verde-marca, #39B54A);
+  fill-opacity: .16;
+  stroke-opacity: .75;
 }
 
 /* El destacado. Tres senales a la vez --opacidad, grosor y etiqueta en
    negro-- para que no dependa de distinguir un color de otro. */
+/* El seleccionado --por rotacion automatica o al apuntar-- va en el
+   mismo verde, mas lleno y con halo. El aro oscuro se cambia por el
+   propio verde oscurecido: un borde negro sobre verde partia el circulo
+   en dos en vez de reforzarlo. */
 .d2-mapa-zonas__sitio.es-foco .d2-mapa-zonas__burbuja {
-  fill-opacity: .88;
-  stroke: var(--c-texto, #333333);
+  fill: var(--c-verde-marca, #39B54A);
+  fill-opacity: .85;
+  stroke: var(--c-verde-hover, #026F00);
   stroke-width: 2.5px;
-  filter: drop-shadow(0 2px 10px #00000038);
+  filter: drop-shadow(0 2px 11px #39B54A4D);
 }
 
 .d2-mapa-zonas__sitio.es-foco .d2-mapa-zonas__etiqueta {
