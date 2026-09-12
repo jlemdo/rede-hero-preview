@@ -26,7 +26,9 @@
         .d2-ega-alcance__inner, .d2-ega-fondos__inner) {
   max-width: var(--d2-ancho, 1280px);
   margin-inline: auto;
-  padding: 96px var(--pad-lateral, 28px);
+  /* 84 y no 96: es el orden del hero de la home --86-- y con 96 en tres
+     secciones la pagina sumaba 70 px de hueco que no dice nada. */
+  padding: 84px var(--pad-lateral, 28px);
 }
 
 
@@ -162,7 +164,10 @@
    a la derecha. Mismo gesto que la seccion de rutas de la home. */
 .d2 :is(.d2-ega-pasos__cab, .d2-ega-fondos__cab) {
   display: grid;
-  grid-template-columns: 1.05fr .95fr;
+  /* El titular manda. "Could a utility program help pay for what comes
+     next?" son 1300 px de texto: con 1,05fr --617 px-- necesitaba tres
+     lineas de verdad, y ningun reparto de palabras arregla eso. */
+  grid-template-columns: 1.28fr .72fr;
   align-items: end;
   gap: 48px;
   margin-bottom: 54px;
@@ -170,11 +175,18 @@
 
 .d2 :is(.d2-ega-pasos__titulo, .d2-ega-alcance__titulo, .d2-ega-fondos__titulo) {
   margin: 12px 0 0;
-  font-size: var(--fs-h2);
+  /* La escala de los titulares de seccion de la home --49 px a 1440--
+     y no --fs-h2, que topa en 40 y los dejaba pequenos al lado de los
+     suyos. */
+  font-size: clamp(34px, 3.4vw, 52px);
   line-height: 1.08;
   letter-spacing: -.025em;
   font-weight: 700;
   color: var(--c-texto, #333333);
+  /* El de Funding necesitaba 2,44 lineas y ocupaba 3 porque el corte
+     caia mal. Balance reparte las palabras y evita de paso la linea
+     huerfana de una sola palabra. */
+  text-wrap: balance;
 }
 
 .d2 :is(.d2-ega-pasos__lead, .d2-ega-fondos__lead) {
