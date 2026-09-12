@@ -278,7 +278,7 @@
   height: 22px;
   border-radius: 50%;
   background: var(--c-verde-marca, #39B54A);
-  color: #FFFFFF;
+  color: var(--c-blanco, #FFFFFF);
 }
 
 .d2 .d2-ega-alcance__tarjetas {
@@ -360,11 +360,11 @@
    calculadora-- y marca el cambio de "que es esto" a "como se paga". */
 .d2 .d2-ega-fondos {
   background: var(--c-superficie-oscura, #1A1A1A);
-  color: #FFFFFF;
+  color: var(--c-blanco, #FFFFFF);
 }
 
 .d2 .d2-ega-fondos .eyebrow { color: var(--c-verde-marca, #39B54A); }
-.d2 .d2-ega-fondos__titulo  { color: #FFFFFF; }
+.d2 .d2-ega-fondos__titulo  { color: var(--c-blanco, #FFFFFF); }
 .d2 .d2-ega-fondos__lead    { color: rgba(255, 255, 255, .78); }
 
 .d2 .d2-ega-fondos__lista {
@@ -401,7 +401,7 @@
   line-height: 1.2;
   letter-spacing: -.015em;
   font-weight: 700;
-  color: #FFFFFF;
+  color: var(--c-blanco, #FFFFFF);
 }
 
 .d2 .d2-ega-fondo p {
