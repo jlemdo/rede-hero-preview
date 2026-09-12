@@ -41,7 +41,9 @@
 
 .d2 .d2-ega-hero__inner {
   display: grid;
-  grid-template-columns: 1fr .92fr;
+  /* Dos columnas iguales, como la home: alli el hero reparte 568 y 568.
+     Con 1fr/.92fr la ilustracion salia mas pequena de lo que le toca. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
   gap: 56px;
   padding-block: 76px 84px;
@@ -74,8 +76,11 @@
   color: var(--c-texto, #333333);
 }
 
-/* El verde cae en "energy audit.", que es donde el titular hace pie. */
-.d2 .d2-ega-hero__titulo span { color: var(--c-verde-marca, #39B54A); }
+/* El verde cae en "energy audit.", que es donde el titular hace pie.
+
+   Va el --c-verde-hover, que es el que usa la home para texto en verde:
+   el de marca da 2,66:1 sobre blanco y no llega al minimo de 4,5. */
+.d2 .d2-ega-hero__titulo span { color: var(--c-verde-hover, #026F00); }
 
 .d2 .d2-ega-hero__lead {
   margin: 0 0 30px;
@@ -330,7 +335,7 @@
 }
 
 .d2 .d2-ega-tarj--si .d2-ega-tarj__eti { color: var(--c-verde-hover, #026F00); }
-.d2 .d2-ega-tarj--si li { border-color: rgba(2, 111, 0, .16); }
+.d2 .d2-ega-tarj--si li { border-color: var(--c-borde, #E4E4E4); }
 
 .d2 .d2-ega-tarj--si li::before {
   content: "\2713";
@@ -365,7 +370,7 @@
 
 .d2 .d2-ega-fondos .eyebrow { color: var(--c-verde-marca, #39B54A); }
 .d2 .d2-ega-fondos__titulo  { color: var(--c-blanco, #FFFFFF); }
-.d2 .d2-ega-fondos__lead    { color: rgba(255, 255, 255, .78); }
+.d2 .d2-ega-fondos__lead    { color: rgba(255, 255, 255, .82); }
 
 .d2 .d2-ega-fondos__lista {
   display: grid;
@@ -408,7 +413,7 @@
   margin: 0 0 20px;
   font-size: 15px;
   line-height: 1.6;
-  color: rgba(255, 255, 255, .76);
+  color: rgba(255, 255, 255, .74);
 }
 
 /* El enlace, abajo del todo: con textos de distinto largo, sin esto las
@@ -431,10 +436,10 @@
   max-width: 76ch;
   font-size: 14px;
   line-height: 1.65;
-  color: rgba(255, 255, 255, .64);
+  color: rgba(255, 255, 255, .62);
 }
 
-.d2 .d2-ega-fondos__nota strong { color: rgba(255, 255, 255, .88); }
+.d2 .d2-ega-fondos__nota strong { color: rgba(255, 255, 255, .82); }
 
 
 /* ==========================================================================
