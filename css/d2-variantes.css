@@ -7247,7 +7247,40 @@ span.d2-panel__filtro:hover {
 
   .d2 .d2-equipo-firma__principal { grid-template-columns: 1fr; }
 
-  .d2 .d2-equipo-firma__foto-grande { max-width: 200px; }
+  /* El ancho bajaba a 200 pero el alto se quedaba en los 350 del
+     original: la foto salia rectangular dentro de un circulo y la mitad
+     derecha quedaba vacia. El aspect-ratio la cuadra, como ya hacen las
+     miniaturas.
+
+     Alcanza tambien a la foto de aficion, que lleva las mismas clases
+     pero cuelga del envoltorio .d2-equipo-retrato. */
+  .d2 .d2-equipo-firma__principal .d2-equipo-retrato,
+  .d2 .d2-equipo-firma__foto-grande {
+    max-width: 200px;
+    aspect-ratio: 1;
+    height: auto;
+  }
+
+  /* Las miniaturas, algo mayores. 88 px es el tamano de escritorio y en
+     un movil ese circulo se queda pequeno respecto al ancho de la
+     pantalla: las caras no se distinguen.
+
+     El tamano lo manda el ENVOLTORIO: las dos fotos de dentro --la base
+     y la de aficion-- lo siguen solas. Poner solo `width` en la imagen
+     no valia: una regla anterior mas especifica fija los 88 y salian
+     88x108. */
+  /* La columna de la rejilla sigue a la foto: reservaba los 88 px de
+     escritorio y el nombre se montaba encima. */
+  .d2 .d2-equipo-firma__mini { grid-template-columns: 108px 1fr; }
+
+  .d2 .d2-equipo-firma__mini picture,
+  .d2 .d2-equipo-firma__mini .d2-equipo-retrato,
+  .d2 .d2-equipo-firma__mini .d2-equipo-firma__foto-mini,
+  .d2 .d2-equipo-firma .d2-equipo-firma__foto-mini {
+    width: 108px;
+    height: 108px;
+    aspect-ratio: 1;
+  }
 }
 
 @media (max-width: 640px) {
@@ -14757,21 +14790,25 @@ span.d2-panel__filtro:hover {
    Las coordenadas salen de medir donde esta la cara en cada archivo, no
    de estimarla mirando la foto. */
 
-/* Esquiando: cara medida en x=54%, y=16%. */
+/* Esquiando: la cara esta en x=54%, y=18%, pero encima lleva casco y
+   gafas que la deteccion de piel no cuenta como cara. Con 2,1 de
+   acercamiento el casco quedaba cortado por arriba. */
 .d2 [src*="marco-hover"] {
   object-fit: cover;
-  object-position: 54% 18%;
-  scale: 2.1;
-  transform-origin: 54% 18%;
+  object-position: 52% 10%;
+  scale: 1.75;
+  transform-origin: 52% 10%;
 }
 
 /* En el huerto: cara medida en x=58%, y=10%. Necesita mas acercamiento
    que Marco porque la figura sale entera y mas lejos. */
+/* La cara esta en x=49%, y=14%. Con 2,6 de acercamiento se le cortaba
+   la cabeza por arriba. */
 .d2 [src*="erica-hover"] {
   object-fit: cover;
-  object-position: 58% 10%;
-  scale: 2.6;
-  transform-origin: 58% 10%;
+  object-position: 50% 8%;
+  scale: 2.1;
+  transform-origin: 50% 8%;
 }
 
 /* El envoltorio ya recorta --overflow:hidden-- asi que la ampliacion no
