@@ -99,122 +99,20 @@
    Es el gesto de Watershed llevado al limite --numero prominente, cero
    conectores-- y funciona mejor en movil, donde tres columnas se aplastan
    y aqui las filas se apilan solas.
-   ========================================================================== */
-
-.d2 .d2-ega-pasos2 {
-  padding-block: 84px;
-  /* El fondo lo pone el tema por ROL; el valor de siempre, de respaldo. */
-  background: var(--comp-rol, var(--c-fondo-alt, #F5F5F5));
-}
-
-.d2 .d2-ega-pasos2__inner {
-  max-width: 1280px;
-  margin-inline: auto;
-  padding-inline: clamp(20px, 5vw, 80px);
-}
-
-.d2 .d2-ega-pasos2__cab {
-  max-width: 780px;
-  margin-bottom: 56px;
-}
-
-.d2 .d2-ega-pasos2__titulo {
-  margin: 12px 0 0;
-  /* La escala de los titulares de seccion de la home --49px a 1440--. */
-  font-size: clamp(34px, 3.4vw, 52px);
-  line-height: 1.08;
-  letter-spacing: -.025em;
-  font-weight: 700;
-  color: var(--c-texto, #333333);
-  text-wrap: balance;
-}
-
-.d2 .d2-ega-pasos2__lead {
-  margin: 20px 0 0;
-  font-size: 17px;
-  line-height: 1.65;
-  color: var(--c-texto-cuerpo, #333333);
-}
-
-.d2 .d2-ega-pasos2__lista {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.d2 .d2-ega-pasos2__paso {
-  display: grid;
-  grid-template-columns: clamp(76px, 8vw, 116px) minmax(0, 1fr);
-  align-items: start;
-  gap: clamp(20px, 3vw, 40px);
-  padding-block: clamp(26px, 3vw, 38px);
-  border-top: 1px solid var(--c-borde, #E4E4E4);
-}
-
-.d2 .d2-ega-pasos2__paso:last-child {
-  border-bottom: 1px solid var(--c-borde, #E4E4E4);
-}
+   ========================================================================== *
 
 /* El numero grande.
 
    El paso de gris a verde va por `color`, que NO es compositor-friendly. Se
    acepta a proposito: son tres elementos, ocurre una vez y no se repite. La
    alternativa --dos capas de texto superpuestas-- duplicaba el numero para
-   los lectores de pantalla, que es peor. */
-.d2 .d2-ega-pasos2__num {
-  display: block;
-  font-size: clamp(38px, 4.4vw, 62px);
-  font-weight: 800;
-  line-height: .9;
-  letter-spacing: -.03em;
-  /* #D8D8D8 daba 1.28:1 sobre el gris de la seccion: el numero se leia
-     como una marca de agua, no como un dato. A 38-62px en negrita el
-     umbral es 3.0 --texto grande-- y este gris da 3.11 sobre el gris y
-     3.45 sobre blanco, asi que cumple en las dos composiciones claras. */
-  color: #8A8A8A;
-  font-variant-numeric: tabular-nums;
-}
-
-.d2 .d2-ega-pasos2__cuerpo { padding-top: 6px; }
-
-.d2 .d2-ega-pasos2__h {
-  margin: 0 0 10px;
-  font-size: clamp(18px, 1.7vw, 23px);
-  font-weight: 700;
-  line-height: 1.22;
-  letter-spacing: -.01em;
-  color: var(--c-texto, #333333);
-}
-
-.d2 .d2-ega-pasos2__d {
-  margin: 0;
-  max-width: 62ch;
-  font-size: 15px;
-  line-height: 1.65;
-  color: var(--c-texto-cuerpo, #333333);
-}
+   los lectores de pantalla, que es peor. *
 
 @media (prefers-reduced-motion: no-preference) {
-  .d2 .d2-ega-pasos2 .d2-ega-pasos2__paso {
-    opacity: 0;
-    transform: translateY(18px);
-  }
 
-  .d2 .d2-ega-pasos2.es-visible .d2-ega-pasos2__paso {
-    animation: d2-ega-p-entra .66s cubic-bezier(.32, .72, 0, 1) both;
-  }
-
-  .d2 .d2-ega-pasos2.es-visible .d2-ega-pasos2__paso:nth-child(2) { animation-delay: .13s; }
-  .d2 .d2-ega-pasos2.es-visible .d2-ega-pasos2__paso:nth-child(3) { animation-delay: .26s; }
 
   /* El numero se enciende cuando su fila ya esta puesta. */
-  .d2 .d2-ega-pasos2.es-visible .d2-ega-pasos2__num {
-    animation: d2-ega-p2-enciende 2.6s cubic-bezier(.4, 0, .2, 1) both;
-    animation-delay: .4s;
-  }
 
-  .d2 .d2-ega-pasos2.es-visible .d2-ega-pasos2__paso:nth-child(2) .d2-ega-pasos2__num { animation-delay: .53s; }
-  .d2 .d2-ega-pasos2.es-visible .d2-ega-pasos2__paso:nth-child(3) .d2-ega-pasos2__num { animation-delay: .66s; }
 }
 
 /* El verde entra y se queda: encendido, no parpadeo.
@@ -477,12 +375,7 @@
 }
 
 @media (max-width: 560px) {
-  .d2 .d2-ega-pasos2__paso {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
 
-  .d2 .d2-ega-pasos2__num { font-size: 34px; }
 
   .d2 .d2-ega-pasos3__barras { height: 140px; }
 }
@@ -500,12 +393,12 @@
    como un dibujo que compite con el texto.
    ========================================================================== */
 
-.d2 :is(.d2-ega-pasos, .d2-ega-pasos2, .d2-ega-pasos3) {
+.d2 :is(.d2-ega-pasos, .d2-ega-pasos3) {
   position: relative;
   overflow: hidden;
 }
 
-.d2 :is(.d2-ega-pasos__circuito, .d2-ega-pasos2__circuito, .d2-ega-pasos3__circuito) {
+.d2 :is(.d2-ega-pasos__circuito, .d2-ega-pasos3__circuito) {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -513,13 +406,13 @@
   pointer-events: none;
 }
 
-.d2 :is(.d2-ega-pasos__circuito, .d2-ega-pasos2__circuito, .d2-ega-pasos3__circuito) path {
+.d2 :is(.d2-ega-pasos__circuito, .d2-ega-pasos3__circuito) path {
   fill: none;
   stroke: rgba(57, 181, 74, .17);
   stroke-width: 1.2px;
 }
 
-.d2 :is(.d2-ega-pasos__circuito, .d2-ega-pasos2__circuito, .d2-ega-pasos3__circuito) circle {
+.d2 :is(.d2-ega-pasos__circuito, .d2-ega-pasos3__circuito) circle {
   /* Relleno del color del fondo: el nodo tapa el trazo que pasa por debajo
      y se lee como una conexion, no como un punto encima de una linea.
 
@@ -532,7 +425,7 @@
 }
 
 /* El contenido, por encima del circuito. */
-.d2 :is(.d2-ega-pasos__inner, .d2-ega-pasos2__inner, .d2-ega-pasos3__inner) {
+.d2 :is(.d2-ega-pasos__inner, .d2-ega-pasos3__inner) {
   position: relative;
   z-index: 1;
 }
@@ -712,21 +605,21 @@
 
 /* --- Titulares y cuerpo --- */
 
-.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos2, .d2-ega-pasos3)
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos3)
   :is(h2, h3) {
   color: #FFFFFF;
 }
 
-.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos2, .d2-ega-pasos3)
-  :is(.d2-ega-pasos__lead, .d2-ega-pasos2__lead, .d2-ega-pasos3__lead,
-      .d2-ega-pasos__paso p, .d2-ega-pasos2__d, .d2-ega-pasos3__d) {
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos3)
+  :is(.d2-ega-pasos__lead, .d2-ega-pasos3__lead,
+      .d2-ega-pasos__paso p, .d2-ega-pasos3__d) {
   color: #C9C9C9;
 }
 
 /* El eyebrow "Start with the portfolio": el verde oscuro se queda en
    1.97:1 sobre este fondo. Entra el verde de MARCA, que da 4.74:1 --el
    del logo se queda en 4.15 y a 12px hace falta 4.5--. */
-.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos2, .d2-ega-pasos3)
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos3)
   .eyebrow {
   color: var(--c-verde-marca, #39B54A);
 }
@@ -744,16 +637,7 @@
 /* El numero grande de la opcion 2 arranca en gris claro --#D8D8D8, que
    sobre oscuro da 8.86:1 y se ve BIEN-- pero su animacion lo lleva al
    verde de marca, que en un numero de 62px aguanta. Solo se ajusta el
-   punto de partida para que no compita con el titular blanco. */
-.d2 [data-comp-tono="oscuro"].d2-ega-pasos2 .d2-ega-pasos2__num {
-  color: #858585;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .d2 [data-comp-tono="oscuro"].d2-ega-pasos2.es-visible .d2-ega-pasos2__num {
-    animation-name: d2-ega-p2-enciende-oscuro;
-  }
-}
+   punto de partida para que no compita con el titular blanco. *
 
 /* El verde del LOGO, no el palido. A 38-62px en negrita el umbral es 3.0
    --texto grande-- y el del logo da 4.15:1 sobre este fondo, asi que se
@@ -767,24 +651,20 @@
 
 /* --- Filos y separadores --- */
 
-.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos2, .d2-ega-pasos3)
-  :is(.d2-ega-pasos__paso, .d2-ega-pasos2__paso, .d2-ega-pasos3__paso) {
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos3)
+  :is(.d2-ega-pasos__paso, .d2-ega-pasos3__paso) {
   border-color: rgba(255, 255, 255, .18);
-}
-
-.d2 [data-comp-tono="oscuro"].d2-ega-pasos2 .d2-ega-pasos2__paso:last-child {
-  border-bottom-color: rgba(255, 255, 255, .18);
 }
 
 /* --- El circuito de fondo --- */
 
 .d2 [data-comp-tono="oscuro"]
-  :is(.d2-ega-pasos__circuito, .d2-ega-pasos2__circuito, .d2-ega-pasos3__circuito) path {
+  :is(.d2-ega-pasos__circuito, .d2-ega-pasos3__circuito) path {
   stroke: rgba(176, 225, 183, .22);
 }
 
 .d2 [data-comp-tono="oscuro"]
-  :is(.d2-ega-pasos__circuito, .d2-ega-pasos2__circuito, .d2-ega-pasos3__circuito) circle {
+  :is(.d2-ega-pasos__circuito, .d2-ega-pasos3__circuito) circle {
   stroke: rgba(176, 225, 183, .38);
 }
 
@@ -914,4 +794,732 @@
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-pasos3__barra--alta {
   background: var(--c-verde-logo, #39A935);
+}
+
+
+/* ==========================================================================
+   LADDER EN EGA: EL FONDO POR ROL (14/9/2026)
+
+   La variante viene de la biblioteca --rutas/02-ladder-- y su fondo sale
+   del token --comp-rutas, que en la home pinta el selector de composicion
+   buscando el carrusel de rutas. En EGA ese carrusel no existe, asi que el
+   token llega vacio y la seccion se quedaria sin fondo.
+
+   Se le da el valor por ROL, que es el mecanismo que si funciona fuera de
+   la home. El orden importa: --comp-rol primero, --comp-rutas de respaldo
+   por si algun dia esta pagina hereda el token del home.
+   ========================================================================== */
+
+.d2 .d2-rutas-esc[data-comp-rol] {
+  background: var(--comp-rol, var(--comp-rutas, var(--c-fondo-alt, #F5F5F5)));
+}
+
+/* El rail y los nodos van en el verde de marca. Sobre el gris claro de la
+   seccion es un elemento grafico --umbral 3.0-- y el de marca da 2.40:1,
+   asi que NO llega: pasa al verde oscuro, 5.78:1.
+
+   Sobre el fondo oscuro de Contrast el de marca si vale (4.74:1) y ademas
+   es el verde de verdad, asi que ahi se recupera. */
+.d2 .d2-rutas-esc[data-comp-rol] .d2-rutas-esc__rail-linea {
+  stroke: var(--c-verde-hover, #026F00);
+}
+
+.d2 .d2-rutas-esc[data-comp-rol] .d2-rutas-esc__nodo {
+  border-color: var(--c-verde-hover, #026F00);
+}
+
+.d2 [data-comp-tono="oscuro"].d2-rutas-esc .d2-rutas-esc__rail-linea {
+  stroke: var(--c-verde-marca, #39B54A);
+}
+
+.d2 [data-comp-tono="oscuro"].d2-rutas-esc .d2-rutas-esc__nodo {
+  background: var(--c-texto, #333333);
+  border-color: var(--c-verde-marca, #39B54A);
+}
+
+
+/* ==========================================================================
+   ALCANCE — LAS DOS VARIANTES NUEVAS (14/9/2026)
+
+   El copy no cambia. Lo que cambia es el PESO y el ORDEN, que segun la
+   evidencia es lo que manda en esta seccion concreta:
+
+   - Meta-analisis de OKeefe: el orden ENTRELAZADO da ventaja --r=+.084--;
+     secuenciar bloque-SI contra bloque-NO no da ninguna ventaja fiable.
+   - NN/g: el patron F es "el patron por defecto cuando no hay senales
+     fuertes". Un 50/50 simetrico es precisamente ausencia de senal.
+   - Hsee (evaluabilidad): la evaluacion conjunta amplifica el peso de lo
+     dificil de juzgar, asi que la simetria MAXIMIZA el escrutinio de las
+     exclusiones.
+
+   NADA DE HOVER
+
+   Esta seccion no es interactiva: es una declaracion. Se anima la entrada
+   y ahi acaba.
+   ========================================================================== */
+
+.d2 :is(.d2-ega-alc2, .d2-ega-alc3) {
+  padding-block: 84px;
+  background: var(--comp-rol, var(--c-blanco, #FFFFFF));
+}
+
+.d2 :is(.d2-ega-alc2__inner, .d2-ega-alc3__inner) {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 80px);
+}
+
+.d2 :is(.d2-ega-alc2__cab, .d2-ega-alc3__cab) {
+  max-width: 720px;
+  margin-bottom: 44px;
+}
+
+.d2 :is(.d2-ega-alc2__titulo, .d2-ega-alc3__titulo) {
+  margin: 12px 0 0;
+  font-size: clamp(34px, 3.4vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  font-weight: 700;
+  color: var(--c-texto, #333333);
+  text-wrap: balance;
+}
+
+.d2 :is(.d2-ega-alc2__lead, .d2-ega-alc3__lead) {
+  margin: 18px 0 0;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+/* El tic: verde oscuro porque a 13px es texto pequeno --necesita 4.5:1--
+   y el de marca sobre blanco se queda en 2.66. */
+.d2 :is(.d2-ega-alc2__tic, .d2-ega-alc3__tic) {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--c-verde-claro, #E8F5E8);
+  color: var(--c-verde-hover, #026F00);
+}
+
+
+/* --------------------------------------------------------------------------
+   OPCION 2 — PESO DESIGUAL
+
+   El "SI" ocupa el doble y va en panel; el "NO" queda a un lado, sin caja
+   y en texto secundario. El lector ve de un vistazo cual de los dos manda,
+   que es justo lo que el 50/50 no dice.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-ega-alc2__reja {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: start;
+}
+
+.d2 .d2-ega-alc2__panel {
+  padding: clamp(24px, 3vw, 38px);
+  background: var(--c-verde-claro, #E8F5E8);
+  border-radius: 8px;
+}
+
+.d2 .d2-ega-alc2__eti {
+  margin: 0 0 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--c-verde-hover, #026F00);
+}
+
+.d2 .d2-ega-alc2__eti--nota {
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .d2-ega-alc2__lista {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-ega-alc2__lista li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.45;
+  font-weight: 700;
+  color: var(--c-texto, #333333);
+}
+
+.d2 .d2-ega-alc2__libre {
+  margin: 24px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(2, 111, 0, .18);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+/* La nota: sin caja, sin fondo, mas pequena. Es una aclaracion, no la
+   mitad de una comparacion. */
+.d2 .d2-ega-alc2__nota {
+  padding-top: 6px;
+}
+
+.d2 .d2-ega-alc2__lista-nota {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-ega-alc2__lista-nota li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* Un guion, no una cruz. Tachar o marcar con X es la senal mas barata de
+   esta seccion, y ademas lee a "no disponible" cuando lo que dice es
+   "esto viene despues". */
+.d2 .d2-ega-alc2__lista-nota li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .7em;
+  width: 9px;
+  height: 1px;
+  background: var(--c-borde, #E4E4E4);
+}
+
+
+/* --------------------------------------------------------------------------
+   OPCION 3 — EMPAREJADO
+
+   Cada entrega junto a su limite. Es la forma que el meta-analisis
+   respalda con numeros, y la unica de las tres en que el lector ve la
+   pareja completa sin tener que recordar la otra columna.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-ega-alc3__cabrejilla {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: clamp(20px, 3vw, 52px);
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--c-texto, #333333);
+}
+
+.d2 .d2-ega-alc3__cabcol {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .d2-ega-alc3__cabcol--si {
+  color: var(--c-verde-hover, #026F00);
+}
+
+.d2 .d2-ega-alc3__filas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-ega-alc3__fila {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: clamp(20px, 3vw, 52px);
+  align-items: start;
+  padding-block: clamp(16px, 2vw, 22px);
+  border-bottom: 1px solid var(--c-borde, #E4E4E4);
+}
+
+.d2 .d2-ega-alc3__si {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.45;
+  font-weight: 700;
+  color: var(--c-texto, #333333);
+}
+
+.d2 .d2-ega-alc3__no {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .d2-ega-alc3__libre {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 28px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+
+/* --------------------------------------------------------------------------
+   LA ENTRADA
+
+   El "SI" entra rapido y escalonado --40ms entre lineas, que es lo que
+   recomienda la investigacion-- y el bloque del "NO" llega despues y mas
+   suave: el orden de lectura marca cual pesa.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* Opcion 2 */
+  .d2 .d2-ega-alc2 .d2-ega-alc2__lista li {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .d2 .d2-ega-alc2.es-visible .d2-ega-alc2__lista li {
+    animation: d2-ega-p-entra .5s cubic-bezier(.32, .72, 0, 1) both;
+  }
+
+  .d2 .d2-ega-alc2.es-visible .d2-ega-alc2__lista li:nth-child(2) { animation-delay: .04s; }
+  .d2 .d2-ega-alc2.es-visible .d2-ega-alc2__lista li:nth-child(3) { animation-delay: .08s; }
+  .d2 .d2-ega-alc2.es-visible .d2-ega-alc2__lista li:nth-child(4) { animation-delay: .12s; }
+
+  .d2 .d2-ega-alc2 .d2-ega-alc2__nota {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .d2 .d2-ega-alc2.es-visible .d2-ega-alc2__nota {
+    animation: d2-ega-p-entra .55s cubic-bezier(.32, .72, 0, 1) both;
+    animation-delay: .26s;
+  }
+
+  /* Opcion 3: la fila entera, para que la pareja llegue junta. */
+  .d2 .d2-ega-alc3 .d2-ega-alc3__fila {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .d2 .d2-ega-alc3.es-visible .d2-ega-alc3__fila {
+    animation: d2-ega-p-entra .52s cubic-bezier(.32, .72, 0, 1) both;
+  }
+
+  .d2 .d2-ega-alc3.es-visible .d2-ega-alc3__fila:nth-child(2) { animation-delay: .05s; }
+  .d2 .d2-ega-alc3.es-visible .d2-ega-alc3__fila:nth-child(3) { animation-delay: .10s; }
+  .d2 .d2-ega-alc3.es-visible .d2-ega-alc3__fila:nth-child(4) { animation-delay: .15s; }
+
+  .d2 .d2-ega-alc3 .d2-ega-alc3__libre {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .d2 .d2-ega-alc3.es-visible .d2-ega-alc3__libre {
+    animation: d2-ega-p-entra .5s cubic-bezier(.32, .72, 0, 1) both;
+    animation-delay: .24s;
+  }
+}
+
+
+/* --- Tono oscuro (Contrast) --- */
+
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-alc2, .d2-ega-alc3) :is(h2, h3) {
+  color: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-alc2, .d2-ega-alc3)
+  :is(.d2-ega-alc2__lead, .d2-ega-alc3__lead) {
+  color: #C9C9C9;
+}
+
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-alc2, .d2-ega-alc3) .eyebrow {
+  color: var(--c-verde-marca, #39B54A);
+}
+
+/* El panel verde claro se queda: es una tarjeta clara sobre fondo oscuro,
+   igual que la cartera de los pasos. Sus tokens se restauran en
+   d2-variantes.css, asi que su texto sigue siendo oscuro. */
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-alc2__lista-nota li {
+  color: #C9C9C9;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-alc2__lista-nota li::before {
+  background: rgba(255, 255, 255, .3);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-alc2__eti--nota {
+  color: #C9C9C9;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__cabrejilla {
+  border-bottom-color: rgba(255, 255, 255, .4);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__cabcol {
+  color: #C9C9C9;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__cabcol--si {
+  color: var(--c-verde-marca, #39B54A);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__fila {
+  border-bottom-color: rgba(255, 255, 255, .18);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__si {
+  color: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__no {
+  color: #C9C9C9;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__libre {
+  color: #C9C9C9;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__tic {
+  background: rgba(57, 181, 74, .18);
+  color: var(--c-verde-marca, #39B54A);
+}
+
+
+@media (max-width: 860px) {
+  .d2 .d2-ega-alc2__reja { grid-template-columns: 1fr; gap: 30px; }
+
+  /* En movil la pareja se apila: primero la entrega, debajo su limite
+     sangrado. Sigue siendo entrelazado, que es lo que importa. */
+  .d2 .d2-ega-alc3__cabrejilla { display: none; }
+
+  .d2 .d2-ega-alc3__fila { grid-template-columns: 1fr; gap: 8px; }
+
+  .d2 .d2-ega-alc3__no {
+    padding-left: 32px;
+  }
+}
+
+
+/* ==========================================================================
+   FINANCIACION — LAS DOS VARIANTES NUEVAS (14/9/2026)
+
+   El copy no cambia. Lo que dice la evidencia:
+
+   - Las propias utilities NO ponen importes: BC Hydro dice "Funding
+     varies based on project type". El copy actual ya lo respeta, y
+     prometer cifras aqui cuando ellos no lo hacen nos expondria.
+   - TARJETAS o FILAS, nunca acordeon cerrado: el acordeon esconde
+     justo lo que el visitante escanea, que es si aplica en su provincia.
+   - Los logos van SEPARADOS. Una etiqueta de texto --"British
+     Columbia"-- es mas segura por uso de marca y envejece mejor que un
+     logo ajeno dentro de una tarjeta.
+   - El aviso de elegibilidad SUBE y se enmarca como competencia, no
+     como descargo (Baymard: una pregunta sin responder deshace todo lo
+     que se hizo bien antes).
+   - Hover MINIMO: 1-2px y cambio de borde. El scale(1.05) y las sombras
+     que crecen son la senal barata.
+
+   Las dos son oscuras, como la que ya existia: es la unica banda oscura
+   de la pagina y marca el cambio de tema.
+   ========================================================================== */
+
+.d2 :is(.d2-ega-fon2, .d2-ega-fon3) {
+  padding-block: 84px;
+  background: var(--c-superficie-oscura, #1A1A1A);
+  color: var(--c-blanco, #FFFFFF);
+}
+
+.d2 :is(.d2-ega-fon2__inner, .d2-ega-fon3__inner) {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 80px);
+}
+
+.d2 :is(.d2-ega-fon2__cab, .d2-ega-fon3__cab) {
+  max-width: 780px;
+  margin-bottom: 32px;
+}
+
+.d2 :is(.d2-ega-fon2__titulo, .d2-ega-fon3__titulo) {
+  margin: 12px 0 0;
+  font-size: clamp(34px, 3.4vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-wrap: balance;
+}
+
+.d2 :is(.d2-ega-fon2__lead, .d2-ega-fon3__lead) {
+  margin: 18px 0 0;
+  font-size: 17px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, .72);
+}
+
+.d2 :is(.d2-ega-fon2, .d2-ega-fon3) .eyebrow {
+  color: var(--c-verde-marca, #39B54A);
+}
+
+/* --- El aviso de elegibilidad ---
+
+   Sube por delante de las opciones. No es letra pequena: es la respuesta
+   a la pregunta que el visitante ya se esta haciendo. */
+
+.d2 :is(.d2-ega-fon2__aviso, .d2-ega-fon3__aviso) {
+  margin: 0 0 36px;
+  padding: 18px 22px;
+  border-left: 3px solid var(--c-verde-marca, #39B54A);
+  background: rgba(255, 255, 255, .05);
+  border-radius: 4px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .78);
+}
+
+.d2 .d2-ega-fon3__aviso {
+  margin: 36px 0 0;
+}
+
+.d2 :is(.d2-ega-fon2__aviso-eti, .d2-ega-fon3__aviso-eti) {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--c-verde-marca, #39B54A);
+}
+
+
+/* --------------------------------------------------------------------------
+   OPCION 2 — REGISTRO
+
+   Filas con la provincia como indice a la izquierda. Saber "cual es la
+   mia" cuesta un barrido vertical en lugar de leer tres bloques enteros.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-ega-fon2__filas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(255, 255, 255, .16);
+}
+
+.d2 .d2-ega-fon2__fila {
+  display: grid;
+  grid-template-columns: clamp(140px, 15vw, 210px) minmax(0, 1fr) auto;
+  gap: clamp(20px, 3vw, 44px);
+  align-items: start;
+  padding-block: clamp(22px, 2.6vw, 30px);
+  border-bottom: 1px solid rgba(255, 255, 255, .16);
+  /* El borde es lo unico que responde al raton: 1-2px de movimiento y un
+     cambio de color. Nada de scale ni de sombras que crecen. */
+  transition: border-color .2s ease, background-color .2s ease;
+}
+
+.d2 .d2-ega-fon2__fila:hover {
+  background: rgba(255, 255, 255, .03);
+  border-bottom-color: rgba(57, 181, 74, .5);
+}
+
+.d2 .d2-ega-fon2__region {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-verde-marca, #39B54A);
+}
+
+.d2 .d2-ega-fon2__nombre {
+  display: block;
+  margin-bottom: 8px;
+  font-size: clamp(17px, 1.6vw, 21px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #FFFFFF;
+}
+
+.d2 .d2-ega-fon2__texto {
+  display: block;
+  max-width: 62ch;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .7);
+}
+
+.d2 .d2-ega-fon2__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--c-verde-marca, #39B54A);
+}
+
+.d2 .d2-ega-fon2__link svg {
+  transition: transform .2s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .d2-ega-fon2__link:hover svg {
+  transform: translateX(3px);
+}
+
+
+/* --------------------------------------------------------------------------
+   OPCION 3 — FOCO
+
+   El visitante elige su provincia y lee solo la que le aplica. Los tres
+   paneles estan en el DOM desde el principio --se ocultan con hidden, no
+   se cargan al pulsar-- asi que el contenido es indexable y se encuentra
+   con Ctrl+F.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-ega-fon3__selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.d2 .d2-ega-fon3__tab {
+  padding: 11px 20px;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 6px;
+  background: transparent;
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, .72);
+  cursor: pointer;
+  transition: border-color .2s ease, background-color .2s ease, color .2s ease;
+}
+
+.d2 .d2-ega-fon3__tab:hover {
+  border-color: rgba(255, 255, 255, .4);
+  color: #FFFFFF;
+}
+
+.d2 .d2-ega-fon3__tab.es-activo {
+  background: var(--c-verde-marca, #39B54A);
+  border-color: var(--c-verde-marca, #39B54A);
+  /* Sobre el verde de marca el texto va en negro de marca: 4.74:1, frente
+     al 2.66 que daria el blanco. */
+  color: #1A1A1A;
+}
+
+.d2 .d2-ega-fon3__paneles {
+  min-height: 150px;
+}
+
+.d2 .d2-ega-fon3__panel[hidden] {
+  display: none;
+}
+
+.d2 .d2-ega-fon3__nombre {
+  margin: 0 0 10px;
+  font-size: clamp(19px, 1.8vw, 24px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #FFFFFF;
+}
+
+.d2 .d2-ega-fon3__texto {
+  margin: 0 0 18px;
+  max-width: 68ch;
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, .74);
+}
+
+.d2 .d2-ega-fon3__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14.5px;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--c-verde-marca, #39B54A);
+}
+
+.d2 .d2-ega-fon3__link svg {
+  transition: transform .2s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .d2-ega-fon3__link:hover svg {
+  transform: translateX(3px);
+}
+
+
+/* --- La entrada --- */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  .d2 .d2-ega-fon2 .d2-ega-fon2__fila {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .d2 .d2-ega-fon2.es-visible .d2-ega-fon2__fila {
+    animation: d2-ega-p-entra .56s cubic-bezier(.32, .72, 0, 1) both;
+  }
+
+  /* 70ms, dentro del rango que recomienda la investigacion para tarjetas
+     de programa. */
+  .d2 .d2-ega-fon2.es-visible .d2-ega-fon2__fila:nth-child(2) { animation-delay: .07s; }
+  .d2 .d2-ega-fon2.es-visible .d2-ega-fon2__fila:nth-child(3) { animation-delay: .14s; }
+
+  .d2 .d2-ega-fon3 .d2-ega-fon3__tab {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .d2 .d2-ega-fon3.es-visible .d2-ega-fon3__tab {
+    animation: d2-ega-p-entra .5s cubic-bezier(.32, .72, 0, 1) both;
+  }
+
+  .d2 .d2-ega-fon3.es-visible .d2-ega-fon3__tab:nth-child(2) { animation-delay: .06s; }
+  .d2 .d2-ega-fon3.es-visible .d2-ega-fon3__tab:nth-child(3) { animation-delay: .12s; }
+
+  /* El panel al cambiar de provincia: entra, no parpadea. */
+  .d2 .d2-ega-fon3__panel:not([hidden]) {
+    animation: d2-ega-p-entra .34s cubic-bezier(.32, .72, 0, 1) both;
+  }
+}
+
+
+@media (max-width: 860px) {
+  .d2 .d2-ega-fon2__fila {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .d2 .d2-ega-fon2__link {
+    white-space: normal;
+  }
+
+  .d2 .d2-ega-fon3__selector {
+    flex-direction: column;
+  }
+
+  .d2 .d2-ega-fon3__tab {
+    width: 100%;
+    text-align: left;
+  }
 }
