@@ -534,6 +534,47 @@
 
 /* --- El circuito de fondo --- */
 
+/* ESTAS REGLAS BASE SE PERDIERON en la limpieza del 14/9 y el resultado
+   fue el SVG relleno de negro ocupando la seccion entera: sin posicion
+   absoluta no se queda de fondo, y sin fill none el navegador rellena
+   cada path con negro por defecto.
+
+   Es lo que el usuario vio: dos manchas negras enormes y el texto
+   desaparecido debajo. */
+.d2 .d2-ega-pasos3 {
+  position: relative;
+  overflow: hidden;
+}
+
+.d2 .d2-ega-pasos3__circuito {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.d2 .d2-ega-pasos3__circuito path {
+  fill: none;
+  stroke: rgba(57, 181, 74, .17);
+  stroke-width: 1.2px;
+}
+
+.d2 .d2-ega-pasos3__circuito circle {
+  /* Relleno del color del fondo: el nodo tapa el trazo que pasa por
+     debajo y se lee como una conexion. Va por --comp-rol para que siga al
+     tema. */
+  fill: var(--comp-rol, var(--c-fondo-alt, #F5F5F5));
+  stroke: rgba(57, 181, 74, .3);
+  stroke-width: 1.5px;
+}
+
+/* El contenido, por encima del circuito. */
+.d2 .d2-ega-pasos3__inner {
+  position: relative;
+  z-index: 1;
+}
+
 .d2 [data-comp-tono="oscuro"] .d2-ega-pasos3__circuito path {
   stroke: rgba(176, 225, 183, .22);
 }
