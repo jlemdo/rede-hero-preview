@@ -1497,6 +1497,13 @@
 
             <div class="d2-ega-piv__lista">
               <p class="d2-ega-piv__eti">What you receive</p>
+              <p class="d2-ega-piv__auto">
+                <button class="d2-ega-piv__pausa" type="button" data-piv-pausa>
+                  <span class="d2-ega-piv__pausa-icono" aria-hidden="true"></span>
+                  <span data-piv-pausa-eti>Stop</span>
+                </button>
+                <span class="d2-ega-piv__auto-nota">Advancing automatically</span>
+              </p>
               <details class="d2-ega-piv__item" name="d2-ega-piv" open=""
                        data-limite="The exact source of the problem" data-razon="Comes from the investigation the shortlist points to.">
                 <summary class="d2-ega-piv__si">
@@ -1546,7 +1553,7 @@
             <!-- La ficha, sticky como la del FAQ. aria-live porque su
                  contenido cambia lejos de donde el usuario pulsa: sin el,
                  un lector de pantalla no se entera. -->
-            <aside class="d2-ega-piv__ficha" aria-live="polite">
+            <aside class="d2-ega-piv__ficha" aria-live="off">
               <div class="d2-ega-piv__ficha-caja">
                 <p class="d2-ega-piv__ficha-eti" data-piv-eti>What this does not include</p>
                 <p class="d2-ega-piv__ficha-limite" data-piv-limite></p>
@@ -1562,77 +1569,88 @@
       </section>
     </div>
 
-    <!-- OPCION 3 - RESALTAR LO QUE NO ENTRA
+    <!-- OPCION 3 - LA ESCALA DE INSTRUMENTO
 
-         Un interruptor que atenua los entregables y deja encendidos los
-         limites. Es el patron "Highlight Differences" que NN/g documenta
-         en tablas comparativas, traducido a esta seccion.
+         Sustituye al interruptor que solo oscurecia un fondo: pulsarlo no
+         producia informacion nueva, asi que no era un mecanismo.
 
-         Funciona con :has() PURO, sin JS --94,8 por ciento de soporte-- y degrada a
-         "todo visible", que es el estado util.
+         Cada entregable lleva un dial cuyas MARCAS DE CALIBRACION no se
+         dibujan: se RESTAN del arco con repeating-conic-gradient y
+         mask-composite. No hay atajo para esto, que es justo lo que lo
+         distingue de una barra de progreso.
 
-         El control es un <input type="checkbox"> real y no un
-         role="switch": el soporte de ese rol en lectores de pantalla es
-         inconsistente. -->
-    <div class="d2-caru__diapo" role="tabpanel" aria-label="Option 3: Contrast" hidden>
-      <section class="d2-ega-con d2-entra" data-comp-rol="prueba" aria-labelledby="ega-con-t">
-        <div class="d2-ega-con__inner">
+         Los arcos se llenan escalonados al entrar, como las cifras de
+         secciones/prueba/01-record. -->
+    <div class="d2-caru__diapo" role="tabpanel" aria-label="Option 3: Meter" hidden>
+      <section class="d2-ega-met d2-entra" data-comp-rol="prueba" aria-labelledby="ega-met-t">
+        <div class="d2-ega-met__inner">
 
-          <div class="d2-ega-con__cab">
+          <div class="d2-ega-met__cab">
             <p class="eyebrow">Clear scope. Straight answers.</p>
-            <h2 class="d2-ega-con__titulo" id="ega-con-t">A ranked shortlist&mdash;not a diagnosis.</h2>
-            <p class="d2-ega-con__lead">Energy Gap Analysis helps you decide where deeper work is justified. It does not guess at the cause or commit you to another service.</p>
+            <h2 class="d2-ega-met__titulo" id="ega-met-t">A ranked shortlist&mdash;not a diagnosis.</h2>
+            <p class="d2-ega-met__lead">Energy Gap Analysis helps you decide where deeper work is justified. It does not guess at the cause or commit you to another service.</p>
           </div>
 
-          <p class="d2-ega-con__control">
-            <input class="d2-ega-con__check" type="checkbox" id="ega-con-solo">
-            <label class="d2-ega-con__label" for="ega-con-solo">Show only what needs a closer look</label>
-          </p>
-
-          <ul class="d2-ega-con__lista">
-            <li class="d2-ega-con__fila">
-              <span class="d2-ega-con__si">
-                <span class="d2-ega-con__marca" aria-hidden="true"></span>
-                One comparison of the portfolio
+          <ul class="d2-ega-met__lista">
+            <li class="d2-ega-met__item" style="--i:0">
+              <span class="d2-ega-met__dial" aria-hidden="true">
+                <span class="d2-ega-met__arco"></span>
+                <span class="d2-ega-met__n">01</span>
               </span>
-              <span class="d2-ega-con__no">
-                <strong>The exact source of the problem</strong>
-                <span class="d2-ega-con__razon">Comes from the investigation the shortlist points to.</span>
-              </span>
+              <div class="d2-ega-met__cuerpo">
+                <h3 class="d2-ega-met__si">One comparison of the portfolio</h3>
+                <p class="d2-ega-met__no">
+                  <span class="d2-ega-met__eti">Not included</span>
+                  <strong>The exact source of the problem</strong>
+                  <span class="d2-ega-met__razon">Comes from the investigation the shortlist points to.</span>
+                </p>
+              </div>
             </li>
-            <li class="d2-ega-con__fila">
-              <span class="d2-ega-con__si">
-                <span class="d2-ega-con__marca" aria-hidden="true"></span>
-                A ranked list of priority buildings
+            <li class="d2-ega-met__item" style="--i:1">
+              <span class="d2-ega-met__dial" aria-hidden="true">
+                <span class="d2-ega-met__arco"></span>
+                <span class="d2-ega-met__n">02</span>
               </span>
-              <span class="d2-ega-con__no">
-                <strong>How controls are programmed</strong>
-                <span class="d2-ega-con__razon">Requires trend data from the building automation system.</span>
-              </span>
+              <div class="d2-ega-met__cuerpo">
+                <h3 class="d2-ega-met__si">A ranked list of priority buildings</h3>
+                <p class="d2-ega-met__no">
+                  <span class="d2-ega-met__eti">Not included</span>
+                  <strong>How controls are programmed</strong>
+                  <span class="d2-ega-met__razon">Requires trend data from the building automation system.</span>
+                </p>
+              </div>
             </li>
-            <li class="d2-ega-con__fila">
-              <span class="d2-ega-con__si">
-                <span class="d2-ega-con__marca" aria-hidden="true"></span>
-                The numbers behind the decision
+            <li class="d2-ega-met__item" style="--i:2">
+              <span class="d2-ega-met__dial" aria-hidden="true">
+                <span class="d2-ega-met__arco"></span>
+                <span class="d2-ega-met__n">03</span>
               </span>
-              <span class="d2-ega-con__no">
-                <strong>Whether equipment is failing</strong>
-                <span class="d2-ega-con__razon">Needs eyes on the equipment, not utility data.</span>
-              </span>
+              <div class="d2-ega-met__cuerpo">
+                <h3 class="d2-ega-met__si">The numbers behind the decision</h3>
+                <p class="d2-ega-met__no">
+                  <span class="d2-ega-met__eti">Not included</span>
+                  <strong>Whether equipment is failing</strong>
+                  <span class="d2-ega-met__razon">Needs eyes on the equipment, not utility data.</span>
+                </p>
+              </div>
             </li>
-            <li class="d2-ega-con__fila">
-              <span class="d2-ega-con__si">
-                <span class="d2-ega-con__marca" aria-hidden="true"></span>
-                A findings review and next-step recommendation
+            <li class="d2-ega-met__item" style="--i:3">
+              <span class="d2-ega-met__dial" aria-hidden="true">
+                <span class="d2-ega-met__arco"></span>
+                <span class="d2-ega-met__n">04</span>
               </span>
-              <span class="d2-ega-con__no">
-                <strong>Guaranteed savings or confirmed funding</strong>
-                <span class="d2-ega-con__razon">The utility confirms eligibility; we tell you what they will ask for.</span>
-              </span>
+              <div class="d2-ega-met__cuerpo">
+                <h3 class="d2-ega-met__si">A findings review and next-step recommendation</h3>
+                <p class="d2-ega-met__no">
+                  <span class="d2-ega-met__eti">Not included</span>
+                  <strong>Guaranteed savings or confirmed funding</strong>
+                  <span class="d2-ega-met__razon">The utility confirms eligibility; we tell you what they will ask for.</span>
+                </p>
+              </div>
             </li>
           </ul>
 
-          <p class="d2-ega-con__libre">
+          <p class="d2-ega-met__libre">
             <strong>No lock-in.</strong> Review the findings, ask questions and decide what happens next.
           </p>
 
@@ -1651,7 +1669,7 @@
       <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
         <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Perimeter</small></button>
         <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Pivot</small></button>
-        <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Contrast</small></button>
+        <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Meter</small></button>
       </div>
 
       <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
