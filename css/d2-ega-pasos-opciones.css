@@ -701,9 +701,13 @@
 
      #FFFFFF   12.63:1   titulares y cuerpo
      #C9C9C9    7.63:1   secundario
-     #B0E1B7    8.60:1   etiquetas y numeros en verde
-     #39B54A    4.74:1   el verde de marca aguanta, pero se reserva para
-                         piezas grandes: en texto pequeno queda justo
+     #39B54A    4.74:1   verde de MARCA: etiquetas y numeros pequenos
+     #39A935    4.15:1   verde del LOGO: el numero grande de la opcion 2,
+                         la flecha y los filos --piezas de 3.0, no de 4.5--
+
+   Los verdes son los del sistema, no tonos aclarados. El del logo no
+   llega a 4.5, asi que en texto pequeno entra el de marca; donde el
+   umbral es 3.0 --numero de 62px, iconos, filos-- va el del logo.
    ========================================================================== */
 
 /* --- Titulares y cuerpo --- */
@@ -720,17 +724,21 @@
 }
 
 /* El eyebrow "Start with the portfolio": el verde oscuro se queda en
-   1.97:1 sobre este fondo. Va el verde claro de la banda del equipo. */
+   1.97:1 sobre este fondo. Entra el verde de MARCA, que da 4.74:1 --el
+   del logo se queda en 4.15 y a 12px hace falta 4.5--. */
 .d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos2, .d2-ega-pasos3)
   .eyebrow {
-  color: #B0E1B7;
+  color: var(--c-verde-marca, #39B54A);
 }
 
 /* --- Los numeros --- */
 
+/* El verde de MARCA, no un tono aclarado. A 12-13px esto es texto pequeno
+   y necesita 4.5:1: el del logo --#39A935-- se queda en 4.15 y el de
+   marca da 4.74, asi que aqui entra el verde de verdad del sistema. */
 .d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos3)
   :is(.d2-ega-pasos__num, .d2-ega-pasos3__num) {
-  color: #B0E1B7;
+  color: var(--c-verde-marca, #39B54A);
 }
 
 /* El numero grande de la opcion 2 arranca en gris claro --#D8D8D8, que
@@ -747,10 +755,14 @@
   }
 }
 
+/* El verde del LOGO, no el palido. A 38-62px en negrita el umbral es 3.0
+   --texto grande-- y el del logo da 4.15:1 sobre este fondo, asi que se
+   puede usar el verde de verdad de la marca en vez de un tono aclarado
+   que no esta en ninguna parte del manual. */
 @keyframes d2-ega-p2-enciende-oscuro {
   0%   { color: #858585; }
-  28%  { color: #B0E1B7; }
-  100% { color: #B0E1B7; }
+  28%  { color: var(--c-verde-logo, #39A935); }
+  100% { color: var(--c-verde-logo, #39A935); }
 }
 
 /* --- Filos y separadores --- */
@@ -786,7 +798,8 @@
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-puente {
   background: rgba(255, 255, 255, .06);
-  border-left-color: #B0E1B7;
+  /* Filo grafico, no texto: aqui si entra el verde del logo. */
+  border-left-color: var(--c-verde-logo, #39A935);
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-puente :is(.d2-ega-puente__preg) {
@@ -797,8 +810,10 @@
   color: #C9C9C9;
 }
 
+/* La flecha es un icono: umbral 3.0 --componente grafico-- asi que lleva
+   el verde del logo, 4.15:1. */
 .d2 [data-comp-tono="oscuro"] .d2-ega-puente .d2-ega-puente__flecha {
-  color: #B0E1B7;
+  color: var(--c-verde-logo, #39A935);
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-puente2 {
@@ -810,7 +825,7 @@
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-puente2 .d2-ega-puente2__eti {
-  color: #B0E1B7;
+  color: var(--c-verde-marca, #39B54A);
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-puente2 .d2-ega-puente2__nom {
