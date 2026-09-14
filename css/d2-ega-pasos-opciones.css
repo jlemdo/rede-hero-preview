@@ -2164,3 +2164,178 @@
 
 /* La tarjeta se queda blanca sobre el fondo oscuro, como la calculadora.
    Sus tokens se restauran en d2-variantes.css. */
+
+
+/* ==========================================================================
+   LA COLUMNA DE LA ILUSTRACION (14/9/2026)
+
+   Arregla el hueco muerto: la rejilla reservaba dos columnas pero la
+   grafica, sus ejes y su pie eran TRES hijos sueltos, asi que se repartian
+   mal y los pasos caian debajo, dejando media seccion vacia.
+
+   Ahora los tres van dentro de .d2-ega-col, que ocupa la primera columna
+   entera, y los pasos la segunda.
+   ========================================================================== */
+
+.d2 .d2-ega-col {
+  display: grid;
+  align-content: start;
+  gap: 0;
+}
+
+
+/* ==========================================================================
+   PORTFOLIO — LA CURVA DE CARGA (14/9/2026)
+
+   Sustituye a la grafica de benchmarks, que estaba repetida en Thermal y
+   en Portfolio: dos de las tres variantes ensenaban lo mismo.
+
+   EL GESTO
+
+   Dos curvas superpuestas --antes y despues de optimizar-- y el area entre
+   ellas. Esa area ES el gap del que habla el nombre del servicio, dibujado.
+
+   La animacion es de ONDA: las dos curvas se desplazan muy poco y en fase
+   distinta, asi que el area entre ellas RESPIRA. No es un efecto pegado:
+   lo que late es la distancia entre lo que el edificio consume y lo que
+   podria consumir.
+
+   NO AFIRMA CIFRAS
+
+   No hay eje de valores ni porcentaje. Es un PERFIL de forma --valle de
+   madrugada, arranque a las 6, pico de manana, meseta, caida de tarde--
+   que es como se comporta un edificio institucional cualquiera. El pie lo
+   dice: "typical daily load shape".
+   ========================================================================== */
+
+/* El desfase de cada curva. Tipado: con syntax "*" no interpola. */
+@property --onda-a {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --onda-b {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+.d2 .d2-ega-onda {
+  padding: clamp(20px, 2.4vw, 28px);
+  background: #FFFFFF;
+  border: 1px solid var(--c-borde, #E4E4E4);
+  border-radius: 6px;
+}
+
+.d2 .d2-ega-onda svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Las curvas se desplazan un pelo hacia arriba y abajo; sin esto el
+     recorte del viewBox les corta la punta. */
+  overflow: visible;
+}
+
+.d2 .d2-ega-onda__horas {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--c-borde, #E4E4E4);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .d2-ega-onda__pie {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* --- La respiracion ---
+
+   Las dos curvas se mueven POCO --3px y 2px-- y en ciclos distintos --7s
+   y 9s--. Al no coincidir, el area entre ellas se ensancha y se estrecha
+   sin que el movimiento se lea como un bucle: es la diferencia entre
+   respirar y parpadear.
+
+   Va por transform, que se queda en el compositor. */
+
+.d2 .d2-ega-onda__antes,
+.d2 .d2-ega-onda__despues {
+  stroke-dasharray: 700;
+  stroke-dashoffset: 700;
+}
+
+.d2 .d2-ega-onda__gap {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .es-visible .d2-ega-onda .g-rejilla {
+    animation: d2-ega-graf-ver .7s ease-out .1s forwards;
+  }
+
+  /* Primero la de antes: es la referencia. */
+  .d2 .es-visible .d2-ega-onda .d2-ega-onda__antes {
+    animation:
+      d2-onda-traza 1.3s cubic-bezier(.33, 1, .68, 1) .3s forwards,
+      d2-onda-sube 7s ease-in-out 1.8s infinite;
+  }
+
+  .d2 .es-visible .d2-ega-onda .d2-ega-onda__despues {
+    animation:
+      d2-onda-traza 1.4s cubic-bezier(.33, 1, .68, 1) .55s forwards,
+      d2-onda-baja 9s ease-in-out 2s infinite;
+  }
+
+  /* El area aparece cuando las dos curvas ya estan trazadas: primero los
+     datos, despues lo que hay entre ellos.
+
+     Y respira con la curva de ARRIBA --la misma animacion, el mismo
+     ciclo--: si las curvas se movieran y el area no, se despegarian y se
+     veria el borde suelto. */
+  .d2 .es-visible .d2-ega-onda .d2-ega-onda__gap {
+    animation:
+      d2-onda-gap 1s ease-out 1.5s forwards,
+      d2-onda-sube 7s ease-in-out 1.8s infinite;
+  }
+}
+
+/* Sin animacion las dos curvas y el area estan puestas: se degrada hacia
+   el estado CON informacion. */
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-ega-onda :is(.d2-ega-onda__antes, .d2-ega-onda__despues) {
+    stroke-dashoffset: 0;
+  }
+  .d2 .d2-ega-onda .d2-ega-onda__gap { opacity: 1; }
+  .d2 .d2-ega-onda .g-rejilla { opacity: 1; }
+}
+
+@keyframes d2-onda-traza {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes d2-onda-gap {
+  to { opacity: 1; }
+}
+
+/* 3px arriba y abajo: se nota que respira, no que se mueve. */
+@keyframes d2-onda-sube {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+@keyframes d2-onda-baja {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(2px); }
+}
+
+/* --- Tono oscuro --- */
+
+/* La tarjeta se queda blanca, como la de la grafica y la calculadora:
+   es un instrumento y tiene su propia superficie. */

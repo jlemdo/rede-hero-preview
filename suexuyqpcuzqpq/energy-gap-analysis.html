@@ -398,6 +398,7 @@
             <!-- La cartera leida como termografia. aria-hidden porque es la
                  ilustracion de lo que dicen los tres pasos, no informacion
                  nueva: un lector de pantalla oiria doce span vacios. -->
+            <div class="d2-ega-col">
             <div class="d2-ega-graf" role="img"
                  aria-label="Historical cost reduction by building type, from BC Hydro Continuous Optimization results: school 9.5 per cent at the high end, shopping mall 2 per cent at the low end, with an average of 5.8 per cent across the thirteen types.">
               <svg viewBox="0 0 520 132" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -444,6 +445,7 @@
               Continuous Optimization results, the same benchmarks used in the
               calculator above.
             </p>
+            </div>
 
             <ol class="d2-ega-termo__pasos">
               <li class="d2-ega-termo__paso">
@@ -620,52 +622,46 @@
 
             <!-- Catorce edificios, uno destacado: es lo que el metodo
                  produce, no un adorno. -->
-            <div class="d2-ega-graf" role="img"
-                 aria-label="Historical cost reduction by building type, from BC Hydro Continuous Optimization results: school 9.5 per cent at the high end, shopping mall 2 per cent at the low end, with an average of 5.8 per cent across the thirteen types.">
+            <div class="d2-ega-col">
+            <div class="d2-ega-onda" role="img"
+                 aria-label="Typical daily load shape for an institutional building, before and after optimization. The gap between the two curves is widest overnight and in the early evening, when the building is empty.">
               <svg viewBox="0 0 520 132" fill="none" xmlns="http://www.w3.org/2000/svg">
 
-                <!-- Rejilla: da escala. Sin ella el grafico flota. -->
+                <!-- Rejilla: la misma gramatica del hero. Da escala. -->
                 <g class="g-rejilla" stroke="#EFEFEF" stroke-width="1">
-                  <line x1="8" y1="20" x2="512" y2="20"/>
-                  <line x1="8" y1="55" x2="512" y2="55"/>
-                  <line x1="8" y1="90" x2="512" y2="90"/>
-                  <line x1="8" y1="120" x2="512" y2="120"/>
+                  <line x1="8" y1="18" x2="512" y2="18"/>
+                  <line x1="8" y1="51" x2="512" y2="51"/>
+                  <line x1="8" y1="84" x2="512" y2="84"/>
+                  <line x1="8" y1="118" x2="512" y2="118"/>
                 </g>
 
-                <!-- La media de los trece: la referencia contra la que se
-                     compara cada tipo, igual que la linea base del hero. -->
-                <line class="g-base" x1="14" y1="62.0" x2="506" y2="62.0"
-                      stroke="#C9C9C9" stroke-width="2" stroke-dasharray="5 5"
-                      stroke-linecap="round"/>
+                <!-- EL GAP: el area entre las dos curvas. Es lo que el
+                     servicio busca, dibujado. -->
+                <path class="d2-ega-onda__gap" d="M14 46.0 L35 44.0 L57 43.0 L78 44.0 L100 45.0 L121 48.0 L142 60.0 L164 78.0 L185 92.0 L207 98.0 L228 100.0 L249 99.0 L271 96.0 L292 98.0 L313 99.0 L335 97.0 L356 92.0 L378 80.0 L399 66.0 L420 56.0 L442 50.0 L463 47.0 L485 45.0 L506 44.0 L506 32.0 L485 33.0 L463 35.0 L442 38.0 L420 43.0 L399 53.0 L378 68.0 L356 82.0 L335 88.0 L313 90.0 L292 89.0 L271 87.0 L249 90.0 L228 91.0 L207 89.0 L185 82.0 L164 66.0 L142 48.0 L121 35.0 L100 32.0 L78 31.0 L57 30.0 L35 31.0 L14 32.0 Z"
+                      fill="var(--c-verde)" fill-opacity=".1"/>
 
-                <path class="g-area" d="M14 25.0 L55 41.0 L96 46.0 L137 50.0 L178 53.0 L219 63.0 L260 63.0 L301 68.0 L342 72.0 L383 72.0 L424 75.0 L465 78.0 L506 100.0 L506 120 L14 120 Z"
-                      fill="var(--c-verde)" fill-opacity=".07"/>
-
-                <path class="g-linea" d="M14 25.0 L55 41.0 L96 46.0 L137 50.0 L178 53.0 L219 63.0 L260 63.0 L301 68.0 L342 72.0 L383 72.0 L424 75.0 L465 78.0 L506 100.0"
-                      stroke="var(--c-verde)" stroke-width="2.5"
+                <!-- Antes de optimizar: discontinua, arriba. -->
+                <path class="d2-ega-onda__antes" d="M14 46.0 L35 44.0 L57 43.0 L78 44.0 L100 45.0 L121 48.0 L142 60.0 L164 78.0 L185 92.0 L207 98.0 L228 100.0 L249 99.0 L271 96.0 L292 98.0 L313 99.0 L335 97.0 L356 92.0 L378 80.0 L399 66.0 L420 56.0 L442 50.0 L463 47.0 L485 45.0 L506 44.0"
+                      stroke="#BFBFBF" stroke-width="2" stroke-dasharray="5 5"
                       stroke-linecap="round" stroke-linejoin="round"/>
 
-                <!-- Cada punto es una lectura, no una curva suelta. -->
-                <g class="g-puntos" fill="#FFFFFF" stroke="var(--c-verde)" stroke-width="2">
-                <circle cx="14" cy="25.0" r="3"/>
-                <circle cx="178" cy="53.0" r="3"/>
-                <circle cx="342" cy="72.0" r="3"/>
-                <circle cx="506" cy="100.0" r="3"/>
-                </g>
+                <!-- Despues: continua, verde, por debajo. -->
+                <path class="d2-ega-onda__despues" d="M14 32.0 L35 31.0 L57 30.0 L78 31.0 L100 32.0 L121 35.0 L142 48.0 L164 66.0 L185 82.0 L207 89.0 L228 91.0 L249 90.0 L271 87.0 L292 89.0 L313 90.0 L335 88.0 L356 82.0 L378 68.0 L399 53.0 L420 43.0 L442 38.0 L463 35.0 L485 33.0 L506 32.0"
+                      stroke="var(--c-verde)" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
 
-              <p class="d2-ega-graf__ejes" aria-hidden="true">
-                <span>School 9.5%</span>
-                <span class="d2-ega-graf__media">Average 5.8%</span>
-                <span>Shopping mall 2%</span>
+              <p class="d2-ega-onda__horas" aria-hidden="true">
+                <span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span>
               </p>
             </div>
 
-            <p class="d2-ega-graf__fuente">
-              Historical cost reduction by building type. Source: BC Hydro
-              Continuous Optimization results, the same benchmarks used in the
-              calculator above.
+            <p class="d2-ega-onda__pie">
+              Typical daily load shape, before and after optimization. The gap is
+              widest when the building is empty &mdash; which is where a portfolio
+              comparison tends to find it first.
             </p>
+            </div>
           </div>
 
           <div class="d2-ega-puente3">
