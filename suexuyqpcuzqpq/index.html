@@ -1852,20 +1852,11 @@
           </select>
           </div>
           </div>
-          <fieldset class="campo campo--grupo">
-          <legend class="campo__label">Where are your buildings?</legend>
-          <div class="duo" role="radiogroup" aria-label="Region">
-          <button class="duo__btn is-elegida" type="button"
-          role="radio" aria-checked="true" data-prov="bc">
-          British Columbia
-          </button>
-          <button class="duo__btn" type="button"
-          role="radio" aria-checked="false" data-prov="ca">
-          Rest of Canada
-          </button>
-          </div>
-          <input type="hidden" id="c-province" value="bc">
-          </fieldset>
+          <!-- La ubicacion se pregunta en el paso 2 --provincia y ciudad--, asi
+          que aqui solo queda el campo que alimenta el perfil y HubSpot. Su
+          valor lo escribe el guion a partir de #c-prov: sin esto se
+          preguntaba dos veces lo mismo, y la segunda vez peor. (14/9/2026) -->
+          <input type="hidden" id="c-province" value="">
           </div>
 
           <!-- PASO 3 -->
@@ -2296,20 +2287,11 @@
           </select>
           </div>
           </div>
-          <fieldset class="campo campo--grupo">
-          <legend class="campo__label">Where are your buildings?</legend>
-          <div class="duo" role="radiogroup" aria-label="Region">
-          <button class="duo__btn is-elegida" type="button"
-          role="radio" aria-checked="true" data-prov="bc">
-          British Columbia
-          </button>
-          <button class="duo__btn" type="button"
-          role="radio" aria-checked="false" data-prov="ca">
-          Rest of Canada
-          </button>
-          </div>
-          <input type="hidden" id="c-province" value="bc">
-          </fieldset>
+          <!-- La ubicacion se pregunta en el paso 2 --provincia y ciudad--, asi
+          que aqui solo queda el campo que alimenta el perfil y HubSpot. Su
+          valor lo escribe el guion a partir de #c-prov: sin esto se
+          preguntaba dos veces lo mismo, y la segunda vez peor. (14/9/2026) -->
+          <input type="hidden" id="c-province" value="">
           </div>
 
           <!-- PASO 3 -->
@@ -2838,6 +2820,17 @@
           <span class="opcion__texto">A portfolio where comparison matters.</span>
           </button>
           </div>
+          <!-- Cuelga de la eleccion de arriba: con "One building" la respuesta
+          es 1 y el guion la escribe solo, asi que preguntarla sobraria. Se
+          muestra al elegir "Multiple buildings". (14/9/2026) -->
+          <div class="campo" data-campo="sitios" hidden>
+          <label class="campo__label" for="c-sites">How many sites in total?</label>
+          <div class="campo__wrap">
+          <input class="campo__input" id="c-sites" type="text" inputmode="numeric"
+          placeholder="22" autocomplete="off">
+          </div>
+          </div>
+
           </div>
 
           <!-- PASO 2 -->
@@ -2862,20 +2855,11 @@
           </select>
           </div>
           </div>
-          <fieldset class="campo campo--grupo">
-          <legend class="campo__label">Where are your buildings?</legend>
-          <div class="duo" role="radiogroup" aria-label="Region">
-          <button class="duo__btn is-elegida" type="button"
-          role="radio" aria-checked="true" data-prov="bc">
-          British Columbia
-          </button>
-          <button class="duo__btn" type="button"
-          role="radio" aria-checked="false" data-prov="ca">
-          Rest of Canada
-          </button>
-          </div>
-          <input type="hidden" id="c-province" value="bc">
-          </fieldset>
+          <!-- La ubicacion se pregunta en el paso 2 --provincia y ciudad--, asi
+          que aqui solo queda el campo que alimenta el perfil y HubSpot. Su
+          valor lo escribe el guion a partir de #c-prov: sin esto se
+          preguntaba dos veces lo mismo, y la segunda vez peor. (14/9/2026) -->
+          <input type="hidden" id="c-province" value="">
           </div>
 
           <!-- PASO 3 -->
@@ -2912,19 +2896,11 @@
           <span class="campo__sufijo">sq ft</span>
           </div>
           </div>
-          <p class="paso-calc__nota">
-          If you manage multiple sites, use total portfolio area.
-          </p>
-          </div>
-
-          <!-- PASO 4 -->
-          <div class="paso-calc" data-paso="8">
-          <h3 class="paso-calc__titulo">What is your annual utility spend?</h3>
-          <p class="paso-calc__ayuda">
-          Use electricity and fuel combined if available. If you are not sure, we
-          will estimate using the historical cost per square foot for this
-          building type.
-          </p>
+          <!-- El gasto anual viaja aqui (14/9/2026): es el otro dato que
+          alimenta el calculo, y preguntarlo en su propia pantalla al final
+          separaba dos campos que se responden de una sola vez. Sigue siendo
+          opcional: sin el, el importe se estima con el coste por pie
+          cuadrado del benchmark. -->
           <div class="campo">
           <label class="campo__label" for="c-spend">Annual utility spend</label>
           <div class="campo__wrap">
@@ -2933,14 +2909,17 @@
           placeholder="Optional" autocomplete="off">
           </div>
           </div>
-          <div class="campo">
-          <label class="campo__label" for="c-sites">Number of sites</label>
-          <div class="campo__wrap">
-          <input class="campo__input" id="c-sites" type="text" inputmode="numeric"
-          placeholder="22" autocomplete="off">
+          <p class="paso-calc__nota">
+          If you manage multiple sites, use total portfolio area. Spend is optional
+          &mdash; without it we estimate from historical cost per square foot.
+          </p>
           </div>
-          </div>
-          </div>
+
+          <!-- PASO 4 -->
+          <!-- PASO 8 (retirado el 14/9/2026): preguntaba el gasto anual y el
+          numero de sitios. El gasto vive ahora junto a la superficie --los dos
+          alimentan el mismo calculo-- y los sitios junto al ambito, que es la
+          misma pregunta. La pantalla se quedaba sin nada que responder. -->
 
           <!-- Navegacion -->
           <div class="pasos__nav">
@@ -2995,6 +2974,51 @@
           <p class="cierre__rec-titulo" id="c-rec-titulo">Recommended next step</p>
           <p class="cierre__rec-texto" id="c-rec-texto"></p>
           </div>
+          </div>
+
+          <!-- SALIDA SIN DATOS (14/9/2026)
+
+          Cuando no hay superficie ni gasto no hay nada que estimar. Antes se
+          enseñaba igual el benchmark y la recomendacion junto a un "Add your
+          area": una ficha tecnica que no le correspondia a quien no habia
+          dado ningun dato.
+
+          Esta es la otra salida. No pide disculpas ni señala un error: el
+          dato que falta puede no estar a mano, y para eso esta la
+          conversacion. -->
+          <div class="cierre cierre--consulta" id="cierre-consulta" hidden>
+          <p class="cierre__label">Your next step</p>
+          <p class="cierre__titulo-consulta">Talk to one of our experts.</p>
+          <p class="cierre__nota">
+          We can review your buildings with you and estimate the opportunity
+          together &mdash; no floor area needed to start the conversation.
+          </p>
+
+          <ul class="cierre__lista">
+          <li class="cierre__punto">
+          <span class="cierre__tic" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 12 12"><path d="M1.6 6.3l3 3 5.8-6.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          A 20-minute call, with no commitment
+          </li>
+          <li class="cierre__punto">
+          <span class="cierre__tic" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 12 12"><path d="M1.6 6.3l3 3 5.8-6.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          We bring the benchmark data for your building type
+          </li>
+          <li class="cierre__punto">
+          <span class="cierre__tic" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 12 12"><path d="M1.6 6.3l3 3 5.8-6.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          You leave knowing whether a deeper look is justified
+          </li>
+          </ul>
+
+          <div class="cierre__recomienda">
+          <p class="cierre__rec-titulo" id="cc-rec-titulo">Recommended next step</p>
+          <p class="cierre__rec-texto" id="cc-rec-texto"></p>
+          </div>
 
           </div>
 
@@ -3017,7 +3041,33 @@
           </div>
 
           <ul class="perfil" id="perfil">
-          <li class="perfil__fila" data-fila="scope">
+          <li class="perfil__fila perfil__fila--eleg" data-fila="tamano">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Building size</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila perfil__fila--eleg" data-fila="lugar">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Location</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila perfil__fila--eleg" data-fila="utility">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Utility</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__fila perfil__fila--eleg" data-fila="fondos">
+          <span class="perfil__punto" aria-hidden="true"></span>
+          <span class="perfil__texto">Prior funding</span>
+          <span class="perfil__valor">-</span>
+          </li>
+          <li class="perfil__resumen" id="eleg-resumen" hidden>
+          <span class="perfil__tic" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 12 12"><path d="M1.6 6.3l3 3 5.8-6.4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="perfil__resumen-txt" id="eleg-resumen-txt"></span>
+          </li>
+          <li class="perfil__fila perfil__fila--corte" data-fila="scope">
           <span class="perfil__punto" aria-hidden="true"></span>
           <span class="perfil__texto">Scope</span>
           <span class="perfil__valor">-</span>

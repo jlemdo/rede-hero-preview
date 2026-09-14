@@ -221,7 +221,10 @@
   /* Ocho pasos desde el 9/9/2026: cuatro de precalificacion mas los cuatro
      de siempre. Nadie los ve los ocho --hay saltos segun las respuestas--,
      de eso se encargan siguientePaso() y pasoAnterior(). */
-  var TOTAL = 8;
+  /* Siete desde el 14/9/2026: la pantalla que pedia gasto y numero de
+     sitios se repartio --el gasto junto al area, los sitios junto al
+     ambito-- y dejo de existir. */
+  var TOTAL = 7;
 
   var $ = function (sel) { return seccion.querySelector(sel); };
 
@@ -245,6 +248,20 @@
 
   var PASO_TIPO = pasoDe('#c-type');
   var PASO_SITIOS = pasoDe('#c-sites');
+
+  /* Donde acaba la precalificacion y empieza el perfil del edificio.
+     Se lee del marcado, igual que los dos de arriba: si los pasos se
+     renumeran otra vez, esto sigue valiendo.
+
+     Se ancla al AMBITO --la pantalla de "how many buildings"-- y no al
+     sector, que va una pantalla despues: con el sector, la elegibilidad
+     seguiria desplegada durante el paso del ambito y el panel ensenaria
+     las diez filas a la vez, que es justo lo que este plegado evita. */
+  var pasoAmbito = seccion.querySelector('.opcion[data-scope]');
+  pasoAmbito = pasoAmbito && pasoAmbito.closest('[data-paso]');
+  var PASO_PERFIL = pasoAmbito
+    ? parseInt(pasoAmbito.getAttribute('data-paso'), 10)
+    : pasoDe('#c-sector');
 
   /* --- Que tipos de edificio ve cada sector -------------------------------
 
@@ -386,6 +403,22 @@
     if (cajaLibre) { cajaLibre.hidden = !cfg.libre; }
     if (libre) { libre.tabIndex = cfg.libre ? 0 : -1; }
 
+    /* El gasto anual, solo donde hay benchmark que aplicarle.
+
+       Antes vivia en una pantalla propia que se saltaba entera para los
+       sectores sin datos C-Op --los ayuntamientos--. Al mudarse junto al
+       area (14/9/2026) esa pantalla dejo de existir, asi que la misma
+       regla se aplica ahora al campo: sin benchmark no hay calculo, y
+       pedir el gasto seria pedir por pedir. */
+    var gasto = seccion.querySelector('#c-spend');
+    if (gasto) {
+      var cajaGasto = gasto.closest('.campo');
+      var sinCalculo = !!cfg.sinBenchmark;
+      if (cajaGasto) { cajaGasto.hidden = sinCalculo; }
+      gasto.tabIndex = sinCalculo ? -1 : 0;
+      if (sinCalculo) { gasto.value = ''; }
+    }
+
     /* Con un solo tipo se elige solo: es el unico que hay. */
     if (cfg.salta && cfg.fijo) { selTipo.value = cfg.fijo; }
 
@@ -473,10 +506,9 @@
      real, sino un dedazo o una prueba: dejarlo pasar da una cifra que nadie
      puede defender delante de un cliente.                                  */
 
-  /* La provincia NO se valida: no es un desplegable sino dos botones
-     --British Columbia / Rest of Canada-- que escriben en un campo oculto
-     que ya viene con 'bc'. Nunca puede estar vacio, asi que una regla ahi
-     solo prometeria una comprobacion que jamas se ejecuta. */
+  /* #c-province NO se valida: ya no es una pregunta. Desde el 14/9/2026 es
+     un campo oculto que el guion deriva de #c-prov --el del paso 2, que si
+     se valida-- para el perfil y para HubSpot. */
 
   var REGLAS = {
     /* Precalificacion (9/9/2026). Los pasos 1 y 3 son botones, no campos:
@@ -498,19 +530,25 @@
       { id: '#c-desc', aviso: 'Tell us what kind of building this is.' },
       { id: '#c-type', aviso: 'Choose a building type.' },
       { id: '#c-area', aviso: 'Enter your total area.', min: 100, max: 1e9,
-        fuera: 'Enter an area between 100 and 1,000,000,000 sq ft.' }
-    ],
-    8: [
-      /* opcional:true -- el campo lleva placeholder "Optional" y el cliente
+        fuera: 'Enter an area between 100 and 1,000,000,000 sq ft.' },
+      /* El gasto se mudo aqui el 14/9/2026, con su regla.
+
+         opcional:true -- el campo lleva placeholder "Optional" y el cliente
          reporto (9/9/2026) que aun asi daba error al dejarlo vacio. Vacio
          se acepta; si se escribe algo, se sigue comprobando que sea un
          numero y que este en rango, porque un gasto de "abc" o de doce
-         mil millones tampoco sirve. */
+         mil millones tampoco sirve.
+
+         Tampoco se pide cuando esta oculto --sector sin benchmark--:
+         revisar() se salta las reglas cuyo campo no esta a la vista. */
       { id: '#c-spend', aviso: 'Enter your annual utility spend.', min: 1, max: 1e9,
         opcional: true,
-        fuera: 'Enter a spend between $1 and $1,000,000,000.' },
-      /* No se pide cuando esta oculto --un solo edificio--: revisar()
-         se salta las reglas cuyo campo no esta a la vista. */
+        fuera: 'Enter a spend between $1 and $1,000,000,000.' }
+    ],
+    /* El numero de sitios acompana ahora al ambito. No se pide cuando esta
+       oculto --un solo edificio--: revisar() se salta las reglas cuyo campo
+       no esta a la vista. */
+    5: [
       { id: '#c-sites', aviso: 'Enter how many sites you manage.', min: 1, max: 10000,
         fuera: 'Enter a number of sites between 1 and 10,000.' }
     ]
@@ -640,14 +678,10 @@
        es cliente de BC Hydro o FortisBC. */
     if (paso === 4) { return estado.provincia !== 'BC' || estado.utility !== 'si'; }
 
-    /* El 8 pide gasto y numero de sitios, que alimentan el calculo. Un
-       ayuntamiento no recibe calculo --no hay datos C-Op de edificios
-       municipales-- asi que preguntarlo seria pedir por pedir. */
-    if (paso === 8) {
-      var sec = $('#c-sector');
-      var cfg = sec ? SECTORES[sec.value] : null;
-      return !!(cfg && cfg.sinBenchmark);
-    }
+    /* El gasto ya no tiene pantalla propia --vive junto al area, en el
+       paso del tipo-- asi que un sector sin benchmark no puede saltarse
+       una pantalla entera: se le oculta solo el campo. Lo hace
+       ajustarCamposSector(). */
 
     return false;
   }
@@ -788,7 +822,87 @@
 
   var TXT_PROV = { bc: 'BC', ca: 'Canada' };
 
+  var TXT_PROVINCIA = {
+    BC: 'British Columbia', AB: 'Alberta', SK: 'Saskatchewan',
+    ON: 'Ontario', MB: 'Manitoba', QC: 'Quebec', NS: 'Nova Scotia',
+    NB: 'New Brunswick', NL: 'Newfoundland', PE: 'PEI',
+    YT: 'Yukon', NT: 'NWT', NU: 'Nunavut'
+  };
+
+  /* --- La precalificacion, en el perfil desde el paso 1 -------------------
+
+     Antes estas cuatro respuestas no se veian: el panel decia "-" en todo
+     hasta el paso 5 y el visitante contestaba media calculadora sin que
+     nada acusara recibo. Los datos ya estaban en `estado`; solo faltaba
+     pintarlos.
+
+     Las filas viven en el MISMO <ul> que las del edificio, no en una lista
+     aparte: la regla que marca "la primera fila pendiente" usa el
+     combinador ~ entre hermanos .perfil__fila, y un <li> de encabezado en
+     medio la partiria --saldrian dos puntos latiendo a la vez--. La
+     separacion visual la da una clase en la primera fila del segundo
+     grupo. */
+  function refrescarElegibilidad() {
+    if (estado.tamano) {
+      ponerFila('tamano', estado.tamano === 'si' ? '25,000+ sq ft' : 'Under 25,000 sq ft');
+    }
+
+    var prov = $('#c-prov');
+    var ciudad = $('#c-city');
+    if (prov && prov.value) {
+      var txtLugar = TXT_PROVINCIA[prov.value] || prov.value;
+      /* La ciudad delante cuando la han escrito: es el dato mas concreto
+         y el que el visitante reconoce como suyo. */
+      var c = ciudad && ciudad.value.trim();
+      ponerFila('lugar', c ? c + ', ' + prov.value : txtLugar);
+    }
+
+    if (estado.utility) {
+      ponerFila('utility', estado.utility === 'si' ? 'BC Hydro / FortisBC' : 'Other provider');
+    }
+
+    var fondos = $('#c-funding');
+    if (fondos && fondos.value) {
+      ponerFila('fondos', fondos.options[fondos.selectedIndex].text);
+    }
+  }
+
+  /* Cuando la precalificacion queda atras, sus cuatro filas se pliegan en
+     una sola linea de resumen. El panel no crece indefinidamente --con diez
+     filas a 390px la mitad quedaria fuera de pantalla-- y lo ya resuelto
+     pesa menos que lo que toca ahora, que es el mismo criterio del punto
+     que late. */
+  function plegarElegibilidad() {
+    var resumen = seccion.querySelector('#eleg-resumen');
+    if (!resumen) { return; }
+
+    var filas = seccion.querySelectorAll('.perfil__fila--eleg');
+    var plegar = estado.paso >= PASO_PERFIL && !seccion.querySelector('[data-abierto]');
+
+    Array.prototype.forEach.call(filas, function (f) {
+      f.hidden = plegar;
+    });
+    resumen.hidden = !plegar;
+
+    if (!plegar) { return; }
+
+    /* El resumen dice lo que importa para seguir: donde esta y si la
+       comercializadora abre la puerta a programas. El tamano solo aparece
+       si es el dato que descarta, porque entonces manda sobre el resto. */
+    var partes = [];
+    var lugar = seccion.querySelector('[data-fila="lugar"] .perfil__valor');
+    if (lugar && lugar.textContent !== '-') { partes.push(lugar.textContent); }
+    if (estado.utility === 'si') { partes.push('BC Hydro / FortisBC'); }
+    if (estado.tamano === 'si') { partes.push('25,000+ sq ft'); }
+    else if (estado.tamano === 'no') { partes.unshift('Under 25,000 sq ft'); }
+
+    var txt = seccion.querySelector('#eleg-resumen-txt');
+    if (txt) { txt.textContent = partes.join('  ·  ') || 'Eligibility checked'; }
+  }
+
   function refrescarPerfil() {
+    refrescarElegibilidad();
+
     if (estado.scope) {
       ponerFila('scope', estado.scope === 'single' ? 'One building' : 'Multiple buildings');
     }
@@ -849,8 +963,20 @@
       ponerFila('sites', sitiosPerfil === 1 ? '1 site' : sitiosPerfil + ' sites');
     }
 
-    var listas = seccion.querySelectorAll('.perfil__fila.is-lleno').length;
-    var totalFilas = seccion.querySelectorAll('.perfil__fila').length;
+    plegarElegibilidad();
+
+    /* Solo cuenta lo que se VE. Las filas plegadas y las que este
+       recorrido no visita --los pasos 3 y 4 se saltan fuera de BC--
+       quedan fuera del total: un "of 10" al que nunca se llega es
+       peor que no contar nada. */
+    var visibles = Array.prototype.filter.call(
+      seccion.querySelectorAll('.perfil__fila'),
+      function (f) { return !f.hidden; }
+    );
+    var listas = visibles.filter(function (f) {
+      return f.classList.contains('is-lleno');
+    }).length;
+    var totalFilas = visibles.length;
     $('#etiqueta-progreso').textContent = listas + ' of ' + totalFilas;
   }
 
@@ -932,6 +1058,7 @@
       estado.descartado = false;
       seccion.dispatchEvent(new CustomEvent('rede:camino', { detail: 'cualificado' }));
     }
+    refrescarPerfil();
   });
 
   /* Paso 2: la ubicacion. La provincia decide si se veran los pasos 3 y 4. */
@@ -945,6 +1072,7 @@
            deja de valer: si alguien pasa de BC a Alberta, su "si soy de BC
            Hydro" ya no tiene sentido. */
         if (prov.value !== 'BC') { estado.utility = ''; }
+        sincronizarProvincia();
         refrescarPerfil();
         /* La provincia cambia cuantas pantallas quedan por delante, asi que
            el contador y la barra se rehacen ya: si no, dirian "of 6" hasta
@@ -955,6 +1083,7 @@
     if (city) {
       city.addEventListener('input', function () {
         estado.ciudad = city.value;
+        refrescarPerfil();
       });
     }
   }());
@@ -963,6 +1092,7 @@
      subvenciones de BC Hydro y FortisBC. */
   conectarEleccion('utility', function (v) {
     estado.utility = v;
+    refrescarPerfil();
     /* Un "no" retira la pantalla de subvenciones: el total baja en uno. */
     pintarPaso();
   });
@@ -972,7 +1102,7 @@
   (function () {
     var f = $('#c-funding');
     if (!f) { return; }
-    f.addEventListener('change', function () { estado.funding = f.value; });
+    f.addEventListener('change', function () { estado.funding = f.value; refrescarPerfil(); });
   }());
 
   /* La descripcion libre de los ayuntamientos. */
@@ -1000,6 +1130,23 @@
   });
 
   // Selector de region: dos botones en lugar de un desplegable
+  /* La provincia ya no se pregunta dos veces. El duo "British Columbia /
+     Rest of Canada" se retiro del paso del sector el 14/9/2026: repetia la
+     pregunta del paso 2 --que ofrece las trece provincias y la ciudad-- y
+     ademas iba DESPUES, asi que el visitante la contestaba ya contestada.
+
+     #c-province sigue existiendo porque lo leen el perfil, el envio a
+     HubSpot y el reinicio; su valor se deriva ahora del dato real. El
+     resto del guion solo distingue BC del resto de Canada. */
+  function sincronizarProvincia() {
+    var prov = $('#c-prov');
+    var oculto = $('#c-province');
+    if (!oculto) { return; }
+    oculto.value = (prov && prov.value === 'BC') ? 'bc' : (prov && prov.value ? 'ca' : '');
+  }
+
+  /* El duo puede seguir existiendo en las variantes antiguas del carrusel,
+     que no se tocan. Ahi se mantiene tal cual. */
   seccion.querySelectorAll('.duo__btn').forEach(function (b) {
     b.addEventListener('click', function () {
       seccion.querySelectorAll('.duo__btn').forEach(function (o) {
@@ -1288,8 +1435,23 @@
     $('#c-rec-titulo').textContent = $('#rec-titulo').textContent;
     $('#c-rec-texto').textContent = $('#rec-texto').textContent;
 
+    /* Dos salidas (14/9/2026). Sin superficie ni gasto no hay nada que
+       estimar, y ensenar el benchmark y la recomendacion junto a un "Add
+       your area" le daba al visitante una ficha tecnica que no le
+       correspondia. Cuando no hay datos se ofrece la conversacion, que es
+       la salida honesta: el dato que falta puede no estar a mano. */
+    var consulta = $('#cierre-consulta');
     $('#pasos').hidden = true;
-    $('#cierre').hidden = false;
+    $('#cierre').hidden = !hayCierre;
+    if (consulta) {
+      consulta.hidden = hayCierre;
+      /* La recomendacion --EGA o Site Investigation-- si vale en las dos:
+         depende del ambito, no de las cifras. */
+      var ccT = $('#cc-rec-titulo');
+      var ccX = $('#cc-rec-texto');
+      if (ccT) { ccT.textContent = $('#rec-titulo').textContent; }
+      if (ccX) { ccX.textContent = $('#rec-texto').textContent; }
+    }
 
     // Y la DERECHA pasa a ser el formulario, sin tener que girar la tarjeta.
     if (flip) { flip.classList.add('girada'); marcarInerte(true); }
@@ -1307,7 +1469,7 @@
         var el = $(sel); if (el) { el.value = ''; }
       });
       $('#c-sector').value = '';
-      $('#c-province').value = 'bc';
+      $('#c-province').value = '';
       selTipo.value = 'school';
 
       seccion.querySelectorAll('.opcion').forEach(function (o) {
@@ -1316,7 +1478,14 @@
       seccion.querySelectorAll('.perfil__fila').forEach(function (f) {
         f.classList.remove('is-lleno');
         f.querySelector('.perfil__valor').textContent = '-';
+        /* Las de elegibilidad vuelven a la vista: al empezar de nuevo se
+           recorre otra vez la precalificacion, y plegadas dejarian el
+           panel vacio en los primeros cuatro pasos --el fallo que este
+           cambio venia a arreglar--. */
+        f.hidden = false;
       });
+      var resumenEleg = seccion.querySelector('#eleg-resumen');
+      if (resumenEleg) { resumenEleg.hidden = true; }
 
       $('#adelanto').hidden = true;
       $('#prueba').hidden = false;
@@ -1324,6 +1493,8 @@
       $('#espera').hidden = false;
       $('#cierre').hidden = true;
       $('#cierre-extra').hidden = true;
+      var cc = $('#cierre-consulta');
+      if (cc) { cc.hidden = true; }
       $('#pasos').hidden = false;
 
       if (flip) { flip.classList.remove('girada', 'enviado'); }

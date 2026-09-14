@@ -4390,3 +4390,62 @@ body { -webkit-font-smoothing: antialiased; }
 @media (max-width: 640px) {
   .personas--cuatro { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* --------------------------------------------------------------------------
+   EL CIERRE SIN DATOS: LA CONSULTA (14/9/2026)
+
+   Sin superficie ni gasto no hay nada que estimar. Antes la pantalla lo
+   decia en la cifra --"Add your area"-- pero seguia enseñando debajo el
+   benchmark, el payback y la recomendacion: una ficha tecnica que no le
+   correspondia a quien no habia dado ningun dato.
+
+   Esta es la otra salida. Hereda .cierre entero --posicion en la rejilla,
+   fondo, ritmo-- y solo cambia lo que la distingue: donde iba una cifra
+   enorme va una frase, y donde iba la tabla van tres razones para hablar.
+   -------------------------------------------------------------------------- */
+
+.cierre__titulo-consulta {
+  /* Un punto por debajo de la cifra: es una frase, no un dato, y a tamaño
+     de cifra se comeria la pantalla en movil. */
+  font-size: clamp(1.6rem, 1.2rem + 1.7vw, 2.35rem);
+  font-weight: var(--fw-extrabold);
+  line-height: 1.12;
+  letter-spacing: var(--ls-tight);
+  color: #FFFFFF;
+  text-wrap: balance;
+}
+
+.cierre__lista {
+  margin-block: var(--sp-5);
+  padding-block: var(--sp-4);
+  /* El mismo filo que .cierre__datos, al que sustituye: la pantalla
+     mantiene su ritmo aunque el contenido sea otro. */
+  border-block: 1px solid rgba(255, 255, 255, .12);
+  list-style: none;
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.cierre__punto {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, .78);
+}
+
+.cierre__tic {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  /* 2px de desfase: el tic se alinea con la PRIMERA linea del texto, no
+     con el centro del bloque, que en dos lineas lo dejaria flotando. */
+  margin-top: 2px;
+  border-radius: 50%;
+  background: rgba(57, 181, 74, .16);
+  color: var(--c-verde-marca);
+}

@@ -12508,7 +12508,7 @@ span.d2-panel__filtro:hover {
    la 3 --dos puntos grandes a la vez, medido--. Esto marca la primera
    pendiente y ninguna mas: se descarta toda pendiente que tenga otra
    pendiente por detras. */
-.d2 .calc .perfil__fila:not(.is-lleno) .perfil__punto {
+.d2 .calc .perfil__fila:not(.is-lleno):not([hidden]) .perfil__punto {
   background: var(--c-verde-marca, #39B54A);
   /* La segunda senal: crece y se rodea. El transform no descoloca la
      fila --el punto sigue ocupando sus 8px de caja-- asi que el texto
@@ -12523,7 +12523,12 @@ span.d2-panel__filtro:hover {
    delante, de modo que solo sobrevive la primera. Es la unica forma de
    decir "la primera pendiente" en CSS: no existe un combinador hacia
    atras, asi que se marca a todas y se desmarca a las posteriores. */
-.d2 .calc .perfil__fila:not(.is-lleno) ~ .perfil__fila:not(.is-lleno) .perfil__punto {
+/* :not([hidden]) en las DOS partes: una fila de elegibilidad sin contestar
+   --el desplegable de subvenciones, que nadie obliga a tocar-- se pliega
+   sin llenarse, y sin esto seguiria contando como "pendiente por delante":
+   apagaria el punto que late en TODO el grupo del edificio y se perderia
+   la senal de "vas aqui". */
+.d2 .calc .perfil__fila:not(.is-lleno):not([hidden]) ~ .perfil__fila:not(.is-lleno):not([hidden]) .perfil__punto {
   transform: none;
   outline: 0;
   animation: none;
@@ -15070,4 +15075,90 @@ span.d2-panel__filtro:hover {
      mapa no depende de leerlos para entenderse. */
   .d2-mapa-zonas__etiqueta { font-size: 13px; }
 
+}
+
+
+/* ==========================================================================
+   EL PERFIL: LA PRECALIFICACION TAMBIEN CUENTA (14/9/2026)
+
+   Los cuatro primeros pasos --tamano, ubicacion, comercializadora y
+   subvenciones previas-- no aparecian en el panel. El visitante contestaba
+   media calculadora viendo "-" en todas las filas y un contador clavado en
+   "0 of 6": la primera senal de que el formulario escuchaba llegaba en el
+   paso 5.
+
+   Ahora esas cuatro respuestas tienen su fila y se encienden desde el paso
+   1, con el mismo gesto que las demas. Cuando la precalificacion queda
+   atras, las cuatro se pliegan en una sola linea de resumen.
+
+   POR QUE PLEGAR Y NO DEJARLAS
+
+   Diez filas a 390px dejan la mitad fuera de pantalla, y el panel es
+   justamente lo que tiene que verse mientras se contesta. Plegar mantiene
+   el recuento honesto --lo respondido sigue ahi, en una linea-- y devuelve
+   el sitio al perfil del edificio, que es lo que toca. Es el mismo criterio
+   del punto que late: lo hecho pesa menos que lo que viene ahora.
+
+   NO HAY <li> DE ENCABEZADO
+
+   Las filas nuevas van dentro del mismo <ul>. La regla que marca "la
+   primera fila pendiente" --linea 12526-- usa el combinador ~ entre
+   hermanos .perfil__fila, y un <li> de titulo en medio la partiria: con el
+   grupo de arriba a medias saldrian DOS puntos latiendo. El corte entre
+   los dos grupos lo hace un borde en la primera fila del segundo.
+   -------------------------------------------------------------------------- */
+
+/* El corte: una linea sobre la primera fila del edificio. Solo cuando hay
+   algo arriba de lo que separarse --si la elegibilidad esta plegada, el
+   resumen ya hace de cierre y un segundo filo sobraria--. */
+.d2 .calc .perfil__fila--eleg:not([hidden]) ~ .perfil__fila--corte {
+  border-top: 1px solid var(--c-borde, #E4E4E4);
+  padding-top: var(--d2-e2);
+  margin-top: var(--d2-e1);
+}
+
+/* --- La linea de resumen ------------------------------------------------- */
+
+.d2 .calc .perfil__resumen {
+  display: flex;
+  align-items: center;
+  gap: var(--d2-e1);
+  padding-bottom: var(--d2-e2);
+  margin-bottom: var(--d2-e1);
+  border-bottom: 1px solid var(--c-borde, #E4E4E4);
+  /* El verde de marca no llega en texto pequeno --3.2:1--; este es el que
+     la propia hoja de tokens manda usar, 6.41:1 sobre blanco. */
+  color: var(--c-verde-hover, #026F00);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* Entra con la curva de la casa, no de golpe: sustituye a cuatro filas y
+   el cambio tiene que leerse como un plegado, no como un salto. */
+.d2 .calc .perfil__resumen:not([hidden]) {
+  animation: d2-calc-aparece .34s cubic-bezier(.32, .72, 0, 1) both;
+}
+
+.d2 .calc .perfil__tic {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--c-verde-claro, #E8F5E8);
+  color: var(--c-verde-hover, #026F00);
+}
+
+/* El texto se parte antes que desbordar: a 390px caben dos datos por
+   linea y el tercero baja, que es preferible a un recorte con puntos
+   suspensivos donde no se sabe que falta. */
+.d2 .calc .perfil__resumen-txt {
+  min-width: 0;
+  font-weight: var(--fw-bold, 700);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .calc .perfil__resumen:not([hidden]) { animation: none; }
 }
