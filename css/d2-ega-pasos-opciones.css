@@ -2929,94 +2929,6 @@
    Dos huecos que el usuario senalo con capturas.
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. PERIMETER — la lectura del perimetro
-
-   En la captura, la columna derecha --los cuatro limites-- quedaba suelta:
-   sin fondo, sin peso, flotando al lado de un panel verde solido.
-
-   Entra un diagrama que dice lo que la seccion entera argumenta: un area
-   cerrada --lo que este servicio cubre-- y cuatro puntos fuera, que son
-   los limites. No es decoracion, es el titular dibujado.
-
-   El trazo NO cierra por abajo a proposito: un perimetro cerrado sugiere
-   un limite fisico, y esto es un alcance de trabajo.
-   -------------------------------------------------------------------------- */
-
-.d2 .d2-ega-per__lectura {
-  margin-top: clamp(26px, 3vw, 38px);
-  padding-top: 22px;
-  /* El mismo fundido horizontal que separa sin filo. */
-  background:
-    linear-gradient(90deg, var(--c-borde, #E4E4E4) 0 55%, transparent)
-    top / 100% 1px no-repeat;
-}
-
-.d2 .d2-ega-per__lectura svg {
-  display: block;
-  width: 100%;
-  max-width: 240px;
-  height: auto;
-}
-
-.d2 .d2-ega-per__lectura-pie {
-  margin: 10px 0 0;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-/* El area se traza al entrar; los nodos aparecen despues, primero los de
-   dentro y luego los de fuera. El orden cuenta la idea: esto es lo que
-   cubrimos, y esto lo que queda al otro lado. */
-.d2 .d2-ega-per__area {
-  stroke-dasharray: 420;
-  stroke-dashoffset: 420;
-}
-
-.d2 :is(.d2-ega-per__dentro-n, .d2-ega-per__fuera-n) circle {
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.d2 .d2-ega-per__escala { opacity: 0; }
-
-@media (prefers-reduced-motion: no-preference) {
-  .d2 .d2-ega-per.es-visible .d2-ega-per__area {
-    animation: d2-ega-graf-traza 1.1s cubic-bezier(.33, 1, .68, 1) .35s forwards;
-  }
-
-  .d2 .d2-ega-per.es-visible .d2-ega-per__escala {
-    animation: d2-ega-graf-ver .6s ease-out .3s forwards;
-  }
-
-  .d2 .d2-ega-per.es-visible :is(.d2-ega-per__dentro-n, .d2-ega-per__fuera-n) circle {
-    animation: d2-ega-graf-punto .38s cubic-bezier(.34, 1.56, .64, 1) forwards;
-  }
-
-  .d2 .d2-ega-per.es-visible .d2-ega-per__dentro-n circle:nth-child(1) { animation-delay: 1.05s; }
-  .d2 .d2-ega-per.es-visible .d2-ega-per__dentro-n circle:nth-child(2) { animation-delay: 1.14s; }
-  .d2 .d2-ega-per.es-visible .d2-ega-per__dentro-n circle:nth-child(3) { animation-delay: 1.23s; }
-  .d2 .d2-ega-per.es-visible .d2-ega-per__dentro-n circle:nth-child(4) { animation-delay: 1.32s; }
-
-  /* Los de fuera, despues y mas separados: llegan como una aclaracion. */
-  .d2 .d2-ega-per.es-visible .d2-ega-per__fuera-n circle:nth-child(1) { animation-delay: 1.55s; }
-  .d2 .d2-ega-per.es-visible .d2-ega-per__fuera-n circle:nth-child(2) { animation-delay: 1.67s; }
-  .d2 .d2-ega-per.es-visible .d2-ega-per__fuera-n circle:nth-child(3) { animation-delay: 1.79s; }
-  .d2 .d2-ega-per.es-visible .d2-ega-per__fuera-n circle:nth-child(4) { animation-delay: 1.91s; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .d2 .d2-ega-per__area { stroke-dashoffset: 0; }
-  .d2 .d2-ega-per__escala { opacity: 1; }
-  .d2 :is(.d2-ega-per__dentro-n, .d2-ega-per__fuera-n) circle { opacity: 1; }
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-per__lectura-pie { color: #BFBFBF; }
-
 
 /* --------------------------------------------------------------------------
    3. METER — la regla graduada
@@ -3054,30 +2966,25 @@
     transparent, #000 8%, #000 92%, transparent);
 }
 
+/* El cursor SIGUE EL SCROLL, no un temporizador.
+
+   Antes bajaba con una animacion de 3.6s y se quedaba clavado donde
+   terminara, sin relacion con lo que el visitante esta mirando. En una
+   regla de medida eso no tiene sentido: el cursor marca DONDE ESTAS.
+
+   Lo mueve d2-ega-alcance.js con un IntersectionObserver sobre los
+   cuatro items, escribiendo --met-pos. No se usa animation-timeline
+   --87% de soporte, Firefox y Safari iOS fuera-- por la misma razon que
+   se descarto para las entradas. */
 .d2 .d2-ega-met__cursor {
-  /* Arranca en la primera marca mayor. */
-  transform: translateY(40px);
+  transform: translateY(var(--met-pos, 40px));
+  transition: transform .55s cubic-bezier(.32, .72, 0, 1);
 }
 
-/* El cursor baja de marca en marca, al ritmo de los arcos: 80 ms de
-   desfase entre items, 1.1s de llenado. Se detiene en el ultimo, no
-   vuelve a empezar. */
-@media (prefers-reduced-motion: no-preference) {
-  .d2 .d2-ega-met.es-visible .d2-ega-met__cursor {
-    animation: d2-met-cursor 3.6s cubic-bezier(.65, 0, .35, 1) .25s both;
-  }
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-ega-met__cursor { transition: none; }
 }
 
-@keyframes d2-met-cursor {
-  0%   { transform: translateY(40px); }
-  25%  { transform: translateY(40px); }
-  33%  { transform: translateY(112px); }
-  50%  { transform: translateY(112px); }
-  58%  { transform: translateY(184px); }
-  75%  { transform: translateY(184px); }
-  83%  { transform: translateY(256px); }
-  100% { transform: translateY(256px); }
-}
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-met__eje,
 .d2 [data-comp-tono="oscuro"] .d2-ega-met__marcas line {
@@ -3094,4 +3001,128 @@
   /* La regla se retira: en una columna no mide nada. */
   .d2 .d2-ega-met__reja { grid-template-columns: 1fr; }
   .d2 .d2-ega-met__regla { display: none; }
+}
+
+
+/* ==========================================================================
+   PERIMETER — LA SALIDA DEL PERIMETRO (14/9/2026)
+
+   EL INTENTO ANTERIOR NO SE ENTENDIA
+
+   Era un rectangulo abstracto con puntos dentro y fuera, colocado DEBAJO
+   de las listas. El usuario lo dijo claro: "no le entiendo que sea, no se
+   si esta bien o la figura quedo mal".
+
+   El fallo: los puntos no se alineaban con nada. Un punto a media altura
+   no dice "este entregable" si no esta A LA ALTURA de ese entregable.
+
+   LO QUE ENTRA
+
+   El diagrama deja de estar al lado y pasa a SER la columna. De cada
+   limite sale un trazo corto hacia la derecha, terminado en un nodo
+   hueco. El area cubierta queda a la izquierda --donde esta el panel
+   verde-- y los cuatro limites, literalmente, fuera de ella.
+
+   Cada trazo nace a la altura de su propio limite: eso es lo que hace que
+   se lea solo. No hay que explicarlo.
+
+   Y se dibuja de dentro hacia fuera, escalonado: primero el borde del
+   area, luego cada salida. El orden cuenta la idea.
+   ========================================================================== */
+
+.d2 .d2-ega-per__fuera {
+  position: relative;
+  padding-left: 30px;
+}
+
+/* El borde del area: la linea que separa lo que entra de lo que no.
+   Se desvanece arriba y abajo, como todo filo de esta pagina. */
+.d2 .d2-ega-per__fuera::before {
+  content: "";
+  position: absolute;
+  inset-block: 34px 8px;
+  inset-inline-start: 0;
+  inline-size: 1.5px;
+  background: var(--c-verde-hover, #026F00);
+  opacity: .34;
+  -webkit-mask: linear-gradient(to bottom, #000 82%, transparent);
+          mask: linear-gradient(to bottom, #000 82%, transparent);
+  transform-origin: top;
+}
+
+.d2 .d2-ega-per__lista-fuera li {
+  position: relative;
+  /* Sitio para el trazo de salida. */
+  padding-left: 34px;
+}
+
+/* El trazo: nace en el borde del area, a la altura exacta de su limite. */
+.d2 .d2-ega-per__lista-fuera li::after {
+  content: "";
+  position: absolute;
+  left: -30px;
+  top: .72em;
+  width: 22px;
+  height: 1.5px;
+  background: var(--c-verde-hover, #026F00);
+  opacity: .34;
+  transform-origin: left;
+}
+
+/* El nodo hueco, al final del trazo: el limite existe, pero fuera. */
+.d2 .d2-ega-per__lista-fuera li::before {
+  left: 0;
+  top: .5em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .d2-ega-per .d2-ega-per__fuera::before {
+    transform: scaleY(0);
+  }
+
+  .d2 .d2-ega-per.es-visible .d2-ega-per__fuera::before {
+    animation: d2-per-borde .7s cubic-bezier(.33, 1, .68, 1) .5s both;
+  }
+
+  .d2 .d2-ega-per .d2-ega-per__lista-fuera li::after {
+    transform: scaleX(0);
+  }
+
+  /* Cada salida se dibuja despues de la anterior, de arriba abajo. */
+  .d2 .d2-ega-per.es-visible .d2-ega-per__lista-fuera li::after {
+    animation: d2-per-salida .42s cubic-bezier(.33, 1, .68, 1) both;
+  }
+
+  .d2 .d2-ega-per.es-visible .d2-ega-per__lista-fuera li:nth-child(1)::after { animation-delay: .95s; }
+  .d2 .d2-ega-per.es-visible .d2-ega-per__lista-fuera li:nth-child(2)::after { animation-delay: 1.07s; }
+  .d2 .d2-ega-per.es-visible .d2-ega-per__lista-fuera li:nth-child(3)::after { animation-delay: 1.19s; }
+  .d2 .d2-ega-per.es-visible .d2-ega-per__lista-fuera li:nth-child(4)::after { animation-delay: 1.31s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-ega-per__fuera::before { transform: none; }
+  .d2 .d2-ega-per__lista-fuera li::after { transform: none; }
+}
+
+@keyframes d2-per-borde {
+  to { transform: scaleY(1); }
+}
+
+@keyframes d2-per-salida {
+  to { transform: scaleX(1); }
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-per__fuera::before,
+.d2 [data-comp-tono="oscuro"] .d2-ega-per__lista-fuera li::after {
+  background: var(--c-verde-marca, #39B54A);
+  opacity: .45;
+}
+
+@media (max-width: 860px) {
+  /* Apilado, el borde del area no separa nada: el panel verde queda
+     arriba, no al lado. */
+  .d2 .d2-ega-per__fuera { padding-left: 0; }
+  .d2 .d2-ega-per__fuera::before { display: none; }
+  .d2 .d2-ega-per__lista-fuera li { padding-left: 26px; }
+  .d2 .d2-ega-per__lista-fuera li::after { display: none; }
 }

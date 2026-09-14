@@ -196,3 +196,64 @@
     marcar();
   });
 }());
+
+
+/* ==========================================================================
+   METER — EL CURSOR DE LA REGLA SIGUE EL SCROLL
+
+   Antes bajaba con una animacion de 3.6s y se quedaba clavado donde
+   terminara, sin relacion con lo que el visitante esta mirando. En una
+   regla de medida eso no tiene sentido: el cursor marca DONDE ESTAS.
+
+   Ahora un IntersectionObserver vigila los cuatro items y escribe la
+   posicion en --met-pos. La transicion del CSS hace el resto.
+
+   POR QUE NO animation-timeline: view()
+
+   Seria la herramienta natural, pero tiene 87% de soporte y deja fuera a
+   Firefox y a Safari de iOS. Es la misma razon por la que se descarto
+   para las entradas: el comprador de Rede son despachos corporativos.
+
+   ROOTMARGIN, NO THRESHOLD
+
+   El item se considera "el actual" cuando cruza el tercio superior de la
+   pantalla, no cuando entra. Con threshold, cuatro items altos pueden
+   estar visibles a la vez y el cursor iria a saltos.
+   ========================================================================== */
+
+(function () {
+  'use strict';
+
+  var secciones = document.querySelectorAll('.d2-ega-met');
+  if (!secciones.length || !('IntersectionObserver' in window)) { return; }
+
+  /* Las cuatro marcas mayores del SVG, en unidades de su viewBox. */
+  var MARCAS = [40, 112, 184, 256];
+
+  Array.prototype.forEach.call(secciones, function (sec) {
+
+    var items = sec.querySelectorAll('.d2-ega-met__item');
+    var regla = sec.querySelector('.d2-ega-met__regla');
+    if (!items.length || !regla) { return; }
+
+    function marcar(n) {
+      regla.style.setProperty('--met-pos', MARCAS[n] + 'px');
+    }
+
+    var obs = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (e) {
+        if (!e.isIntersecting) { return; }
+        var i = Array.prototype.indexOf.call(items, e.target);
+        if (i > -1) { marcar(i); }
+      });
+    }, {
+      /* La franja activa es el tercio superior: el item que la cruza es
+         el que se esta leyendo. */
+      rootMargin: '-28% 0px -62% 0px'
+    });
+
+    Array.prototype.forEach.call(items, function (item) { obs.observe(item); });
+
+    marcar(0);
+  });
+}());
