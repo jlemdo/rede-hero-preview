@@ -8650,7 +8650,8 @@ span.d2-panel__filtro:hover {
    sigue siendo blanco y el texto tiene que ser oscuro otra vez. */
 .d2 [data-comp-tono="oscuro"] :is(.d2-res-tres__item, .d2-foco__prueba,
                                   .d2-prueba-resp__tarjeta, .d2-cta-bal__accion,
-                                  .d2-cta-car__carril, .d2-prob-mapa__ficha) {
+                                  .d2-cta-car__carril, .d2-prob-mapa__ficha,
+                                  .d2-ega-pasos3__cartera) {
   --c-texto:        #333333;
   --c-texto-cuerpo: #333333;
   --c-texto-suave:  #6B6B6B;

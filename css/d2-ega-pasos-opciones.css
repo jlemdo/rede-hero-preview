@@ -858,14 +858,18 @@
    el fondo oscuro gana el aire de panel que ya tiene la calculadora-- pero
    su texto se veia blanco sobre blanco.
 
-   La causa es la herencia: "Portfolio" y "14 buildings" son <span> sin
-   color propio, asi que toman el que venga de arriba. Basta con que
-   CUALQUIER regla de la pagina --presente o futura-- ponga color en la
-   seccion oscura para que el texto de la tarjeta se vaya con ella.
+   LA CAUSA, encontrada: la seccion oscura redefine los
+   TOKENS de texto --d2-variantes.css:8642--. Pedir var(--c-texto) dentro
+   de una seccion oscura devuelve #FFFFFF, asi que mis reglas pintaban
+   blanco sobre blanco por mucho que nombraran el token correcto.
 
-   No se caza la regla culpable: se fija el color aqui, que es donde se
-   sabe cual debe ser. La tarjeta es un panel claro y su texto es oscuro,
-   este la seccion en el tono que este.
+   El sistema ya tenia la solucion: una lista de tarjetas claras que
+   RESTAURAN los tokens a su valor original. La cartera no estaba en ella
+   y ahora si --misma regla, mismo sitio--.
+
+   Lo de abajo se queda como refuerzo explicito: los tokens ya llegan
+   bien, pero un color fijado donde se sabe cual debe ser no depende de
+   que nadie recuerde mantener esa lista.
 
    Los valores son los mismos que en fondo claro, porque el fondo de la
    tarjeta no cambia:
