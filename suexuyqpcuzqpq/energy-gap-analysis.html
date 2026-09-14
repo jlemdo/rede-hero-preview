@@ -357,63 +357,106 @@
   <div class="d2-caru" id="caru-ega-pasos" data-caru>
 
     <!-- OPCION 1 - LA LISTA QUE SE ORDENA -->
-    <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Option 1: Columns">
-  <section class="d2-ega-pasos d2-entra" data-comp-rol="proceso" id="analysis" aria-labelledby="ega-pasos-t">
-          <svg class="d2-ega-pasos__circuito" viewBox="0 0 1440 620" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 96H300L360 156H620"/>
-        <path d="M1440 540H1180L1110 470H860"/>
-        <path d="M1440 140H1290L1240 90H1040"/>
-        <circle cx="360" cy="156" r="5"/>
-        <circle cx="1110" cy="470" r="5"/>
-        <circle cx="1240" cy="90" r="5"/>
-      </svg>
-      <div class="d2-ega-pasos__inner">
+    <!-- OPCION 1 - TERMOGRAFIA
 
-      <div class="d2-ega-pasos__cab">
-        <div>
-          <p class="eyebrow">Start with the portfolio</p>
-          <h2 class="d2-ega-pasos__titulo" id="ega-pasos-t">Find the buildings worth a closer look.</h2>
+         Doce fachadas de la cartera. Al entrar pasan de gris a falso color
+         termico y las tres mas calientes se quedan marcadas.
+
+         El filtro es un feComponentTransfer con tres tablas: una LUT por
+         pixel, que no muestrea vecinos y por tanto es barata. Se aplica UNA
+         vez; lo que se anima es la mascara que lo revela.
+
+         Un hue-rotate no puede hacer esto: la rueda de tono no permite ir
+         de azul a naranja pasando por rosa. La tabla si. -->
+    <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Option 1: Thermal">
+      <section class="d2-ega-termo d2-entra" data-comp-rol="proceso" aria-labelledby="ega-termo-t">
+
+        <!-- El filtro vive una sola vez en la pagina. width/height 0 para
+             que el <svg> no ocupe: solo transporta la definicion. -->
+        <svg class="d2-ega-termo__def" width="0" height="0" aria-hidden="true" focusable="false">
+          <filter id="ega-termico" color-interpolation-filters="sRGB">
+            <feComponentTransfer>
+              <feFuncR type="table" tableValues="0 0.125 0.8 1 1"/>
+              <feFuncG type="table" tableValues="0 0 0 0.843 1"/>
+              <feFuncB type="table" tableValues="0 0.549 0.466 0 1"/>
+            </feComponentTransfer>
+          </filter>
+        </svg>
+
+        <div class="d2-ega-termo__inner">
+
+          <div class="d2-ega-termo__cab">
+            <div>
+              <p class="eyebrow">Start with the portfolio</p>
+              <h2 class="d2-ega-termo__titulo" id="ega-termo-t">Find the buildings worth a closer look.</h2>
+            </div>
+            <p class="d2-ega-termo__lead">A detailed commercial energy audit looks inside one building. Energy Gap Analysis compares the buildings you manage first, so your budget and team can focus on the right places.</p>
+          </div>
+
+          <div class="d2-ega-termo__reja">
+
+            <!-- La cartera leida como termografia. aria-hidden porque es la
+                 ilustracion de lo que dicen los tres pasos, no informacion
+                 nueva: un lector de pantalla oiria doce span vacios. -->
+            <div class="d2-ega-termo__lectura" aria-hidden="true">
+              <div class="d2-ega-termo__escala">
+                <span class="d2-ega-termo__escala-eti">Low</span>
+                <span class="d2-ega-termo__barra"></span>
+                <span class="d2-ega-termo__escala-eti">High</span>
+              </div>
+              <div class="d2-ega-termo__cartera">
+                <span class="d2-ega-termo__col" style="--h:34%;--i:0"></span>
+                <span class="d2-ega-termo__col" style="--h:52%;--i:1"></span>
+                <span class="d2-ega-termo__col d2-ega-termo__col--alta" style="--h:88%;--i:2"></span>
+                <span class="d2-ega-termo__col" style="--h:41%;--i:3"></span>
+                <span class="d2-ega-termo__col" style="--h:47%;--i:4"></span>
+                <span class="d2-ega-termo__col" style="--h:63%;--i:5"></span>
+                <span class="d2-ega-termo__col d2-ega-termo__col--alta" style="--h:95%;--i:6"></span>
+                <span class="d2-ega-termo__col" style="--h:39%;--i:7"></span>
+                <span class="d2-ega-termo__col" style="--h:58%;--i:8"></span>
+                <span class="d2-ega-termo__col d2-ega-termo__col--alta" style="--h:79%;--i:9"></span>
+                <span class="d2-ega-termo__col" style="--h:44%;--i:10"></span>
+                <span class="d2-ega-termo__col" style="--h:51%;--i:11"></span>
+              </div>
+              <p class="d2-ega-termo__pie">Energy use intensity across 12 buildings</p>
+            </div>
+
+            <ol class="d2-ega-termo__pasos">
+              <li class="d2-ega-termo__paso">
+                <span class="d2-ega-termo__num">01</span>
+                <h3 class="d2-ega-termo__h">Share the information you already have</h3>
+                <p class="d2-ega-termo__d">Utility bills, building type, floor area and basic operating context. No new equipment needs to be installed.</p>
+              </li>
+              <li class="d2-ega-termo__paso">
+                <span class="d2-ega-termo__num">02</span>
+                <h3 class="d2-ega-termo__h">Compare each building fairly</h3>
+                <p class="d2-ega-termo__d">Rede compares both energy used and money spent by building size. Engineers call these measures BEPI and BECI; your team gets the plain-language meaning.</p>
+              </li>
+              <li class="d2-ega-termo__paso">
+                <span class="d2-ega-termo__num">03</span>
+                <h3 class="d2-ega-termo__h">See where to investigate first</h3>
+                <p class="d2-ega-termo__d">Get a ranked view of the buildings that stand out, the numbers behind the decision and a practical next step.</p>
+              </li>
+            </ol>
+
+          </div>
+
+          <div class="d2-ega-puente2">
+            <div class="d2-ega-puente2__lado">
+              <p class="d2-ega-puente2__eti">This service</p>
+              <p class="d2-ega-puente2__nom">Energy Gap Analysis</p>
+              <p class="d2-ega-puente2__preg">Where should we look?</p>
+            </div>
+            <div class="d2-ega-puente2__lado d2-ega-puente2__lado--fin">
+              <p class="d2-ega-puente2__eti">What may come next</p>
+              <p class="d2-ega-puente2__nom">Energy audit or investigation</p>
+              <p class="d2-ega-puente2__preg">What is causing it?</p>
+            </div>
+          </div>
+
         </div>
-        <p class="d2-ega-pasos__lead">A detailed commercial energy audit looks inside one building. Energy Gap Analysis compares the buildings you manage first, so your budget and team can focus on the right places.</p>
-      </div>
-
-      <ol class="d2-ega-pasos__lista">
-        <li class="d2-ega-pasos__paso">
-          <span class="d2-ega-pasos__num" aria-hidden="true">01</span>
-          <h3>Share the information you already have</h3>
-          <p>Utility bills, building type, floor area and basic operating context. No new equipment needs to be installed.</p>
-        </li>
-        <li class="d2-ega-pasos__paso">
-          <span class="d2-ega-pasos__num" aria-hidden="true">02</span>
-          <h3>Compare each building fairly</h3>
-          <p>Rede compares both energy used and money spent by building size. Engineers call these measures BEPI and BECI; your team gets the plain-language meaning.</p>
-        </li>
-        <li class="d2-ega-pasos__paso">
-          <span class="d2-ega-pasos__num" aria-hidden="true">03</span>
-          <h3>See where to investigate first</h3>
-          <p>Get a ranked view of the buildings that stand out, the numbers behind the decision and a practical next step.</p>
-        </li>
-      </ol>
-
-      <!-- El puente entre este servicio y el siguiente -->
-      <div class="d2-ega-puente">
-        <div class="d2-ega-puente__lado">
-          <p class="d2-ega-puente__eti">Energy Gap Analysis</p>
-          <p class="d2-ega-puente__preg">Where should we look?</p>
-        </div>
-        <span class="d2-ega-puente__flecha" aria-hidden="true">
-          <svg width="26" height="14" viewBox="0 0 26 14"><path d="M18 1l6 6-6 6M24 7H1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <div class="d2-ega-puente__lado d2-ega-puente__lado--fin">
-          <p class="d2-ega-puente__eti">Energy audit or investigation</p>
-          <p class="d2-ega-puente__preg">What is causing it?</p>
-        </div>
-      </div>
-
+      </section>
     </div>
-  </section>
-    </div>
-
 
     <!-- OPCION 2 - LA ESCALERA (de la biblioteca: rutas/02-ladder)
 
@@ -605,7 +648,7 @@
       </button>
 
       <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
-        <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Columns</small></button>
+        <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Thermal</small></button>
         <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Ladder</small></button>
         <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Portfolio</small></button>
       </div>
@@ -1317,48 +1360,52 @@
   <div class="d2-caru" id="caru-ega-alcance" data-caru>
 
     <!-- OPCION 1 - DOS TARJETAS (la que ya existia) -->
-    <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Option 1: Two cards">
-  <section class="d2-ega-alcance d2-entra" data-comp-rol="prueba" aria-labelledby="ega-alcance-t">
-    <div class="d2-ega-alcance__inner">
+    <!-- OPCION 1 - PERIMETRO
 
-      <div class="d2-ega-alcance__copy">
-        <p class="eyebrow">Clear scope. Straight answers.</p>
-        <h2 class="d2-ega-alcance__titulo" id="ega-alcance-t">A ranked shortlist&mdash;not a diagnosis.</h2>
-        <p class="d2-ega-alcance__lead">Energy Gap Analysis helps you decide where deeper work is justified. It does not guess at the cause or commit you to another service.</p>
+         Una forma completa --todo lo que podria saberse de un edificio-- y
+         dentro, recortado, lo que este servicio cubre. El hueco ES lo que
+         no entrega: el significado esta en la operacion booleana, no en un
+         check y una cruz.
 
-        <p class="d2-ega-alcance__libre">
-          <span class="d2-ega-alcance__tic" aria-hidden="true">
-            <svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5l3.5 3.5L12 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-          <strong>No lock-in.</strong> Review the findings, ask questions and decide what happens next.
-        </p>
-      </div>
+         mask-composite: subtract. Baseline desde diciembre de 2023 y SIN
+         prefijo; la documentacion que circula pidiendo -webkit- esta
+         obsoleta. -->
+    <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Option 1: Perimeter">
+      <section class="d2-ega-per d2-entra" data-comp-rol="prueba" aria-labelledby="ega-per-t">
+        <div class="d2-ega-per__inner">
 
-      <div class="d2-ega-alcance__tarjetas">
+          <div class="d2-ega-per__cab">
+            <p class="eyebrow">Clear scope. Straight answers.</p>
+            <h2 class="d2-ega-per__titulo" id="ega-per-t">A ranked shortlist&mdash;not a diagnosis.</h2>
+            <p class="d2-ega-per__lead">Energy Gap Analysis helps you decide where deeper work is justified. It does not guess at the cause or commit you to another service.</p>
+          </div>
 
-        <div class="d2-ega-tarj d2-ega-tarj--si">
-          <p class="d2-ega-tarj__eti">What you receive</p>
-          <ul>
-            <li>One comparison of the portfolio</li>
-            <li>A ranked list of priority buildings</li>
-            <li>The numbers behind the decision</li>
-            <li>A findings review and next-step recommendation</li>
-          </ul>
+          <div class="d2-ega-per__reja">
+
+            <div class="d2-ega-per__dentro">
+              <p class="d2-ega-per__eti">What you receive</p>
+              <ul class="d2-ega-per__lista">
+                <li>One comparison of the portfolio</li>
+                <li>A ranked list of priority buildings</li>
+                <li>The numbers behind the decision</li>
+                <li>A findings review and next-step recommendation</li>
+              </ul>
+              <p class="d2-ega-per__libre"><strong>No lock-in.</strong> Review the findings, ask questions and decide what happens next.</p>
+            </div>
+
+            <div class="d2-ega-per__fuera">
+              <p class="d2-ega-per__eti d2-ega-per__eti--fuera">What needs a closer look</p>
+              <ul class="d2-ega-per__lista-fuera">
+                <li>The exact source of the problem</li>
+                <li>How controls are programmed</li>
+                <li>Whether equipment is failing</li>
+                <li>Guaranteed savings or confirmed funding</li>
+              </ul>
+            </div>
+
+          </div>
         </div>
-
-        <div class="d2-ega-tarj d2-ega-tarj--no">
-          <p class="d2-ega-tarj__eti">What needs a closer look</p>
-          <ul>
-            <li>The exact source of the problem</li>
-            <li>How controls are programmed</li>
-            <li>Whether equipment is failing</li>
-            <li>Guaranteed savings or confirmed funding</li>
-          </ul>
-        </div>
-
-      </div>
-    </div>
-  </section>
+      </section>
     </div>
 
     <!-- OPCION 2 - PESO DESIGUAL
@@ -1507,7 +1554,7 @@
       </button>
 
       <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
-        <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Cards</small></button>
+        <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Perimeter</small></button>
         <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Weighted</small></button>
         <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Paired</small></button>
       </div>
@@ -1610,49 +1657,70 @@
   <div class="d2-caru" id="caru-ega-fondos" data-caru>
 
     <!-- OPCION 1 - TRES TARJETAS (la que ya existia) -->
-    <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Option 1: Cards">
-  <section class="d2-ega-fondos d2-entra" id="funding" aria-labelledby="ega-fondos-t">
-    <div class="d2-ega-fondos__inner">
+    <!-- OPCION 1 - DIALES
 
-      <div class="d2-ega-fondos__cab">
-        <div>
-          <p class="eyebrow">Commercial energy funding</p>
-          <h2 class="d2-ega-fondos__titulo" id="ega-fondos-t">Could a utility program help pay for what comes next?</h2>
+         Tres medidores de instrumento. No un anillo de progreso: un sector
+         de 270 grados que arranca en 135, como la aguja de un contador
+         analogico. Cada provincia barre hasta su posicion al entrar.
+
+         El angulo va en una variable registrada por @property como
+         <number>. Sin registrar no interpola y el barrido saltaria. -->
+    <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Option 1: Dials">
+      <section class="d2-ega-dial d2-entra" aria-labelledby="ega-dial-t">
+        <div class="d2-ega-dial__inner">
+
+          <div class="d2-ega-dial__cab">
+            <p class="eyebrow">Commercial energy funding</p>
+            <h2 class="d2-ega-dial__titulo" id="ega-dial-t">Could a utility program help pay for what comes next?</h2>
+            <p class="d2-ega-dial__lead">Program rules change, and the right path depends on your utility, building and proposed work. Rede helps you identify the relevant route before you invest in a detailed study or project.</p>
+          </div>
+
+          <p class="d2-ega-dial__aviso">
+            <span class="d2-ega-dial__aviso-eti">How eligibility works</span>
+            Energy Gap Analysis identifies a sensible next step. It is not automatically funded, and final eligibility is always confirmed against the current program requirements.
+          </p>
+
+          <ul class="d2-ega-dial__lista">
+            <li class="d2-ega-dial__item" style="--barrido:82;--i:0">
+              <span class="d2-ega-dial__medidor" aria-hidden="true">
+                <span class="d2-ega-dial__aguja"></span>
+                <span class="d2-ega-dial__centro">BC</span>
+              </span>
+              <p class="d2-ega-dial__region">British Columbia</p>
+              <h3 class="d2-ega-dial__nombre">BC Hydro programs</h3>
+              <p class="d2-ega-dial__texto">Commercial and institutional customers may be able to access support for eligible studies, operational improvements, equipment projects or ongoing energy management.</p>
+              <a class="d2-ega-dial__link" href="#contact">Check BC program fit
+                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </li>
+            <li class="d2-ega-dial__item" style="--barrido:64;--i:1">
+              <span class="d2-ega-dial__medidor" aria-hidden="true">
+                <span class="d2-ega-dial__aguja"></span>
+                <span class="d2-ega-dial__centro">SK</span>
+              </span>
+              <p class="d2-ega-dial__region">Saskatchewan</p>
+              <h3 class="d2-ega-dial__nombre">SaskPower programs</h3>
+              <p class="d2-ega-dial__texto">Available support depends on the customer, facility, energy opportunity and type of project being considered.</p>
+              <a class="d2-ega-dial__link" href="#contact">Check Saskatchewan program fit
+                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </li>
+            <li class="d2-ega-dial__item" style="--barrido:45;--i:2">
+              <span class="d2-ega-dial__medidor" aria-hidden="true">
+                <span class="d2-ega-dial__aguja"></span>
+                <span class="d2-ega-dial__centro">CA</span>
+              </span>
+              <p class="d2-ega-dial__region">Other provinces</p>
+              <h3 class="d2-ega-dial__nombre">Regional program review</h3>
+              <p class="d2-ega-dial__texto">Rede can discuss other provincial energy-efficiency programs relevant to commercial, institutional and public-sector buildings.</p>
+              <a class="d2-ega-dial__link" href="#contact">Ask about your province
+                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </li>
+          </ul>
+
         </div>
-        <p class="d2-ega-fondos__lead">Program rules change, and the right path depends on your utility, building and proposed work. Rede helps you identify the relevant route before you invest in a detailed study or project.</p>
-      </div>
-
-      <ul class="d2-ega-fondos__lista">
-        <li class="d2-ega-fondo">
-          <p class="d2-ega-fondo__region">British Columbia</p>
-          <h3>BC Hydro programs</h3>
-          <p>Commercial and institutional customers may be able to access support for eligible studies, operational improvements, equipment projects or ongoing energy management.</p>
-          <a href="#contact">Check BC program fit
-            <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </li>
-        <li class="d2-ega-fondo">
-          <p class="d2-ega-fondo__region">Saskatchewan</p>
-          <h3>SaskPower programs</h3>
-          <p>Available support depends on the customer, facility, energy opportunity and type of project being considered.</p>
-          <a href="#contact">Check Saskatchewan program fit
-            <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </li>
-        <li class="d2-ega-fondo">
-          <p class="d2-ega-fondo__region">Other provinces</p>
-          <h3>Regional program review</h3>
-          <p>Rede can discuss other provincial energy-efficiency programs relevant to commercial, institutional and public-sector buildings.</p>
-          <a href="#contact">Ask about your province
-            <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </li>
-      </ul>
-
-      <p class="d2-ega-fondos__nota"><strong>Important:</strong> Energy Gap Analysis identifies a sensible next step. It is not automatically funded, and final eligibility is always confirmed against the current program requirements.</p>
-
-    </div>
-  </section>
+      </section>
     </div>
 
     <!-- OPCION 2 - REGISTRO
@@ -1782,7 +1850,7 @@
       </button>
 
       <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
-        <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Cards</small></button>
+        <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Dials</small></button>
         <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Ledger</small></button>
         <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Focus</small></button>
       </div>
