@@ -745,12 +745,12 @@
    sobre oscuro da 8.86:1 y se ve BIEN-- pero su animacion lo lleva al
    verde de marca, que en un numero de 62px aguanta. Solo se ajusta el
    punto de partida para que no compita con el titular blanco. */
-.d2 [data-comp-tono="oscuro"] .d2-ega-pasos2 .d2-ega-pasos2__num {
+.d2 [data-comp-tono="oscuro"].d2-ega-pasos2 .d2-ega-pasos2__num {
   color: #858585;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .d2 [data-comp-tono="oscuro"] .d2-ega-pasos2.es-visible .d2-ega-pasos2__num {
+  .d2 [data-comp-tono="oscuro"].d2-ega-pasos2.es-visible .d2-ega-pasos2__num {
     animation-name: d2-ega-p2-enciende-oscuro;
   }
 }
@@ -772,7 +772,7 @@
   border-color: rgba(255, 255, 255, .18);
 }
 
-.d2 [data-comp-tono="oscuro"] .d2-ega-pasos2 .d2-ega-pasos2__paso:last-child {
+.d2 [data-comp-tono="oscuro"].d2-ega-pasos2 .d2-ega-pasos2__paso:last-child {
   border-bottom-color: rgba(255, 255, 255, .18);
 }
 
