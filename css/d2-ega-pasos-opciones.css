@@ -114,7 +114,6 @@
 
 .d2 .d2-ega-pasos3__paso {
   padding-left: 22px;
-  border-left: 2px solid var(--c-borde, #E4E4E4);
 }
 
 .d2 .d2-ega-pasos3__num {
@@ -224,7 +223,6 @@
 
 .d2 .d2-ega-puente2__lado--fin {
   padding-left: clamp(24px, 4vw, 64px);
-  border-left: 1px solid var(--c-borde, #E4E4E4);
 }
 
 .d2 .d2-ega-puente2__eti {
@@ -329,8 +327,7 @@
   .d2 .d2-ega-puente2__lado--fin {
     padding-left: 0;
     padding-top: 26px;
-    border-left: 0;
-    border-top: 1px solid var(--c-borde, #E4E4E4);
+      border-top: 1px solid var(--c-borde, #E4E4E4);
   }
 
   .d2 .d2-ega-puente3 {
@@ -702,7 +699,6 @@
 .d2 :is(.d2-ega-fon2__aviso, .d2-ega-fon3__aviso) {
   margin: 0 0 36px;
   padding: 18px 22px;
-  border-left: 3px solid var(--c-verde-marca, #39B54A);
   background: rgba(255, 255, 255, .05);
   border-radius: 4px;
   font-size: 14.5px;
@@ -1064,7 +1060,6 @@
 
 .d2 .d2-ega-termo__paso {
   padding-left: 22px;
-  border-left: 2px solid var(--c-borde, #E4E4E4);
 }
 
 .d2 .d2-ega-termo__num {
@@ -1473,7 +1468,6 @@
 .d2 .d2-ega-dial__aviso {
   margin: 0 0 40px;
   padding: 18px 22px;
-  border-left: 3px solid var(--c-verde-marca, #39B54A);
   background: rgba(255, 255, 255, .05);
   border-radius: 4px;
   font-size: 14.5px;
@@ -2291,7 +2285,6 @@
 .d2 .d2-ega-piv__ficha-caja {
   padding: clamp(22px, 2.6vw, 30px);
   background: var(--c-fondo-alt, #F5F5F5);
-  border-left: 3px solid var(--c-verde-hover, #026F00);
   border-radius: 4px;
 }
 
@@ -2845,4 +2838,161 @@
     grid-template-columns: 1fr;
     gap: 12px;
   }
+}
+
+
+/* ==========================================================================
+   FUERA LOS FILOS DE ACENTO (14/9/2026)
+
+   El usuario senalo con una captura la barra verde vertical a la izquierda
+   de un panel. Es el recurso mas repetido que existe --lo lleva cualquier
+   plantilla-- y yo lo tenia en SEIS sitios distintos de esta pagina.
+
+   No significa nada: no dice "aviso", no dice "energia", solo rellena el
+   borde izquierdo porque hay que poner algo ahi.
+
+   LO QUE ENTRA EN SU LUGAR
+
+   Una ESCALA DE MEDIDA: marcas horizontales de distinta longitud, como las
+   de una regla graduada o un instrumento. Se dibujan con un
+   repeating-linear-gradient enmascarado, no con un border.
+
+   Por que esto si significa: una escala dice "esto esta medido", que es
+   exactamente lo que Rede hace. Y las marcas mayores cada cinco son la
+   convencion de cualquier instrumento real.
+
+   Ademas resuelve algo que el filo no podia: la escala se DESVANECE en los
+   extremos, asi que no corta la composicion como una regla de punta a
+   punta.
+   ========================================================================== */
+
+/* La escala, en una variable para no repetir el gradiente seis veces.
+
+   Marcas cada 7px: las menores de 5px y, cada cinco, una mayor de 10px.
+   La segunda capa es la que pinta las mayores, desplazada 35px. */
+.d2 .d2-ega-escala,
+.d2 :is(.d2-ega-piv__ficha-caja, .d2-ega-fon2__aviso,
+        .d2-ega-fon3__aviso, .d2-ega-dial__aviso) {
+  --escala-color: var(--c-verde-hover, #026F00);
+  position: relative;
+}
+
+.d2 :is(.d2-ega-piv__ficha-caja, .d2-ega-fon2__aviso,
+        .d2-ega-fon3__aviso, .d2-ega-dial__aviso)::before {
+  content: "";
+  position: absolute;
+  inset-block: 10%;
+  inset-inline-start: 0;
+  inline-size: 11px;
+  background:
+    /* Las marcas mayores, cada 35px */
+    repeating-linear-gradient(to bottom,
+      var(--escala-color) 0 1.5px,
+      transparent 1.5px 35px) left / 11px 100% no-repeat,
+    /* Las menores, cada 7px */
+    repeating-linear-gradient(to bottom,
+      var(--escala-color) 0 1px,
+      transparent 1px 7px) left / 5px 100% no-repeat;
+  /* El desvanecido de los extremos: la escala no corta la composicion.
+     Es el recurso que documenta Google Chrome para separar sin filo. */
+  -webkit-mask: linear-gradient(to bottom,
+    transparent, #000 14%, #000 86%, transparent);
+          mask: linear-gradient(to bottom,
+    transparent, #000 14%, #000 86%, transparent);
+  /* .62 y no .5: medido, al 50% la escala se queda en 2.26:1 sobre el
+     panel claro y casi no se lee. No le aplica el umbral de 3.0 --es
+     decorativa, no informa-- pero si no se ve, no vale para nada. */
+  opacity: .62;
+  pointer-events: none;
+}
+
+/* El panel deja sitio a la escala sin el border. */
+.d2 .d2-ega-piv__ficha-caja {
+  padding-left: clamp(30px, 3.2vw, 40px);
+}
+
+.d2 :is(.d2-ega-fon2__aviso, .d2-ega-fon3__aviso, .d2-ega-dial__aviso) {
+  padding-left: 30px;
+}
+
+/* Sobre el fondo oscuro la escala va en el verde de marca, que ahi si
+   tiene contraste suficiente. */
+.d2 :is(.d2-ega-fon2__aviso, .d2-ega-fon3__aviso, .d2-ega-dial__aviso) {
+  --escala-color: var(--c-verde-marca, #39B54A);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-piv__ficha-caja {
+  --escala-color: var(--c-verde-marca, #39B54A);
+}
+
+
+/* --------------------------------------------------------------------------
+   LOS FILOS DE LOS PASOS
+
+   Los de .d2-ega-termo__paso y .d2-ega-pasos3__paso marcan que los tres
+   pasos son una secuencia. Ahi el filo SI dice algo, pero de punta a
+   punta corta.
+
+   Se quedan, con el mismo desvanecido: la linea existe donde hay texto y
+   se apaga en los bordes.
+   -------------------------------------------------------------------------- */
+
+.d2 :is(.d2-ega-termo__paso, .d2-ega-pasos3__paso) {
+  position: relative;
+}
+
+.d2 :is(.d2-ega-termo__paso, .d2-ega-pasos3__paso)::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: 2px;
+  background: var(--c-borde, #E4E4E4);
+  -webkit-mask: linear-gradient(to bottom, #000 78%, transparent);
+          mask: linear-gradient(to bottom, #000 78%, transparent);
+}
+
+/* El filo del ultimo paso se apaga antes: la secuencia termina ahi y una
+   linea que sigue sugiere que falta algo. */
+.d2 :is(.d2-ega-termo__paso:last-child, .d2-ega-pasos3__paso:last-child)::before {
+  -webkit-mask: linear-gradient(to bottom, #000 42%, transparent);
+          mask: linear-gradient(to bottom, #000 42%, transparent);
+}
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-ega-termo__paso, .d2-ega-pasos3__paso)::before {
+  background: rgba(255, 255, 255, .22);
+}
+
+
+/* --------------------------------------------------------------------------
+   EL FILO DEL PUENTE 2
+
+   Separaba los dos lados de la comparacion. Mismo tratamiento: existe
+   donde hay contenido y se desvanece en los extremos.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-ega-puente2__lado--fin {
+  position: relative;
+}
+
+.d2 .d2-ega-puente2__lado--fin::before {
+  content: "";
+  position: absolute;
+  inset-block: 4%;
+  inset-inline-start: 0;
+  inline-size: 1px;
+  background: var(--c-borde, #E4E4E4);
+  -webkit-mask: linear-gradient(to bottom,
+    transparent, #000 20%, #000 80%, transparent);
+          mask: linear-gradient(to bottom,
+    transparent, #000 20%, #000 80%, transparent);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-puente2__lado--fin::before {
+  background: rgba(255, 255, 255, .22);
+}
+
+@media (max-width: 760px) {
+  /* Apilados, el filo vertical no separa nada. */
+  .d2 .d2-ega-puente2__lado--fin::before { display: none; }
 }
