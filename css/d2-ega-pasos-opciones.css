@@ -33,47 +33,7 @@
    Solo `transform` y `opacity`, las unicas que se quedan en el compositor
    (web.dev). Nada de `top`, `height` ni `box-shadow`.
 
-   Todo dentro de @media (prefers-reduced-motion: no-preference): el estado
-   por defecto es CONTENIDO VISIBLE y la animacion es el anadido. Al reves
-   --animar siempre y anular despues-- deja la seccion invisible si el
-   navegador no aplica la anulacion.
-
-   El disparo es la clase .es-visible que ya pone el observador de
-   `d2-entra`, el mismo que usa el resto de la pagina. No se usa
-   `animation-timeline: view()` pese a ser mas moderno: MDN lo marca
-   "Limited availability" y caniuse da 87,22% --Safari solo desde 26,
-   Firefox desde 158--. Ese 13% son despachos corporativos y gestores de
-   activos, o sea el comprador de Rede.
-   ========================================================================== */
-
-
-/* ==========================================================================
-   OPCION 2 — EL NUMERO COMO ARQUITECTURA
-
-   Filas en vez de columnas, y el numero deja de ser una etiqueta pequena
-   para convertirse en la estructura: 01 02 03 a tamano de titular, en gris
-   claro, ocupando su propia columna.
-
-   Es el gesto de Watershed llevado al limite --numero prominente, cero
-   conectores-- y funciona mejor en movil, donde tres columnas se aplastan
-   y aqui las filas se apilan solas.
-   ========================================================================== *
-
-/* El numero grande.
-
-   El paso de gris a verde va por `color`, que NO es compositor-friendly. Se
-   acepta a proposito: son tres elementos, ocurre una vez y no se repite. La
-   alternativa --dos capas de texto superpuestas-- duplicaba el numero para
-   los lectores de pantalla, que es peor. *
-
-@media (prefers-reduced-motion: no-preference) {
-
-
-  /* El numero se enciende cuando su fila ya esta puesta. */
-
-}
-
-/* El verde entra y se queda: encendido, no parpadeo.
+   Todo dentro de /* El verde entra y se queda: encendido, no parpadeo.
 
    Va el --c-verde-hover y no el de marca: medido, el de marca da 2.40:1
    sobre el gris de la seccion, que no llega ni al umbral de texto grande
@@ -534,8 +494,10 @@
   color: #FFFFFF;
 }
 
-.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos3)
-  :is(.d2-ega-pasos3__lead,
+.d2 [data-comp-tono="oscuro"].d2-ega-pasos3
+  :is(.d2-ega-pasos3__lead, .d2-ega-pasos3__d) {
+  color: #C9C9C9;
+}
 
 /* El eyebrow "Start with the portfolio": el verde oscuro se queda en
    1.97:1 sobre este fondo. Entra el verde de MARCA, que da 4.74:1 --el
@@ -555,7 +517,7 @@
 /* El numero grande de la opcion 2 arranca en gris claro --#D8D8D8, que
    sobre oscuro da 8.86:1 y se ve BIEN-- pero su animacion lo lleva al
    verde de marca, que en un numero de 62px aguanta. Solo se ajusta el
-   punto de partida para que no compita con el titular blanco. *
+   punto de partida para que no compita con el titular blanco. */
 
 /* El verde del LOGO, no el palido. A 38-62px en negrita el umbral es 3.0
    --texto grande-- y el del logo da 4.15:1 sobre este fondo, asi que se
@@ -1675,8 +1637,14 @@
 @media (prefers-reduced-motion: no-preference) {
 
   /* El barrido: la capa termica se revela de izquierda a derecha. Lo que
-     se mueve es el STOP de la mascara, no el filtro. */
-  .d2 .d2-ega-termo .d2-ega-termo__col::after {
+     se mueve es el STOP de la mascara, no el filtro.
+
+     Va sobre .es-visible y NO sobre la seccion a secas: si el observador
+     no llega a marcarla --script bloqueado, error antes de su turno--,
+     --termo-frente se queda en 0% y las doce columnas quedarian grises,
+     sin la lectura que la seccion promete. Asi el estado por defecto es
+     la termografia completa y el barrido es el anadido. */
+  .d2 .d2-ega-termo.es-visible .d2-ega-termo__col::after {
     -webkit-mask: linear-gradient(90deg,
       #000 var(--termo-frente),
       transparent var(--termo-frente));
@@ -1873,6 +1841,13 @@
     radial-gradient(circle at 18% 28%, #000 var(--per-radio), transparent var(--per-radio));
   -webkit-mask-composite: xor;
           mask-composite: subtract;
+  /* opacity:0 por defecto y NO solo al final de la animacion.
+
+     Con --per-radio en 0% la resta no quita nada, asi que la capa se ve
+     ENTERA: un velo verde permanente sobre el panel. Solo debe verse
+     mientras el barrido corre. Si el navegador no soporta @property o el
+     usuario pide menos movimiento, no se ve nada, que es el estado
+     correcto: el panel limpio. */
   opacity: 0;
 }
 
@@ -2115,6 +2090,14 @@
 
 /* --- El medidor --- */
 
+/* El contenedor NO lleva mascara.
+
+   La llevaba y recortaba TODO su contenido, el texto del centro incluido:
+   una mascara se aplica al arbol ya compuesto, asi que un mask:none en el
+   hijo no la contrarresta. El codigo de provincia quedaba invisible.
+
+   Ahora el anillo lo dibuja ::before --su propia capa, con su propia
+   mascara-- y el texto va por encima, sin recortar. */
 .d2 .d2-ega-dial__medidor {
   position: relative;
   display: grid;
@@ -2122,9 +2105,15 @@
   width: 92px;
   height: 92px;
   margin: 22px 0 20px;
+}
+
+/* La pista: el arco de 270 grados desde 135. El resto del circulo queda
+   vacio, que es lo que distingue un instrumento de un anillo de progreso. */
+.d2 .d2-ega-dial__medidor::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   border-radius: 50%;
-  /* El arco: 270 grados desde 135. El resto del circulo queda vacio, que
-     es lo que distingue un instrumento de un anillo de progreso. */
   background:
     conic-gradient(from 135deg,
       rgba(255, 255, 255, .13) 0deg,
@@ -2134,7 +2123,8 @@
           mask: radial-gradient(circle, transparent 60%, #000 61%);
 }
 
-/* La aguja: el mismo arco, recortado al angulo actual y en verde. */
+/* La aguja: el mismo arco, recortado al angulo actual y en verde. Lleva su
+   propia mascara porque ya no la hereda del padre. */
 .d2 .d2-ega-dial__aguja {
   position: absolute;
   inset: 0;
@@ -2144,10 +2134,12 @@
       var(--c-verde-marca, #39B54A) 0deg,
       var(--c-verde-marca, #39B54A) calc(var(--dial-ang) * 1deg),
       transparent calc(var(--dial-ang) * 1deg));
+  -webkit-mask: radial-gradient(circle, transparent 60%, #000 61%);
+          mask: radial-gradient(circle, transparent 60%, #000 61%);
 }
 
-/* El codigo de provincia, en el centro y fuera de la mascara del anillo.
-   Va en su propia capa para que el recorte del medidor no se lo coma. */
+/* El codigo de provincia, en el centro. Ya no hace falta contrarrestar
+   ninguna mascara: el padre no la tiene. */
 .d2 .d2-ega-dial__centro {
   position: absolute;
   inset: 0;
@@ -2157,10 +2149,6 @@
   font-weight: 800;
   letter-spacing: .06em;
   color: #FFFFFF;
-  /* La mascara del padre recorta el centro; este texto la contrarresta
-     saliendo de la pila de mascara con su propio contexto. */
-  -webkit-mask: none;
-          mask: none;
 }
 
 .d2 .d2-ega-dial__region {
