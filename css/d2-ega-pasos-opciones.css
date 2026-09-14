@@ -3126,3 +3126,166 @@
   .d2 .d2-ega-per__lista-fuera li { padding-left: 26px; }
   .d2 .d2-ega-per__lista-fuera li::after { display: none; }
 }
+
+
+/* ==========================================================================
+   PERIMETER — EL PANEL, REHECHO (14/9/2026)
+
+   El usuario: "lo unico que no me termina de gustar de todo es esto".
+
+   Tenia razon. El panel era una tarjeta verde con esquinas redondeadas y
+   vinetas redondas: tres decisiones por defecto, ninguna dice nada de
+   energia ni de medicion. Podria ser de cualquier sitio.
+
+   QUE CAMBIA
+
+   1. El relleno plano pasa a un degradado MUY leve que se apaga hacia
+      abajo, como la intensidad que la seccion mide. Sigue siendo
+      practicamente plano: no es un efecto, es que el color no sea
+      uniforme.
+
+   2. Las esquinas redondeadas se van. Este panel no es una tarjeta: es
+      un AREA DELIMITADA, y un area de trabajo tiene esquinas vivas. Es
+      el mismo criterio que ya aplica el sistema en el CTA y en la ficha
+      del mapa, donde el propio CSS dice: "alli las esquinas vivas
+      significan algo... un albaran no tiene esquinas redondeadas".
+
+      En su lugar, marcas de esquina: cuatro angulos cortos en las
+      esquinas, como los de un plano tecnico o un visor. Delimitan sin
+      encerrar.
+
+   3. Las vinetas redondas pasan a MARCAS DE ESCALA: un trazo corto y
+      grueso, como las de la regla del instrumento que ya usa la opcion
+      3. Cada entregable es una lectura, no un punto de lista.
+
+   Lo importante: ninguna de las tres es una decision de una palabra
+   clave. Un border-radius es una palabra; cuatro marcas de esquina
+   dibujadas con gradientes enmascarados, no.
+   ========================================================================== */
+
+.d2 .d2-ega-per__dentro {
+  position: relative;
+  padding: clamp(28px, 3.2vw, 42px);
+  border-radius: 0;
+  /* El degradado se apaga hacia abajo: lo que se mide pierde intensidad.
+     La diferencia entre los dos extremos es minima a proposito --el panel
+     tiene que leerse plano, no como un fondo con efecto--. */
+  background: linear-gradient(to bottom,
+    var(--c-verde-claro, #E8F5E8) 0%,
+    color-mix(in srgb, var(--c-verde-claro, #E8F5E8) 55%, #FFFFFF) 100%);
+}
+
+/* Las marcas de esquina. Cuatro angulos cortos, no un borde: delimitan el
+   area sin encerrarla, que es lo que hace un plano tecnico.
+
+   Se dibujan con cuatro gradientes en una sola capa: dos por esquina, uno
+   horizontal y otro vertical. Sin elementos extra y sin imagenes. */
+.d2 .d2-ega-per__dentro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --m: var(--c-verde-hover, #026F00);
+  --g: 14px;
+  background:
+    /* superior izquierda */
+    linear-gradient(to right, var(--m) 0 var(--g), transparent 0) top left / 100% 1.5px no-repeat,
+    linear-gradient(to bottom, var(--m) 0 var(--g), transparent 0) top left / 1.5px 100% no-repeat,
+    /* superior derecha */
+    linear-gradient(to left, var(--m) 0 var(--g), transparent 0) top right / 100% 1.5px no-repeat,
+    linear-gradient(to bottom, var(--m) 0 var(--g), transparent 0) top right / 1.5px 100% no-repeat,
+    /* inferior izquierda */
+    linear-gradient(to right, var(--m) 0 var(--g), transparent 0) bottom left / 100% 1.5px no-repeat,
+    linear-gradient(to top, var(--m) 0 var(--g), transparent 0) bottom left / 1.5px 100% no-repeat,
+    /* inferior derecha */
+    linear-gradient(to left, var(--m) 0 var(--g), transparent 0) bottom right / 100% 1.5px no-repeat,
+    linear-gradient(to top, var(--m) 0 var(--g), transparent 0) bottom right / 1.5px 100% no-repeat;
+  opacity: .55;
+}
+
+/* Las marcas se dibujan al entrar, de la esquina hacia dentro. */
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .d2-ega-per .d2-ega-per__dentro::after {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+
+  .d2 .d2-ega-per.es-visible .d2-ega-per__dentro::after {
+    animation: d2-per-marcas .6s cubic-bezier(.32, .72, 0, 1) .2s both;
+  }
+}
+
+@keyframes d2-per-marcas {
+  to { opacity: .55; transform: none; }
+}
+
+/* --- Las marcas de escala, en lugar de las vinetas --- */
+
+.d2 .d2-ega-per__lista li {
+  padding-left: 30px;
+}
+
+.d2 .d2-ega-per__lista li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: .62em;
+  /* Un trazo, no un punto: la misma marca de la regla graduada de la
+     opcion 3. Cada entregable es una lectura. */
+  width: 13px;
+  height: 2px;
+  border-radius: 0;
+  background: var(--c-verde-hover, #026F00);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .d2-ega-per .d2-ega-per__lista li::before {
+    transform: scaleX(0);
+  }
+
+  .d2 .d2-ega-per.es-visible .d2-ega-per__lista li::before {
+    animation: d2-per-marca-item .34s cubic-bezier(.32, .72, 0, 1) both;
+  }
+
+  .d2 .d2-ega-per.es-visible .d2-ega-per__lista li:nth-child(1)::before { animation-delay: .34s; }
+  .d2 .d2-ega-per.es-visible .d2-ega-per__lista li:nth-child(2)::before { animation-delay: .42s; }
+  .d2 .d2-ega-per.es-visible .d2-ega-per__lista li:nth-child(3)::before { animation-delay: .50s; }
+  .d2 .d2-ega-per.es-visible .d2-ega-per__lista li:nth-child(4)::before { animation-delay: .58s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-ega-per__lista li::before { transform: none; }
+  .d2 .d2-ega-per__dentro::after { opacity: .55; transform: none; }
+}
+
+@keyframes d2-per-marca-item {
+  to { transform: scaleX(1); }
+}
+
+/* El filete del "No lock-in": el mismo fundido que el resto de la pagina,
+   en vez de una regla de punta a punta. */
+.d2 .d2-ega-per__libre {
+  border-top: 0;
+  background:
+    linear-gradient(90deg,
+      color-mix(in srgb, var(--c-verde-hover, #026F00) 30%, transparent) 0 62%,
+      transparent)
+    top / 100% 1px no-repeat;
+}
+
+/* --- Tono oscuro --- */
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-per__dentro {
+  background: linear-gradient(to bottom,
+    rgba(57, 181, 74, .1) 0%,
+    rgba(57, 181, 74, .04) 100%);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-per__dentro::after {
+  --m: var(--c-verde-marca, #39B54A);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-per__lista li::before {
+  background: var(--c-verde-marca, #39B54A);
+}
