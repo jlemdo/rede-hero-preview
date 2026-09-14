@@ -512,12 +512,9 @@
 /* El verde de MARCA, no un tono aclarado. A 12-13px esto es texto pequeno
    y necesita 4.5:1: el del logo --#39A935-- se queda en 4.15 y el de
    marca da 4.74, asi que aqui entra el verde de verdad del sistema. */
-.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos3)
-
-/* El numero grande de la opcion 2 arranca en gris claro --#D8D8D8, que
-   sobre oscuro da 8.86:1 y se ve BIEN-- pero su animacion lo lleva al
-   verde de marca, que en un numero de 62px aguanta. Solo se ajusta el
-   punto de partida para que no compita con el titular blanco. */
+.d2 [data-comp-tono="oscuro"].d2-ega-pasos3 .d2-ega-pasos3__num {
+  color: var(--c-verde-marca, #39B54A);
+}
 
 /* El verde del LOGO, no el palido. A 38-62px en negrita el umbral es 3.0
    --texto grande-- y el del logo da 4.15:1 sobre este fondo, asi que se
@@ -531,13 +528,19 @@
 
 /* --- Filos y separadores --- */
 
-.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos3)
+.d2 [data-comp-tono="oscuro"].d2-ega-pasos3 .d2-ega-pasos3__paso {
+  border-left-color: rgba(255, 255, 255, .18);
+}
 
 /* --- El circuito de fondo --- */
 
-.d2 [data-comp-tono="oscuro"]
+.d2 [data-comp-tono="oscuro"] .d2-ega-pasos3__circuito path {
+  stroke: rgba(176, 225, 183, .22);
+}
 
-.d2 [data-comp-tono="oscuro"]
+.d2 [data-comp-tono="oscuro"] .d2-ega-pasos3__circuito circle {
+  stroke: rgba(176, 225, 183, .38);
+}
 
 /* --- La cartera de la opcion 3 --- */
 
