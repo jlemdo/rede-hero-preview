@@ -433,11 +433,15 @@
                 </g>
               </svg>
 
+              <p class="d2-ega-graf__eje-y" aria-hidden="true">% annual cost saved</p>
+
               <p class="d2-ega-graf__ejes" aria-hidden="true">
                 <span>School 9.5%</span>
                 <span class="d2-ega-graf__media">Average 5.8%</span>
                 <span>Shopping mall 2%</span>
               </p>
+
+              <p class="d2-ega-graf__cuenta" aria-hidden="true">13 building types</p>
             </div>
 
             <p class="d2-ega-graf__fuente">
@@ -649,17 +653,41 @@
                 <path class="d2-ega-onda__despues" d="M14 32.0 L35 31.0 L57 30.0 L78 31.0 L100 32.0 L121 35.0 L142 48.0 L164 66.0 L185 82.0 L207 89.0 L228 91.0 L249 90.0 L271 87.0 L292 89.0 L313 90.0 L335 88.0 L356 82.0 L378 68.0 L399 53.0 L420 43.0 L442 38.0 L463 35.0 L485 33.0 L506 32.0"
                       stroke="var(--c-verde)" stroke-width="2.5"
                       stroke-linecap="round" stroke-linejoin="round"/>
+              
+                <!-- Donde el gap es mayor: de madrugada, con el edificio
+                     vacio. Es lo que el pie afirma en palabras, senalado. -->
+                <g class="d2-ega-onda__marca">
+                  <line x1="76" y1="26" x2="76" y2="104" stroke="var(--c-verde-hover)"
+                        stroke-width="1" stroke-dasharray="2 3"/>
+                  <circle cx="76" cy="26" r="2.5" fill="var(--c-verde-hover)"/>
+                  <circle cx="76" cy="104" r="2.5" fill="var(--c-verde-hover)"/>
+                </g>
               </svg>
+
+              <p class="d2-ega-onda__eje-y" aria-hidden="true">Energy use</p>
+
+              <p class="d2-ega-onda__franjas" aria-hidden="true">
+                <span class="d2-ega-onda__franja d2-ega-onda__franja--vacio">Building empty</span>
+                <span class="d2-ega-onda__franja">Occupied</span>
+                <span class="d2-ega-onda__franja d2-ega-onda__franja--vacio">Building empty</span>
+              </p>
 
               <p class="d2-ega-onda__horas" aria-hidden="true">
                 <span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span>
               </p>
+
+              <p class="d2-ega-onda__leyenda" aria-hidden="true">
+                <span class="d2-ega-onda__clave d2-ega-onda__clave--antes">Before</span>
+                <span class="d2-ega-onda__clave d2-ega-onda__clave--despues">After optimization</span>
+                <span class="d2-ega-onda__clave d2-ega-onda__clave--gap">The gap</span>
+              </p>
             </div>
 
             <p class="d2-ega-onda__pie">
-              Typical daily load shape, before and after optimization. The gap is
-              widest when the building is empty &mdash; which is where a portfolio
-              comparison tends to find it first.
+              Illustrative daily load shape, before and after optimization. The
+              gap is widest when the building is empty &mdash; which is where a
+              portfolio comparison tends to find it first. Your own profile comes
+              from your utility data.
             </p>
             </div>
           </div>

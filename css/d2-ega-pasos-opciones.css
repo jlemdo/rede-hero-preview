@@ -2339,3 +2339,152 @@
 
 /* La tarjeta se queda blanca, como la de la grafica y la calculadora:
    es un instrumento y tiene su propia superficie. */
+
+
+/* ==========================================================================
+   LAS ETIQUETAS DE LAS GRAFICAS (14/9/2026)
+
+   Lo minimo para leerlas de un vistazo, sin convertirlas en un panel de
+   control. La regla: todo lo que se anade sale de datos que YA existen, y
+   ninguna cifra es nueva.
+
+   Que les faltaba:
+
+     Benchmarks   no decia QUE mide el eje vertical. Se veia una linea que
+                  baja sin saber de que. Tampoco cuantos tipos son.
+     Curva        no decia CUANDO el edificio esta vacio, que es justo
+                  donde el gap se abre y lo que el pie ya afirma en texto.
+   ========================================================================== */
+
+/* El eje vertical, en pequeno y arriba: no es un titulo, es una unidad. */
+.d2 :is(.d2-ega-graf__eje-y, .d2-ega-onda__eje-y) {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* El recuento, al pie de la grafica de benchmarks. Dice que la linea son
+   trece lecturas y no una curva continua. */
+.d2 .d2-ega-graf__cuenta {
+  margin: 8px 0 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* --- Las franjas horarias de la curva --- */
+
+/* Tres tramos proporcionales al dia: vacio hasta las 6, ocupado hasta las
+   18, vacio de nuevo. Es la misma division que dibuja la curva. */
+.d2 .d2-ega-onda__franjas {
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  gap: 2px;
+  margin: 10px 0 0;
+}
+
+.d2 .d2-ega-onda__franja {
+  padding: 5px 8px;
+  border-radius: 3px;
+  background: var(--c-fondo-alt, #F5F5F5);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-align: center;
+  color: var(--c-texto-suave, #6B6B6B);
+  /* Los rotulos no caben en el tramo estrecho a ciertos anchos: antes de
+     desbordar, se recortan. */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Las franjas de edificio vacio, en verde muy claro: es donde el gap se
+   abre, y conviene que se note sin gritar. */
+.d2 .d2-ega-onda__franja--vacio {
+  background: var(--c-verde-claro, #E8F5E8);
+  color: var(--c-verde-hover, #026F00);
+}
+
+/* --- La leyenda de las dos curvas --- */
+
+.d2 .d2-ega-onda__leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 12px 0 0;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .d2-ega-onda__clave {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* La muestra de cada clave: una raya del mismo trazo que la curva, no un
+   cuadrado de color. Asi la leyenda usa el lenguaje de la grafica. */
+.d2 .d2-ega-onda__clave::before {
+  content: "";
+  width: 16px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.d2 .d2-ega-onda__clave--antes::before {
+  /* Discontinua, como la curva de antes. El degradado la imita sin
+     necesidad de un SVG. */
+  background: repeating-linear-gradient(90deg,
+    var(--c-texto-suave, #6B6B6B) 0 4px,
+    transparent 4px 7px);
+}
+
+.d2 .d2-ega-onda__clave--despues::before {
+  background: var(--c-verde-hover, #026F00);
+  height: 2.5px;
+}
+
+.d2 .d2-ega-onda__clave--gap::before {
+  height: 10px;
+  border-radius: 2px;
+  background: var(--c-verde-claro, #E8F5E8);
+  border: 1px solid var(--c-verde-marca, #39B54A);
+}
+
+/* --- La marca del gap mas ancho, dentro del SVG --- */
+
+.d2 .d2-ega-onda__marca {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Llega al final: primero las curvas, luego el area, y solo entonces se
+     senala donde es mayor. Un dato cada vez. */
+  .d2 .es-visible .d2-ega-onda .d2-ega-onda__marca {
+    animation: d2-onda-gap .6s ease-out 2.4s forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-ega-onda .d2-ega-onda__marca { opacity: 1; }
+}
+
+@media (max-width: 560px) {
+  /* A este ancho "Building empty" no cabe en un cuarto de la fila. Se
+     queda solo la franja central rotulada, que es la que explica el
+     contraste. */
+  .d2 .d2-ega-onda__franja--vacio { font-size: 0; }
+
+  .d2 .d2-ega-onda__franja--vacio::after {
+    content: "—";
+    font-size: 10.5px;
+  }
+}
