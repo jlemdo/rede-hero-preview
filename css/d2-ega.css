@@ -223,7 +223,11 @@
   font-size: 13px;
   font-weight: 800;
   letter-spacing: .12em;
-  color: var(--c-verde-marca, #39B54A);
+  /* A 13px esto es texto pequeno: necesita 4.5:1. El verde de marca se
+     queda en 2.40:1 sobre el gris de la seccion --venia asi de antes--.
+     El --c-verde-hover da 5.78:1, que es el que la hoja de tokens manda
+     usar para texto pequeno. (14/9/2026) */
+  color: var(--c-verde-hover, #026F00);
 }
 
 .d2 .d2-ega-pasos__paso h3 {

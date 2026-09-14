@@ -167,7 +167,11 @@
   font-weight: 800;
   line-height: .9;
   letter-spacing: -.03em;
-  color: #D8D8D8;
+  /* #D8D8D8 daba 1.28:1 sobre el gris de la seccion: el numero se leia
+     como una marca de agua, no como un dato. A 38-62px en negrita el
+     umbral es 3.0 --texto grande-- y este gris da 3.11 sobre el gris y
+     3.45 sobre blanco, asi que cumple en las dos composiciones claras. */
+  color: #8A8A8A;
   font-variant-numeric: tabular-nums;
 }
 
@@ -213,11 +217,15 @@
   .d2 .d2-ega-pasos2.es-visible .d2-ega-pasos2__paso:nth-child(3) .d2-ega-pasos2__num { animation-delay: .66s; }
 }
 
-/* El verde entra y se queda: encendido, no parpadeo. */
+/* El verde entra y se queda: encendido, no parpadeo.
+
+   Va el --c-verde-hover y no el de marca: medido, el de marca da 2.40:1
+   sobre el gris de la seccion, que no llega ni al umbral de texto grande
+   --3.0--. A 62px seguiria siendo un numero dificil de leer. */
 @keyframes d2-ega-p2-enciende {
-  0%   { color: #D8D8D8; }
-  28%  { color: var(--c-verde-marca, #39B54A); }
-  100% { color: var(--c-verde-marca, #39B54A); }
+  0%   { color: #8A8A8A; }
+  28%  { color: var(--c-verde-hover, #026F00); }
+  100% { color: var(--c-verde-hover, #026F00); }
 }
 
 
@@ -299,7 +307,10 @@
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .14em;
-  color: var(--c-verde-marca, #39B54A);
+  /* A 12px esto es texto pequeno y necesita 4.5:1. El verde de marca da
+     2.40:1 sobre el gris claro de la seccion; el --c-verde-hover, 5.78:1.
+     Es lo que manda la propia hoja de tokens para texto pequeno. */
+  color: var(--c-verde-hover, #026F00);
 }
 
 .d2 .d2-ega-pasos3__h {
@@ -669,4 +680,157 @@
     width: 100%;
     height: 1px;
   }
+}
+
+
+/* ==========================================================================
+   EL TONO OSCURO (14/9/2026)
+
+   En la composicion Contrast el rol `proceso` recibe #333333, y toda esta
+   seccion estaba escrita para fondo claro: los titulares y el cuerpo van en
+   --c-texto, que ES #333333.
+
+   Medido: 1.00:1. Texto invisible sobre su propio color. Es el mismo fallo
+   que ya costo caro en el CTA de la maqueta.
+
+   El guion marca la seccion con data-comp-tono="oscuro" cuando el fondo que
+   le toca es el negro de marca. Aqui se recoge esa marca, igual que hace la
+   home con sus secciones.
+
+   Los valores estan medidos sobre #333333:
+
+     #FFFFFF   12.63:1   titulares y cuerpo
+     #C9C9C9    7.63:1   secundario
+     #B0E1B7    8.60:1   etiquetas y numeros en verde
+     #39B54A    4.74:1   el verde de marca aguanta, pero se reserva para
+                         piezas grandes: en texto pequeno queda justo
+   ========================================================================== */
+
+/* --- Titulares y cuerpo --- */
+
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos2, .d2-ega-pasos3)
+  :is(h2, h3) {
+  color: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos2, .d2-ega-pasos3)
+  :is(.d2-ega-pasos__lead, .d2-ega-pasos2__lead, .d2-ega-pasos3__lead,
+      .d2-ega-pasos__paso p, .d2-ega-pasos2__d, .d2-ega-pasos3__d) {
+  color: #C9C9C9;
+}
+
+/* El eyebrow "Start with the portfolio": el verde oscuro se queda en
+   1.97:1 sobre este fondo. Va el verde claro de la banda del equipo. */
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos2, .d2-ega-pasos3)
+  .eyebrow {
+  color: #B0E1B7;
+}
+
+/* --- Los numeros --- */
+
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos3)
+  :is(.d2-ega-pasos__num, .d2-ega-pasos3__num) {
+  color: #B0E1B7;
+}
+
+/* El numero grande de la opcion 2 arranca en gris claro --#D8D8D8, que
+   sobre oscuro da 8.86:1 y se ve BIEN-- pero su animacion lo lleva al
+   verde de marca, que en un numero de 62px aguanta. Solo se ajusta el
+   punto de partida para que no compita con el titular blanco. */
+.d2 [data-comp-tono="oscuro"] .d2-ega-pasos2 .d2-ega-pasos2__num {
+  color: #858585;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 [data-comp-tono="oscuro"] .d2-ega-pasos2.es-visible .d2-ega-pasos2__num {
+    animation-name: d2-ega-p2-enciende-oscuro;
+  }
+}
+
+@keyframes d2-ega-p2-enciende-oscuro {
+  0%   { color: #858585; }
+  28%  { color: #B0E1B7; }
+  100% { color: #B0E1B7; }
+}
+
+/* --- Filos y separadores --- */
+
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-pasos, .d2-ega-pasos2, .d2-ega-pasos3)
+  :is(.d2-ega-pasos__paso, .d2-ega-pasos2__paso, .d2-ega-pasos3__paso) {
+  border-color: rgba(255, 255, 255, .18);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-pasos2 .d2-ega-pasos2__paso:last-child {
+  border-bottom-color: rgba(255, 255, 255, .18);
+}
+
+/* --- El circuito de fondo --- */
+
+.d2 [data-comp-tono="oscuro"]
+  :is(.d2-ega-pasos__circuito, .d2-ega-pasos2__circuito, .d2-ega-pasos3__circuito) path {
+  stroke: rgba(176, 225, 183, .22);
+}
+
+.d2 [data-comp-tono="oscuro"]
+  :is(.d2-ega-pasos__circuito, .d2-ega-pasos2__circuito, .d2-ega-pasos3__circuito) circle {
+  stroke: rgba(176, 225, 183, .38);
+}
+
+/* --- La cartera de la opcion 3 --- */
+
+/* La tarjeta se queda BLANCA a proposito: es un dato, y sobre el fondo
+   oscuro gana el aire de panel que ya tiene la calculadora. Su texto
+   interior no se toca, porque su fondo no ha cambiado. */
+
+/* --- Los puentes --- */
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-puente {
+  background: rgba(255, 255, 255, .06);
+  border-left-color: #B0E1B7;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-puente :is(.d2-ega-puente__preg) {
+  color: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-puente .d2-ega-puente__eti {
+  color: #C9C9C9;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-puente .d2-ega-puente__flecha {
+  color: #B0E1B7;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-puente2 {
+  border-top-color: rgba(255, 255, 255, .4);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-puente2 .d2-ega-puente2__lado--fin {
+  border-left-color: rgba(255, 255, 255, .18);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-puente2 .d2-ega-puente2__eti {
+  color: #B0E1B7;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-puente2 .d2-ega-puente2__nom {
+  color: #ADADAD;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-puente2 .d2-ega-puente2__preg {
+  color: #FFFFFF;
+}
+
+/* El lado derecho sigue mas apagado que el izquierdo --es lo que viene
+   despues-- pero por encima del minimo: 5.63:1. */
+.d2 [data-comp-tono="oscuro"] .d2-ega-puente2 .d2-ega-puente2__lado--fin
+  :is(.d2-ega-puente2__eti, .d2-ega-puente2__preg) {
+  color: #ADADAD;
+}
+
+/* El puente 3 YA es oscuro. Sobre un fondo oscuro se perderia, asi que
+   sube a negro pleno y gana un filo que lo separa. */
+.d2 [data-comp-tono="oscuro"] .d2-ega-puente3 {
+  background: #1A1A1A;
+  border: 1px solid rgba(255, 255, 255, .12);
 }
