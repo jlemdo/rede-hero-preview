@@ -623,221 +623,6 @@
    y ahi acaba.
    ========================================================================== */
 
-.d2 :is(.d2-ega-alc2, .d2-ega-alc3) {
-  padding-block: 84px;
-  background: var(--comp-rol, var(--c-blanco, #FFFFFF));
-}
-
-.d2 :is(.d2-ega-alc2__inner, .d2-ega-alc3__inner) {
-  max-width: 1280px;
-  margin-inline: auto;
-  padding-inline: clamp(20px, 5vw, 80px);
-}
-
-.d2 :is(.d2-ega-alc2__cab, .d2-ega-alc3__cab) {
-  max-width: 720px;
-  margin-bottom: 44px;
-}
-
-.d2 :is(.d2-ega-alc2__titulo, .d2-ega-alc3__titulo) {
-  margin: 12px 0 0;
-  font-size: clamp(34px, 3.4vw, 52px);
-  line-height: 1.08;
-  letter-spacing: -.025em;
-  font-weight: 700;
-  color: var(--c-texto, #333333);
-  text-wrap: balance;
-}
-
-.d2 :is(.d2-ega-alc2__lead, .d2-ega-alc3__lead) {
-  margin: 18px 0 0;
-  font-size: 17px;
-  line-height: 1.65;
-  color: var(--c-texto-cuerpo, #333333);
-}
-
-/* El tic: verde oscuro porque a 13px es texto pequeno --necesita 4.5:1--
-   y el de marca sobre blanco se queda en 2.66. */
-.d2 :is(.d2-ega-alc2__tic, .d2-ega-alc3__tic) {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  margin-top: 1px;
-  border-radius: 50%;
-  background: var(--c-verde-claro, #E8F5E8);
-  color: var(--c-verde-hover, #026F00);
-}
-
-
-/* --------------------------------------------------------------------------
-   OPCION 2 — PESO DESIGUAL
-
-   El "SI" ocupa el doble y va en panel; el "NO" queda a un lado, sin caja
-   y en texto secundario. El lector ve de un vistazo cual de los dos manda,
-   que es justo lo que el 50/50 no dice.
-   -------------------------------------------------------------------------- */
-
-.d2 .d2-ega-alc2__reja {
-  display: grid;
-  grid-template-columns: 1.7fr 1fr;
-  gap: clamp(28px, 4vw, 64px);
-  align-items: start;
-}
-
-.d2 .d2-ega-alc2__panel {
-  padding: clamp(24px, 3vw, 38px);
-  background: var(--c-verde-claro, #E8F5E8);
-  border-radius: 8px;
-}
-
-.d2 .d2-ega-alc2__eti {
-  margin: 0 0 20px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--c-verde-hover, #026F00);
-}
-
-.d2 .d2-ega-alc2__eti--nota {
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-.d2 .d2-ega-alc2__lista {
-  display: grid;
-  gap: 14px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.d2 .d2-ega-alc2__lista li {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  font-size: clamp(15px, 1.4vw, 17px);
-  line-height: 1.45;
-  font-weight: 700;
-  color: var(--c-texto, #333333);
-}
-
-.d2 .d2-ega-alc2__libre {
-  margin: 24px 0 0;
-  padding-top: 20px;
-  border-top: 1px solid rgba(2, 111, 0, .18);
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--c-texto-cuerpo, #333333);
-}
-
-/* La nota: sin caja, sin fondo, mas pequena. Es una aclaracion, no la
-   mitad de una comparacion. */
-.d2 .d2-ega-alc2__nota {
-  padding-top: 6px;
-}
-
-.d2 .d2-ega-alc2__lista-nota {
-  display: grid;
-  gap: 12px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.d2 .d2-ega-alc2__lista-nota li {
-  position: relative;
-  padding-left: 18px;
-  font-size: 14.5px;
-  line-height: 1.5;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-/* Un guion, no una cruz. Tachar o marcar con X es la senal mas barata de
-   esta seccion, y ademas lee a "no disponible" cuando lo que dice es
-   "esto viene despues". */
-.d2 .d2-ega-alc2__lista-nota li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: .7em;
-  width: 9px;
-  height: 1px;
-  background: var(--c-borde, #E4E4E4);
-}
-
-
-/* --------------------------------------------------------------------------
-   OPCION 3 — EMPAREJADO
-
-   Cada entrega junto a su limite. Es la forma que el meta-analisis
-   respalda con numeros, y la unica de las tres en que el lector ve la
-   pareja completa sin tener que recordar la otra columna.
-   -------------------------------------------------------------------------- */
-
-.d2 .d2-ega-alc3__cabrejilla {
-  display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  gap: clamp(20px, 3vw, 52px);
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--c-texto, #333333);
-}
-
-.d2 .d2-ega-alc3__cabcol {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-.d2 .d2-ega-alc3__cabcol--si {
-  color: var(--c-verde-hover, #026F00);
-}
-
-.d2 .d2-ega-alc3__filas {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.d2 .d2-ega-alc3__fila {
-  display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  gap: clamp(20px, 3vw, 52px);
-  align-items: start;
-  padding-block: clamp(16px, 2vw, 22px);
-  border-bottom: 1px solid var(--c-borde, #E4E4E4);
-}
-
-.d2 .d2-ega-alc3__si {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  font-size: clamp(15px, 1.4vw, 17px);
-  line-height: 1.45;
-  font-weight: 700;
-  color: var(--c-texto, #333333);
-}
-
-.d2 .d2-ega-alc3__no {
-  font-size: 14.5px;
-  line-height: 1.5;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-.d2 .d2-ega-alc3__libre {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin: 28px 0 0;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--c-texto-cuerpo, #333333);
-}
-
 
 /* --------------------------------------------------------------------------
    LA ENTRADA
@@ -847,136 +632,7 @@
    suave: el orden de lectura marca cual pesa.
    -------------------------------------------------------------------------- */
 
-@media (prefers-reduced-motion: no-preference) {
 
-  /* Opcion 2 */
-  .d2 .d2-ega-alc2 .d2-ega-alc2__lista li {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  .d2 .d2-ega-alc2.es-visible .d2-ega-alc2__lista li {
-    animation: d2-ega-p-entra .5s cubic-bezier(.32, .72, 0, 1) both;
-  }
-
-  .d2 .d2-ega-alc2.es-visible .d2-ega-alc2__lista li:nth-child(2) { animation-delay: .04s; }
-  .d2 .d2-ega-alc2.es-visible .d2-ega-alc2__lista li:nth-child(3) { animation-delay: .08s; }
-  .d2 .d2-ega-alc2.es-visible .d2-ega-alc2__lista li:nth-child(4) { animation-delay: .12s; }
-
-  .d2 .d2-ega-alc2 .d2-ega-alc2__nota {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  .d2 .d2-ega-alc2.es-visible .d2-ega-alc2__nota {
-    animation: d2-ega-p-entra .55s cubic-bezier(.32, .72, 0, 1) both;
-    animation-delay: .26s;
-  }
-
-  /* Opcion 3: la fila entera, para que la pareja llegue junta. */
-  .d2 .d2-ega-alc3 .d2-ega-alc3__fila {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  .d2 .d2-ega-alc3.es-visible .d2-ega-alc3__fila {
-    animation: d2-ega-p-entra .52s cubic-bezier(.32, .72, 0, 1) both;
-  }
-
-  .d2 .d2-ega-alc3.es-visible .d2-ega-alc3__fila:nth-child(2) { animation-delay: .05s; }
-  .d2 .d2-ega-alc3.es-visible .d2-ega-alc3__fila:nth-child(3) { animation-delay: .10s; }
-  .d2 .d2-ega-alc3.es-visible .d2-ega-alc3__fila:nth-child(4) { animation-delay: .15s; }
-
-  .d2 .d2-ega-alc3 .d2-ega-alc3__libre {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  .d2 .d2-ega-alc3.es-visible .d2-ega-alc3__libre {
-    animation: d2-ega-p-entra .5s cubic-bezier(.32, .72, 0, 1) both;
-    animation-delay: .24s;
-  }
-}
-
-
-/* --- Tono oscuro (Contrast) --- */
-
-.d2 [data-comp-tono="oscuro"]:is(.d2-ega-alc2, .d2-ega-alc3) :is(h2, h3) {
-  color: #FFFFFF;
-}
-
-.d2 [data-comp-tono="oscuro"]:is(.d2-ega-alc2, .d2-ega-alc3)
-  :is(.d2-ega-alc2__lead, .d2-ega-alc3__lead) {
-  color: #E8E8E8;
-}
-
-.d2 [data-comp-tono="oscuro"]:is(.d2-ega-alc2, .d2-ega-alc3) .eyebrow {
-  color: var(--c-verde-marca, #39B54A);
-}
-
-/* El panel verde claro se queda: es una tarjeta clara sobre fondo oscuro,
-   igual que la cartera de los pasos. Sus tokens se restauran en
-   d2-variantes.css, asi que su texto sigue siendo oscuro. */
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-alc2__lista-nota li {
-  color: #E8E8E8;
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-alc2__lista-nota li::before {
-  background: rgba(255, 255, 255, .3);
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-alc2__eti--nota {
-  color: #E8E8E8;
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__cabrejilla {
-  border-bottom-color: rgba(255, 255, 255, .4);
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__cabcol {
-  color: #E8E8E8;
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__cabcol--si {
-  color: var(--c-verde-marca, #39B54A);
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__fila {
-  border-bottom-color: rgba(255, 255, 255, .18);
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__si {
-  color: #FFFFFF;
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__no {
-  color: #E8E8E8;
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__libre {
-  color: #E8E8E8;
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-alc3__tic {
-  background: rgba(57, 181, 74, .18);
-  color: var(--c-verde-marca, #39B54A);
-}
-
-
-@media (max-width: 860px) {
-  .d2 .d2-ega-alc2__reja { grid-template-columns: 1fr; gap: 30px; }
-
-  /* En movil la pareja se apila: primero la entrega, debajo su limite
-     sangrado. Sigue siendo entrelazado, que es lo que importa. */
-  .d2 .d2-ega-alc3__cabrejilla { display: none; }
-
-  .d2 .d2-ega-alc3__fila { grid-template-columns: 1fr; gap: 8px; }
-
-  .d2 .d2-ega-alc3__no {
-    padding-left: 32px;
-  }
-}
 
 
 /* ==========================================================================
@@ -2487,4 +2143,492 @@
     content: "—";
     font-size: 10.5px;
   }
+}
+
+
+/* ==========================================================================
+   ALCANCE — PIVOTE Y CONTRASTE (14/9/2026)
+
+   Sustituyen a Weighted y Paired, que eran maquetacion estatica: una la
+   misma rejilla que Perimeter con una decima de diferencia --1.7fr contra
+   1.6fr-- y la otra filas de tabla.
+
+   Lo que las eleva no es mas animacion: es MECANISMO. El usuario actua y
+   la interfaz responde con informacion util. Es lo que hace bueno al FAQ,
+   cuya unica animacion dura 180 ms.
+
+   CADA LIMITE LLEVA SU RAZON
+
+   Verificado en Datadog y Vercel: las exclusiones se enuncian con su
+   causa, no como negativa suelta. "How controls are programmed" pasa a
+   llevar "requires trend data from the building automation system".
+
+   El limite deja de ser una negativa y pasa a ser competencia demostrada.
+   Es copy nuevo, anotado en COPY-PROPUESTO-EGA.md.
+   ========================================================================== */
+
+.d2 :is(.d2-ega-piv, .d2-ega-con) {
+  padding-block: 84px;
+  background: var(--comp-rol, var(--c-blanco, #FFFFFF));
+}
+
+.d2 :is(.d2-ega-piv__inner, .d2-ega-con__inner) {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 80px);
+}
+
+.d2 :is(.d2-ega-piv__cab, .d2-ega-con__cab) {
+  max-width: 720px;
+  margin-bottom: 40px;
+}
+
+.d2 :is(.d2-ega-piv__titulo, .d2-ega-con__titulo) {
+  margin: 12px 0 0;
+  font-size: clamp(34px, 3.4vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  font-weight: 700;
+  color: var(--c-texto, #333333);
+  text-wrap: balance;
+}
+
+.d2 :is(.d2-ega-piv__lead, .d2-ega-con__lead) {
+  margin: 18px 0 0;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+.d2 :is(.d2-ega-piv__eti, .d2-ega-con__eti) {
+  margin: 0 0 18px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--c-verde-hover, #026F00);
+}
+
+
+/* --------------------------------------------------------------------------
+   OPCION 2 — EL PIVOTE
+
+   Abrir un entregable muestra en la ficha SU limite emparejado. Mismo
+   mecanismo que el FAQ: <details name> da el acordeon exclusivo sin JS, y
+   el guion solo rellena la ficha.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-ega-piv__cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 60px);
+  align-items: start;
+}
+
+.d2 .d2-ega-piv__item {
+  border-bottom: 1px solid var(--c-borde, #E4E4E4);
+}
+
+.d2 .d2-ega-piv__item:first-of-type {
+  border-top: 1px solid var(--c-borde, #E4E4E4);
+}
+
+.d2 .d2-ega-piv__si {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-block: clamp(15px, 1.8vw, 20px);
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--c-texto, #333333);
+  cursor: pointer;
+  list-style: none;
+  transition: color .18s ease;
+}
+
+/* El triangulo por defecto, fuera: la marca propia lo sustituye. */
+.d2 .d2-ega-piv__si::-webkit-details-marker { display: none; }
+.d2 .d2-ega-piv__si::marker { content: ""; }
+
+.d2 .d2-ega-piv__si:hover { color: var(--c-verde-hover, #026F00); }
+
+/* La marca: un anillo que se rellena al abrirse. Es el mismo gesto del
+   punto del perfil de la calculadora, no un icono nuevo. */
+.d2 .d2-ega-piv__marca {
+  flex: 0 0 auto;
+  width: 11px;
+  height: 11px;
+  margin-top: .38em;
+  border-radius: 50%;
+  border: 2px solid var(--c-borde, #E4E4E4);
+  transition: border-color .22s ease, background-color .22s ease;
+}
+
+.d2 .d2-ega-piv__item[open] .d2-ega-piv__marca {
+  border-color: var(--c-verde-hover, #026F00);
+  background: var(--c-verde-hover, #026F00);
+}
+
+.d2 .d2-ega-piv__item[open] .d2-ega-piv__si {
+  color: var(--c-verde-hover, #026F00);
+}
+
+/* El limite dentro del propio <details>. En escritorio se oculta porque
+   lo dice la ficha; en movil y sin JS es el contenido de verdad. */
+.d2 .d2-ega-piv__r {
+  margin: 0 0 18px;
+  padding-left: 25px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .d2-ega-piv__r-eti {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* --- La ficha --- */
+
+.d2 .d2-ega-piv__ficha {
+  position: sticky;
+  top: 104px;
+}
+
+.d2 .d2-ega-piv__ficha-caja {
+  padding: clamp(22px, 2.6vw, 30px);
+  background: var(--c-fondo-alt, #F5F5F5);
+  border-left: 3px solid var(--c-verde-hover, #026F00);
+  border-radius: 4px;
+}
+
+.d2 .d2-ega-piv__ficha-eti {
+  margin: 0 0 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* Sin llegar al tamano de una cifra: esto es una frase, no un dato. */
+.d2 .d2-ega-piv__ficha-limite {
+  margin: 0 0 10px;
+  font-size: clamp(19px, 1.9vw, 25px);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -.015em;
+  color: var(--c-texto, #333333);
+  text-wrap: balance;
+}
+
+.d2 .d2-ega-piv__ficha-razon {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+.d2 .d2-ega-piv__ficha-pie {
+  margin: 18px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* La entrada al cambiar de item. Corta --180 ms, la del FAQ-- porque al
+   segundo clic una animacion lenta se siente pesada. */
+@keyframes d2-piv-entra {
+  from { opacity: .4; transform: translateY(5px); }
+  to   { opacity: 1;  transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .d2-ega-piv__ficha-caja { animation: d2-piv-entra .18s ease-out; }
+}
+
+
+/* --------------------------------------------------------------------------
+   OPCION 3 — EL CONTRASTE
+
+   Un interruptor atenua los entregables y deja encendidos los limites. Es
+   el patron "Highlight Differences" que NN/g documenta en tablas
+   comparativas.
+
+   Funciona con :has() PURO, sin JS. Degrada a "todo visible", que es el
+   estado util.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-ega-con__control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 26px;
+}
+
+/* Un checkbox real y no role="switch": el soporte de ese rol en lectores
+   de pantalla es inconsistente. Se oculta visualmente pero sigue en el
+   arbol y recibe el foco. */
+.d2 .d2-ega-con__check {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.d2 .d2-ega-con__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px 9px 12px;
+  border: 1px solid var(--c-borde, #E4E4E4);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--c-texto-cuerpo, #333333);
+  cursor: pointer;
+  transition: border-color .2s ease, background-color .2s ease;
+}
+
+.d2 .d2-ega-con__label::before {
+  content: "";
+  width: 30px;
+  height: 17px;
+  border-radius: 9px;
+  background: var(--c-borde, #E4E4E4);
+  /* El pomo: un degradado que se desplaza, sin elemento extra. */
+  background-image: radial-gradient(circle 6px at 9px 50%, #FFFFFF 98%, transparent 100%);
+  transition: background-color .22s ease, background-position .22s cubic-bezier(.32, .72, 0, 1);
+  background-position: 0 0;
+}
+
+.d2 .d2-ega-con__check:checked + .d2-ega-con__label::before {
+  background-color: var(--c-verde-hover, #026F00);
+  background-position: 12px 0;
+}
+
+.d2 .d2-ega-con__check:focus-visible + .d2-ega-con__label {
+  outline: 2px solid var(--c-verde-hover, #026F00);
+  outline-offset: 2px;
+}
+
+.d2 .d2-ega-con__label:hover {
+  border-color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .d2-ega-con__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--c-borde, #E4E4E4);
+}
+
+.d2 .d2-ega-con__fila {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: clamp(20px, 3vw, 48px);
+  align-items: start;
+  padding-block: clamp(16px, 2vw, 22px);
+  border-bottom: 1px solid var(--c-borde, #E4E4E4);
+}
+
+.d2 .d2-ega-con__si {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--c-texto, #333333);
+  transition: opacity .3s ease, filter .3s ease;
+}
+
+.d2 .d2-ega-con__marca {
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  margin-top: .5em;
+  border-radius: 50%;
+  background: var(--c-verde-hover, #026F00);
+}
+
+.d2 .d2-ega-con__no strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--c-texto, #333333);
+}
+
+.d2 .d2-ega-con__razon {
+  display: block;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* EL MECANISMO: con el interruptor puesto se RESALTA el limite, no se
+   apaga el entregable. :has() lee el estado del checkbox desde la
+   seccion, sin una linea de JS.
+
+   Atenuar era la primera idea y se descarto MIDIENDO: el texto a 0.3 de
+   opacidad da 1.78:1 sobre blanco, y ni siquiera al 0.55 llega al 4.5 que
+   pide el texto normal. Un mecanismo que vuelve ilegible la mitad de la
+   seccion no es un mecanismo, es un fallo de accesibilidad.
+
+   Resaltar consigue el mismo efecto --que la vista vaya a los limites--
+   sin tocar la legibilidad de nada. */
+.d2 .d2-ega-con:has(.d2-ega-con__check:checked) .d2-ega-con__fila {
+  background: var(--c-verde-claro, #E8F5E8);
+}
+
+.d2 .d2-ega-con__fila {
+  transition: background-color .3s ease;
+  padding-inline: clamp(0px, 1vw, 14px);
+  border-radius: 4px;
+}
+
+/* El entregable pierde el peso, no el contraste: pasa de 700 a 400 y el
+   limite se lo queda. */
+.d2 .d2-ega-con:has(.d2-ega-con__check:checked) .d2-ega-con__si {
+  font-weight: 400;
+}
+
+.d2 .d2-ega-con:has(.d2-ega-con__check:checked) .d2-ega-con__marca {
+  background: var(--c-borde, #E4E4E4);
+}
+
+.d2 .d2-ega-con__si {
+  transition: font-weight .2s ease;
+}
+
+.d2 .d2-ega-con:has(.d2-ega-con__check:checked) .d2-ega-con__no strong {
+  color: var(--c-verde-hover, #026F00);
+}
+
+.d2 .d2-ega-con__libre {
+  margin: 26px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+
+/* --- La entrada --- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .d2-ega-piv .d2-ega-piv__item,
+  .d2 .d2-ega-con .d2-ega-con__fila {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .d2 .d2-ega-piv.es-visible .d2-ega-piv__item,
+  .d2 .d2-ega-con.es-visible .d2-ega-con__fila {
+    animation: d2-ega-p-entra .5s cubic-bezier(.32, .72, 0, 1) both;
+  }
+
+  .d2 .d2-ega-piv.es-visible .d2-ega-piv__item:nth-of-type(2),
+  .d2 .d2-ega-con.es-visible .d2-ega-con__fila:nth-child(2) { animation-delay: .05s; }
+  .d2 .d2-ega-piv.es-visible .d2-ega-piv__item:nth-of-type(3),
+  .d2 .d2-ega-con.es-visible .d2-ega-con__fila:nth-child(3) { animation-delay: .10s; }
+  .d2 .d2-ega-piv.es-visible .d2-ega-piv__item:nth-of-type(4),
+  .d2 .d2-ega-con.es-visible .d2-ega-con__fila:nth-child(4) { animation-delay: .15s; }
+}
+
+
+/* --- Tono oscuro --- */
+
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-piv, .d2-ega-con) :is(h2, h3) {
+  color: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-piv, .d2-ega-con)
+  :is(.d2-ega-piv__lead, .d2-ega-con__lead) {
+  color: #E8E8E8;
+}
+
+.d2 [data-comp-tono="oscuro"]:is(.d2-ega-piv, .d2-ega-con) .eyebrow {
+  color: var(--c-verde-marca, #39B54A);
+}
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-ega-piv__eti, .d2-ega-con__eti) {
+  color: var(--c-verde-marca, #39B54A);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-piv__si {
+  color: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-piv__item[open] .d2-ega-piv__si {
+  color: var(--c-verde-marca, #39B54A);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-piv__item[open] .d2-ega-piv__marca {
+  border-color: var(--c-verde-marca, #39B54A);
+  background: var(--c-verde-marca, #39B54A);
+}
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-ega-piv__item, .d2-ega-con__fila, .d2-ega-con__lista) {
+  border-color: rgba(255, 255, 255, .18);
+}
+
+/* La ficha se queda clara sobre el fondo oscuro, como la del FAQ: sus
+   tokens se restauran en d2-variantes.css. */
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-piv__ficha-pie,
+.d2 [data-comp-tono="oscuro"] .d2-ega-piv__r,
+.d2 [data-comp-tono="oscuro"] .d2-ega-con__razon {
+  color: #BFBFBF;
+}
+
+.d2 [data-comp-tono="oscuro"] :is(.d2-ega-con__si, .d2-ega-con__no strong, .d2-ega-con__libre) {
+  color: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-con__marca {
+  background: var(--c-verde-marca, #39B54A);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-con__label {
+  border-color: rgba(255, 255, 255, .25);
+  color: #FFFFFF;
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-con__label::before {
+  background-color: rgba(255, 255, 255, .25);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-con__check:checked + .d2-ega-con__label::before {
+  background-color: var(--c-verde-marca, #39B54A);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-con:has(.d2-ega-con__check:checked) .d2-ega-con__no strong {
+  color: var(--c-verde-marca, #39B54A);
+}
+
+
+@media (max-width: 900px) {
+  .d2 .d2-ega-piv__cuerpo { grid-template-columns: 1fr; }
+
+  /* La ficha se retira en movil: abajo quedaria despues de los cuatro
+     items y nadie la relacionaria con lo que acaba de abrir. El limite ya
+     esta dentro de cada <details>, asi que no se pierde nada. Es la misma
+     decision que toma el FAQ, al reves: alli la ficha sube. */
+  .d2 .d2-ega-piv__ficha { display: none; }
+
+  .d2 .d2-ega-con__fila { grid-template-columns: 1fr; gap: 10px; }
+  .d2 .d2-ega-con__no { padding-left: 21px; }
+}
+
+/* En escritorio el limite lo dice la ficha: dentro del <details> sobra. */
+@media (min-width: 901px) {
+  .d2 .d2-ega-piv__r { display: none; }
 }

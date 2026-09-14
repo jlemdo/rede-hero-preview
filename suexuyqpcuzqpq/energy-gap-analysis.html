@@ -1476,65 +1476,85 @@
       </section>
     </div>
 
-    <!-- OPCION 2 - PESO DESIGUAL
+    <!-- OPCION 2 - EL PIVOTE
 
-         El "SI" ocupa el doble de ancho y va en panel con fondo; el "NO"
-         queda a un lado, sin caja, en texto secundario. Rompe la simetria
-         que segun NN/g deja al lector sin senal de jerarquia. -->
-    <div class="d2-caru__diapo" role="tabpanel" aria-label="Option 2: Weighted" hidden>
-      <section class="d2-ega-alc2 d2-entra" data-comp-rol="prueba" aria-labelledby="ega-alc2-t">
-        <div class="d2-ega-alc2__inner">
+         El mecanismo del FAQ, con otra carga: abrir un entregable muestra
+         en la ficha SU limite emparejado, con la razon de por que lo es.
 
-          <div class="d2-ega-alc2__cab">
+         <details name> da acordeon exclusivo, teclado y accesibilidad sin
+         una linea de JS: es el mismo patron que ya usa el FAQ. -->
+    <div class="d2-caru__diapo" role="tabpanel" aria-label="Option 2: Pivot" hidden>
+      <section class="d2-ega-piv d2-entra" data-comp-rol="prueba" aria-labelledby="ega-piv-t">
+        <div class="d2-ega-piv__inner">
+
+          <div class="d2-ega-piv__cab">
             <p class="eyebrow">Clear scope. Straight answers.</p>
-            <h2 class="d2-ega-alc2__titulo" id="ega-alc2-t">A ranked shortlist&mdash;not a diagnosis.</h2>
-            <p class="d2-ega-alc2__lead">Energy Gap Analysis helps you decide where deeper work is justified. It does not guess at the cause or commit you to another service.</p>
+            <h2 class="d2-ega-piv__titulo" id="ega-piv-t">A ranked shortlist&mdash;not a diagnosis.</h2>
+            <p class="d2-ega-piv__lead">Energy Gap Analysis helps you decide where deeper work is justified. It does not guess at the cause or commit you to another service.</p>
           </div>
 
-          <div class="d2-ega-alc2__reja">
+          <div class="d2-ega-piv__cuerpo">
 
-            <div class="d2-ega-alc2__panel">
-              <p class="d2-ega-alc2__eti">What you receive</p>
-              <ul class="d2-ega-alc2__lista">
-                <li>
-                  <span class="d2-ega-alc2__tic" aria-hidden="true">
-                    <svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5l3.5 3.5L12 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
+            <div class="d2-ega-piv__lista">
+              <p class="d2-ega-piv__eti">What you receive</p>
+              <details class="d2-ega-piv__item" name="d2-ega-piv" open=""
+                       data-limite="The exact source of the problem" data-razon="Comes from the investigation the shortlist points to.">
+                <summary class="d2-ega-piv__si">
+                  <span class="d2-ega-piv__marca" aria-hidden="true"></span>
                   One comparison of the portfolio
-                </li>
-                <li>
-                  <span class="d2-ega-alc2__tic" aria-hidden="true">
-                    <svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5l3.5 3.5L12 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
+                </summary>
+                <p class="d2-ega-piv__r">
+                  <span class="d2-ega-piv__r-eti">What this does not include</span>
+                  <strong>The exact source of the problem</strong> Comes from the investigation the shortlist points to.
+                </p>
+              </details>
+              <details class="d2-ega-piv__item" name="d2-ega-piv"
+                       data-limite="How controls are programmed" data-razon="Requires trend data from the building automation system.">
+                <summary class="d2-ega-piv__si">
+                  <span class="d2-ega-piv__marca" aria-hidden="true"></span>
                   A ranked list of priority buildings
-                </li>
-                <li>
-                  <span class="d2-ega-alc2__tic" aria-hidden="true">
-                    <svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5l3.5 3.5L12 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
+                </summary>
+                <p class="d2-ega-piv__r">
+                  <span class="d2-ega-piv__r-eti">What this does not include</span>
+                  <strong>How controls are programmed</strong> Requires trend data from the building automation system.
+                </p>
+              </details>
+              <details class="d2-ega-piv__item" name="d2-ega-piv"
+                       data-limite="Whether equipment is failing" data-razon="Needs eyes on the equipment, not utility data.">
+                <summary class="d2-ega-piv__si">
+                  <span class="d2-ega-piv__marca" aria-hidden="true"></span>
                   The numbers behind the decision
-                </li>
-                <li>
-                  <span class="d2-ega-alc2__tic" aria-hidden="true">
-                    <svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5l3.5 3.5L12 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
+                </summary>
+                <p class="d2-ega-piv__r">
+                  <span class="d2-ega-piv__r-eti">What this does not include</span>
+                  <strong>Whether equipment is failing</strong> Needs eyes on the equipment, not utility data.
+                </p>
+              </details>
+              <details class="d2-ega-piv__item" name="d2-ega-piv"
+                       data-limite="Guaranteed savings or confirmed funding" data-razon="The utility confirms eligibility; we tell you what they will ask for.">
+                <summary class="d2-ega-piv__si">
+                  <span class="d2-ega-piv__marca" aria-hidden="true"></span>
                   A findings review and next-step recommendation
-                </li>
-              </ul>
-
-              <p class="d2-ega-alc2__libre">
-                <strong>No lock-in.</strong> Review the findings, ask questions and decide what happens next.
-              </p>
+                </summary>
+                <p class="d2-ega-piv__r">
+                  <span class="d2-ega-piv__r-eti">What this does not include</span>
+                  <strong>Guaranteed savings or confirmed funding</strong> The utility confirms eligibility; we tell you what they will ask for.
+                </p>
+              </details>
             </div>
 
-            <aside class="d2-ega-alc2__nota">
-              <p class="d2-ega-alc2__eti d2-ega-alc2__eti--nota">What needs a closer look</p>
-              <ul class="d2-ega-alc2__lista-nota">
-                <li>The exact source of the problem</li>
-                <li>How controls are programmed</li>
-                <li>Whether equipment is failing</li>
-                <li>Guaranteed savings or confirmed funding</li>
-              </ul>
+            <!-- La ficha, sticky como la del FAQ. aria-live porque su
+                 contenido cambia lejos de donde el usuario pulsa: sin el,
+                 un lector de pantalla no se entera. -->
+            <aside class="d2-ega-piv__ficha" aria-live="polite">
+              <div class="d2-ega-piv__ficha-caja">
+                <p class="d2-ega-piv__ficha-eti" data-piv-eti>What this does not include</p>
+                <p class="d2-ega-piv__ficha-limite" data-piv-limite></p>
+                <p class="d2-ega-piv__ficha-razon" data-piv-razon></p>
+              </div>
+              <p class="d2-ega-piv__ficha-pie">
+                <strong>No lock-in.</strong> Review the findings, ask questions and decide what happens next.
+              </p>
             </aside>
 
           </div>
@@ -1542,70 +1562,77 @@
       </section>
     </div>
 
-    <!-- OPCION 3 - EMPAREJADO
+    <!-- OPCION 3 - RESALTAR LO QUE NO ENTRA
 
-         Cada entrega junto a su limite, en filas. Es la forma que el
-         meta-analisis de O'Keefe respalda con numeros: el orden
-         entrelazado da r=+.084; secuenciar bloque contra bloque, ninguna
-         ventaja fiable. -->
-    <div class="d2-caru__diapo" role="tabpanel" aria-label="Option 3: Paired" hidden>
-      <section class="d2-ega-alc3 d2-entra" data-comp-rol="prueba" aria-labelledby="ega-alc3-t">
-        <div class="d2-ega-alc3__inner">
+         Un interruptor que atenua los entregables y deja encendidos los
+         limites. Es el patron "Highlight Differences" que NN/g documenta
+         en tablas comparativas, traducido a esta seccion.
 
-          <div class="d2-ega-alc3__cab">
+         Funciona con :has() PURO, sin JS --94,8 por ciento de soporte-- y degrada a
+         "todo visible", que es el estado util.
+
+         El control es un <input type="checkbox"> real y no un
+         role="switch": el soporte de ese rol en lectores de pantalla es
+         inconsistente. -->
+    <div class="d2-caru__diapo" role="tabpanel" aria-label="Option 3: Contrast" hidden>
+      <section class="d2-ega-con d2-entra" data-comp-rol="prueba" aria-labelledby="ega-con-t">
+        <div class="d2-ega-con__inner">
+
+          <div class="d2-ega-con__cab">
             <p class="eyebrow">Clear scope. Straight answers.</p>
-            <h2 class="d2-ega-alc3__titulo" id="ega-alc3-t">A ranked shortlist&mdash;not a diagnosis.</h2>
-            <p class="d2-ega-alc3__lead">Energy Gap Analysis helps you decide where deeper work is justified. It does not guess at the cause or commit you to another service.</p>
+            <h2 class="d2-ega-con__titulo" id="ega-con-t">A ranked shortlist&mdash;not a diagnosis.</h2>
+            <p class="d2-ega-con__lead">Energy Gap Analysis helps you decide where deeper work is justified. It does not guess at the cause or commit you to another service.</p>
           </div>
 
-          <div class="d2-ega-alc3__cabrejilla" aria-hidden="true">
-            <span class="d2-ega-alc3__cabcol d2-ega-alc3__cabcol--si">What you receive</span>
-            <span class="d2-ega-alc3__cabcol">What needs a closer look</span>
-          </div>
+          <p class="d2-ega-con__control">
+            <input class="d2-ega-con__check" type="checkbox" id="ega-con-solo">
+            <label class="d2-ega-con__label" for="ega-con-solo">Show only what needs a closer look</label>
+          </p>
 
-          <ul class="d2-ega-alc3__filas">
-            <li class="d2-ega-alc3__fila">
-              <span class="d2-ega-alc3__si">
-                <span class="d2-ega-alc3__tic" aria-hidden="true">
-                  <svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5l3.5 3.5L12 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
+          <ul class="d2-ega-con__lista">
+            <li class="d2-ega-con__fila">
+              <span class="d2-ega-con__si">
+                <span class="d2-ega-con__marca" aria-hidden="true"></span>
                 One comparison of the portfolio
               </span>
-              <span class="d2-ega-alc3__no">The exact source of the problem</span>
+              <span class="d2-ega-con__no">
+                <strong>The exact source of the problem</strong>
+                <span class="d2-ega-con__razon">Comes from the investigation the shortlist points to.</span>
+              </span>
             </li>
-            <li class="d2-ega-alc3__fila">
-              <span class="d2-ega-alc3__si">
-                <span class="d2-ega-alc3__tic" aria-hidden="true">
-                  <svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5l3.5 3.5L12 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
+            <li class="d2-ega-con__fila">
+              <span class="d2-ega-con__si">
+                <span class="d2-ega-con__marca" aria-hidden="true"></span>
                 A ranked list of priority buildings
               </span>
-              <span class="d2-ega-alc3__no">How controls are programmed</span>
+              <span class="d2-ega-con__no">
+                <strong>How controls are programmed</strong>
+                <span class="d2-ega-con__razon">Requires trend data from the building automation system.</span>
+              </span>
             </li>
-            <li class="d2-ega-alc3__fila">
-              <span class="d2-ega-alc3__si">
-                <span class="d2-ega-alc3__tic" aria-hidden="true">
-                  <svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5l3.5 3.5L12 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
+            <li class="d2-ega-con__fila">
+              <span class="d2-ega-con__si">
+                <span class="d2-ega-con__marca" aria-hidden="true"></span>
                 The numbers behind the decision
               </span>
-              <span class="d2-ega-alc3__no">Whether equipment is failing</span>
+              <span class="d2-ega-con__no">
+                <strong>Whether equipment is failing</strong>
+                <span class="d2-ega-con__razon">Needs eyes on the equipment, not utility data.</span>
+              </span>
             </li>
-            <li class="d2-ega-alc3__fila">
-              <span class="d2-ega-alc3__si">
-                <span class="d2-ega-alc3__tic" aria-hidden="true">
-                  <svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5l3.5 3.5L12 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
+            <li class="d2-ega-con__fila">
+              <span class="d2-ega-con__si">
+                <span class="d2-ega-con__marca" aria-hidden="true"></span>
                 A findings review and next-step recommendation
               </span>
-              <span class="d2-ega-alc3__no">Guaranteed savings or confirmed funding</span>
+              <span class="d2-ega-con__no">
+                <strong>Guaranteed savings or confirmed funding</strong>
+                <span class="d2-ega-con__razon">The utility confirms eligibility; we tell you what they will ask for.</span>
+              </span>
             </li>
           </ul>
 
-          <p class="d2-ega-alc3__libre">
-            <span class="d2-ega-alc3__tic" aria-hidden="true">
-              <svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5l3.5 3.5L12 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
+          <p class="d2-ega-con__libre">
             <strong>No lock-in.</strong> Review the findings, ask questions and decide what happens next.
           </p>
 
@@ -1623,8 +1650,8 @@
 
       <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
         <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Perimeter</small></button>
-        <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Weighted</small></button>
-        <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Paired</small></button>
+        <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Pivot</small></button>
+        <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Contrast</small></button>
       </div>
 
       <button class="d2-caru__flecha" type="button" data-caru-ir="1" aria-label="Next option">
@@ -2365,6 +2392,7 @@
 <script src="js/d2-composicion.js"></script>
 <script src="js/d2-carrusel.js"></script>
 <script src="js/d2-ega-fondos.js"></script>
+<script src="js/d2-ega-alcance.js"></script>
 <script src="js/main.js"></script>
 <script src="js/d2-hubspot.js"></script>
 </body>
