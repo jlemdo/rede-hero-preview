@@ -37,7 +37,9 @@
    ========================================================================== */
 
 .d2 .d2-ega-hero {
-  background: var(--c-blanco, #FFFFFF);
+  /* El fondo lo pone el tema por ROL (14/9/2026). El valor de siempre
+     queda de respaldo: si el guion no corre, la pagina se ve igual. */
+  background: var(--comp-rol, var(--c-blanco, #FFFFFF));
   border-bottom: 1px solid var(--c-borde, #E4E4E4);
   /* La ilustracion sangra a la derecha y ademas mide un 112% de su
      hueco: sin esto la suma abre una barra de scroll horizontal. Lo que
@@ -158,7 +160,7 @@
    2. EL PROCESO
    ========================================================================== */
 
-.d2 .d2-ega-pasos { background: var(--c-fondo-alt, #F5F5F5); }
+.d2 .d2-ega-pasos { background: var(--comp-rol, var(--c-fondo-alt, #F5F5F5)); }
 
 /* Cabecera partida: el titular a la izquierda y el parrafo que lo matiza
    a la derecha. Mismo gesto que la seccion de rutas de la home. */
@@ -281,7 +283,7 @@
    3. EL ALCANCE
    ========================================================================== */
 
-.d2 .d2-ega-alcance { background: var(--c-blanco, #FFFFFF); }
+.d2 .d2-ega-alcance { background: var(--comp-rol, var(--c-blanco, #FFFFFF)); }
 
 .d2 .d2-ega-alcance__inner {
   display: grid;

@@ -114,6 +114,48 @@
       });
     });
 
+    /* --- El mismo tema, en CUALQUIER pagina (14/9/2026) -----------------
+
+       Lo de arriba es POSICIONAL:  es una lista de once fondos en el
+       orden exacto de las once secciones del home. Fuera del home no
+       aplica nada, porque ninguno de esos once carruseles existe --se
+       comprobo en Energy Gap Analysis: el tema no le tocaba un solo
+       fondo--.
+
+       Esta segunda pasada va por ROL. Una seccion declara QUE ES con
+       data-comp-rol y recibe el fondo que el tema da a ese rol, este donde
+       este y en la pagina que sea. Las paginas que aun no existen heredan
+       el sistema sin tocar nada.
+
+       Los roles se derivan del mapa, no se escriben aparte: asi cambiar
+       una composicion sigue cambiando toda la web de una vez, que es para
+       lo que se hizo. */
+    var PORROL = {
+      hero:    c.mapa[0],   /* la primera pantalla */
+      marcas:  c.mapa[1],   /* la banda de logos */
+      proceso: c.mapa[2],   /* los pasos de un metodo */
+      calc:    c.mapa[4],   /* la calculadora */
+      prueba:  c.mapa[5],   /* datos o prueba social */
+      citas:   c.mapa[6],   /* resenas */
+      faq:     c.mapa[8],   /* preguntas */
+      cierre:  c.mapa[9],   /* el CTA final */
+      pie:     c.mapa[10]
+    };
+
+    Array.prototype.forEach.call(
+      document.querySelectorAll('[data-comp-rol]'),
+      function (sec) {
+        var color = PORROL[sec.getAttribute('data-comp-rol')];
+        if (!color) { return; }
+        sec.style.setProperty('--comp-rol', color);
+        if (esOscuro(color)) {
+          sec.setAttribute('data-comp-tono', 'oscuro');
+        } else {
+          sec.removeAttribute('data-comp-tono');
+        }
+      }
+    );
+
     raiz.setAttribute('data-composicion', c.id);
 
     Array.prototype.forEach.call(botones, function (b, n) {

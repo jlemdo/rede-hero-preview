@@ -103,7 +103,8 @@
 
 .d2 .d2-ega-pasos2 {
   padding-block: 84px;
-  background: var(--c-fondo-alt, #F5F5F5);
+  /* El fondo lo pone el tema por ROL; el valor de siempre, de respaldo. */
+  background: var(--comp-rol, var(--c-fondo-alt, #F5F5F5));
 }
 
 .d2 .d2-ega-pasos2__inner {
@@ -238,7 +239,7 @@
 
 .d2 .d2-ega-pasos3 {
   padding-block: 84px;
-  background: var(--c-fondo-alt, #F5F5F5);
+  background: var(--comp-rol, var(--c-fondo-alt, #F5F5F5));
 }
 
 .d2 .d2-ega-pasos3__inner {
@@ -509,8 +510,12 @@
 
 .d2 :is(.d2-ega-pasos__circuito, .d2-ega-pasos2__circuito, .d2-ega-pasos3__circuito) circle {
   /* Relleno del color del fondo: el nodo tapa el trazo que pasa por debajo
-     y se lee como una conexion, no como un punto encima de una linea. */
-  fill: var(--c-fondo-alt, #F5F5F5);
+     y se lee como una conexion, no como un punto encima de una linea.
+
+     Va por --comp-rol, no por el gris fijo: si el tema cambia el fondo de
+     la seccion, el relleno lo sigue. Con el gris a fuego los nodos se
+     quedaban como puntos grises sobre blanco. */
+  fill: var(--comp-rol, var(--c-fondo-alt, #F5F5F5));
   stroke: rgba(57, 181, 74, .3);
   stroke-width: 1.5px;
 }
