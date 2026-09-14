@@ -398,28 +398,52 @@
             <!-- La cartera leida como termografia. aria-hidden porque es la
                  ilustracion de lo que dicen los tres pasos, no informacion
                  nueva: un lector de pantalla oiria doce span vacios. -->
-            <div class="d2-ega-termo__lectura" aria-hidden="true">
-              <div class="d2-ega-termo__escala">
-                <span class="d2-ega-termo__escala-eti">Low</span>
-                <span class="d2-ega-termo__barra"></span>
-                <span class="d2-ega-termo__escala-eti">High</span>
-              </div>
-              <div class="d2-ega-termo__cartera">
-                <span class="d2-ega-termo__col" style="--h:34%;--i:0"></span>
-                <span class="d2-ega-termo__col" style="--h:52%;--i:1"></span>
-                <span class="d2-ega-termo__col d2-ega-termo__col--alta" style="--h:88%;--i:2"></span>
-                <span class="d2-ega-termo__col" style="--h:41%;--i:3"></span>
-                <span class="d2-ega-termo__col" style="--h:47%;--i:4"></span>
-                <span class="d2-ega-termo__col" style="--h:63%;--i:5"></span>
-                <span class="d2-ega-termo__col d2-ega-termo__col--alta" style="--h:95%;--i:6"></span>
-                <span class="d2-ega-termo__col" style="--h:39%;--i:7"></span>
-                <span class="d2-ega-termo__col" style="--h:58%;--i:8"></span>
-                <span class="d2-ega-termo__col d2-ega-termo__col--alta" style="--h:79%;--i:9"></span>
-                <span class="d2-ega-termo__col" style="--h:44%;--i:10"></span>
-                <span class="d2-ega-termo__col" style="--h:51%;--i:11"></span>
-              </div>
-              <p class="d2-ega-termo__pie">Energy use intensity across 12 buildings</p>
+            <div class="d2-ega-graf" role="img"
+                 aria-label="Historical cost reduction by building type, from BC Hydro Continuous Optimization results: school 9.5 per cent at the high end, shopping mall 2 per cent at the low end, with an average of 5.8 per cent across the thirteen types.">
+              <svg viewBox="0 0 520 132" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                <!-- Rejilla: da escala. Sin ella el grafico flota. -->
+                <g class="g-rejilla" stroke="#EFEFEF" stroke-width="1">
+                  <line x1="8" y1="20" x2="512" y2="20"/>
+                  <line x1="8" y1="55" x2="512" y2="55"/>
+                  <line x1="8" y1="90" x2="512" y2="90"/>
+                  <line x1="8" y1="120" x2="512" y2="120"/>
+                </g>
+
+                <!-- La media de los trece: la referencia contra la que se
+                     compara cada tipo, igual que la linea base del hero. -->
+                <line class="g-base" x1="14" y1="62.0" x2="506" y2="62.0"
+                      stroke="#C9C9C9" stroke-width="2" stroke-dasharray="5 5"
+                      stroke-linecap="round"/>
+
+                <path class="g-area" d="M14 25.0 L55 41.0 L96 46.0 L137 50.0 L178 53.0 L219 63.0 L260 63.0 L301 68.0 L342 72.0 L383 72.0 L424 75.0 L465 78.0 L506 100.0 L506 120 L14 120 Z"
+                      fill="var(--c-verde)" fill-opacity=".07"/>
+
+                <path class="g-linea" d="M14 25.0 L55 41.0 L96 46.0 L137 50.0 L178 53.0 L219 63.0 L260 63.0 L301 68.0 L342 72.0 L383 72.0 L424 75.0 L465 78.0 L506 100.0"
+                      stroke="var(--c-verde)" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+
+                <!-- Cada punto es una lectura, no una curva suelta. -->
+                <g class="g-puntos" fill="#FFFFFF" stroke="var(--c-verde)" stroke-width="2">
+                <circle cx="14" cy="25.0" r="3"/>
+                <circle cx="178" cy="53.0" r="3"/>
+                <circle cx="342" cy="72.0" r="3"/>
+                <circle cx="506" cy="100.0" r="3"/>
+                </g>
+              </svg>
+
+              <p class="d2-ega-graf__ejes" aria-hidden="true">
+                <span>School 9.5%</span>
+                <span class="d2-ega-graf__media">Average 5.8%</span>
+                <span>Shopping mall 2%</span>
+              </p>
             </div>
+
+            <p class="d2-ega-graf__fuente">
+              Historical cost reduction by building type. Source: BC Hydro
+              Continuous Optimization results, the same benchmarks used in the
+              calculator above.
+            </p>
 
             <ol class="d2-ega-termo__pasos">
               <li class="d2-ega-termo__paso">
@@ -596,32 +620,52 @@
 
             <!-- Catorce edificios, uno destacado: es lo que el metodo
                  produce, no un adorno. -->
-            <div class="d2-ega-pasos3__cartera" aria-hidden="true">
-              <div class="d2-ega-pasos3__cartera-cab">
-                <span class="d2-ega-pasos3__cartera-eti">Portfolio</span>
-                <span class="d2-ega-pasos3__cartera-n">14 buildings</span>
-              </div>
-              <div class="d2-ega-pasos3__barras">
-                <span class="d2-ega-pasos3__barra" style="--h:34%"></span>
-                <span class="d2-ega-pasos3__barra" style="--h:52%"></span>
-                <span class="d2-ega-pasos3__barra" style="--h:41%"></span>
-                <span class="d2-ega-pasos3__barra" style="--h:68%"></span>
-                <span class="d2-ega-pasos3__barra" style="--h:47%"></span>
-                <span class="d2-ega-pasos3__barra d2-ega-pasos3__barra--alta" style="--h:100%"></span>
-                <span class="d2-ega-pasos3__barra" style="--h:58%"></span>
-                <span class="d2-ega-pasos3__barra" style="--h:39%"></span>
-                <span class="d2-ega-pasos3__barra" style="--h:72%"></span>
-                <span class="d2-ega-pasos3__barra" style="--h:45%"></span>
-                <span class="d2-ega-pasos3__barra" style="--h:61%"></span>
-                <span class="d2-ega-pasos3__barra" style="--h:36%"></span>
-                <span class="d2-ega-pasos3__barra" style="--h:54%"></span>
-                <span class="d2-ega-pasos3__barra" style="--h:43%"></span>
-              </div>
-              <p class="d2-ega-pasos3__cartera-pie">
-                <span class="d2-ega-pasos3__punto"></span>
-                Highest gap &mdash; investigate first
+            <div class="d2-ega-graf" role="img"
+                 aria-label="Historical cost reduction by building type, from BC Hydro Continuous Optimization results: school 9.5 per cent at the high end, shopping mall 2 per cent at the low end, with an average of 5.8 per cent across the thirteen types.">
+              <svg viewBox="0 0 520 132" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                <!-- Rejilla: da escala. Sin ella el grafico flota. -->
+                <g class="g-rejilla" stroke="#EFEFEF" stroke-width="1">
+                  <line x1="8" y1="20" x2="512" y2="20"/>
+                  <line x1="8" y1="55" x2="512" y2="55"/>
+                  <line x1="8" y1="90" x2="512" y2="90"/>
+                  <line x1="8" y1="120" x2="512" y2="120"/>
+                </g>
+
+                <!-- La media de los trece: la referencia contra la que se
+                     compara cada tipo, igual que la linea base del hero. -->
+                <line class="g-base" x1="14" y1="62.0" x2="506" y2="62.0"
+                      stroke="#C9C9C9" stroke-width="2" stroke-dasharray="5 5"
+                      stroke-linecap="round"/>
+
+                <path class="g-area" d="M14 25.0 L55 41.0 L96 46.0 L137 50.0 L178 53.0 L219 63.0 L260 63.0 L301 68.0 L342 72.0 L383 72.0 L424 75.0 L465 78.0 L506 100.0 L506 120 L14 120 Z"
+                      fill="var(--c-verde)" fill-opacity=".07"/>
+
+                <path class="g-linea" d="M14 25.0 L55 41.0 L96 46.0 L137 50.0 L178 53.0 L219 63.0 L260 63.0 L301 68.0 L342 72.0 L383 72.0 L424 75.0 L465 78.0 L506 100.0"
+                      stroke="var(--c-verde)" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+
+                <!-- Cada punto es una lectura, no una curva suelta. -->
+                <g class="g-puntos" fill="#FFFFFF" stroke="var(--c-verde)" stroke-width="2">
+                <circle cx="14" cy="25.0" r="3"/>
+                <circle cx="178" cy="53.0" r="3"/>
+                <circle cx="342" cy="72.0" r="3"/>
+                <circle cx="506" cy="100.0" r="3"/>
+                </g>
+              </svg>
+
+              <p class="d2-ega-graf__ejes" aria-hidden="true">
+                <span>School 9.5%</span>
+                <span class="d2-ega-graf__media">Average 5.8%</span>
+                <span>Shopping mall 2%</span>
               </p>
             </div>
+
+            <p class="d2-ega-graf__fuente">
+              Historical cost reduction by building type. Source: BC Hydro
+              Continuous Optimization results, the same benchmarks used in the
+              calculator above.
+            </p>
           </div>
 
           <div class="d2-ega-puente3">
@@ -1681,7 +1725,7 @@
           </p>
 
           <ul class="d2-ega-dial__lista">
-            <li class="d2-ega-dial__item" style="--barrido:82;--i:0">
+            <li class="d2-ega-dial__item" style="--i:0">
               <span class="d2-ega-dial__medidor" aria-hidden="true">
                 <span class="d2-ega-dial__aguja"></span>
                 <span class="d2-ega-dial__centro">BC</span>
@@ -1693,7 +1737,7 @@
                 <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </a>
             </li>
-            <li class="d2-ega-dial__item" style="--barrido:64;--i:1">
+            <li class="d2-ega-dial__item" style="--i:1">
               <span class="d2-ega-dial__medidor" aria-hidden="true">
                 <span class="d2-ega-dial__aguja"></span>
                 <span class="d2-ega-dial__centro">SK</span>
@@ -1705,7 +1749,7 @@
                 <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </a>
             </li>
-            <li class="d2-ega-dial__item" style="--barrido:45;--i:2">
+            <li class="d2-ega-dial__item" style="--i:2">
               <span class="d2-ega-dial__medidor" aria-hidden="true">
                 <span class="d2-ega-dial__aguja"></span>
                 <span class="d2-ega-dial__centro">CA</span>

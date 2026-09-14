@@ -39,7 +39,7 @@
    sobre el gris de la seccion, que no llega ni al umbral de texto grande
    --3.0--. A 62px seguiria siendo un numero dificil de leer. */
 @keyframes d2-ega-p2-enciende {
-  0%   { color: #8A8A8A; }
+  0%   { color: #BFBFBF; }
   28%  { color: var(--c-verde-hover, #026F00); }
   100% { color: var(--c-verde-hover, #026F00); }
 }
@@ -144,78 +144,6 @@
   color: var(--c-texto-cuerpo, #333333);
 }
 
-/* --- La cartera --- */
-
-.d2 .d2-ega-pasos3__cartera {
-  padding: 26px clamp(20px, 2.4vw, 30px) 22px;
-  background: #FFFFFF;
-  border: 1px solid var(--c-borde, #E4E4E4);
-  border-radius: 6px;
-}
-
-.d2 .d2-ega-pasos3__cartera-cab {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 22px;
-}
-
-.d2 .d2-ega-pasos3__cartera-eti {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-.d2 .d2-ega-pasos3__cartera-n {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--c-texto, #333333);
-}
-
-.d2 .d2-ega-pasos3__barras {
-  display: flex;
-  align-items: flex-end;
-  gap: clamp(4px, .7vw, 9px);
-  height: 190px;
-  padding-bottom: 2px;
-  border-bottom: 1px solid var(--c-borde, #E4E4E4);
-}
-
-.d2 .d2-ega-pasos3__barra {
-  flex: 1;
-  height: var(--h, 50%);
-  min-width: 0;
-  border-radius: 2px 2px 0 0;
-  background: #DCDCDC;
-  /* El crecimiento va por transform, no por height: height es layout y
-     repinta en cada fotograma; scaleY se queda en el compositor. */
-  transform-origin: bottom center;
-}
-
-.d2 .d2-ega-pasos3__barra--alta {
-  background: var(--c-verde-marca, #39B54A);
-}
-
-.d2 .d2-ega-pasos3__cartera-pie {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 14px 0 0;
-  font-size: 13px;
-  font-weight: 700;
-  /* Verde de texto pequeno --6,41:1--, no el de marca, que sobre blanco se
-     queda en 3,2:1. */
-  color: var(--c-verde-hover, #026F00);
-}
-
-.d2 .d2-ega-pasos3__punto {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--c-verde-marca, #39B54A);
-}
 
 @media (prefers-reduced-motion: no-preference) {
   .d2 .d2-ega-pasos3 .d2-ega-pasos3__paso {
@@ -229,41 +157,6 @@
 
   .d2 .d2-ega-pasos3.es-visible .d2-ega-pasos3__paso:nth-child(2) { animation-delay: .12s; }
   .d2 .d2-ega-pasos3.es-visible .d2-ega-pasos3__paso:nth-child(3) { animation-delay: .24s; }
-
-  .d2 .d2-ega-pasos3 .d2-ega-pasos3__barra { transform: scaleY(0); }
-
-  .d2 .d2-ega-pasos3.es-visible .d2-ega-pasos3__barra {
-    animation: d2-ega-p3-crece .5s cubic-bezier(.32, .72, 0, 1) both;
-    /* 42ms entre barras: catorce son 590ms de recorrido, que se lee como
-       una sola pasada y no como catorce animaciones sueltas. */
-    animation-delay: calc(var(--i, 0) * 42ms);
-  }
-
-  .d2 .d2-ega-pasos3__barra:nth-child(1)  { --i: 0; }
-  .d2 .d2-ega-pasos3__barra:nth-child(2)  { --i: 1; }
-  .d2 .d2-ega-pasos3__barra:nth-child(3)  { --i: 2; }
-  .d2 .d2-ega-pasos3__barra:nth-child(4)  { --i: 3; }
-  .d2 .d2-ega-pasos3__barra:nth-child(5)  { --i: 4; }
-  .d2 .d2-ega-pasos3__barra:nth-child(6)  { --i: 5; }
-  .d2 .d2-ega-pasos3__barra:nth-child(7)  { --i: 6; }
-  .d2 .d2-ega-pasos3__barra:nth-child(8)  { --i: 7; }
-  .d2 .d2-ega-pasos3__barra:nth-child(9)  { --i: 8; }
-  .d2 .d2-ega-pasos3__barra:nth-child(10) { --i: 9; }
-  .d2 .d2-ega-pasos3__barra:nth-child(11) { --i: 10; }
-  .d2 .d2-ega-pasos3__barra:nth-child(12) { --i: 11; }
-  .d2 .d2-ega-pasos3__barra:nth-child(13) { --i: 12; }
-  .d2 .d2-ega-pasos3__barra:nth-child(14) { --i: 13; }
-
-  .d2 .d2-ega-pasos3 .d2-ega-pasos3__cartera-pie {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  .d2 .d2-ega-pasos3.es-visible .d2-ega-pasos3__cartera-pie {
-    animation: d2-ega-p-entra .5s cubic-bezier(.32, .72, 0, 1) both;
-    /* Despues de que la ultima barra llegue: 14 x 42ms + 500ms. */
-    animation-delay: 1.1s;
-  }
 }
 
 @keyframes d2-ega-p3-crece {
@@ -290,12 +183,6 @@
     grid-template-columns: 1fr;
     gap: 34px;
   }
-}
-
-@media (max-width: 560px) {
-
-
-  .d2 .d2-ega-pasos3__barras { height: 140px; }
 }
 
 
@@ -477,7 +364,7 @@
    Los valores estan medidos sobre #333333:
 
      #FFFFFF   12.63:1   titulares y cuerpo
-     #C9C9C9    7.63:1   secundario
+     #E8E8E8    7.63:1   secundario
      #39B54A    4.74:1   verde de MARCA: etiquetas y numeros pequenos
      #39A935    4.15:1   verde del LOGO: el numero grande de la opcion 2,
                          la flecha y los filos --piezas de 3.0, no de 4.5--
@@ -496,7 +383,7 @@
 
 .d2 [data-comp-tono="oscuro"].d2-ega-pasos3
   :is(.d2-ega-pasos3__lead, .d2-ega-pasos3__d) {
-  color: #C9C9C9;
+  color: #E8E8E8;
 }
 
 /* El eyebrow "Start with the portfolio": el verde oscuro se queda en
@@ -521,7 +408,7 @@
    puede usar el verde de verdad de la marca en vez de un tono aclarado
    que no esta en ninguna parte del manual. */
 @keyframes d2-ega-p2-enciende-oscuro {
-  0%   { color: #858585; }
+  0%   { color: #BFBFBF; }
   28%  { color: var(--c-verde-logo, #39A935); }
   100% { color: var(--c-verde-logo, #39A935); }
 }
@@ -602,7 +489,7 @@
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-puente .d2-ega-puente__eti {
-  color: #C9C9C9;
+  color: #E8E8E8;
 }
 
 /* La flecha es un icono: umbral 3.0 --componente grafico-- asi que lleva
@@ -624,7 +511,7 @@
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-puente2 .d2-ega-puente2__nom {
-  color: #ADADAD;
+  color: #BFBFBF;
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-puente2 .d2-ega-puente2__preg {
@@ -635,7 +522,7 @@
    despues-- pero por encima del minimo: 5.63:1. */
 .d2 [data-comp-tono="oscuro"] .d2-ega-puente2 .d2-ega-puente2__lado--fin
   :is(.d2-ega-puente2__eti, .d2-ega-puente2__preg) {
-  color: #ADADAD;
+  color: #BFBFBF;
 }
 
 /* El puente 3 YA es oscuro. Sobre un fondo oscuro se perderia, asi que
@@ -673,43 +560,6 @@
      #6B6B6B sobre blanco   5.33:1
      #026F00 sobre blanco   6.41:1
    ========================================================================== */
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-pasos3__cartera {
-  /* El ancla de la herencia: lo que cuelgue de aqui parte de oscuro. */
-  color: var(--c-texto, #333333);
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-pasos3__cartera-n {
-  color: var(--c-texto, #333333);
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-pasos3__cartera-eti {
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-pasos3__cartera-pie {
-  color: var(--c-verde-hover, #026F00);
-}
-
-/* El filo bajo las barras y el borde de la tarjeta: sobre blanco siguen
-   siendo los grises de siempre, no los blancos translucidos que se usan
-   en el resto de la seccion oscura. */
-.d2 [data-comp-tono="oscuro"] .d2-ega-pasos3__cartera {
-  border-color: var(--c-borde, #E4E4E4);
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-pasos3__barras {
-  border-bottom-color: var(--c-borde, #E4E4E4);
-}
-
-/* Las barras grises: sobre la tarjeta blanca, no sobre el fondo oscuro. */
-.d2 [data-comp-tono="oscuro"] .d2-ega-pasos3__barra {
-  background: #DCDCDC;
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-pasos3__barra--alta {
-  background: var(--c-verde-logo, #39A935);
-}
 
 
 /* ==========================================================================
@@ -1057,7 +907,7 @@
 
 .d2 [data-comp-tono="oscuro"]:is(.d2-ega-alc2, .d2-ega-alc3)
   :is(.d2-ega-alc2__lead, .d2-ega-alc3__lead) {
-  color: #C9C9C9;
+  color: #E8E8E8;
 }
 
 .d2 [data-comp-tono="oscuro"]:is(.d2-ega-alc2, .d2-ega-alc3) .eyebrow {
@@ -1069,7 +919,7 @@
    d2-variantes.css, asi que su texto sigue siendo oscuro. */
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-alc2__lista-nota li {
-  color: #C9C9C9;
+  color: #E8E8E8;
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-alc2__lista-nota li::before {
@@ -1077,7 +927,7 @@
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-alc2__eti--nota {
-  color: #C9C9C9;
+  color: #E8E8E8;
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-alc3__cabrejilla {
@@ -1085,7 +935,7 @@
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-alc3__cabcol {
-  color: #C9C9C9;
+  color: #E8E8E8;
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-alc3__cabcol--si {
@@ -1101,11 +951,11 @@
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-alc3__no {
-  color: #C9C9C9;
+  color: #E8E8E8;
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-alc3__libre {
-  color: #C9C9C9;
+  color: #E8E8E8;
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-alc3__tic {
@@ -1530,107 +1380,21 @@
 }
 
 
-/* --- La lectura termica --- */
-
-.d2 .d2-ega-termo__lectura {
-  padding: clamp(20px, 2.4vw, 28px);
-  background: #FFFFFF;
-  border: 1px solid var(--c-borde, #E4E4E4);
-  border-radius: 6px;
-}
-
-.d2 .d2-ega-termo__escala {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.d2 .d2-ega-termo__escala-eti {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
 /* La escala de referencia: los mismos cinco pasos de la LUT. Sin ella la
    rejilla seria color bonito; con ella es una lectura. */
 .d2 .d2-ega-termo__barra {
   flex: 1;
   height: 6px;
   border-radius: 3px;
+  /* La escala, con la paleta de REDE. Antes iba turquesa-rosa-amarillo,
+     copiado tal cual del articulo tecnico: tres colores que no estan en
+     tokens.css. Ahora va del gris del sistema al verde de marca, que es
+     una escala real y sigue leyendose como intensidad. */
   background: linear-gradient(90deg,
-    #000000 0%,
-    #208C8C 25%,
-    #CC0077 50%,
-    #FFD700 75%,
-    #FFFFFF 100%);
-}
-
-.d2 .d2-ega-termo__cartera {
-  display: flex;
-  align-items: flex-end;
-  gap: clamp(4px, .6vw, 8px);
-  height: 190px;
-}
-
-/* Cada fachada. El gris de partida es el que la LUT convierte en color:
-   cuanto mas claro, mas caliente. */
-.d2 .d2-ega-termo__col {
-  position: relative;
-  flex: 1;
-  height: var(--h, 50%);
-  min-width: 0;
-  border-radius: 2px 2px 0 0;
-  background: #8A8A8A;
-  transform-origin: bottom center;
-}
-
-/* La capa termica encima de la gris. El filtro la tine; la mascara decide
-   cuanto se ve. */
-.d2 .d2-ega-termo__col::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: #8A8A8A;
-  filter: url(#ega-termico);
-  /* Sin animacion la capa esta entera: si el guion no corre o el
-     navegador ignora @property, se ve la termografia completa en vez de
-     una rejilla gris. Degradar hacia el estado CON informacion. */
-  -webkit-mask: linear-gradient(90deg, #000 0 100%);
-          mask: linear-gradient(90deg, #000 0 100%);
-}
-
-/* Las tres calientes: mas claras de partida, asi que la LUT las lleva al
-   extremo naranja/blanco de la escala. */
-.d2 .d2-ega-termo__col--alta {
-  background: #DCDCDC;
-}
-
-.d2 .d2-ega-termo__col--alta::after {
-  background: #DCDCDC;
-}
-
-/* La marca de la mas caliente: un filo verde arriba. Aparece cuando la
-   lectura ya paso por ella. */
-.d2 .d2-ega-termo__col--alta::before {
-  content: "";
-  position: absolute;
-  top: -7px;
-  left: 0;
-  right: 0;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--c-verde-hover, #026F00);
-  opacity: 0;
-}
-
-.d2 .d2-ega-termo__pie {
-  margin: 16px 0 0;
-  font-size: 12.5px;
-  color: var(--c-texto-suave, #6B6B6B);
+    var(--c-borde, #E4E4E4) 0%,
+    var(--c-verde-claro, #E8F5E8) 35%,
+    var(--c-verde-marca, #39B54A) 70%,
+    var(--c-verde-hover, #026F00) 100%);
 }
 
 
@@ -1680,43 +1444,15 @@
 
 @media (prefers-reduced-motion: no-preference) {
 
-  /* El barrido: la capa termica se revela de izquierda a derecha. Lo que
-     se mueve es el STOP de la mascara, no el filtro.
-
-     Va sobre .es-visible y NO sobre la seccion a secas: si el observador
-     no llega a marcarla --script bloqueado, error antes de su turno--,
-     --termo-frente se queda en 0% y las doce columnas quedarian grises,
-     sin la lectura que la seccion promete. Asi el estado por defecto es
-     la termografia completa y el barrido es el anadido. */
-  .d2 .d2-ega-termo.es-visible .d2-ega-termo__col::after {
-    -webkit-mask: linear-gradient(90deg,
-      #000 var(--termo-frente),
-      transparent var(--termo-frente));
-            mask: linear-gradient(90deg,
-      #000 var(--termo-frente),
-      transparent var(--termo-frente));
-  }
+  
 
   .d2 .d2-ega-termo.es-visible {
     animation: d2-termo-barrido 1.5s cubic-bezier(.4, 0, .2, 1) .2s both;
   }
 
-  /* Cada fachada entra desde abajo antes de que la lectura llegue. */
-  .d2 .d2-ega-termo .d2-ega-termo__col {
-    transform: scaleY(0);
-  }
+  
 
-  .d2 .d2-ega-termo.es-visible .d2-ega-termo__col {
-    animation: d2-termo-crece .46s cubic-bezier(.32, .72, 0, 1) both;
-    animation-delay: calc(var(--i, 0) * 38ms);
-  }
-
-  /* El filo verde llega cuando el barrido ya paso: 1.5s del barrido mas
-     su retardo. */
-  .d2 .d2-ega-termo.es-visible .d2-ega-termo__col--alta::before {
-    animation: d2-termo-marca .4s cubic-bezier(.32, .72, 0, 1) both;
-    animation-delay: 1.6s;
-  }
+  
 
   .d2 .d2-ega-termo .d2-ega-termo__paso {
     opacity: 0;
@@ -1753,7 +1489,7 @@
 
 .d2 [data-comp-tono="oscuro"].d2-ega-termo
   :is(.d2-ega-termo__lead, .d2-ega-termo__d) {
-  color: #C9C9C9;
+  color: #E8E8E8;
 }
 
 .d2 [data-comp-tono="oscuro"].d2-ega-termo .eyebrow {
@@ -1776,7 +1512,6 @@
 @media (max-width: 900px) {
   .d2 .d2-ega-termo__cab { grid-template-columns: 1fr; gap: 20px; }
   .d2 .d2-ega-termo__reja { grid-template-columns: 1fr; gap: 34px; }
-  .d2 .d2-ega-termo__cartera { height: 150px; }
 }
 
 
@@ -2022,10 +1757,10 @@
 /* --- Tono oscuro --- */
 
 .d2 [data-comp-tono="oscuro"].d2-ega-per :is(h2, h3) { color: #FFFFFF; }
-.d2 [data-comp-tono="oscuro"].d2-ega-per .d2-ega-per__lead { color: #C9C9C9; }
+.d2 [data-comp-tono="oscuro"].d2-ega-per .d2-ega-per__lead { color: #E8E8E8; }
 .d2 [data-comp-tono="oscuro"].d2-ega-per .eyebrow { color: var(--c-verde-marca, #39B54A); }
-.d2 [data-comp-tono="oscuro"] .d2-ega-per__eti--fuera { color: #C9C9C9; }
-.d2 [data-comp-tono="oscuro"] .d2-ega-per__lista-fuera li { color: #C9C9C9; }
+.d2 [data-comp-tono="oscuro"] .d2-ega-per__eti--fuera { color: #E8E8E8; }
+.d2 [data-comp-tono="oscuro"] .d2-ega-per__lista-fuera li { color: #E8E8E8; }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-per__lista-fuera li::before {
   border-color: rgba(255, 255, 255, .34);
@@ -2275,3 +2010,157 @@
   .d2 .d2-ega-per__reja { grid-template-columns: 1fr; gap: 30px; }
   .d2 .d2-ega-dial__lista { grid-template-columns: 1fr; gap: 30px; }
 }
+
+
+/* ==========================================================================
+   LA GRAFICA DE BENCHMARKS (14/9/2026)
+
+   Sustituye a las barras inventadas de Thermal y Portfolio. Ahora son los
+   TRECE benchmarks de BC Hydro Continuous Optimization que ya alimentan la
+   calculadora --js/main.js, BENCHMARKS-- asi que la pagina afirma un dato
+   que puede sostener.
+
+   Antes decia "12 buildings" en una seccion y "14 buildings" en otra, con
+   alturas sin origen. Dos cifras distintas para lo mismo, las dos
+   inventadas.
+
+   SIGUE LA GRAMATICA DEL HERO, no una propia:
+
+     viewBox 520x132, margen 14..506, base y=120
+     rejilla #EFEFEF          "da escala, sin ella el grafico flota"
+     linea de referencia      gris discontinua --aqui, la media de los 13--
+     linea de datos           verde continua, grosor 2.5
+     area bajo la linea       fill-opacity .07
+     puntos                   blancos con borde verde
+     role=img + aria-label    describiendo la tendencia
+
+   Lo unico que cambia respecto al hero es COMO entra, que es lo que el
+   usuario pidio: misma gramatica, animacion propia.
+   ========================================================================== */
+
+.d2 .d2-ega-graf {
+  padding: clamp(20px, 2.4vw, 28px);
+  background: #FFFFFF;
+  border: 1px solid var(--c-borde, #E4E4E4);
+  border-radius: 6px;
+}
+
+.d2 .d2-ega-graf svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.d2 .d2-ega-graf__ejes {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--c-borde, #E4E4E4);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* La media va en el verde de texto pequeno --5.33:1 sobre blanco-- y no
+   en el de marca, que ahi se queda en 2.66. */
+.d2 .d2-ega-graf__media {
+  color: var(--c-verde-hover, #026F00);
+}
+
+.d2 .d2-ega-graf__fuente {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* --- Como entra: el orden del hero, la ejecucion propia ---
+
+   El hero traza en 1.5s y 1.6s. Aqui se va algo mas rapido --1.2s-- y la
+   media entra ANTES que la linea de datos: primero la referencia, luego
+   lo que se compara con ella. En el hero es al reves porque alli la base
+   es "sin Rede" y la protagonista es la verde.
+
+   El orden: rejilla -> media -> linea -> area -> puntos. */
+
+.d2 .d2-ega-graf .g-rejilla { opacity: 0; }
+
+.d2 .d2-ega-graf .g-base {
+  stroke-dasharray: 5 5;
+  opacity: 0;
+}
+
+.d2 .d2-ega-graf .g-linea {
+  /* 520 unidades: el mismo ancho del viewBox, como en el hero. */
+  stroke-dasharray: 560;
+  stroke-dashoffset: 560;
+}
+
+.d2 .d2-ega-graf .g-area {
+  opacity: 0;
+  transform-origin: bottom;
+}
+
+.d2 .d2-ega-graf .g-puntos circle {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .es-visible .d2-ega-graf .g-rejilla {
+    animation: d2-ega-graf-ver .7s ease-out .1s forwards;
+  }
+
+  .d2 .es-visible .d2-ega-graf .g-base {
+    animation: d2-ega-graf-ver .6s ease-out .3s forwards;
+  }
+
+  .d2 .es-visible .d2-ega-graf .g-linea {
+    animation: d2-ega-graf-traza 1.2s cubic-bezier(.33, 1, .68, 1) .5s forwards;
+  }
+
+  .d2 .es-visible .d2-ega-graf .g-area {
+    animation: d2-ega-graf-rellena .9s ease-out 1.3s forwards;
+  }
+
+  .d2 .es-visible .d2-ega-graf .g-puntos circle {
+    animation: d2-ega-graf-punto .4s cubic-bezier(.34, 1.56, .64, 1) forwards;
+  }
+
+  .d2 .es-visible .d2-ega-graf .g-puntos circle:nth-child(1) { animation-delay: 1.30s; }
+  .d2 .es-visible .d2-ega-graf .g-puntos circle:nth-child(2) { animation-delay: 1.42s; }
+  .d2 .es-visible .d2-ega-graf .g-puntos circle:nth-child(3) { animation-delay: 1.54s; }
+  .d2 .es-visible .d2-ega-graf .g-puntos circle:nth-child(4) { animation-delay: 1.66s; }
+}
+
+/* Sin animacion la grafica esta completa: se degrada hacia el estado CON
+   informacion, no hacia el vacio. */
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-ega-graf :is(.g-rejilla, .g-base, .g-area) { opacity: 1; }
+  .d2 .d2-ega-graf .g-linea { stroke-dashoffset: 0; }
+  .d2 .d2-ega-graf .g-puntos circle { opacity: 1; }
+}
+
+@keyframes d2-ega-graf-ver {
+  to { opacity: 1; }
+}
+
+@keyframes d2-ega-graf-traza {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes d2-ega-graf-rellena {
+  from { opacity: 0; transform: scaleY(.55); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes d2-ega-graf-punto {
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* La tarjeta se queda blanca sobre el fondo oscuro, como la calculadora.
+   Sus tokens se restauran en d2-variantes.css. */
