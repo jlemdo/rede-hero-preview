@@ -111,18 +111,44 @@
        transicion. */
 
     var TURNO = 4500;
-    var boton = sec.querySelector('[data-piv-pausa]');
-    var botonEti = sec.querySelector('[data-piv-pausa-eti]');
     var quieto = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     var reloj = null;
     var parado = quieto.matches;
 
+    /* UNA VUELTA Y PARA.
+
+       El usuario pidio quitar el boton de pausa: "solo con hover se
+       deberia detener". Tenia razon en que sobraba visualmente, pero
+       quitarlo sin mas dejaba la pieza fuera de norma.
+
+       WCAG 2.2.2 exige un mecanismo de pausa para todo movimiento
+       automatico de MAS de cinco segundos, y el hover no cuenta: no
+       existe en tactil ni con teclado.
+
+       La salida es no tener bucle infinito. Avanza una sola vuelta
+       --cuatro items, 18s-- y se detiene en el ultimo. Deja de aplicar la
+       norma, el boton desaparece y el gesto sigue: el visitante ve que la
+       lista se mueve sola y luego se queda quieta para que lea.
+
+       Si el raton entra, para. Si sale, reanuda solo si aun queda vuelta.
+    */
+    var vueltas = 0;
+
     function siguiente() {
       var abierto = sec.querySelector('.d2-ega-piv__item[open]');
       var i = Array.prototype.indexOf.call(items, abierto);
-      var n = items[(i + 1) % items.length];
-      if (n) { n.open = true; }
+
+      /* El ultimo cierra la vuelta: se para ahi y no vuelve a empezar. */
+      if (i >= items.length - 1) {
+        parado = true;
+        detener();
+        marcar();
+        return;
+      }
+
+      vueltas += 1;
+      items[i + 1].open = true;
     }
 
     function arrancar() {
@@ -134,24 +160,11 @@
       if (reloj) { clearInterval(reloj); reloj = null; }
     }
 
-    function pintarBoton() {
-      if (botonEti) { botonEti.textContent = parado ? 'Start' : 'Stop'; }
-      if (boton) {
-        boton.setAttribute('aria-label',
-          parado ? 'Start automatic advance' : 'Stop automatic advance');
-      }
-      /* En rotacion, la ficha calla. */
+    function marcar() {
+      /* En rotacion la ficha calla; parada, anuncia. */
       caja.setAttribute('aria-live', parado ? 'polite' : 'off');
       if (parado) { sec.setAttribute('data-piv-parado', ''); }
       else { sec.removeAttribute('data-piv-parado'); }
-    }
-
-    if (boton) {
-      boton.addEventListener('click', function () {
-        parado = !parado;
-        pintarBoton();
-        if (parado) { detener(); } else { arrancar(); }
-      });
     }
 
     /* El raton detiene mientras esta encima y reanuda al salir. */
@@ -165,7 +178,7 @@
     sec.addEventListener('focusin', function () {
       if (parado) { return; }
       parado = true;
-      pintarBoton();
+      marcar();
       detener();
     });
 
@@ -180,6 +193,6 @@
       arrancar();
     }
 
-    pintarBoton();
+    marcar();
   });
 }());

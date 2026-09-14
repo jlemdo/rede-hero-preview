@@ -1469,6 +1469,50 @@
                 <li>Whether equipment is failing</li>
                 <li>Guaranteed savings or confirmed funding</li>
               </ul>
+
+              <div class="d2-ega-per__lectura" aria-hidden="true">
+                <svg viewBox="0 0 220 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                  <!-- El area cubierta: lo que ESTE servicio alcanza. El
+                       trazo no cierra del todo por abajo: un perimetro
+                       cerrado sugiere un limite fisico, y esto es un
+                       alcance de trabajo. -->
+                  <path class="d2-ega-per__area"
+                        d="M28 118 L28 44 Q28 30 42 30 L150 30 Q164 30 164 44 L164 112"
+                        stroke="var(--c-verde-hover)" stroke-width="1.5"
+                        stroke-linecap="round"/>
+
+                  <!-- Lo que queda dentro: cuatro nodos alineados con los
+                       cuatro entregables. -->
+                  <g class="d2-ega-per__dentro-n" fill="var(--c-verde-hover)">
+                    <circle cx="56" cy="56" r="3.5"/>
+                    <circle cx="90" cy="56" r="3.5"/>
+                    <circle cx="124" cy="56" r="3.5"/>
+                    <circle cx="90" cy="88" r="3.5"/>
+                  </g>
+
+                  <!-- Los cuatro limites, fuera del area y sin rellenar:
+                       existen, pero no estan dentro. -->
+                  <g class="d2-ega-per__fuera-n" fill="none"
+                     stroke="var(--c-texto-suave)" stroke-width="1.5">
+                    <circle cx="188" cy="46" r="3.5"/>
+                    <circle cx="196" cy="78" r="3.5"/>
+                    <circle cx="186" cy="108" r="3.5"/>
+                    <circle cx="200" cy="132" r="3.5"/>
+                  </g>
+
+                  <!-- La escala del margen inferior: marca que esto es una
+                       lectura, no un dibujo. -->
+                  <g class="d2-ega-per__escala" stroke="var(--c-borde)" stroke-width="1">
+                    <line x1="28" y1="136" x2="28" y2="142"/>
+                    <line x1="62" y1="138" x2="62" y2="142"/>
+                    <line x1="96" y1="138" x2="96" y2="142"/>
+                    <line x1="130" y1="138" x2="130" y2="142"/>
+                    <line x1="164" y1="136" x2="164" y2="142"/>
+                  </g>
+                </svg>
+                <p class="d2-ega-per__lectura-pie">Inside this engagement</p>
+              </div>
             </div>
 
           </div>
@@ -1497,13 +1541,6 @@
 
             <div class="d2-ega-piv__lista">
               <p class="d2-ega-piv__eti">What you receive</p>
-              <p class="d2-ega-piv__auto">
-                <button class="d2-ega-piv__pausa" type="button" data-piv-pausa>
-                  <span class="d2-ega-piv__pausa-icono" aria-hidden="true"></span>
-                  <span data-piv-pausa-eti>Stop</span>
-                </button>
-                <span class="d2-ega-piv__auto-nota">Advancing automatically</span>
-              </p>
               <details class="d2-ega-piv__item" name="d2-ega-piv" open=""
                        data-limite="The exact source of the problem" data-razon="Comes from the investigation the shortlist points to.">
                 <summary class="d2-ega-piv__si">
@@ -1591,6 +1628,45 @@
             <p class="d2-ega-met__lead">Energy Gap Analysis helps you decide where deeper work is justified. It does not guess at the cause or commit you to another service.</p>
           </div>
 
+          <div class="d2-ega-met__reja">
+
+          <div class="d2-ega-met__regla" aria-hidden="true">
+            <svg viewBox="0 0 64 320" fill="none" xmlns="http://www.w3.org/2000/svg"
+                 preserveAspectRatio="xMidYMin meet">
+
+              <!-- El eje. No llega a los extremos: se desvanece con la
+                   mascara del CSS. -->
+              <line class="d2-ega-met__eje" x1="12" y1="8" x2="12" y2="312"
+                    stroke="var(--c-borde)" stroke-width="1.5"/>
+
+              <!-- Las marcas: una mayor por cada entregable, cuatro
+                   menores entre medias. Es la graduacion de un
+                   instrumento, no una lista de vinetas. -->
+              <g class="d2-ega-met__marcas" stroke="var(--c-borde)" stroke-width="1">
+                <line x1="12" y1="40" x2="30" y2="40" stroke-width="1.5"/>
+                <line x1="12" y1="56" x2="21" y2="56"/>
+                <line x1="12" y1="72" x2="21" y2="72"/>
+                <line x1="12" y1="112" x2="30" y2="112" stroke-width="1.5"/>
+                <line x1="12" y1="128" x2="21" y2="128"/>
+                <line x1="12" y1="144" x2="21" y2="144"/>
+                <line x1="12" y1="184" x2="30" y2="184" stroke-width="1.5"/>
+                <line x1="12" y1="200" x2="21" y2="200"/>
+                <line x1="12" y1="216" x2="21" y2="216"/>
+                <line x1="12" y1="256" x2="30" y2="256" stroke-width="1.5"/>
+                <line x1="12" y1="272" x2="21" y2="272"/>
+                <line x1="12" y1="288" x2="21" y2="288"/>
+              </g>
+
+              <!-- El cursor: baja por el eje al ritmo de los cuatro
+                   arcos, y se detiene en el ultimo. -->
+              <g class="d2-ega-met__cursor">
+                <line x1="6" y1="0" x2="34" y2="0" stroke="var(--c-verde-hover)"
+                      stroke-width="2" stroke-linecap="round"/>
+                <circle cx="12" cy="0" r="3.5" fill="var(--c-verde-hover)"/>
+              </g>
+            </svg>
+          </div>
+
           <ul class="d2-ega-met__lista">
             <li class="d2-ega-met__item" style="--i:0">
               <span class="d2-ega-met__dial" aria-hidden="true">
@@ -1649,6 +1725,7 @@
               </div>
             </li>
           </ul>
+          </div>
 
           <p class="d2-ega-met__libre">
             <strong>No lock-in.</strong> Review the findings, ask questions and decide what happens next.

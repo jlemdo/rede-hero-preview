@@ -2701,74 +2701,6 @@
 }
 
 
-/* --------------------------------------------------------------------------
-   EL AVANCE AUTOMATICO DEL PIVOTE
-
-   Patron normativo del W3C --APG, Carousel--. Lo que casi todos fallan y
-   aqui se respeta:
-
-     - el boton CAMBIA DE ETIQUETA --Stop / Start-- en vez de usar
-       aria-pressed
-     - aria-live va en `off` mientras rota y pasa a `polite` al parar: en
-       rotacion automatica el lector de pantalla debe callar
-     - el hover detiene y REANUDA al salir; el foco de teclado detiene y
-       NO reanuda solo. La asimetria es deliberada
-   -------------------------------------------------------------------------- */
-
-.d2 .d2-ega-piv__auto {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 14px;
-}
-
-.d2 .d2-ega-piv__pausa {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 5px 11px;
-  border: 1px solid var(--c-borde, #E4E4E4);
-  border-radius: 5px;
-  background: transparent;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--c-texto-cuerpo, #333333);
-  cursor: pointer;
-  transition: border-color .2s ease;
-}
-
-.d2 .d2-ega-piv__pausa:hover {
-  border-color: var(--c-verde-hover, #026F00);
-}
-
-.d2 .d2-ega-piv__pausa-icono {
-  width: 8px;
-  height: 9px;
-  /* Dos barras: el icono de pausa, sin una imagen. */
-  background: currentColor;
-  -webkit-mask: linear-gradient(#000 0 0) 0 0 / 3px 100% no-repeat,
-                linear-gradient(#000 0 0) 100% 0 / 3px 100% no-repeat;
-          mask: linear-gradient(#000 0 0) 0 0 / 3px 100% no-repeat,
-                linear-gradient(#000 0 0) 100% 0 / 3px 100% no-repeat;
-}
-
-/* Parado: el icono pasa a triangulo de reproduccion. */
-.d2 .d2-ega-piv[data-piv-parado] .d2-ega-piv__pausa-icono {
-  -webkit-mask: none;
-          mask: none;
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
-}
-
-.d2 .d2-ega-piv__auto-nota {
-  font-size: 12px;
-  color: var(--c-texto-suave, #6B6B6B);
-}
-
-.d2 .d2-ega-piv[data-piv-parado] .d2-ega-piv__auto-nota {
-  visibility: hidden;
-}
-
 /* La barra de tiempo del item abierto: se llena mientras dura su turno.
    Es el unico indicador de que algo va a cambiar; sin el, el salto
    sorprende. */
@@ -2820,13 +2752,6 @@
     var(--c-verde-marca, #39B54A) calc(var(--met-ang) * 1deg),
     transparent calc(var(--met-ang) * 1deg));
 }
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-piv__pausa {
-  border-color: rgba(255, 255, 255, .25);
-  color: #FFFFFF;
-}
-
-.d2 [data-comp-tono="oscuro"] .d2-ega-piv__auto-nota { color: #BFBFBF; }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-piv__ficha::before {
   background: var(--c-verde-marca, #39B54A);
@@ -2995,4 +2920,178 @@
 @media (max-width: 760px) {
   /* Apilados, el filo vertical no separa nada. */
   .d2 .d2-ega-puente2__lado--fin::before { display: none; }
+}
+
+
+/* ==========================================================================
+   LAS DOS COMPOSICIONES (14/9/2026)
+
+   Dos huecos que el usuario senalo con capturas.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. PERIMETER — la lectura del perimetro
+
+   En la captura, la columna derecha --los cuatro limites-- quedaba suelta:
+   sin fondo, sin peso, flotando al lado de un panel verde solido.
+
+   Entra un diagrama que dice lo que la seccion entera argumenta: un area
+   cerrada --lo que este servicio cubre-- y cuatro puntos fuera, que son
+   los limites. No es decoracion, es el titular dibujado.
+
+   El trazo NO cierra por abajo a proposito: un perimetro cerrado sugiere
+   un limite fisico, y esto es un alcance de trabajo.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-ega-per__lectura {
+  margin-top: clamp(26px, 3vw, 38px);
+  padding-top: 22px;
+  /* El mismo fundido horizontal que separa sin filo. */
+  background:
+    linear-gradient(90deg, var(--c-borde, #E4E4E4) 0 55%, transparent)
+    top / 100% 1px no-repeat;
+}
+
+.d2 .d2-ega-per__lectura svg {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+}
+
+.d2 .d2-ega-per__lectura-pie {
+  margin: 10px 0 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* El area se traza al entrar; los nodos aparecen despues, primero los de
+   dentro y luego los de fuera. El orden cuenta la idea: esto es lo que
+   cubrimos, y esto lo que queda al otro lado. */
+.d2 .d2-ega-per__area {
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+}
+
+.d2 :is(.d2-ega-per__dentro-n, .d2-ega-per__fuera-n) circle {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.d2 .d2-ega-per__escala { opacity: 0; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .d2-ega-per.es-visible .d2-ega-per__area {
+    animation: d2-ega-graf-traza 1.1s cubic-bezier(.33, 1, .68, 1) .35s forwards;
+  }
+
+  .d2 .d2-ega-per.es-visible .d2-ega-per__escala {
+    animation: d2-ega-graf-ver .6s ease-out .3s forwards;
+  }
+
+  .d2 .d2-ega-per.es-visible :is(.d2-ega-per__dentro-n, .d2-ega-per__fuera-n) circle {
+    animation: d2-ega-graf-punto .38s cubic-bezier(.34, 1.56, .64, 1) forwards;
+  }
+
+  .d2 .d2-ega-per.es-visible .d2-ega-per__dentro-n circle:nth-child(1) { animation-delay: 1.05s; }
+  .d2 .d2-ega-per.es-visible .d2-ega-per__dentro-n circle:nth-child(2) { animation-delay: 1.14s; }
+  .d2 .d2-ega-per.es-visible .d2-ega-per__dentro-n circle:nth-child(3) { animation-delay: 1.23s; }
+  .d2 .d2-ega-per.es-visible .d2-ega-per__dentro-n circle:nth-child(4) { animation-delay: 1.32s; }
+
+  /* Los de fuera, despues y mas separados: llegan como una aclaracion. */
+  .d2 .d2-ega-per.es-visible .d2-ega-per__fuera-n circle:nth-child(1) { animation-delay: 1.55s; }
+  .d2 .d2-ega-per.es-visible .d2-ega-per__fuera-n circle:nth-child(2) { animation-delay: 1.67s; }
+  .d2 .d2-ega-per.es-visible .d2-ega-per__fuera-n circle:nth-child(3) { animation-delay: 1.79s; }
+  .d2 .d2-ega-per.es-visible .d2-ega-per__fuera-n circle:nth-child(4) { animation-delay: 1.91s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-ega-per__area { stroke-dashoffset: 0; }
+  .d2 .d2-ega-per__escala { opacity: 1; }
+  .d2 :is(.d2-ega-per__dentro-n, .d2-ega-per__fuera-n) circle { opacity: 1; }
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-per__lectura-pie { color: #BFBFBF; }
+
+
+/* --------------------------------------------------------------------------
+   3. METER — la regla graduada
+
+   La lista ocupaba media pantalla y la derecha quedaba en blanco.
+
+   Entra una escala vertical con la misma gramatica de instrumento que ya
+   usan los diales: una marca mayor por cada entregable y cuatro menores
+   entre medias. Cada marca mayor se alinea con su item.
+
+   Lo que da sensacion de instrumento no es la escala en si: es que los
+   items esten MEDIDOS contra algo.
+   -------------------------------------------------------------------------- */
+
+.d2 .d2-ega-met__reja {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: clamp(14px, 2vw, 26px);
+  align-items: start;
+}
+
+.d2 .d2-ega-met__regla {
+  position: sticky;
+  top: 120px;
+}
+
+.d2 .d2-ega-met__regla svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* El eje se desvanece arriba y abajo: no corta la composicion. */
+  -webkit-mask: linear-gradient(to bottom,
+    transparent, #000 8%, #000 92%, transparent);
+          mask: linear-gradient(to bottom,
+    transparent, #000 8%, #000 92%, transparent);
+}
+
+.d2 .d2-ega-met__cursor {
+  /* Arranca en la primera marca mayor. */
+  transform: translateY(40px);
+}
+
+/* El cursor baja de marca en marca, al ritmo de los arcos: 80 ms de
+   desfase entre items, 1.1s de llenado. Se detiene en el ultimo, no
+   vuelve a empezar. */
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .d2-ega-met.es-visible .d2-ega-met__cursor {
+    animation: d2-met-cursor 3.6s cubic-bezier(.65, 0, .35, 1) .25s both;
+  }
+}
+
+@keyframes d2-met-cursor {
+  0%   { transform: translateY(40px); }
+  25%  { transform: translateY(40px); }
+  33%  { transform: translateY(112px); }
+  50%  { transform: translateY(112px); }
+  58%  { transform: translateY(184px); }
+  75%  { transform: translateY(184px); }
+  83%  { transform: translateY(256px); }
+  100% { transform: translateY(256px); }
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-met__eje,
+.d2 [data-comp-tono="oscuro"] .d2-ega-met__marcas line {
+  stroke: rgba(255, 255, 255, .28);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-met__cursor line,
+.d2 [data-comp-tono="oscuro"] .d2-ega-met__cursor circle {
+  stroke: var(--c-verde-marca, #39B54A);
+  fill: var(--c-verde-marca, #39B54A);
+}
+
+@media (max-width: 760px) {
+  /* La regla se retira: en una columna no mide nada. */
+  .d2 .d2-ega-met__reja { grid-template-columns: 1fr; }
+  .d2 .d2-ega-met__regla { display: none; }
 }
