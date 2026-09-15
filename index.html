@@ -4127,16 +4127,18 @@
      la firma nueva. El cliente quiere comparar las dos, asi que se quita el
      data-caru-fijo y se limita con data-caru-solo. Los indices son base 0:
      2 = Signature, 3 = Green band. -->
-<!-- One voice es el INDICE 3, no el 4.
+<!-- One voice, fijada. Es el INDICE 4: el carrusel tiene cinco
+     diapositivas, 0 a 4.
 
-     El aria-label dice "Option 5" porque numera las variantes que se
-     disenaron, no las que quedaron: la 3 --Signature-- se retiro del
-     marcado y los labels no se renumeraron. El carrusel tiene cuatro
-     diapositivas, 0 a 3.
+     Me equivoque una vez contandolas --un patron mal escrito se salto
+     Signature-- y lo cambie a 3, que es justo Signature. El aria-label no
+     sirve para contar: dice "Option 5" porque numera el orden de diseno,
+     no la posicion en el marcado, y ademas estan desordenadas (la 4 va
+     antes que la 3).
 
-     Con fijo="4" el JS caia a su respaldo --n=0 si el indice no
-     existe-- y de ahi que se viera otra variante con el copy viejo. -->
-<div class="d2-caru" id="caru-equipo" data-caru data-caru-fijo="3">
+     Lo unico fiable es contar los <div class="d2-caru__diapo"> del
+     marcado, que son cinco. -->
+<div class="d2-caru" id="caru-equipo" data-caru data-caru-fijo="4">
 
   <!-- ======================================================================
        OPCION 1 — FICHA
