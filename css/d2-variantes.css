@@ -14423,11 +14423,27 @@ span.d2-panel__filtro:hover {
 
 /* "Do nothing" es la linea de referencia: gris, discreta, queda arriba. */
 .d2 .hero-gr__linea--nada {
-  /* #9A9A9A y no #E4E4E4: el anterior daba contraste 1.27 sobre el panel
-     blanco, o sea invisible. El minimo para un elemento grafico es 3, y
-     con #9A9A9A se quedaba en 2.81. Este da 3.5 sin robarle protagonismo
-     a la linea verde. */
-  stroke: var(--c-borde, #E4E4E4);
+  /* #8A8A8A (14/9/2026). El comentario anterior ya razonaba bien --decia
+     que #E4E4E4 da 1.27:1 y es invisible, y que #9A9A9A se queda en
+     2.81-- pero el codigo seguia poniendo var(--c-borde), o sea #E4E4E4.
+     El razonamiento estaba escrito y no aplicado.
+
+     Medido sobre el panel blanco:
+
+       #E4E4E4 ... 1.27:1   lo que habia
+       #9A9A9A ... 2.81:1   lo que decia el comentario, tampoco llega
+       #8A8A8A ... 3.45:1   pasa el minimo de 3.0 para elemento grafico
+
+     Sigue siendo la mas tenue de las tres, que es lo que le toca a una
+     linea de referencia:
+
+       do nothing  #8A8A8A ... 3.45:1   guion largo
+       target      #6B6B6B ... 5.33:1   punteado
+       actual      #026F00 ... 6.41:1   solido
+
+     Gris y no rojo: el manual dice que la marca vive "in the range of
+     green and grey", y el verde ya esta tomado por la linea real. */
+  stroke: #8A8A8A;
   /* Guion largo, trazo fino: es la linea de referencia, la que dice donde
      estaria el consumo sin hacer nada. */
   stroke-dasharray: 7 5;
@@ -14502,7 +14518,11 @@ span.d2-panel__filtro:hover {
   width: 10px;
   height: 3px;
   border-radius: 2px;
-  background: var(--c-borde, #C9C9C9);
+  /* El mismo gris que la linea que representa. Antes var(--c-borde)
+     --#E4E4E4, 1.27:1--: la muestra de la leyenda estaba tan invisible
+     como su linea, asi que el usuario no podia ni saber que color
+     buscar. */
+  background: #8A8A8A;
 }
 
 .d2 .d2-hero__punto--ahorro {

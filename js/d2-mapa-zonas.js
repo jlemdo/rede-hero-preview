@@ -48,6 +48,48 @@
      no da tiempo a leer el nombre; mas lento se siente parado. */
   var INTERVALO = 2600;
 
+  /* --- LA FICHA DE LECTURA (14/9/2026) -------------------------------
+
+     El usuario pidio el gesto del mapa de cartera: al senalar una zona,
+     una cajita con informacion.
+
+     El hover ya estaba montado aqui --fijar/soltar, teclado, rotacion que
+     se detiene--, asi que lo unico que faltaba era escribir la ficha. Se
+     reutiliza el patron de d2-mapa-cartera.js en vez de inventar otro:
+     mismo marcado, misma clase, misma animacion de entrada.
+
+     EL TEXTO ES PROVISIONAL
+
+     Los NOMBRES son reales: salen del aria-label de cada zona, que a su
+     vez viene del portal de datos abiertos de la ciudad. Los tres datos
+     son lorem ipsum, y la etiqueta de la ficha lo dice en la interfaz.
+
+     Esto no es un descuido: la cabecera de este mismo archivo cuenta que
+     la primera version mostraba desviacion e intensidad inventadas, y que
+     se retiraron porque al lado de calles reales se leen como ciertas. El
+     aviso se queda hasta que lleguen los datos de verdad.
+
+     Los nombres se leen del marcado y no se copian aqui: una lista
+     duplicada se desincroniza en cuanto alguien edite el HTML. */
+  var FICHA = {
+    caja:   mapa.querySelector('[data-zonas-ficha]'),
+    titulo: mapa.querySelector('[data-zonas-titulo]'),
+    nombre: mapa.querySelector('[data-zonas-nombre]'),
+    d1:     mapa.querySelector('[data-zonas-d1]'),
+    d2:     mapa.querySelector('[data-zonas-d2]'),
+    d3:     mapa.querySelector('[data-zonas-d3]')
+  };
+
+  /* Lorem ipsum, uno por zona, para que al recorrer el mapa se vea que la
+     ficha responde a cada una y no es un bloque fijo. */
+  var RELLENO = [
+    ['Dolor sit',   'Adipiscing', 'Tempor'],
+    ['Amet',        'Elit sed',   'Incididunt'],
+    ['Consectetur', 'Eiusmod',    'Ut labore'],
+    ['Magna',       'Aliqua',     'Enim ad'],
+    ['Minim',       'Veniam',     'Quis nostrud']
+  ];
+
   var actual = ORDEN[0];
   var reloj = null;
   var detenido = false;
@@ -56,9 +98,41 @@
 
   function mostrar(id) {
     actual = id;
+
+    var elegido = null;
     Array.prototype.forEach.call(sitios, function (s) {
-      s.classList.toggle('es-foco', s.getAttribute('data-zona') === id);
+      var on = s.getAttribute('data-zona') === id;
+      s.classList.toggle('es-foco', on);
+      if (on) { elegido = s; }
     });
+
+    if (!FICHA.caja || !elegido) { return; }
+
+    /* El nombre sale del aria-label, que ya lo lleva por accesibilidad.
+       Algunos dicen "Mission Heights, one of 2 sites": en la ficha sobra
+       la coletilla, que es una precision para el lector de pantalla. */
+    var nombre = (elegido.getAttribute('aria-label') || '').split(',')[0];
+    if (FICHA.nombre) { FICHA.nombre.textContent = nombre; }
+
+    /* El titulo no cambia por zona: dice que el contenido es provisional,
+       y eso vale para las trece. Se escribe igualmente desde aqui para que
+       el dia que lleguen los datos reales baste con cambiar esta linea y
+       no haya que acordarse de tocar tambien el HTML. */
+    if (FICHA.titulo) { FICHA.titulo.textContent = 'Placeholder content'; }
+
+    var r = RELLENO[ORDEN.indexOf(id) % RELLENO.length];
+    if (FICHA.d1) { FICHA.d1.textContent = r[0]; }
+    if (FICHA.d2) { FICHA.d2.textContent = r[1]; }
+    if (FICHA.d3) { FICHA.d3.textContent = r[2]; }
+
+    /* Reinicia la animacion de entrada. El reflow entre medias es
+       necesario: sin el, el navegador agrupa los dos cambios y la ficha
+       cambia de texto sin que se vea que ha cambiado. */
+    if (!sinMovimiento) {
+      FICHA.caja.style.animation = 'none';
+      void FICHA.caja.offsetWidth;
+      FICHA.caja.style.animation = '';
+    }
   }
 
   function avanzar() {
