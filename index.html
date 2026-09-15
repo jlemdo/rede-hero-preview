@@ -1719,6 +1719,95 @@
      El copy es el aprobado, literal.
      ========================================================================== -->
 
+<!-- ==========================================================================
+     FINANCIACION — ENCIMA DE LA CALCULADORA (14/9/2026)
+
+     Va aqui a proposito: la pregunta "¿esto lo puede pagar un programa?"
+     llega ANTES de calcular cuanto se ahorra. Primero se sabe si hay una
+     via, luego se mide.
+
+     EL CIRCUITO
+
+     Mismo SVG que d2-ega-pasos3, literal: mismos trazados, mismos nodos,
+     mismo viewBox de 1440x700 con preserveAspectRatio="none". No es una
+     version parecida --si se redibuja a ojo, las dos paginas dejan de
+     parecerse-- y por eso tampoco se reescala: el estirado forma parte
+     del gesto.
+
+     LA ACREDITACION, PENDIENTE
+
+     La linea sobre BC Hydro no se publica como hecho. En ningun archivo
+     del proyecto consta que Rede sea proveedor aprobado de Continuous
+     Optimization: lo que si consta es que la calculadora usa BENCHMARKS
+     historicos de C-Op, que es otra cosa.
+
+     Se deja el bloque montado y marcado con hidden. Cuando Erick confirme
+     la acreditacion, se quita ese atributo y ya esta.
+     ========================================================================== -->
+<section class="d2-fondos d2-entra" data-comp-rol="calc" aria-labelledby="fondos-titulo">
+
+  <svg class="d2-fondos__circuito" viewBox="0 0 1440 700" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 160H240L300 220H520L580 160H760"/>
+    <path d="M0 620H200L270 550H480"/>
+    <path d="M1440 80H1240L1180 140H980"/>
+    <circle cx="300" cy="220" r="5"/>
+    <circle cx="580" cy="160" r="5"/>
+    <circle cx="270" cy="550" r="5"/>
+    <circle cx="1180" cy="140" r="5"/>
+  </svg>
+
+  <div class="d2-fondos__inner">
+
+    <div class="d2-fondos__texto">
+      <p class="eyebrow">Commercial energy funding</p>
+      <h2 class="d2-fondos__titulo" id="fondos-titulo">
+        Funding may help cover your next energy project.
+      </h2>
+      <p class="d2-fondos__lead">
+        Rede helps identify BC Hydro rebates, FortisBC rebates, SaskPower incentives,
+        and other commercial energy funding before you invest in an energy audit or
+        improvement project.
+      </p>
+    </div>
+
+    <div class="d2-fondos__lado">
+      <p class="d2-fondos__eti">Programs we can help you navigate</p>
+
+      <!-- ul y no ol: son tres utilities alternativas, no una secuencia.
+           Un lector de pantalla no debe sugerir orden donde no lo hay. -->
+      <ul class="d2-fondos__programas">
+        <li>BC Hydro</li>
+        <li>FortisBC</li>
+        <li>SaskPower</li>
+      </ul>
+
+      <!-- PENDIENTE DE CONFIRMAR (14/9/2026)
+
+           Esta acreditacion no consta en ningun archivo del proyecto. El
+           dato que si consta es distinto: la calculadora usa benchmarks
+           historicos de BC Hydro C-Op, lo que no implica ser proveedor
+           aprobado.
+
+           Publicarla sin confirmar seria afirmar una acreditacion ajena.
+           Erick lo verifica y se quita el hidden. -->
+      <p class="d2-fondos__aval" hidden>
+        <span class="d2-fondos__tic" aria-hidden="true">
+          <svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5l3.5 3.5L12 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        Listed by BC Hydro as an approved Continuous Optimization service provider
+      </p>
+
+      <a class="d2-btn d2-btn--solido d2-fondos__cta" href="#calculator">
+        Check funding options
+        <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+
+      <p class="d2-fondos__nota">Initial program-fit review at no cost.</p>
+    </div>
+
+  </div>
+</section>
+
 <!-- Variante fijada: la 3, Steps. Las otras dos siguen en el marcado,
      escondidas: para recuperarlas basta quitar data-caru-fijo. -->
 <div class="d2-caru" id="caru-calc" data-caru data-caru-fijo="2">

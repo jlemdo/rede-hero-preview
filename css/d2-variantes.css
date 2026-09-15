@@ -15324,3 +15324,258 @@ span.d2-panel__filtro:hover {
      donde si se reciben. */
   cursor: pointer;
 }
+
+
+/* ==========================================================================
+   FINANCIACION — LA SECCION SOBRE LA CALCULADORA (14/9/2026)
+
+   Va encima de la calculadora a proposito: la pregunta "¿esto lo puede
+   pagar un programa?" llega ANTES de calcular cuanto se ahorra. Primero
+   se sabe si hay via, luego se mide.
+
+   EL CIRCUITO ES EL MISMO, NO UNO PARECIDO
+
+   Se replican las reglas de .d2-ega-pasos3__circuito al pie de la letra:
+   mismo grosor, mismos alfas, mismo relleno de nodo por --comp-rol. Si
+   se ajustan "a ojo" para que quede bien aqui, las dos paginas dejan de
+   parecerse y nadie sabe cual es la buena.
+
+   Las dos reglas base del contenedor --position:relative y overflow:
+   hidden-- no son opcionales: sin la primera el SVG absoluto se ancla al
+   documento, y sin la segunda el circuito desborda la seccion. Se
+   perdieron una vez en una limpieza y el resultado fue el SVG ocupando
+   la pagina entera.
+
+   LA REJILLA
+
+   Dos columnas, texto a la izquierda y acciones a la derecha, como en la
+   referencia. 1.15fr y no 1fr: el titular es lo que manda el bloque y con
+   columnas iguales caia en tres lineas mientras la derecha sobraba.
+   ========================================================================== */
+
+.d2 .d2-fondos {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(56px, 6vw, 92px);
+  background: var(--comp-rol, var(--c-fondo-alt, #F3F3F3));
+
+  /* EL FILETE, Y POR QUE HACE FALTA
+
+     Esta seccion lleva data-comp-rol="calc" --el mismo que la
+     calculadora-- porque la referencia la pide sobre fondo claro y ese
+     es el rol que lo garantiza en las cuatro composiciones.
+
+     El efecto secundario es que las dos quedan SIEMPRE del mismo color,
+     asi que sin nada entre medias se leen como un solo bloque enorme.
+     Comprobado en las cuatro: propuesta, sobria y contraste dan gris en
+     las dos; plana da blanco en las dos.
+
+     Un filete de 1px resuelve el limite sin depender de la composicion:
+     el color sale de --c-linea, que el tono oscuro ya reescribe a un
+     blanco translucido. */
+  border-bottom: 1px solid var(--c-linea, rgba(0, 0, 0, .1));
+}
+
+/* --- El circuito: identico al de d2-ega-pasos3 --- */
+
+.d2 .d2-fondos__circuito {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.d2 .d2-fondos__circuito path {
+  fill: none;
+  stroke: rgba(57, 181, 74, .17);
+  stroke-width: 1.2px;
+}
+
+.d2 .d2-fondos__circuito circle {
+  /* Relleno del color del fondo: el nodo tapa el trazo que pasa por
+     debajo y se lee como una conexion. Por --comp-rol para que siga al
+     tema, igual que en Energy Gap Analysis. */
+  fill: var(--comp-rol, var(--c-fondo-alt, #F3F3F3));
+  stroke: rgba(57, 181, 74, .3);
+  stroke-width: 1.5px;
+}
+
+/* El contenido, por encima del circuito. */
+.d2 .d2-fondos__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: clamp(32px, 5vw, 76px);
+  align-items: start;
+  max-width: var(--d2-ancho, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter, clamp(20px, 5vw, 80px));
+}
+
+/* --- La columna de texto --- */
+
+.d2 .d2-fondos__titulo {
+  margin: 12px 0 0;
+  font-size: clamp(32px, 3.2vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  font-weight: var(--fw-extrabold, 800);
+  color: var(--c-texto, #333333);
+  text-wrap: balance;
+}
+
+.d2 .d2-fondos__lead {
+  margin: 18px 0 0;
+  max-width: 46ch;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+/* --- La columna de acciones --- */
+
+.d2 .d2-fondos__eti {
+  margin: 0 0 14px;
+  font-size: var(--fs-small, 12px);
+  font-weight: var(--fw-bold, 700);
+  letter-spacing: var(--ls-eyebrow, .08em);
+  text-transform: uppercase;
+  /* El verde de marca da 2.41:1 sobre el gris de seccion: para texto de
+     12px hace falta el oscuro, que da 5.78:1. */
+  color: var(--c-verde-hover, #026F00);
+}
+
+/* Las pastillas de utility. Lista sin viñetas: son etiquetas, no una
+   enumeracion que leer en voz alta. */
+.d2 .d2-fondos__programas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-fondos__programas li {
+  padding: 11px 22px;
+  /* #C7C7C7 y no var(--c-borde): ese token es #E4E4E4 y da 1.15:1 sobre
+     el gris de seccion, o sea un borde que no se ve. Es el mismo fallo
+     que tenia la linea "do nothing" del hero.
+
+     El minimo para el limite de un elemento de interfaz es 3.0, y estas
+     pastillas SON el limite: sin borde visible no se distinguen del
+     fondo y dejan de leerse como tres elementos.
+
+     Medido en el PEOR de sus dos fondos, el gris #F3F3F3:
+
+       #E4E4E4 ... 1.15:1  lo que habia
+       #949494 ... 2.73:1  todavia no
+       #8A8A8A ... 3.11:1  pasa
+
+     Va #8A8A8A, que ademas es el mismo gris que la linea "do nothing"
+     del hero: un solo valor para "gris que tiene que verse".
+
+     Sigue siendo discreto: la pastilla no compite con el boton verde,
+     que es la accion de verdad. */
+  border: 1px solid #8A8A8A;
+  border-radius: 999px;
+  background: var(--c-blanco, #FFFFFF);
+  font-size: 15px;
+  color: var(--c-texto, #333333);
+  white-space: nowrap;
+}
+
+/* El aval, cuando se confirme. Nace con [hidden] en el marcado. */
+.d2 .d2-fondos__aval {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin: 20px 0 0;
+  padding: 16px 20px;
+  border-radius: 6px;
+  background: rgba(57, 181, 74, .08);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--c-texto, #333333);
+}
+
+.d2 .d2-fondos__tic {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--c-verde-hover, #026F00);
+  /* Blanco sobre #026F00: 6.41:1. El verde de marca no llegaria. */
+  color: #FFFFFF;
+}
+
+.d2 .d2-fondos__cta {
+  margin-top: 22px;
+}
+
+.d2 .d2-fondos__nota {
+  margin: 14px 0 0;
+  font-size: 13px;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* --- Tono oscuro ---------------------------------------------------------
+
+   La seccion lleva data-comp-rol="calc", asi que hay composiciones donde
+   su fondo es #333333. Los tokens de texto ya se invierten solos; lo que
+   no se adapta es lo que lleva color literal. */
+
+.d2 .d2-fondos[data-comp-tono="oscuro"] .d2-fondos__circuito path {
+  stroke: rgba(176, 225, 183, .22);
+}
+
+.d2 .d2-fondos[data-comp-tono="oscuro"] .d2-fondos__circuito circle {
+  stroke: rgba(176, 225, 183, .38);
+}
+
+/* Sobre oscuro el verde de marca SI llega --4.74:1-- y ademas es el que
+   identifica a Rede. */
+.d2 .d2-fondos[data-comp-tono="oscuro"] .eyebrow,
+.d2 .d2-fondos[data-comp-tono="oscuro"] .d2-fondos__eti {
+  color: var(--c-verde-marca, #39B54A);
+}
+
+.d2 .d2-fondos[data-comp-tono="oscuro"] .d2-fondos__programas li {
+  background: rgba(255, 255, 255, .06);
+  border-color: rgba(255, 255, 255, .22);
+  color: #FFFFFF;
+}
+
+.d2 .d2-fondos[data-comp-tono="oscuro"] .d2-fondos__aval {
+  background: rgba(255, 255, 255, .06);
+  color: #FFFFFF;
+}
+
+/* --- Adaptacion --- */
+
+@media (max-width: 960px) {
+  .d2 .d2-fondos__inner {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .d2 .d2-fondos__lead { max-width: none; }
+}
+
+@media (max-width: 540px) {
+  .d2 .d2-fondos__programas li {
+    padding: 9px 16px;
+    font-size: 14px;
+  }
+
+  .d2 .d2-fondos__cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
