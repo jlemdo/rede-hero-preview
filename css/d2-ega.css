@@ -545,3 +545,77 @@
 
   .d2 .d2-ega-hero__acciones .d2-btn { width: 100%; justify-content: center; }
 }
+
+
+/* ==========================================================================
+   EL CTA FINAL — EL CONTRASTE (14/9/2026)
+
+   El usuario: "el CTA no tiene contraste no se ve bien".
+
+   LA CAUSA
+
+   La seccion se pinta con --d2-tinta, que es #F2F9F2: un verde casi
+   blanco. En el home eso no molesta porque el sistema de composicion le
+   da a veces un fondo oscuro; en Energy Gap Analysis la seccion no
+   declara rol, asi que se queda en el claro SIEMPRE.
+
+   Y sobre ese fondo, tres piezas se caen. MEDIDO:
+
+     boton de contorno, fondo  #FFFFFF sobre #F2F9F2 ...... 1.07:1
+     su borde                  #39B54A sobre #F2F9F2 ...... 2.49:1
+     eyebrow                   #39B54A sobre #F2F9F2 ...... 2.49:1
+
+   El boton de contorno es el caso grave: blanco sobre verde-casi-blanco
+   no se distingue del fondo. No es que se lea mal el texto --el texto va
+   en #026F00 y da 6.41:1--: es que no se ve DONDE EMPIEZA EL BOTON.
+
+   El titular y el parrafo estan bien (11.80:1) y no se tocan.
+
+   LA CORRECCION
+
+   Nada de colores nuevos. El proyecto ya tiene los dos tokens que hacen
+   falta y tokens.css documenta para que sirve cada uno:
+
+     --c-verde-hover  #026F00  "el verde para TEXTO pequeno", 6.41:1
+                               sobre blanco. Entra en el eyebrow.
+     --c-blanco       #FFFFFF  el fondo del boton de contorno, que aqui
+                               necesita separarse del fondo de seccion.
+
+   Para el boton de contorno se sube el borde a #026F00: el mismo verde
+   que ya lleva su texto, asi que la pieza queda de un solo color en vez
+   de dos. 6.41:1 contra su relleno blanco y 5.98:1 contra el fondo de la
+   seccion -- por encima del 3.0 que pide un elemento de interfaz.
+
+   El hover no cambia: ahi el fondo pasa a verde y el contraste ya subia.
+
+   EL :not() NO ES ADORNO
+
+   Estas reglas EMPATAN en especificidad con la inversion de tono oscuro
+   de d2-variantes.css (0,3,0 las dos), y esta hoja carga despues: sin el
+   :not(), el dia que esta seccion reciba data-comp-tono="oscuro" mi verde
+   #026F00 pisaria el blanco correcto y dejaria el eyebrow ilegible sobre
+   negro. El fallo que arreglo aqui es exactamente ese, al reves.
+   ========================================================================== */
+
+/* AMBITO: basta .d2 --el mismo body que el home-- porque esta hoja solo
+   la enlaza Energy Gap Analysis. Si algun dia la carga otra pagina, estas
+   tres reglas viajan con ella, que es lo correcto: el problema no es de
+   esta pagina sino de cualquier CTA sobre fondo claro sin tono asignado.
+
+   El eyebrow: texto de 12px, necesita 4.5:1. El verde de marca da 2.49. */
+.d2 .d2-cta-bal:not([data-comp-tono="oscuro"]) .eyebrow {
+  color: var(--c-verde-hover, #026F00);
+}
+
+/* El boton de contorno: el borde toma el mismo verde oscuro del texto.
+   Un solo color para toda la pieza, y el limite del boton se ve. */
+.d2 .d2-cta-bal:not([data-comp-tono="oscuro"]) .d2-btn--linea {
+  border-color: var(--c-verde-hover, #026F00);
+}
+
+/* En hover el fondo se llena de verde de marca y el texto pasa a blanco:
+   ese estado ya estaba medido y se respeta tal cual. */
+.d2 .d2-cta-bal:not([data-comp-tono="oscuro"]) .d2-btn--linea:hover,
+.d2 .d2-cta-bal:not([data-comp-tono="oscuro"]) .d2-btn--linea:focus-visible {
+  border-color: var(--c-verde, #39B54A);
+}

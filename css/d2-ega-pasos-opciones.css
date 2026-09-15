@@ -33,7 +33,11 @@
    Solo `transform` y `opacity`, las unicas que se quedan en el compositor
    (web.dev). Nada de `top`, `height` ni `box-shadow`.
 
-   Todo dentro de /* El verde entra y se queda: encendido, no parpadeo.
+   Todo dentro de @media (prefers-reduced-motion: no-preference).
+
+   EL VERDE DE LAS CIFRAS
+
+   El verde entra y se queda: encendido, no parpadeo.
 
    Va el --c-verde-hover y no el de marca: medido, el de marca da 2.40:1
    sobre el gris de la seccion, que no llega ni al umbral de texto grande
