@@ -830,16 +830,31 @@
           <div>
             <p class="d2-rutas-sec__eyebrow">Energy management solutions</p>
             <h2 class="d2-rutas-sec__titulo" id="rutas-sec-titulo">
-              <!-- El corte va forzado: a 58px la primera linea pide 732px y la
-                   columna da 607, asi que el navegador partia en "scattered".
-                   En movil el br se desactiva por CSS y el texto fluye solo. -->
-              From scattered signals to<br>measurable action.
+              <!-- Copy final del cliente (14/9/2026). Sustituye a "From
+                   scattered signals to measurable action".
+
+                   El corte va forzado, y donde va importa. Medido con las
+                   metricas de Open Sans ExtraBold a 50px, sobre una columna
+                   de 607px:
+
+                     "Start with the energy problem"      756px  se pasa
+                     "Start with the energy problem in"   817px  se pasa
+                     "Start with the energy"              532px  cabe
+                        + "problem in front of you."      597px  cabe
+
+                   Solo hay un corte posible en dos lineas. En movil el br se
+                   desactiva por CSS y el texto fluye solo. -->
+              Start with the energy<br>problem in front of you.
             </h2>
           </div>
           <p class="d2-rutas-sec__lead">
-            Start with the problem in front of you. Rede connects portfolio screening,
-            energy monitoring, building recommissioning and ongoing energy management
-            into one practical path.
+            <!-- Copy final del cliente (14/9/2026).
+
+                 El lead anterior empezaba con "Start with the problem in
+                 front of you", que es justo lo que ahora dice el TITULAR.
+                 Dejarlo seria repetir la misma frase dos veces seguidas. -->
+            Choose the solution that fits your buildings today. Each can stand alone
+            or work as part of a long-term energy management plan.
           </p>
         </div>
 
@@ -863,8 +878,8 @@
             <p class="d2-rutas-sec__preg">Which buildings need attention?</p>
             <h3 class="d2-rutas-sec__nombre">Energy Gap Analysis</h3>
             <p class="d2-rutas-sec__desc">
-              Screen energy use and cost across your portfolio before investing in a
-              detailed commercial building energy audit.
+              Screen energy use and cost across your portfolio before investing in detailed energy
+              audits for every building.
             </p>
             <a class="d2-rutas-sec__enlace" href="#">
               Explore
@@ -887,11 +902,11 @@
                 </svg>
               </span>
             </span>
-            <p class="d2-rutas-sec__preg">Can you see performance across every building?</p>
+            <p class="d2-rutas-sec__preg">How do you know when a building starts wasting energy?</p>
             <h3 class="d2-rutas-sec__nombre">RUN Energy Monitoring</h3>
             <p class="d2-rutas-sec__desc">
-              Organize utility data into one portfolio view so your team can compare
-              performance, track actions and catch energy drift.
+              Bring utility data from every building into one energy management system so your team
+              can compare performance, track actions, and spot problems early.
             </p>
             <a class="d2-rutas-sec__enlace" href="#">
               Explore
@@ -916,11 +931,11 @@
                 </svg>
               </span>
             </span>
-            <p class="d2-rutas-sec__preg">Is the building still running as designed?</p>
+            <p class="d2-rutas-sec__preg">Are your buildings still running as designed?</p>
             <h3 class="d2-rutas-sec__nombre">Commercial Building Recommissioning</h3>
             <p class="d2-rutas-sec__desc">
-              Tune schedules, controls, setpoints and equipment sequences to restore
-              performance before considering major replacement.
+              Improve how existing building systems operate by correcting schedules, controls, and
+              equipment settings before considering major replacements.
             </p>
             <a class="d2-rutas-sec__enlace" href="#">
               Explore
@@ -946,12 +961,11 @@
                 </svg>
               </span>
             </span>
-            <p class="d2-rutas-sec__preg">Who keeps the plan moving after the first project?</p>
+            <p class="d2-rutas-sec__preg">How do you keep energy improvements moving forward?</p>
             <h3 class="d2-rutas-sec__nombre">Energy Management Services</h3>
             <p class="d2-rutas-sec__desc">
-              Maintain the action plan, monitor results and catch new problems across a
-              multi-building portfolio without building a full internal energy management
-              function.
+              Maintain the action plan, monitor results, and identify new problems across your
+              buildings without hiring a full internal energy team.
             </p>
             <a class="d2-rutas-sec__enlace" href="#">
               Explore
@@ -1806,20 +1820,23 @@
         <li>SaskPower</li>
       </ul>
 
-      <!-- PENDIENTE DE CONFIRMAR (14/9/2026)
+      <!-- CONFIRMADO (14/9/2026)
 
-           Esta acreditacion no consta en ningun archivo del proyecto. El
-           dato que si consta es distinto: la calculadora usa benchmarks
-           historicos de BC Hydro C-Op, lo que no implica ser proveedor
-           aprobado.
+           Se monto oculto porque la acreditacion no constaba en ningun
+           archivo del proyecto. El copy final del cliente --"Homepage
+           final copy (3).docx"-- la afirma DOS veces, en la seccion 03 y
+           otra vez en la 05:
 
-           Publicarla sin confirmar seria afirmar una acreditacion ajena.
-           Erick lo verifica y se quita el hidden. -->
-      <p class="d2-financia__aval" hidden>
+             "REDE is listed by BC Hydro as an approved service provider
+              for the Continuous Optimization program."
+
+           Con eso deja de ser una suposicion y se publica. El texto es el
+           del documento, literal. -->
+      <p class="d2-financia__aval">
         <span class="d2-financia__tic" aria-hidden="true">
           <svg width="13" height="10" viewBox="0 0 13 10"><path d="M1 5l3.5 3.5L12 1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
-        Listed by BC Hydro as an approved Continuous Optimization service provider
+        Listed by BC Hydro as an approved service provider for the Continuous Optimization program
       </p>
 
       <a class="d2-btn d2-btn--solido d2-financia__cta" href="#calculator">
@@ -1856,12 +1873,12 @@
       <div class="calc__inner">
 
         <div class="calc__intro">
-        <p class="eyebrow">Check your opportunity</p>
-        <h2 class="calc__titulo">Find out what your buildings may be trying to tell you.</h2>
+        <p class="eyebrow">Energy savings calculator</p>
+        <h2 class="calc__titulo">Estimate your building energy savings opportunity.</h2>
         <p class="calc__lead">
-        Use a few basic inputs to compare your building or portfolio against
-        historical BC Hydro Continuous Optimization results. The output is a
-        planning benchmark, not a savings guarantee.
+          Enter a few basic details to compare your building or portfolio with historical
+          BC Hydro Continuous Optimization results. Your result is a planning estimate,
+          not a savings guarantee.
         </p>
         </div>
 
@@ -2291,12 +2308,12 @@
       <div class="calc__inner">
 
         <div class="calc__intro">
-        <p class="eyebrow">Check your opportunity</p>
-        <h2 class="calc__titulo">Find out what your buildings may be trying to tell you.</h2>
+        <p class="eyebrow">Energy savings calculator</p>
+        <h2 class="calc__titulo">Estimate your building energy savings opportunity.</h2>
         <p class="calc__lead">
-        Use a few basic inputs to compare your building or portfolio against
-        historical BC Hydro Continuous Optimization results. The output is a
-        planning benchmark, not a savings guarantee.
+          Enter a few basic details to compare your building or portfolio with historical
+          BC Hydro Continuous Optimization results. Your result is a planning estimate,
+          not a savings guarantee.
         </p>
         </div>
 
@@ -2729,12 +2746,12 @@
       <div class="calc__inner">
 
         <div class="calc__intro">
-        <p class="eyebrow">Check your opportunity</p>
-        <h2 class="calc__titulo">Find out what your buildings may be trying to tell you.</h2>
+        <p class="eyebrow">Energy savings calculator</p>
+        <h2 class="calc__titulo">Estimate your building energy savings opportunity.</h2>
         <p class="calc__lead">
-        Use a few basic inputs to compare your building or portfolio against
-        historical BC Hydro Continuous Optimization results. The output is a
-        planning benchmark, not a savings guarantee.
+          Enter a few basic details to compare your building or portfolio with historical
+          BC Hydro Continuous Optimization results. Your result is a planning estimate,
+          not a savings guarantee.
         </p>
         </div>
 
@@ -4583,13 +4600,10 @@
       <div class="d2-equipo-voz__inner">
 
         <div class="d2-equipo-voz__intro">
-          <p class="d2-equipo-voz__eyebrow">The Rede team</p>
-          <h2 class="d2-equipo-voz__titulo">Meet the team.</h2>
+          <p class="d2-equipo-voz__eyebrow">The Rede difference</p>
+          <h2 class="d2-equipo-voz__titulo">Why work with Rede?</h2>
           <p class="d2-equipo-voz__lead">
-            Rede is a small team of engineers and energy efficiency professionals.
-            We specialise in institutional facilities and complex building environments,
-            and we care about the organisations and communities we work with.
-          </p>
+            Lasting energy savings take more than a one-time report. Rede's engineers and energy efficiency consultants combine utility data, practical recommendations, and long-term support to help public-sector and multi-site organizations reduce building energy costs. Rede is listed by BC Hydro as an approved service provider for the Continuous Optimization program. We build lasting relationships with the organizations and communities we serve.</p>
         </div>
 
         <article class="d2-equipo-voz__persona">
@@ -5365,8 +5379,7 @@
             Find out what your buildings are actually costing you.
           </h2>
           <p class="d2-cta-bal__parrafo">
-            Start with a clear, specific picture of the unnecessary energy costs in your
-            building or portfolio. One set of inputs. A practical recommendation. No lock-in.
+            Get a clear picture of unnecessary energy costs across your building or portfolio. Identify where an energy audit or other improvement may be worthwhile, and whether BC Hydro rebates, FortisBC rebates, SaskPower incentives, or other energy efficiency funding may be available. One set of inputs. A practical recommendation. No lock-in.
           </p>
         </div>
 
