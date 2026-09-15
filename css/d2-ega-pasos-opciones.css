@@ -3450,12 +3450,9 @@
 .d2 .d2-ega-sen__barra {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
-  /* 7px y no 4: a 4 la barra era un hilo y su llenado apenas se percibia
-     --el usuario lo describio como "algo muy leve"--. A 7 el gesto se ve
-     sin que la barra pese mas que el titulo. */
-  height: 7px;
-  margin-bottom: 12px;
+  gap: 3px;
+  height: 4px;
+  margin-bottom: 10px;
   /* La pista: los tres tramos apagados. */
   background:
     repeating-linear-gradient(90deg,
@@ -3564,9 +3561,16 @@
     transform-origin: left;
   }
 
+  /* Cada tramo tarda lo mismo que el anterior en empezar --0.5s-- asi
+     que los tres encadenan sin hueco ni solape: se lee como UNA linea
+     que cruza la seccion, no como tres trazos cortos.
+
+     Antes duraban 0.55s con 180 ms de desfase: el segundo arrancaba
+     cuando el primero llevaba un tercio, y los tres se pisaban. El
+     recorrido se percibia como un parpadeo. */
   .d2 .d2-ega-eta.es-visible .d2-ega-eta__eje {
-    animation: d2-eta-eje .55s cubic-bezier(.33, 1, .68, 1) both;
-    animation-delay: calc(var(--i, 0) * 180ms);
+    animation: d2-eta-eje .5s linear both;
+    animation-delay: calc(.15s + var(--i, 0) * 500ms);
   }
 
   .d2 .d2-ega-eta .d2-ega-eta__nodo {
@@ -3574,9 +3578,12 @@
     transform: scale(0);
   }
 
+  /* El nodo aparece cuando el trazo LLEGA a el, no antes: su etapa
+     empieza a dibujarse en .15s + i*500, y el nodo esta al principio de
+     ese tramo. */
   .d2 .d2-ega-eta.es-visible .d2-ega-eta__nodo {
     animation: d2-eta-nodo .35s cubic-bezier(.34, 1.56, .64, 1) both;
-    animation-delay: calc(.2s + var(--i, 0) * 180ms);
+    animation-delay: calc(.15s + var(--i, 0) * 500ms);
   }
 
   /* Los hijos de la etapa, menos tres que tienen animacion propia:
@@ -3594,7 +3601,7 @@
 
   .d2 .d2-ega-eta.es-visible .d2-ega-eta__paso > :not(.d2-ega-eta__regs, .d2-ega-eta__eje, .d2-ega-eta__nodo) {
     animation: d2-ega-p-entra .5s cubic-bezier(.32, .72, 0, 1) both;
-    animation-delay: calc(.3s + var(--i, 0) * 180ms);
+    animation-delay: calc(.35s + var(--i, 0) * 500ms);
   }
 
   /* Las tres regiones, una tras otra. Van despues del titular de su
@@ -3608,9 +3615,9 @@
     animation: d2-ega-p-entra .46s cubic-bezier(.32, .72, 0, 1) both;
   }
 
-  .d2 .d2-ega-eta.es-visible .d2-ega-eta__reg:nth-child(1) { animation-delay: .46s; }
-  .d2 .d2-ega-eta.es-visible .d2-ega-eta__reg:nth-child(2) { animation-delay: .55s; }
-  .d2 .d2-ega-eta.es-visible .d2-ega-eta__reg:nth-child(3) { animation-delay: .64s; }
+  .d2 .d2-ega-eta.es-visible .d2-ega-eta__reg:nth-child(1) { animation-delay: .6s; }
+  .d2 .d2-ega-eta.es-visible .d2-ega-eta__reg:nth-child(2) { animation-delay: .7s; }
+  .d2 .d2-ega-eta.es-visible .d2-ega-eta__reg:nth-child(3) { animation-delay: .8s; }
 
   /* Senales: los tramos se encienden uno tras otro. */
   .d2 .d2-ega-sen .d2-ega-sen__lleno { transform: scaleX(0); }

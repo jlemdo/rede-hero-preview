@@ -156,12 +156,48 @@
       diapos[actual].querySelectorAll('.d2-entra').forEach(function (el) {
         el.classList.remove('es-visible');
         el.style.transitionDelay = '0ms';
-      });
 
-      void diapos[actual].offsetWidth;
+        /* El reflow va sobre EL ELEMENTO, no sobre la diapositiva.
 
-      diapos[actual].querySelectorAll('.d2-entra').forEach(function (el) {
+           Una diapositiva que acaba de perder su atributo hidden puede
+           estar sin layout cuando se lee su offsetWidth, asi que el
+           navegador agrupaba los dos cambios de clase y las animaciones
+           de los hijos --el eje de Stages, sus nodos-- no llegaban a
+           arrancar: se veia el estado final directamente.
+
+           Leer el offsetWidth de cada seccion fuerza su propio recalculo,
+           que es lo que separa el "sin clase" del "con clase". */
+        void el.offsetWidth;
+
         el.classList.add('es-visible');
+
+        /* Y se reinician las animaciones de los HIJOS.
+
+           .d2-entra anima la seccion con una TRANSITION, que el cambio de
+           clase reinicia sola. Pero variantes como Stages animan sus
+           hijos --el eje, los nodos-- con ANIMATION, y una animacion ya
+           terminada no vuelve a correr solo porque el padre recupere la
+           clase: el navegador la considera cumplida.
+
+           Apagarla y devolverla obliga a re-arrancar. Se hace sobre lo
+           que tenga animacion declarada, sin listas de clases que
+           mantener. */
+        var hijos = el.querySelectorAll('*');
+
+        /* Se apagan TODAS de una pasada y se lee el layout UNA sola vez.
+
+           Leer getComputedStyle dentro del bucle obligaria al navegador a
+           recalcular en cada vuelta: con un centenar de nodos eso es un
+           tiron perceptible. Asi son dos pasadas y un solo recalculo. */
+        Array.prototype.forEach.call(hijos, function (hijo) {
+          hijo.style.animation = 'none';
+        });
+
+        void el.offsetWidth;
+
+        Array.prototype.forEach.call(hijos, function (hijo) {
+          hijo.style.animation = '';
+        });
       });
     }
 
