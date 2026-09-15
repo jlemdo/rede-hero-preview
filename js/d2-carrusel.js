@@ -142,10 +142,26 @@
 
       /* Las entradas al hacer scroll ya se dispararon en la diapositiva que
          estaba visible. La que entra ahora nunca fue observada, asi que se
-         marca como visible a mano o se quedaria en blanco. */
+         marca como visible a mano o se quedaria en blanco.
+
+         Y se REINICIA: antes solo se anadia la clase, asi que al volver a
+         una variante ya vista las animaciones no se repetian --el trazado
+         ya dibujado, las barras llenas--. Justo cuando alguien compara las
+         tres es cuando mas se nota.
+
+         Quitar y poner en el mismo fotograma no basta: el navegador agrupa
+         los dos cambios y no ve transicion. El reflow de en medio --leer
+         offsetWidth-- lo obliga a aplicar el estado intermedio. Es la misma
+         tecnica que usa la ficha del FAQ. */
+      diapos[actual].querySelectorAll('.d2-entra').forEach(function (el) {
+        el.classList.remove('es-visible');
+        el.style.transitionDelay = '0ms';
+      });
+
+      void diapos[actual].offsetWidth;
+
       diapos[actual].querySelectorAll('.d2-entra').forEach(function (el) {
         el.classList.add('es-visible');
-        el.style.transitionDelay = '0ms';
       });
     }
 

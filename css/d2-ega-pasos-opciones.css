@@ -3542,15 +3542,33 @@
     animation-delay: calc(.2s + var(--i, 0) * 180ms);
   }
 
-  .d2 .d2-ega-eta .d2-ega-eta__paso > * {
+  /* Los hijos de la etapa, MENOS la lista de regiones: esa tiene su
+     propio escalonado mas abajo. Con > * a secas el <ul> entraba entero
+     de golpe y las tres regiones aparecian juntas, perdiendo el gesto. */
+  .d2 .d2-ega-eta .d2-ega-eta__paso > :not(.d2-ega-eta__regs) {
     opacity: 0;
     transform: translateY(8px);
   }
 
-  .d2 .d2-ega-eta.es-visible .d2-ega-eta__paso > * {
+  .d2 .d2-ega-eta.es-visible .d2-ega-eta__paso > :not(.d2-ega-eta__regs) {
     animation: d2-ega-p-entra .5s cubic-bezier(.32, .72, 0, 1) both;
     animation-delay: calc(.3s + var(--i, 0) * 180ms);
   }
+
+  /* Las tres regiones, una tras otra. Van despues del titular de su
+     etapa: primero se sabe que se esta leyendo, luego que hay dentro. */
+  .d2 .d2-ega-eta .d2-ega-eta__reg {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .d2 .d2-ega-eta.es-visible .d2-ega-eta__reg {
+    animation: d2-ega-p-entra .46s cubic-bezier(.32, .72, 0, 1) both;
+  }
+
+  .d2 .d2-ega-eta.es-visible .d2-ega-eta__reg:nth-child(1) { animation-delay: .46s; }
+  .d2 .d2-ega-eta.es-visible .d2-ega-eta__reg:nth-child(2) { animation-delay: .55s; }
+  .d2 .d2-ega-eta.es-visible .d2-ega-eta__reg:nth-child(3) { animation-delay: .64s; }
 
   /* Senales: los tramos se encienden uno tras otro. */
   .d2 .d2-ega-sen .d2-ega-sen__lleno { transform: scaleX(0); }
