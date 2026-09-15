@@ -1804,67 +1804,84 @@
   <div class="d2-caru" id="caru-ega-fondos" data-caru>
 
     <!-- OPCION 1 - TRES TARJETAS (la que ya existia) -->
-    <!-- OPCION 1 - DIALES
+    <!-- OPCION 1 - LAS RUTAS
 
-         Tres medidores de instrumento. No un anillo de progreso: un sector
-         de 270 grados que arranca en 135, como la aguja de un contador
-         analogico. Cada provincia barre hasta su posicion al entrar.
+         Tres trazados de distinta CERTEZA hacia un mismo punto de
+         resolucion.
 
-         El angulo va en una variable registrada por @property como
-         <number>. Sin registrar no interpola y el barrido saltaria. -->
-    <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Option 1: Dials">
-      <section class="d2-ega-dial d2-entra" aria-labelledby="ega-dial-t">
-        <div class="d2-ega-dial__inner">
+         BC Hydro y SaskPower tienen programas nombrados y publicados:
+         su linea llega entera. "Otras provincias" es una conversacion:
+         la suya arranca discontinua.
 
-          <div class="d2-ega-dial__cab">
+         Eso no es decoracion. Credit Karma hace lo mismo con sus niveles
+         de probabilidad: el mas alto se basa en criterios reales del
+         prestamista y los de abajo en comparacion, y NO se dibujan
+         iguales. La asimetria es el dato. -->
+    <div class="d2-caru__diapo es-activa" role="tabpanel" aria-label="Option 1: Routes">
+      <section class="d2-ega-ruta-sec d2-entra" aria-labelledby="ega-ruta-t">
+        <div class="d2-ega-ruta-sec__inner">
+
+          <div class="d2-ega-ruta-sec__cab">
             <p class="eyebrow">Commercial energy funding</p>
-            <h2 class="d2-ega-dial__titulo" id="ega-dial-t">Could a utility program help pay for what comes next?</h2>
-            <p class="d2-ega-dial__lead">Program rules change, and the right path depends on your utility, building and proposed work. Rede helps you identify the relevant route before you invest in a detailed study or project.</p>
+            <h2 class="d2-ega-ruta-sec__titulo" id="ega-ruta-t">Could a utility program help pay for what comes next?</h2>
+            <p class="d2-ega-ruta-sec__lead">Program rules change, and the right path depends on your utility, building and proposed work. Rede helps you identify the relevant route before you invest in a detailed study or project.</p>
           </div>
 
-          <p class="d2-ega-dial__aviso">
-            <span class="d2-ega-dial__aviso-eti">How eligibility works</span>
-            Energy Gap Analysis identifies a sensible next step. It is not automatically funded, and final eligibility is always confirmed against the current program requirements.
-          </p>
-
-          <ul class="d2-ega-dial__lista">
-            <li class="d2-ega-dial__item" style="--i:0">
-              <span class="d2-ega-dial__medidor" aria-hidden="true">
-                <span class="d2-ega-dial__aguja"></span>
-                <span class="d2-ega-dial__centro">BC</span>
+          <ul class="d2-ega-ruta-sec__lista">
+            <li class="d2-ega-ruta" data-certeza="definido" style="--i:0">
+              <span class="d2-ega-ruta__traza" aria-hidden="true">
+                <svg viewBox="0 0 40 120" fill="none" preserveAspectRatio="none">
+                  <path class="d2-ega-ruta__linea" d="M20 4 L20 116" pathLength="100"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <circle class="d2-ega-ruta__nodo" cx="20" cy="4" r="4"/>
+                </svg>
               </span>
-              <p class="d2-ega-dial__region">British Columbia</p>
-              <h3 class="d2-ega-dial__nombre">BC Hydro programs</h3>
-              <p class="d2-ega-dial__texto">Commercial and institutional customers may be able to access support for eligible studies, operational improvements, equipment projects or ongoing energy management.</p>
-              <a class="d2-ega-dial__link" href="#contact">Check BC program fit
-                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
+              <div class="d2-ega-ruta__cuerpo">
+                <p class="d2-ega-ruta__region">British Columbia</p>
+                <h3 class="d2-ega-ruta__nom">BC Hydro programs</h3>
+                <p class="d2-ega-ruta__txt">Commercial and institutional customers may be able to access support for eligible studies, operational improvements, equipment projects or ongoing energy management.</p>
+                <p class="d2-ega-ruta__cert">Named programs, published rules</p>
+                <a class="d2-ega-ruta__link" href="#contact">Check BC program fit <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              </div>
             </li>
-            <li class="d2-ega-dial__item" style="--i:1">
-              <span class="d2-ega-dial__medidor" aria-hidden="true">
-                <span class="d2-ega-dial__aguja"></span>
-                <span class="d2-ega-dial__centro">SK</span>
+            <li class="d2-ega-ruta" data-certeza="definido" style="--i:1">
+              <span class="d2-ega-ruta__traza" aria-hidden="true">
+                <svg viewBox="0 0 40 120" fill="none" preserveAspectRatio="none">
+                  <path class="d2-ega-ruta__linea" d="M20 4 L20 116" pathLength="100"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <circle class="d2-ega-ruta__nodo" cx="20" cy="4" r="4"/>
+                </svg>
               </span>
-              <p class="d2-ega-dial__region">Saskatchewan</p>
-              <h3 class="d2-ega-dial__nombre">SaskPower programs</h3>
-              <p class="d2-ega-dial__texto">Available support depends on the customer, facility, energy opportunity and type of project being considered.</p>
-              <a class="d2-ega-dial__link" href="#contact">Check Saskatchewan program fit
-                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
+              <div class="d2-ega-ruta__cuerpo">
+                <p class="d2-ega-ruta__region">Saskatchewan</p>
+                <h3 class="d2-ega-ruta__nom">SaskPower programs</h3>
+                <p class="d2-ega-ruta__txt">Available support depends on the customer, facility, energy opportunity and type of project being considered.</p>
+                <p class="d2-ega-ruta__cert">Named programs, criteria vary</p>
+                <a class="d2-ega-ruta__link" href="#contact">Check Saskatchewan program fit <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              </div>
             </li>
-            <li class="d2-ega-dial__item" style="--i:2">
-              <span class="d2-ega-dial__medidor" aria-hidden="true">
-                <span class="d2-ega-dial__aguja"></span>
-                <span class="d2-ega-dial__centro">CA</span>
+            <li class="d2-ega-ruta" data-certeza="abierto" style="--i:2">
+              <span class="d2-ega-ruta__traza" aria-hidden="true">
+                <svg viewBox="0 0 40 120" fill="none" preserveAspectRatio="none">
+                  <path class="d2-ega-ruta__linea" d="M20 4 L20 116" pathLength="100"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <circle class="d2-ega-ruta__nodo" cx="20" cy="4" r="4"/>
+                </svg>
               </span>
-              <p class="d2-ega-dial__region">Other provinces</p>
-              <h3 class="d2-ega-dial__nombre">Regional program review</h3>
-              <p class="d2-ega-dial__texto">Rede can discuss other provincial energy-efficiency programs relevant to commercial, institutional and public-sector buildings.</p>
-              <a class="d2-ega-dial__link" href="#contact">Ask about your province
-                <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </a>
+              <div class="d2-ega-ruta__cuerpo">
+                <p class="d2-ega-ruta__region">Other provinces</p>
+                <h3 class="d2-ega-ruta__nom">Regional program review</h3>
+                <p class="d2-ega-ruta__txt">Rede can discuss other provincial energy-efficiency programs relevant to commercial, institutional and public-sector buildings.</p>
+                <p class="d2-ega-ruta__cert">Reviewed case by case</p>
+                <a class="d2-ega-ruta__link" href="#contact">Ask about your province <svg width="16" height="11" viewBox="0 0 18 12" aria-hidden="true"><path d="M11.5 1L16.5 6L11.5 11M16 6H1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              </div>
             </li>
           </ul>
+
+          <p class="d2-ega-ruta-sec__cierre">
+            <span class="d2-ega-ruta-sec__cierre-eti">Where the uncertainty ends</span>
+            Energy Gap Analysis identifies a sensible next step. It is not automatically funded, and final eligibility is always confirmed against the current program requirements.
+          </p>
 
         </div>
       </section>
@@ -1997,7 +2014,7 @@
       </button>
 
       <div class="d2-caru__puntos" role="tablist" aria-label="Section version">
-        <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Dials</small></button>
+        <button class="d2-caru__punto es-activo" type="button" role="tab" aria-selected="true"  data-caru-a="0"><span>1</span><small>Routes</small></button>
         <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="1"><span>2</span><small>Ledger</small></button>
         <button class="d2-caru__punto"           type="button" role="tab" aria-selected="false" data-caru-a="2"><span>3</span><small>Focus</small></button>
       </div>
