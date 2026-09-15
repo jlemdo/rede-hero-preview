@@ -2293,6 +2293,31 @@
 
             </svg>
 
+            <!-- La ficha de lectura del mapa de barrios (14/9/2026)
+
+                 Mismo patron que la del mapa de cartera --.d2-prob-mapa__ficha,
+                 ya aprobado-- porque este mapa reutiliza su contenedor y sus
+                 estilos: la clase existe y hereda posicion, animacion y
+                 colores sin CSS nuevo.
+
+                 aria-live="polite" y no "assertive": el contenido cambia solo
+                 cada 2.6s mientras rota, y "assertive" interrumpiria al lector
+                 de pantalla en cada vuelta.
+
+                 EL TEXTO ES PROVISIONAL. Los nombres de barrio son reales
+                 --salen del portal de datos abiertos de la ciudad-- pero las
+                 tres lineas de datos son lorem ipsum a la espera del contenido
+                 real, y por eso la etiqueta lo dice en la propia interfaz: el
+                 mapa de cartera ya tuvo el problema de ensenar cifras
+                 inventadas al lado de calles verdaderas. -->
+            <div class="d2-prob-mapa__ficha" data-zonas-ficha aria-live="polite">
+              <small data-zonas-titulo>Placeholder content</small>
+              <b data-zonas-nombre>Royal Oaks</b>
+              <div><span>Lorem ipsum</span><strong data-zonas-d1>Dolor sit</strong></div>
+              <div><span>Consectetur</span><strong data-zonas-d2>Adipiscing</strong></div>
+              <div><span>Sed do eiusmod</span><strong data-zonas-d3>Tempor</strong></div>
+            </div>
+
             <p class="d2-prob-mapa__aviso">Contains information licensed under the Open Data License – City of Grande Prairie. Roads © OpenStreetMap contributors.</p>
 
             </div>
