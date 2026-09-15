@@ -13855,11 +13855,26 @@ span.d2-panel__filtro:hover {
 /* --- La cabecera --- */
 
 .d2 .d2-equipo-voz__intro {
-  /* 88ch y no 62 (8/9/2026): el lead ocupaba 603px de los 1280 del
-     contenedor --menos de la mitad-- y la seccion se veia vacia por la
-     derecha. 88 caracteres sigue siendo comodo de leer para un parrafo
-     corto de tres lineas; el techo de 65-75 aplica a textos largos. */
-  max-width: 88ch;
+  /* Sin tope (14/9/2026): que el parrafo llegue hasta el borde del
+     contenedor, que es donde el usuario pidio que terminara.
+
+     Historia de este valor: era 62ch, subio a 88 el 8/9 porque el lead
+     ocupaba 603px de los 1280 y la seccion se veia vacia por la derecha.
+     Con el copy final --439 caracteres frente a los ~150 de antes-- 88ch
+     son 832px, el 65% del ancho: vuelve a cortarse a media seccion y se
+     lee como una columna estrecha en un bloque ancho.
+
+     Medido a 17px, donde 1ch = 9.45px:
+
+        88ch ...  832px ... 65% ... ~5 lineas
+       100ch ...  945px ... 74% ... ~4 lineas
+       128ch ... 1210px ... 95% ... ~3 lineas
+
+     Se quita el tope y manda el contenedor. El limite comodo de 65-75
+     caracteres aplica a textos largos de lectura seguida; este es un
+     parrafo unico de presentacion, del mismo tipo que el lead del hero,
+     que tampoco lo lleva. */
+  max-width: none;
   margin-bottom: clamp(34px, 4vw, 56px);
 }
 
