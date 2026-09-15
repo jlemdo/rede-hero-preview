@@ -3266,8 +3266,7 @@
 /* El eje que enlaza las tres etapas. Se desvanece en los extremos, como
    todo filo de esta pagina, y el tramo de la ultima se apaga antes: ahi
    termina el recorrido. */
-.d2 .d2-ega-eta__paso::before {
-  content: "";
+.d2 .d2-ega-eta__eje {
   position: absolute;
   top: 0;
   left: 0;
@@ -3276,20 +3275,19 @@
   background: rgba(255, 255, 255, .22);
 }
 
-.d2 .d2-ega-eta__paso:first-child::before {
+.d2 .d2-ega-eta__paso:first-child .d2-ega-eta__eje {
   -webkit-mask: linear-gradient(90deg, transparent, #000 12%, #000);
           mask: linear-gradient(90deg, transparent, #000 12%, #000);
 }
 
-.d2 .d2-ega-eta__paso--fin::before {
+.d2 .d2-ega-eta__paso--fin .d2-ega-eta__eje {
   background: var(--c-verde-marca, #39B54A);
   -webkit-mask: linear-gradient(90deg, #000, #000 72%, transparent);
           mask: linear-gradient(90deg, #000, #000 72%, transparent);
 }
 
 /* El nodo de cada etapa, sobre el eje. */
-.d2 .d2-ega-eta__paso::after {
-  content: "";
+.d2 .d2-ega-eta__nodo {
   position: absolute;
   top: -4px;
   left: 0;
@@ -3300,11 +3298,14 @@
   border: 2px solid rgba(255, 255, 255, .34);
 }
 
-.d2 .d2-ega-eta__paso + .d2-ega-eta__paso::after {
+/* Las etapas 2 y 3 llevan padding a la izquierda, asi que su nodo se
+   desplaza para seguir sobre el eje. El selector correcto es el HIJO de
+   una etapa que sigue a otra, no el hermano del paso. */
+.d2 .d2-ega-eta__paso + .d2-ega-eta__paso .d2-ega-eta__nodo {
   left: clamp(20px, 2.6vw, 34px);
 }
 
-.d2 .d2-ega-eta__paso--fin::after {
+.d2 .d2-ega-eta__paso--fin .d2-ega-eta__nodo {
   border-color: var(--c-verde-marca, #39B54A);
   background: var(--c-verde-marca, #39B54A);
 }
@@ -3522,35 +3523,40 @@
 @media (prefers-reduced-motion: no-preference) {
 
   /* Etapas: el eje se dibuja y luego llega el contenido. */
-  .d2 .d2-ega-eta .d2-ega-eta__paso::before {
+  .d2 .d2-ega-eta .d2-ega-eta__eje {
     transform: scaleX(0);
     transform-origin: left;
   }
 
-  .d2 .d2-ega-eta.es-visible .d2-ega-eta__paso::before {
+  .d2 .d2-ega-eta.es-visible .d2-ega-eta__eje {
     animation: d2-eta-eje .55s cubic-bezier(.33, 1, .68, 1) both;
     animation-delay: calc(var(--i, 0) * 180ms);
   }
 
-  .d2 .d2-ega-eta .d2-ega-eta__paso::after {
+  .d2 .d2-ega-eta .d2-ega-eta__nodo {
     opacity: 0;
     transform: scale(0);
   }
 
-  .d2 .d2-ega-eta.es-visible .d2-ega-eta__paso::after {
+  .d2 .d2-ega-eta.es-visible .d2-ega-eta__nodo {
     animation: d2-eta-nodo .35s cubic-bezier(.34, 1.56, .64, 1) both;
     animation-delay: calc(.2s + var(--i, 0) * 180ms);
   }
 
-  /* Los hijos de la etapa, MENOS la lista de regiones: esa tiene su
-     propio escalonado mas abajo. Con > * a secas el <ul> entraba entero
-     de golpe y las tres regiones aparecian juntas, perdiendo el gesto. */
-  .d2 .d2-ega-eta .d2-ega-eta__paso > :not(.d2-ega-eta__regs) {
+  /* Los hijos de la etapa, menos tres que tienen animacion propia:
+
+       __regs   la lista de regiones, con su escalonado
+       __eje    la linea que se dibuja
+       __nodo   el punto que aparece sobre ella
+
+     Sin excluirlos, cada uno recibiria DOS animaciones sobre la misma
+     propiedad y la ultima declarada ganaria, anulando la suya. */
+  .d2 .d2-ega-eta .d2-ega-eta__paso > :not(.d2-ega-eta__regs, .d2-ega-eta__eje, .d2-ega-eta__nodo) {
     opacity: 0;
     transform: translateY(8px);
   }
 
-  .d2 .d2-ega-eta.es-visible .d2-ega-eta__paso > :not(.d2-ega-eta__regs) {
+  .d2 .d2-ega-eta.es-visible .d2-ega-eta__paso > :not(.d2-ega-eta__regs, .d2-ega-eta__eje, .d2-ega-eta__nodo) {
     animation: d2-ega-p-entra .5s cubic-bezier(.32, .72, 0, 1) both;
     animation-delay: calc(.3s + var(--i, 0) * 180ms);
   }
@@ -3618,7 +3624,7 @@
   }
 
   /* Apilado, el eje pasa a vertical. */
-  .d2 .d2-ega-eta__paso::before {
+  .d2 .d2-ega-eta__eje {
     top: 0;
     bottom: 0;
     left: 0;
@@ -3627,8 +3633,8 @@
     height: auto;
   }
 
-  .d2 .d2-ega-eta__paso::after,
-  .d2 .d2-ega-eta__paso + .d2-ega-eta__paso::after {
+  .d2 .d2-ega-eta__nodo,
+  .d2 .d2-ega-eta__paso + .d2-ega-eta__paso .d2-ega-eta__nodo {
     top: 26px;
     left: -4px;
   }
