@@ -3266,13 +3266,23 @@
 /* El eje que enlaza las tres etapas. Se desvanece en los extremos, como
    todo filo de esta pagina, y el tramo de la ultima se apaga antes: ahi
    termina el recorrido. */
+/* El eje de las dos primeras etapas.
+
+   Iba al 22% de blanco --2.03:1-- contra el verde de la tercera, que da
+   6.53:1. La diferencia era tan grande que las dos primeras parecian
+   DESACTIVADAS en vez de en reposo, y el recorrido se leia como si solo
+   existiera el final.
+
+   Sube al 42%: siguen por debajo del verde --el ultimo tramo tiene que
+   destacar, ahi es donde se cierra el condicional-- pero ya se leen como
+   parte del mismo eje. */
 .d2 .d2-ega-eta__eje {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 1.5px;
-  background: rgba(255, 255, 255, .22);
+  background: rgba(255, 255, 255, .42);
 }
 
 .d2 .d2-ega-eta__paso:first-child .d2-ega-eta__eje {
@@ -3295,7 +3305,7 @@
   height: 9px;
   border-radius: 50%;
   background: var(--c-superficie-oscura, #1A1A1A);
-  border: 2px solid rgba(255, 255, 255, .34);
+  border: 2px solid rgba(255, 255, 255, .55);
 }
 
 /* Las etapas 2 y 3 llevan padding a la izquierda, asi que su nodo se
