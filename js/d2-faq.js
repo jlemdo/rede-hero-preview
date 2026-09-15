@@ -46,16 +46,20 @@
 
        Antes esto hacia `caja.hidden = true`, y `caja` es el <aside> entero.
        Cuando aqui solo vivia la ficha, daba igual. Desde el 4/9 ese aside
-       contiene TAMBIEN el mapa de barrios, asi que ocultarlo se llevaba el
-       mapa por delante.
+       contiene el mapa de barrios, asi que ocultarlo se llevaba el mapa por
+       delante.
 
        No se noto hasta hoy porque las diez preguntas antiguas tenian todas
        su data-cifra: la rama del `if` no llegaba a ejecutarse nunca. Con el
        copy final del cliente solo dos de once traen cifra, y el mapa
        desaparecia en las otras nueve.
 
-       Ahora se oculta unicamente `interior` --la caja de la cifra-- y el
-       mapa se queda donde esta. */
+       Y hay un matiz que conviene dejar escrito: la ficha de cifras esta
+       COMENTADA en el marcado desde ese mismo 4/9, asi que `interior`,
+       `cifra`, `eti` y `nota` son null en el home. Todo lo que hay debajo
+       va guardado con `if (...)` y no rompe nada; el modulo se queda
+       practicamente inerte, que es lo correcto mientras la ficha no
+       vuelva. Si algun dia se descomenta, esto sigue funcionando. */
     if (!c) {
       if (interior) { interior.hidden = true; }
       return;
