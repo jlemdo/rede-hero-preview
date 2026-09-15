@@ -3175,49 +3175,7 @@
     color-mix(in srgb, var(--c-verde-claro, #E8F5E8) 55%, #FFFFFF) 100%);
 }
 
-/* Las marcas de esquina. Cuatro angulos cortos, no un borde: delimitan el
-   area sin encerrarla, que es lo que hace un plano tecnico.
 
-   Se dibujan con cuatro gradientes en una sola capa: dos por esquina, uno
-   horizontal y otro vertical. Sin elementos extra y sin imagenes. */
-.d2 .d2-ega-per__dentro::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  --m: var(--c-verde-hover, #026F00);
-  --g: 14px;
-  background:
-    /* superior izquierda */
-    linear-gradient(to right, var(--m) 0 var(--g), transparent 0) top left / 100% 1.5px no-repeat,
-    linear-gradient(to bottom, var(--m) 0 var(--g), transparent 0) top left / 1.5px 100% no-repeat,
-    /* superior derecha */
-    linear-gradient(to left, var(--m) 0 var(--g), transparent 0) top right / 100% 1.5px no-repeat,
-    linear-gradient(to bottom, var(--m) 0 var(--g), transparent 0) top right / 1.5px 100% no-repeat,
-    /* inferior izquierda */
-    linear-gradient(to right, var(--m) 0 var(--g), transparent 0) bottom left / 100% 1.5px no-repeat,
-    linear-gradient(to top, var(--m) 0 var(--g), transparent 0) bottom left / 1.5px 100% no-repeat,
-    /* inferior derecha */
-    linear-gradient(to left, var(--m) 0 var(--g), transparent 0) bottom right / 100% 1.5px no-repeat,
-    linear-gradient(to top, var(--m) 0 var(--g), transparent 0) bottom right / 1.5px 100% no-repeat;
-  opacity: .55;
-}
-
-/* Las marcas se dibujan al entrar, de la esquina hacia dentro. */
-@media (prefers-reduced-motion: no-preference) {
-  .d2 .d2-ega-per .d2-ega-per__dentro::after {
-    opacity: 0;
-    transform: scale(1.04);
-  }
-
-  .d2 .d2-ega-per.es-visible .d2-ega-per__dentro::after {
-    animation: d2-per-marcas .6s cubic-bezier(.32, .72, 0, 1) .2s both;
-  }
-}
-
-@keyframes d2-per-marcas {
-  to { opacity: .55; transform: none; }
-}
 
 /* --- Las marcas de escala, en lugar de las vinetas --- */
 
@@ -3256,7 +3214,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .d2 .d2-ega-per__lista li::before { transform: none; }
-  .d2 .d2-ega-per__dentro::after { opacity: .55; transform: none; }
+  /* El ::after es la mascara del barrido: sin movimiento no se ve,
+     que es el estado correcto --el panel limpio--. */
+  .d2 .d2-ega-per__dentro::after { opacity: 0; }
 }
 
 @keyframes d2-per-marca-item {
@@ -3282,10 +3242,145 @@
     rgba(57, 181, 74, .04) 100%);
 }
 
-.d2 [data-comp-tono="oscuro"] .d2-ega-per__dentro::after {
+.d2 [data-comp-tono="oscuro"] .d2-ega-per__dentro::before {
   --m: var(--c-verde-marca, #39B54A);
 }
 
 .d2 [data-comp-tono="oscuro"] .d2-ega-per__lista li::before {
   background: var(--c-verde-marca, #39B54A);
 }
+
+
+/* ==========================================================================
+   PERIMETER — EL PANEL EN EL VERDE DEL EQUIPO (14/9/2026)
+
+   Tres cosas que pidio el usuario, y una que yo habia roto sin darme
+   cuenta.
+
+   LO QUE ROMPI
+
+   Las marcas de esquina que acabo de anadir usan ::after, que es el MISMO
+   pseudoelemento donde vivia la animacion de mascara --la que el usuario
+   aprobo explicitamente--. Al ir despues en el archivo, la pisaron.
+
+   No se veia ningun error: la animacion simplemente dejo de existir.
+
+   LA SOLUCION
+
+   Las marcas de esquina pasan a ::before del panel. El ::after se queda
+   entero para la animacion de mascara, tal como estaba.
+
+   EL VERDE
+
+   #1A5121, el de la banda del equipo. El comentario del sistema lo
+   describe como "verde de marca al 45% sobre negro", asi que no es un
+   color nuevo: es uno que la web ya usa en una seccion entera.
+
+   Y esa banda lleva circuito de fondo, que es justo el lenguaje que el
+   usuario lleva pidiendo. El panel hereda la familia.
+
+   TEXTO BLANCO
+
+   Medido sobre #1A5121:
+
+     #FFFFFF   9.36:1   titulos e items
+     #D1D1D1   6.13:1   el parrafo del No lock-in
+     #B0E1B7   6.38:1   la etiqueta y las marcas de escala
+   ========================================================================== */
+
+.d2 .d2-ega-per__dentro {
+  /* El degradado, ahora sobre el verde oscuro: se aclara muy poco hacia
+     abajo, lo justo para que el color no sea plano. */
+  background: linear-gradient(to bottom,
+    #1A5121 0%,
+    color-mix(in srgb, #1A5121 88%, #FFFFFF) 100%);
+}
+
+/* Las marcas de esquina se mudan a ::before para dejar libre el ::after,
+   que es donde vive la animacion de mascara. */
+.d2 .d2-ega-per__dentro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --m: #B0E1B7;
+  --g: 14px;
+  background:
+    linear-gradient(to right, var(--m) 0 var(--g), transparent 0) top left / 100% 1.5px no-repeat,
+    linear-gradient(to bottom, var(--m) 0 var(--g), transparent 0) top left / 1.5px 100% no-repeat,
+    linear-gradient(to left, var(--m) 0 var(--g), transparent 0) top right / 100% 1.5px no-repeat,
+    linear-gradient(to bottom, var(--m) 0 var(--g), transparent 0) top right / 1.5px 100% no-repeat,
+    linear-gradient(to right, var(--m) 0 var(--g), transparent 0) bottom left / 100% 1.5px no-repeat,
+    linear-gradient(to top, var(--m) 0 var(--g), transparent 0) bottom left / 1.5px 100% no-repeat,
+    linear-gradient(to left, var(--m) 0 var(--g), transparent 0) bottom right / 100% 1.5px no-repeat,
+    linear-gradient(to top, var(--m) 0 var(--g), transparent 0) bottom right / 1.5px 100% no-repeat;
+  opacity: .6;
+  border: 0;
+  border-radius: 0;
+}
+
+/* --- El texto, en blanco --- */
+
+.d2 .d2-ega-per__eti {
+  color: #B0E1B7;
+}
+
+.d2 .d2-ega-per__lista li {
+  color: #FFFFFF;
+}
+
+.d2 .d2-ega-per__lista li::before {
+  background: #B0E1B7;
+}
+
+.d2 .d2-ega-per__libre {
+  /* #E8E8E8 y no #D1D1D1: medido, en la parte BAJA del degradado el gris
+     mas oscuro se queda en 4.41:1 y no llega. Este es ademas el valor que
+     el propio sistema usa para cuerpo sobre fondo oscuro. */
+  color: #E8E8E8;
+  background:
+    linear-gradient(90deg, rgba(176, 225, 183, .32) 0 62%, transparent)
+    top / 100% 1px no-repeat;
+}
+
+.d2 .d2-ega-per__libre strong {
+  color: #FFFFFF;
+}
+
+/* La animacion de mascara vuelve a tener su ::after entero. El velo, en
+   claro sobre el verde oscuro. */
+.d2 .d2-ega-per__dentro::after {
+  background: rgba(176, 225, 183, .16);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Las marcas de esquina ahora entran por ::before. */
+  .d2 .d2-ega-per .d2-ega-per__dentro::before {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+
+  .d2 .d2-ega-per.es-visible .d2-ega-per__dentro::before {
+    animation: d2-per-marcas-b .6s cubic-bezier(.32, .72, 0, 1) .2s both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .d2-ega-per__dentro::before { opacity: .6; transform: none; }
+}
+
+@keyframes d2-per-marcas-b {
+  to { opacity: .6; transform: none; }
+}
+
+/* --- Tono oscuro: el panel ya es oscuro, asi que apenas cambia --- */
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-per__dentro {
+  background: linear-gradient(to bottom,
+    #1A5121 0%,
+    color-mix(in srgb, #1A5121 92%, #000000) 100%);
+}
+
+.d2 [data-comp-tono="oscuro"] .d2-ega-per__lista li { color: #FFFFFF; }
+.d2 [data-comp-tono="oscuro"] .d2-ega-per__eti { color: #B0E1B7; }
+.d2 [data-comp-tono="oscuro"] .d2-ega-per__lista li::before { background: #B0E1B7; }
