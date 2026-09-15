@@ -96,7 +96,14 @@
   var aLaVista = false;
   var sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function mostrar(id) {
+  /* `conFicha` distingue las dos formas de llegar aqui:
+
+       - la ROTACION automatica pasa false: enciende el barrio pero no
+         saca la ficha. Si la sacara, apareceria sola cada 2.6s sin que
+         nadie senale nada, que es justo lo que el usuario no quiere.
+
+       - el HOVER y el TECLADO pasan true: hay intencion, se muestra. */
+  function mostrar(id, conFicha) {
     actual = id;
 
     var elegido = null;
@@ -125,14 +132,50 @@
     if (FICHA.d2) { FICHA.d2.textContent = r[1]; }
     if (FICHA.d3) { FICHA.d3.textContent = r[2]; }
 
-    /* Reinicia la animacion de entrada. El reflow entre medias es
-       necesario: sin el, el navegador agrupa los dos cambios y la ficha
-       cambia de texto sin que se vea que ha cambiado. */
-    if (!sinMovimiento) {
-      FICHA.caja.style.animation = 'none';
-      void FICHA.caja.offsetWidth;
-      FICHA.caja.style.animation = '';
-    }
+    if (conFicha) { colocar(elegido); }
+  }
+
+  /* --- DONDE SE DIBUJA LA FICHA (14/9/2026) ---------------------------
+
+     Debajo del circulo señalado, no en la esquina del lienzo.
+
+     Se mide con getBoundingClientRect y no convirtiendo coordenadas del
+     viewBox: el SVG escala con la ventana --width:100%, height:auto-- y
+     cualquier factor calculado a mano se rompe al redimensionar. El
+     rectangulo que devuelve el navegador ya viene en pixeles reales. */
+  function colocar(sitio) {
+    if (!FICHA.caja || !sitio) { return; }
+
+    var burbuja = sitio.querySelector('.d2-mapa-zonas__burbuja') || sitio;
+    var r = burbuja.getBoundingClientRect();
+    var base = FICHA.caja.offsetParent || mapa;
+    var rb = base.getBoundingClientRect();
+
+    /* Coordenadas relativas al contenedor posicionado, que es sobre quien
+       se aplican top y left. */
+    var x = r.left - rb.left + r.width / 2;
+    var y = r.bottom - rb.top + 10;
+
+    /* Si no cabe debajo, se dibuja encima: en los barrios del sur la
+       ficha se saldria del lienzo y quedaria cortada. */
+    var alto = FICHA.caja.offsetHeight || 120;
+    var arriba = y + alto > rb.height;
+    if (arriba) { y = r.top - rb.top - 10; }
+    FICHA.caja.classList.toggle('es-arriba', arriba);
+
+    /* Y que no se salga por los lados: se acota a medio ancho de cada
+       borde, que es donde el translate(-50%) la deja tocando el limite. */
+    var medio = (FICHA.caja.offsetWidth || 190) / 2;
+    if (x < medio) { x = medio; }
+    if (x > rb.width - medio) { x = rb.width - medio; }
+
+    FICHA.caja.style.setProperty('--fx', x + 'px');
+    FICHA.caja.style.setProperty('--fy', y + 'px');
+    FICHA.caja.classList.add('es-visible');
+  }
+
+  function ocultarFicha() {
+    if (FICHA.caja) { FICHA.caja.classList.remove('es-visible'); }
   }
 
   function avanzar() {
@@ -158,8 +201,11 @@
   Array.prototype.forEach.call(sitios, function (s) {
     var id = s.getAttribute('data-zona');
 
-    function fijar()  { detenido = true;  parar(); mostrar(id); }
-    function soltar() { detenido = false; arrancar(); }
+    function fijar()  { detenido = true;  parar(); mostrar(id, true); }
+
+    /* Al salir, la ficha se va: el usuario pidio que no se quede puesta.
+       La rotacion se retoma y sigue encendiendo barrios, pero sin ficha. */
+    function soltar() { detenido = false; ocultarFicha(); arrancar(); }
 
     s.addEventListener('mouseenter', fijar);
     s.addEventListener('mouseleave', soltar);
@@ -174,6 +220,19 @@
         fijar();
       }
     });
+  });
+
+  /* En tactil no hay mouseleave: se toca un circulo, sale la ficha y no
+     hay gesto que la cierre. Un toque fuera del mapa la retira.
+
+     Va en 'pointerdown' y no en 'click' para que no compita con el click
+     del propio circulo: cuando se toca otro sitio, su fijar() vuelve a
+     mostrarla inmediatamente despues. */
+  document.addEventListener('pointerdown', function (e) {
+    if (e.target.closest && e.target.closest('[data-zona]')) { return; }
+    ocultarFicha();
+    detenido = false;
+    arrancar();
   });
 
   /* Con la pestana en segundo plano no hay nadie mirando */

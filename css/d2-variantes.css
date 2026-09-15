@@ -15183,3 +15183,144 @@ span.d2-panel__filtro:hover {
 @media (prefers-reduced-motion: reduce) {
   .d2 .calc .perfil__resumen:not([hidden]) { animation: none; }
 }
+
+
+/* ==========================================================================
+   MAPA DE BARRIOS — LA FICHA SIGUE AL CIRCULO (14/9/2026)
+
+   El usuario: "me gustaria que se vaya moviendo y quede abajo de cada
+   circulo y si no tiene hover desaparezca, por que ahora solo queda hasta
+   abajo".
+
+   QUE CAMBIA
+
+   La ficha heredaba .d2-prob-mapa__ficha del mapa de cartera, que la fija
+   en la esquina inferior derecha. Ahi funciona --aquel mapa tiene cinco
+   sitios y la ficha nunca estorba--, pero con trece circulos repartidos
+   por el plano la distancia entre el que senalas y el dato que lo
+   describe es demasiada.
+
+   Ahora la ficha se coloca DEBAJO del circuloseñalado. El JS escribe --fx
+   y --fy en pixeles; aqui solo se traducen a posicion.
+
+   POR QUE NO SIGUE AL RATON
+
+   Porque el mapa tambien se recorre con teclado, y ahi no hay raton que
+   seguir. Anclarla al CIRCULO da la misma lectura en los dos casos, que
+   es la razon por la que este modulo ya tenia foco y Enter desde el
+   principio.
+
+   translate(-50%) y no left calculado en JS: el navegador centra la caja
+   sobre el punto sin que el guion tenga que medir su ancho, que cambia
+   con el nombre del barrio.
+   ========================================================================== */
+
+.d2 .d2-mapa-zonas .d2-prob-mapa__ficha {
+  /* El anclaje lo pone el JS. Los valores de reserva dejan la ficha en el
+     centro si el guion no llega a correr: nunca en una esquina cortada. */
+  top: var(--fy, 50%);
+  left: var(--fx, 50%);
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, 0);
+
+  /* Mas estrecha que la del mapa de cartera: aqui flota sobre el plano y
+     una caja de 240px taparia dos barrios vecinos. */
+  width: 190px;
+  padding: 14px;
+
+  /* Sombra para despegarla del mapa: la de cartera se apoya en la esquina
+     del lienzo y no la necesita; esta se superpone a calles y manchas de
+     color. */
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .22);
+
+  /* Que no intercepte el puntero: si la ficha se interpone entre el raton
+     y el circulo, al aparecer se dispararia mouseleave y entraria en un
+     ciclo de parpadeo. */
+  pointer-events: none;
+}
+
+/* Oculta mientras no se senala nada. Con visibility y no display:none
+   para que la transicion tenga algo que animar. */
+.d2 .d2-mapa-zonas .d2-prob-mapa__ficha:not(.es-visible) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.d2 .d2-mapa-zonas .d2-prob-mapa__ficha.es-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .d2-mapa-zonas .d2-prob-mapa__ficha {
+    transition: opacity .16s ease-out,
+                top .22s cubic-bezier(.32, .72, 0, 1),
+                left .22s cubic-bezier(.32, .72, 0, 1);
+  }
+}
+
+/* Cuando la ficha no cabe debajo --los barrios del sur-- el JS le pone
+   esta clase y se dibuja ENCIMA del circulo. */
+.d2 .d2-mapa-zonas .d2-prob-mapa__ficha.es-arriba {
+  transform: translate(-50%, -100%);
+}
+
+/* En movil el mapa se ve pequeno y una ficha flotante taparia media
+   ciudad: vuelve a su sitio fijo, debajo del plano. */
+@media (max-width: 700px) {
+  .d2 .d2-mapa-zonas .d2-prob-mapa__ficha {
+    position: static;
+    width: auto;
+    transform: none;
+    box-shadow: none;
+    margin-top: 14px;
+  }
+
+  .d2 .d2-mapa-zonas .d2-prob-mapa__ficha:not(.es-visible) {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+
+/* --- Los circulos que no se podian senalar (14/9/2026) ---------------------
+
+   El usuario: "hay circulos que no se pueden seleccionar".
+
+   LA CAUSA
+
+   Cada <g> de zona contiene dos cosas: el POLIGONO del barrio y la
+   BURBUJA. Los poligonos son grandes y se tocan entre si --son limites
+   municipales reales, comparten frontera-- asi que el ultimo del DOM
+   captura el puntero de los anteriores en toda la franja compartida.
+
+   Y hay un caso peor: s13 cae ENTERO dentro de s12 --dos sitios del mismo
+   barrio, Country Club Estates, a 18px de distancia en un circulo de
+   39--. Ahi no hay orden de DOM que salve a los dos.
+
+   LA SOLUCION
+
+   El puntero solo lo recoge la BURBUJA. El poligono se queda como lo que
+   es --la mancha que dice donde esta el barrio-- y deja de competir.
+
+   Medido sobre los trece: con esto los dos pares solapados quedan
+   alcanzables, porque en ambos el circulo PEQUENO es el que va despues en
+   el marcado y pinta encima. Al grande le queda su anillo exterior
+   entero, que es mas superficie que la que tenia antes.
+
+   La etiqueta tambien se aparta: es texto centrado sobre la burbuja y sin
+   esto los eventos se disparan al pasar sobre las letras pero no sobre el
+   circulo que las rodea, lo que da un area de acierto con agujeros. */
+.d2 .d2-mapa-zonas__area,
+.d2 .d2-mapa-zonas__etiqueta {
+  pointer-events: none;
+}
+
+.d2 .d2-mapa-zonas__burbuja {
+  pointer-events: auto;
+  /* El cursor confirma que el circulo es lo que se puede senalar. El <g>
+     ya lo declaraba, pero ahora que no recibe eventos hay que decirlo
+     donde si se reciben. */
+  cursor: pointer;
+}
