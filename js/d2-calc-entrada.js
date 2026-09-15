@@ -33,7 +33,23 @@
   var sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function preparar() {
+    /* En el home la calculadora vive dentro del carrusel #caru-calc y hay
+       que coger la variante visible. En Energy Gap Analysis va suelta, sin
+       carrusel: alli el primer selector no encuentra nada y antes el
+       modulo se rendia, dejando la tarjeta con la opacidad 0 que le pone
+       el marcado.
+
+       Se busca primero la del carrusel y, si no hay, la primera .calc que
+       no este dentro de una diapositiva oculta. */
     var seccion = document.querySelector('#caru-calc .d2-caru__diapo:not([hidden]) .calc');
+
+    if (!seccion) {
+      var sueltas = document.querySelectorAll('.calc');
+      for (var i = 0; i < sueltas.length; i++) {
+        if (!sueltas[i].closest('[hidden]')) { seccion = sueltas[i]; break; }
+      }
+    }
+
     if (!seccion) { return; }
 
     var tarjeta = seccion.querySelector('.calc__panel');

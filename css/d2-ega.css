@@ -550,72 +550,64 @@
 /* ==========================================================================
    EL CTA FINAL — EL CONTRASTE (14/9/2026)
 
-   El usuario: "el CTA no tiene contraste no se ve bien".
+   PRIMER INTENTO, EQUIVOCADO
 
-   LA CAUSA
+   Medi el contraste contra --d2-tinta (#F2F9F2) porque es lo que declara
+   la regla de la linea 5462 de d2-variantes.css. Pero 3160 lineas mas
+   abajo, en la 8622, hay esto:
 
-   La seccion se pinta con --d2-tinta, que es #F2F9F2: un verde casi
-   blanco. En el home eso no molesta porque el sistema de composicion le
-   da a veces un fondo oscuro; en Energy Gap Analysis la seccion no
-   declara rol, asi que se queda en el claro SIEMPRE.
+     .d2 .d2-cta-bal, ... { background: var(--comp-cta); }
 
-   Y sobre ese fondo, tres piezas se caen. MEDIDO:
+   Misma especificidad y mas abajo: GANA. Y --comp-cta es --comp-negro,
+   #333333. El fondo real es OSCURO, no claro.
 
-     boton de contorno, fondo  #FFFFFF sobre #F2F9F2 ...... 1.07:1
-     su borde                  #39B54A sobre #F2F9F2 ...... 2.49:1
-     eyebrow                   #39B54A sobre #F2F9F2 ...... 2.49:1
+   Puse #026F00 en el eyebrow y en el borde del boton "para mejorar el
+   contraste". Sobre #333333 eso da 1.97:1 -- los hice MENOS visibles.
 
-   El boton de contorno es el caso grave: blanco sobre verde-casi-blanco
-   no se distingue del fondo. No es que se lea mal el texto --el texto va
-   en #026F00 y da 6.41:1--: es que no se ve DONDE EMPIEZA EL BOTON.
+   LA LECCION: leer la primera regla que define una propiedad no basta.
+   Hay que buscar TODAS y quedarse con la ultima que gana.
 
-   El titular y el parrafo estan bien (11.80:1) y no se tocan.
+   LA CAUSA REAL
 
-   LA CORRECCION
+   El titular usa var(--c-texto), que vale #333333. Sobre un fondo
+   #333333 eso es 1.00:1: el mismo color exacto. Invisible, no "poco
+   legible".
 
-   Nada de colores nuevos. El proyecto ya tiene los dos tokens que hacen
-   falta y tokens.css documenta para que sirve cada uno:
+   d2-variantes.css ya resuelve esto: [data-comp-tono="oscuro"] redefine
+   --c-texto a blanco y --c-texto-cuerpo a #E8E8E8. El atributo lo pone
+   d2-composicion.js, pero SOLO en secciones que declaren data-comp-rol.
+   Y el CTA de esta pagina no lo declaraba.
 
-     --c-verde-hover  #026F00  "el verde para TEXTO pequeno", 6.41:1
-                               sobre blanco. Entra en el eyebrow.
-     --c-blanco       #FFFFFF  el fondo del boton de contorno, que aqui
-                               necesita separarse del fondo de seccion.
+   Asi que la correccion no es CSS: es declarar el rol en el marcado. Se
+   hace en el HTML, no aqui.
 
-   Para el boton de contorno se sube el borde a #026F00: el mismo verde
-   que ya lleva su texto, asi que la pieza queda de un solo color en vez
-   de dos. 6.41:1 contra su relleno blanco y 5.98:1 contra el fondo de la
-   seccion -- por encima del 3.0 que pide un elemento de interfaz.
+   Medido, con el rol puesto:
 
-   El hover no cambia: ahi el fondo pasa a verde y el contraste ya subia.
-
-   EL :not() NO ES ADORNO
-
-   Estas reglas EMPATAN en especificidad con la inversion de tono oscuro
-   de d2-variantes.css (0,3,0 las dos), y esta hoja carga despues: sin el
-   :not(), el dia que esta seccion reciba data-comp-tono="oscuro" mi verde
-   #026F00 pisaria el blanco correcto y dejaria el eyebrow ilegible sobre
-   negro. El fallo que arreglo aqui es exactamente ese, al reves.
+     titulo   #FFFFFF sobre #333333 ... 12.63:1
+     parrafo  #E8E8E8 ................. 10.31:1
+     eyebrow  #39B54A .................. 4.74:1
    ========================================================================== */
 
-/* AMBITO: basta .d2 --el mismo body que el home-- porque esta hoja solo
-   la enlaza Energy Gap Analysis. Si algun dia la carga otra pagina, estas
-   tres reglas viajan con ella, que es lo correcto: el problema no es de
-   esta pagina sino de cualquier CTA sobre fondo claro sin tono asignado.
+/* --- El eyebrow, por TONO --------------------------------------------------
 
-   El eyebrow: texto de 12px, necesita 4.5:1. El verde de marca da 2.49. */
+   El .eyebrow global usa --c-verde (#39B54A). Medido:
+
+     sobre blanco  #FFFFFF ... 2.49:1
+     sobre gris    #F3F3F3 ... 2.41:1
+     sobre negro   #333333 ... 4.74:1  OK
+
+   O sea: sobre fondo OSCURO el verde de marca funciona, y sobre CLARO no
+   llega ni de lejos al 4.5 que pide un texto de 12px.
+
+   tokens.css ya tiene el color para este caso exacto -- "el verde para
+   TEXTO pequeno", #026F00, 6.41:1 sobre blanco y 5.78:1 sobre el gris.
+
+   Se aplica por tono y no por seccion: cualquier eyebrow sobre claro lo
+   necesita, y el dia que la composicion cambie el fondo de una seccion,
+   el color la sigue sin tocar nada.
+
+   El :not() deja intacto el caso oscuro, donde el verde de marca es el
+   correcto y ademas es el que lo identifica como Rede. */
 .d2 .d2-cta-bal:not([data-comp-tono="oscuro"]) .eyebrow {
   color: var(--c-verde-hover, #026F00);
-}
-
-/* El boton de contorno: el borde toma el mismo verde oscuro del texto.
-   Un solo color para toda la pieza, y el limite del boton se ve. */
-.d2 .d2-cta-bal:not([data-comp-tono="oscuro"]) .d2-btn--linea {
-  border-color: var(--c-verde-hover, #026F00);
-}
-
-/* En hover el fondo se llena de verde de marca y el texto pasa a blanco:
-   ese estado ya estaba medido y se respeta tal cual. */
-.d2 .d2-cta-bal:not([data-comp-tono="oscuro"]) .d2-btn--linea:hover,
-.d2 .d2-cta-bal:not([data-comp-tono="oscuro"]) .d2-btn--linea:focus-visible {
-  border-color: var(--c-verde, #39B54A);
 }
