@@ -1744,17 +1744,42 @@
      Se deja el bloque montado y marcado con hidden. Cuando Erick confirme
      la acreditacion, se quita ese atributo y ya esta.
      ========================================================================== -->
-<section class="d2-fondos d2-entra" data-comp-rol="calc" aria-labelledby="fondos-titulo">
+<section class="d2-fondos d2-entra" aria-labelledby="fondos-titulo">
 
-  <svg class="d2-fondos__circuito" viewBox="0 0 1440 700" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 160H240L300 220H520L580 160H760"/>
-    <path d="M0 620H200L270 550H480"/>
-    <path d="M1440 80H1240L1180 140H980"/>
-    <circle cx="300" cy="220" r="5"/>
-    <circle cx="580" cy="160" r="5"/>
-    <circle cx="270" cy="550" r="5"/>
-    <circle cx="1180" cy="140" r="5"/>
-  </svg>
+  <!-- DOS SVG, uno por esquina. No uno estirado.
+
+         El primer intento fue un solo SVG de 1440x700 cubriendo la
+         seccion. No funciono, y la razon es geometrica: la seccion es
+         mucho mas apaisada que el viewBox --3.17:1 frente a 2.06:1-- asi
+         que "slice" recortaba 322px de alto para mantener la forma, y se
+         comia justo las dos esquinas donde vive el dibujo. El resultado
+         era una seccion sin circuito.
+
+         "none" tampoco sirve: estira los codos y convierte los nodos en
+         ovalos.
+
+         Con un SVG por esquina cada uno conserva su tamano real, se ancla
+         donde le toca y no depende del alto de la seccion. -->
+    <svg class="d2-fondos__circuito d2-fondos__circuito--sup" viewBox="0 0 460 140" fill="none" aria-hidden="true">
+      <path d="M8 0v18a14 14 0 0 0 14 14h250a14 14 0 0 1 14 14v22a14 14 0 0 0 14 14h142"/>
+      <circle cx="450" cy="82" r="7"/>
+    </svg>
+
+    <!-- El nodo va a la DERECHA (14/9/2026): el usuario lo pidio asi. La
+         linea entra por el borde izquierdo, baja en escalon y termina en
+         el nodo, que queda al final del recorrido en vez de al principio.
+
+         Es tambien lo que hace el trazo de arriba --entra por un borde y
+         acaba en nodo-- asi que los dos se leen igual. -->
+    <svg class="d2-fondos__circuito d2-fondos__circuito--inf" viewBox="0 0 320 150" fill="none" aria-hidden="true">
+      <path d="M0 16h126a14 14 0 0 1 14 14v40a14 14 0 0 0 14 14h146"/>
+      <circle cx="311" cy="84" r="7"/>
+    </svg>
+
+    <svg class="d2-fondos__circuito d2-fondos__circuito--izq" viewBox="0 0 120 30" fill="none" aria-hidden="true">
+      <path d="M0 15h56"/>
+      <circle cx="64" cy="15" r="7"/>
+    </svg>
 
   <div class="d2-fondos__inner">
 

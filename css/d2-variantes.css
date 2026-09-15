@@ -15355,9 +15355,28 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-fondos {
   position: relative;
+  /* Recorta los trazos que asoman por los bordes, que es justo lo que se
+     ve en la referencia: las lineas entran y salen de la seccion en vez
+     de terminar dentro. Los SVG llevan overflow:visible para que el
+     recorte lo haga la SECCION y no cada uno por su cuenta. */
   overflow: hidden;
-  padding-block: clamp(56px, 6vw, 92px);
-  background: var(--comp-rol, var(--c-fondo-alt, #F3F3F3));
+  /* En el rango de sus vecinas --la calculadora usa 56, el CTA 88-- y no
+     los 128 que puse midiendo la referencia: ahi la seccion se veia
+     suelta y aqui va encajada entre otras. Un padding mayor que el de
+     todas las demas es lo que hacia que se leyera como un bloque
+     desprendido. */
+  padding-block: clamp(52px, 5.6vw, 80px);
+
+  /* BLANCO, por decision del usuario (14/9/2026)
+
+     La referencia tenia un verde muy claro --#F2F9F2-- y asi se monto
+     primero. El usuario pidio blanco "para que cuadre con todo lo que
+     hemos hecho", y tiene razon: el verde la separaba del resto de
+     secciones claras del home, que son blancas.
+
+     Literal y no por --comp-rol: el rol la repintaria de gris o negro
+     segun la composicion elegida, y aqui el blanco es fijo. */
+  background: var(--c-blanco, #FFFFFF);
 
   /* EL FILETE, Y POR QUE HACE FALTA
 
@@ -15378,27 +15397,82 @@ span.d2-panel__filtro:hover {
 
 /* --- El circuito: identico al de d2-ega-pasos3 --- */
 
+/* Cada trazo se ancla a SU esquina y conserva su tamano real.
+
+   El intento anterior era un solo SVG de 1440x700 con inset:0 cubriendo
+   la seccion entera. Fallaba por geometria: la seccion es mucho mas
+   apaisada que el viewBox --3.17:1 frente a 2.06:1-- asi que "slice"
+   recortaba 322px de alto para conservar la forma y se comia justo las
+   dos esquinas donde estaba el dibujo. El circuito no se veia.
+
+   Asi cada uno mide lo que mide y no depende del alto de la seccion. */
 .d2 .d2-fondos__circuito {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
   pointer-events: none;
+  overflow: visible;
+}
+
+/* Arriba a la derecha: entra por el borde superior y baja en escalones
+   hasta el nodo. El right negativo deja el nodo tocando el borde, como
+   en la referencia. */
+.d2 .d2-fondos__circuito--sup {
+  top: 0;
+  right: -10px;
+  width: clamp(280px, 30vw, 460px);
+  height: auto;
+}
+
+/* Abajo a la izquierda: el nodo pegado al borde y la linea saliendo por
+   abajo. */
+/* El nodo esta ahora al final del trazo, a la derecha. El left:0 hace que
+   la linea ARRANQUE en el borde de la seccion --entra desde fuera, como
+   en la referencia-- y el nodo quede a unos 300px hacia dentro. */
+.d2 .d2-fondos__circuito--inf {
+  bottom: -20px;
+  left: 0;
+  width: clamp(200px, 22vw, 320px);
+  height: auto;
+}
+
+/* Arriba a la izquierda: el nodo suelto con su tramo corto. */
+.d2 .d2-fondos__circuito--izq {
+  top: clamp(56px, 9vw, 108px);
+  left: 0;
+  width: clamp(80px, 9vw, 120px);
+  height: auto;
+}
+
+/* En pantallas estrechas los trazos laterales estorban mas que aportan:
+   el contenido ya ocupa todo el ancho. Se queda solo el de arriba. */
+@media (max-width: 760px) {
+  .d2 .d2-fondos__circuito--inf,
+  .d2 .d2-fondos__circuito--izq { display: none; }
+
+  .d2 .d2-fondos__circuito--sup { opacity: .7; }
 }
 
 .d2 .d2-fondos__circuito path {
   fill: none;
-  stroke: rgba(57, 181, 74, .17);
-  stroke-width: 1.2px;
+  /* Mas visible que en EGA --.17 alli-- porque aqui son dos trazos
+     cortos en las esquinas y con ese alfa desaparecian. En la referencia
+     se leen sin esfuerzo. */
+  stroke: rgba(57, 181, 74, .38);
+  stroke-width: 1.4px;
+  stroke-linecap: round;
 }
 
 .d2 .d2-fondos__circuito circle {
-  /* Relleno del color del fondo: el nodo tapa el trazo que pasa por
-     debajo y se lee como una conexion. Por --comp-rol para que siga al
-     tema, igual que en Energy Gap Analysis. */
-  fill: var(--comp-rol, var(--c-fondo-alt, #F3F3F3));
-  stroke: rgba(57, 181, 74, .3);
-  stroke-width: 1.5px;
+  /* HUECOS, no rellenos.
+
+     El nodo de d2-ega-pasos3 se rellena del color de fondo para tapar el
+     trazo que le pasa por debajo. Aqui ningun trazo pasa por debajo: el
+     nodo esta en la PUNTA de la linea, asi que el relleno no tiene nada
+     que tapar y lo unico que hace es engordarlo.
+
+     En la referencia se ve el anillo y el fondo a traves. */
+  fill: none;
+  stroke: rgba(57, 181, 74, .55);
+  stroke-width: 1.6px;
 }
 
 /* El contenido, por encima del circuito. */
@@ -15406,12 +15480,27 @@ span.d2-panel__filtro:hover {
   position: relative;
   z-index: 1;
   display: grid;
+
+  /* LOS MISMOS VALORES QUE TODO EL HOME
+
+     El descuadre venia de aqui: puse max-width 1320 y un padding propio
+     de hasta 96px, medidos sobre la referencia. Pero la referencia es una
+     captura suelta y esta seccion vive entre otras quince.
+
+     Con medidas propias su contenido no alineaba con el de arriba ni con
+     el de abajo, y eso es lo que se lee como "flotando": no es que este
+     descentrada --lo esta, por el margin-inline:auto-- es que su columna
+     izquierda empieza en un sitio distinto al de la calculadora que va
+     justo debajo.
+
+     Ahora usa --d2-ancho y --d2-gutter, los mismos tokens que .d2-hero,
+     .d2-prob-comp, .calc y las demas. */
   grid-template-columns: 1.15fr 1fr;
-  gap: clamp(32px, 5vw, 76px);
+  gap: clamp(32px, 5vw, 72px);
   align-items: start;
   max-width: var(--d2-ancho, 1280px);
   margin-inline: auto;
-  padding-inline: var(--d2-gutter, clamp(20px, 5vw, 80px));
+  padding-inline: var(--d2-gutter, clamp(20px, 4vw, 40px));
 }
 
 /* --- La columna de texto --- */
@@ -15495,7 +15584,11 @@ span.d2-panel__filtro:hover {
   margin: 20px 0 0;
   padding: 16px 20px;
   border-radius: 6px;
-  background: rgba(57, 181, 74, .08);
+  /* .14 y no .08: sobre el gris anterior la caja se distinguia sola, pero
+     sobre blanco se quedaba en 1.08:1 --practicamente invisible-- y en la
+     referencia se lee claramente como una caja aparte. Con .14 sube a
+     1.15:1, que sigue siendo un tinte suave pero ya dibuja el bloque. */
+  background: rgba(57, 181, 74, .14);
   font-size: 15px;
   line-height: 1.5;
   color: var(--c-texto, #333333);
@@ -15525,37 +15618,29 @@ span.d2-panel__filtro:hover {
   color: var(--c-texto-suave, #6B6B6B);
 }
 
-/* --- Tono oscuro ---------------------------------------------------------
+/* --- Por que esta seccion NO sigue al tema -------------------------------
 
-   La seccion lleva data-comp-rol="calc", asi que hay composiciones donde
-   su fondo es #333333. Los tokens de texto ya se invierten solos; lo que
-   no se adapta es lo que lleva color literal. */
+   Las demas secciones declaran data-comp-rol y reciben su fondo del
+   selector de composicion. Esta no, y es deliberado: la referencia pide
+   un verde muy claro concreto --#F2F9F2-- y el rol lo repintaria de gris
+   o de negro segun la composicion elegida.
 
-.d2 .d2-fondos[data-comp-tono="oscuro"] .d2-fondos__circuito path {
-  stroke: rgba(176, 225, 183, .22);
-}
+   Al no llevar rol, tampoco recibe data-comp-tono, asi que el bloque de
+   inversion de d2-variantes.css no la alcanza y el texto se queda
+   oscuro, que es lo correcto sobre este fondo.
 
-.d2 .d2-fondos[data-comp-tono="oscuro"] .d2-fondos__circuito circle {
-  stroke: rgba(176, 225, 183, .38);
-}
+   Medido sobre #F2F9F2:
 
-/* Sobre oscuro el verde de marca SI llega --4.74:1-- y ademas es el que
-   identifica a Rede. */
-.d2 .d2-fondos[data-comp-tono="oscuro"] .eyebrow,
-.d2 .d2-fondos[data-comp-tono="oscuro"] .d2-fondos__eti {
-  color: var(--c-verde-marca, #39B54A);
-}
+     titulo y lead   #333333 ... 11.80:1
+     eyebrow         #026F00 .... 5.98:1
+     nota            #6B6B6B .... 4.98:1
+     borde pastilla  #8A8A8A .... 3.22:1
 
-.d2 .d2-fondos[data-comp-tono="oscuro"] .d2-fondos__programas li {
-  background: rgba(255, 255, 255, .06);
-  border-color: rgba(255, 255, 255, .22);
-  color: #FFFFFF;
-}
-
-.d2 .d2-fondos[data-comp-tono="oscuro"] .d2-fondos__aval {
-  background: rgba(255, 255, 255, .06);
-  color: #FFFFFF;
-}
+   Si algun dia se quiere que siga al tema, hay que devolver el rol Y
+   quitar el fondo fijo: las dos cosas juntas o ninguna. Dejar el fondo
+   fijo con rol puesto daria texto blanco sobre verde claro --1.07:1--,
+   que es el fallo que ya costo una vuelta en el CTA de Energy Gap
+   Analysis. */
 
 /* --- Adaptacion --- */
 
