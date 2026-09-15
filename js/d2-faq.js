@@ -38,11 +38,31 @@
     if (!item) { return; }
 
     var c = item.getAttribute('data-cifra');
+
     /* Sin dato no hay ficha. Es deliberado: la alternativa seria rellenarla
-       con algo generico, y eso es justo lo que convierte un dato en ruido. */
-    if (!c) { caja.hidden = true; return; }
+       con algo generico, y eso es justo lo que convierte un dato en ruido.
+
+       PERO SE OCULTA LA FICHA, NO EL PANEL (14/9/2026)
+
+       Antes esto hacia `caja.hidden = true`, y `caja` es el <aside> entero.
+       Cuando aqui solo vivia la ficha, daba igual. Desde el 4/9 ese aside
+       contiene TAMBIEN el mapa de barrios, asi que ocultarlo se llevaba el
+       mapa por delante.
+
+       No se noto hasta hoy porque las diez preguntas antiguas tenian todas
+       su data-cifra: la rama del `if` no llegaba a ejecutarse nunca. Con el
+       copy final del cliente solo dos de once traen cifra, y el mapa
+       desaparecia en las otras nueve.
+
+       Ahora se oculta unicamente `interior` --la caja de la cifra-- y el
+       mapa se queda donde esta. */
+    if (!c) {
+      if (interior) { interior.hidden = true; }
+      return;
+    }
 
     caja.hidden = false;
+    if (interior) { interior.hidden = false; }
     if (eti)   { eti.textContent   = item.getAttribute('data-eti')  || ''; }
     if (nota)  { nota.textContent  = item.getAttribute('data-nota') || ''; }
 

@@ -4876,7 +4876,9 @@
                  pregunta por si se recupera.
 
                  La caja original, comentada:
-                 <div class="d2-faq-dato__ficha-caja">
+                 <!-- Nace oculta: la primera pregunta del copy final no trae cifra.
+               Si el JS no corriera, mejor sin caja que con una vacia. -->
+          <div class="d2-faq-dato__ficha-caja" hidden>
                  <p class="d2-faq-dato__ficha-eti" data-ficha-eti>Energy Gap Analysis</p>
                  <p class="d2-faq-dato__ficha-cifra" data-ficha-cifra>$5,000</p>
                  <p class="d2-faq-dato__ficha-nota" data-ficha-nota>Four to six weeks from data access to findings.</p>
