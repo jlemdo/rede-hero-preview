@@ -15776,3 +15776,45 @@ span.d2-panel__filtro:hover {
   .d2 .cierre__volver svg { transition: none; }
   .d2 .cierre__volver:hover svg { transform: none; }
 }
+
+
+/* ==========================================================================
+   EL PANEL DE PERFIL: LAS FILAS APARECEN AL RESPONDERSE (14/9/2026)
+
+   Antes las diez estaban siempre a la vista y nueve mostraban un guion.
+   El panel medía lo mismo con una respuesta que con las diez, y lo que se
+   leia era una lista de huecos.
+
+   No se pierde la vista previa de lo que falta: para eso estan los dos
+   contadores que ya existen --"N of M" arriba y "Step N of M" en el
+   formulario-- y que dicen cuanto queda sin gastar una linea por cada
+   cosa pendiente. Esa fue la razon que dio el usuario para elegir esta
+   via sobre las otras dos.
+
+   LA ENTRADA
+
+   Solo transform y opacity, que son las dos que el compositor puede
+   animar sin recalcular la pagina. Nada de animar `height`: con una
+   lista que crece de una en una, eso es un reflow por respuesta.
+
+   14px de recorrido y 300ms. Mas corto se pierde, mas largo se nota
+   esperando: la fila aparece MIENTRAS el usuario ya esta leyendo la
+   siguiente pregunta, asi que no puede pedir atencion.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .perfil__fila.is-lleno {
+    animation: d2-perfil-fila-entra .3s cubic-bezier(.32, .72, 0, 1) both;
+  }
+}
+
+@keyframes d2-perfil-fila-entra {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

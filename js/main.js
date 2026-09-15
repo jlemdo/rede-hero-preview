@@ -796,11 +796,21 @@
 
   function fila(clave) { return seccion.querySelector('[data-fila="' + clave + '"]'); }
 
+  /* La fila APARECE al llenarse (14/9/2026).
+
+     Antes las diez estaban siempre a la vista y nueve de ellas mostraban
+     un guion. El panel medía lo mismo con una respuesta que con las diez,
+     y el usuario leia una lista de huecos.
+
+     No se pierde la vista previa de lo que falta: para eso estan los dos
+     contadores --"0 of 10" arriba y "Step 1 of N" en el formulario-- que
+     ya dicen cuanto queda sin ocupar una linea por cada cosa pendiente. */
   function ponerFila(clave, valor) {
     var f = fila(clave);
     if (!f) { return; }
     f.querySelector('.perfil__valor').textContent = valor;
     f.classList.add('is-lleno');
+    f.hidden = false;
   }
 
   function milesTxt(n) {
@@ -880,7 +890,13 @@
     var plegar = estado.paso >= PASO_PERFIL && !seccion.querySelector('[data-abierto]');
 
     Array.prototype.forEach.call(filas, function (f) {
-      f.hidden = plegar;
+      /* Plegar las esconde todas. Desplegar NO las muestra todas: solo
+         vuelven las que ya tienen respuesta.
+
+         Sin ese matiz, al desplegar reaparecerian las cuatro filas de
+         elegibilidad aunque estuvieran vacias, que es justo lo que este
+         cambio viene a evitar. */
+      f.hidden = plegar || !f.classList.contains('is-lleno');
     });
     resumen.hidden = !plegar;
 
@@ -965,18 +981,43 @@
 
     plegarElegibilidad();
 
-    /* Solo cuenta lo que se VE. Las filas plegadas y las que este
-       recorrido no visita --los pasos 3 y 4 se saltan fuera de BC--
-       quedan fuera del total: un "of 10" al que nunca se llega es
-       peor que no contar nada. */
-    var visibles = Array.prototype.filter.call(
-      seccion.querySelectorAll('.perfil__fila'),
-      function (f) { return !f.hidden; }
-    );
-    var listas = visibles.filter(function (f) {
-      return f.classList.contains('is-lleno');
-    }).length;
-    var totalFilas = visibles.length;
+    /* EL TOTAL SALE DE LA RAMA, NO DE LO QUE SE VE (14/9/2026)
+
+       Antes se contaban las filas VISIBLES. Funcionaba porque las diez
+       estaban siempre a la vista; ahora aparecen solo al llenarse, asi
+       que contar las visibles daria "1 of 1", "2 of 2"... y el contador
+       dejaria de informar.
+
+       El total es ahora el numero de filas que ESTE recorrido va a
+       visitar, que depende de lo que se haya respondido:
+
+         fuera de BC       no hay utility ni fondos    -2
+         un solo edificio  no hay sites                -1
+
+       Un "of 10" al que nunca se llega es peor que no contar nada, y ese
+       era ya el criterio de la version anterior: lo unico que cambia es
+       de donde se saca el numero. */
+    var todas = seccion.querySelectorAll('.perfil__fila');
+
+    var noAplica = {};
+    /* Los pasos 3 y 4 solo existen en BC: fuera, ni se pregunta por la
+       comercializadora ni por subvenciones previas. */
+    if (estado.provincia && estado.provincia !== 'BC') {
+      noAplica.utility = true;
+      noAplica.fondos = true;
+    }
+    /* Con un solo edificio no hay numero de sitios que dar. */
+    if (estado.scope === 'single') {
+      noAplica.sites = true;
+    }
+
+    var totalFilas = 0, listas = 0;
+    Array.prototype.forEach.call(todas, function (f) {
+      if (noAplica[f.getAttribute('data-fila')]) { return; }
+      totalFilas++;
+      if (f.classList.contains('is-lleno')) { listas++; }
+    });
+
     $('#etiqueta-progreso').textContent = listas + ' of ' + totalFilas;
   }
 
@@ -1489,11 +1530,14 @@
       seccion.querySelectorAll('.perfil__fila').forEach(function (f) {
         f.classList.remove('is-lleno');
         f.querySelector('.perfil__valor').textContent = '-';
-        /* Las de elegibilidad vuelven a la vista: al empezar de nuevo se
-           recorre otra vez la precalificacion, y plegadas dejarian el
-           panel vacio en los primeros cuatro pasos --el fallo que este
-           cambio venia a arreglar--. */
-        f.hidden = false;
+        /* Y se ocultan: al empezar de nuevo no hay ninguna respuesta que
+           ensenar, y el panel debe arrancar vacio igual que la primera
+           vez. Cada una reaparece cuando ponerFila() la llene.
+
+           Antes aqui se hacia `f.hidden = false` porque las filas vivian
+           siempre visibles y lo unico que las escondia era el plegado de
+           elegibilidad. */
+        f.hidden = true;
       });
       var resumenEleg = seccion.querySelector('#eleg-resumen');
       if (resumenEleg) { resumenEleg.hidden = true; }
