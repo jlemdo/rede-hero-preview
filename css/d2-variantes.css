@@ -15329,6 +15329,22 @@ span.d2-panel__filtro:hover {
 /* ==========================================================================
    FINANCIACION — LA SECCION SOBRE LA CALCULADORA (14/9/2026)
 
+   SE LLAMA d2-financia Y NO d2-fondos, Y ESO IMPORTA
+
+   La primera version usaba .d2-fondos. Ese nombre YA ESTABA OCUPADO por
+   la barra flotante del selector de fondos, 7000 lineas mas arriba en
+   este mismo archivo, y su primera declaracion es:
+
+     .d2-fondos { position: fixed; left: ...; bottom: 20px; z-index: 60; }
+
+   Asi que la seccion heredaba position:fixed y se despegaba del flujo:
+   flotaba sobre la pagina en vez de ocupar su sitio. El descuadre que el
+   usuario veia no era de rejilla ni de margenes --los toque dos veces
+   buscandolo donde no estaba-- era esto.
+
+   La barra no se toca: es un control de la maqueta y funciona. Lo que
+   cambia es el nombre de la seccion nueva, que es quien llego despues.
+
    Va encima de la calculadora a proposito: la pregunta "¿esto lo puede
    pagar un programa?" llega ANTES de calcular cuanto se ahorra. Primero
    se sabe si hay via, luego se mide.
@@ -15353,7 +15369,7 @@ span.d2-panel__filtro:hover {
    columnas iguales caia en tres lineas mientras la derecha sobraba.
    ========================================================================== */
 
-.d2 .d2-fondos {
+.d2 .d2-financia {
   position: relative;
   /* Recorta los trazos que asoman por los bordes, que es justo lo que se
      ve en la referencia: las lineas entran y salen de la seccion en vez
@@ -15406,7 +15422,7 @@ span.d2-panel__filtro:hover {
    dos esquinas donde estaba el dibujo. El circuito no se veia.
 
    Asi cada uno mide lo que mide y no depende del alto de la seccion. */
-.d2 .d2-fondos__circuito {
+.d2 .d2-financia__circuito {
   position: absolute;
   pointer-events: none;
   overflow: visible;
@@ -15415,7 +15431,7 @@ span.d2-panel__filtro:hover {
 /* Arriba a la derecha: entra por el borde superior y baja en escalones
    hasta el nodo. El right negativo deja el nodo tocando el borde, como
    en la referencia. */
-.d2 .d2-fondos__circuito--sup {
+.d2 .d2-financia__circuito--sup {
   top: 0;
   right: -10px;
   width: clamp(280px, 30vw, 460px);
@@ -15427,7 +15443,7 @@ span.d2-panel__filtro:hover {
 /* El nodo esta ahora al final del trazo, a la derecha. El left:0 hace que
    la linea ARRANQUE en el borde de la seccion --entra desde fuera, como
    en la referencia-- y el nodo quede a unos 300px hacia dentro. */
-.d2 .d2-fondos__circuito--inf {
+.d2 .d2-financia__circuito--inf {
   bottom: -20px;
   left: 0;
   width: clamp(200px, 22vw, 320px);
@@ -15435,7 +15451,7 @@ span.d2-panel__filtro:hover {
 }
 
 /* Arriba a la izquierda: el nodo suelto con su tramo corto. */
-.d2 .d2-fondos__circuito--izq {
+.d2 .d2-financia__circuito--izq {
   top: clamp(56px, 9vw, 108px);
   left: 0;
   width: clamp(80px, 9vw, 120px);
@@ -15445,13 +15461,13 @@ span.d2-panel__filtro:hover {
 /* En pantallas estrechas los trazos laterales estorban mas que aportan:
    el contenido ya ocupa todo el ancho. Se queda solo el de arriba. */
 @media (max-width: 760px) {
-  .d2 .d2-fondos__circuito--inf,
-  .d2 .d2-fondos__circuito--izq { display: none; }
+  .d2 .d2-financia__circuito--inf,
+  .d2 .d2-financia__circuito--izq { display: none; }
 
-  .d2 .d2-fondos__circuito--sup { opacity: .7; }
+  .d2 .d2-financia__circuito--sup { opacity: .7; }
 }
 
-.d2 .d2-fondos__circuito path {
+.d2 .d2-financia__circuito path {
   fill: none;
   /* Mas visible que en EGA --.17 alli-- porque aqui son dos trazos
      cortos en las esquinas y con ese alfa desaparecian. En la referencia
@@ -15461,7 +15477,7 @@ span.d2-panel__filtro:hover {
   stroke-linecap: round;
 }
 
-.d2 .d2-fondos__circuito circle {
+.d2 .d2-financia__circuito circle {
   /* HUECOS, no rellenos.
 
      El nodo de d2-ega-pasos3 se rellena del color de fondo para tapar el
@@ -15476,7 +15492,7 @@ span.d2-panel__filtro:hover {
 }
 
 /* El contenido, por encima del circuito. */
-.d2 .d2-fondos__inner {
+.d2 .d2-financia__inner {
   position: relative;
   z-index: 1;
   display: grid;
@@ -15505,7 +15521,7 @@ span.d2-panel__filtro:hover {
 
 /* --- La columna de texto --- */
 
-.d2 .d2-fondos__titulo {
+.d2 .d2-financia__titulo {
   margin: 12px 0 0;
   font-size: clamp(32px, 3.2vw, 50px);
   line-height: 1.08;
@@ -15515,7 +15531,7 @@ span.d2-panel__filtro:hover {
   text-wrap: balance;
 }
 
-.d2 .d2-fondos__lead {
+.d2 .d2-financia__lead {
   margin: 18px 0 0;
   max-width: 46ch;
   font-size: 1.0625rem;
@@ -15525,7 +15541,7 @@ span.d2-panel__filtro:hover {
 
 /* --- La columna de acciones --- */
 
-.d2 .d2-fondos__eti {
+.d2 .d2-financia__eti {
   margin: 0 0 14px;
   font-size: var(--fs-small, 12px);
   font-weight: var(--fw-bold, 700);
@@ -15538,7 +15554,7 @@ span.d2-panel__filtro:hover {
 
 /* Las pastillas de utility. Lista sin viñetas: son etiquetas, no una
    enumeracion que leer en voz alta. */
-.d2 .d2-fondos__programas {
+.d2 .d2-financia__programas {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -15547,7 +15563,7 @@ span.d2-panel__filtro:hover {
   list-style: none;
 }
 
-.d2 .d2-fondos__programas li {
+.d2 .d2-financia__programas li {
   padding: 11px 22px;
   /* #C7C7C7 y no var(--c-borde): ese token es #E4E4E4 y da 1.15:1 sobre
      el gris de seccion, o sea un borde que no se ve. Es el mismo fallo
@@ -15577,7 +15593,7 @@ span.d2-panel__filtro:hover {
 }
 
 /* El aval, cuando se confirme. Nace con [hidden] en el marcado. */
-.d2 .d2-fondos__aval {
+.d2 .d2-financia__aval {
   display: flex;
   align-items: flex-start;
   gap: 13px;
@@ -15594,7 +15610,7 @@ span.d2-panel__filtro:hover {
   color: var(--c-texto, #333333);
 }
 
-.d2 .d2-fondos__tic {
+.d2 .d2-financia__tic {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
@@ -15608,11 +15624,11 @@ span.d2-panel__filtro:hover {
   color: #FFFFFF;
 }
 
-.d2 .d2-fondos__cta {
+.d2 .d2-financia__cta {
   margin-top: 22px;
 }
 
-.d2 .d2-fondos__nota {
+.d2 .d2-financia__nota {
   margin: 14px 0 0;
   font-size: 13px;
   color: var(--c-texto-suave, #6B6B6B);
@@ -15645,21 +15661,21 @@ span.d2-panel__filtro:hover {
 /* --- Adaptacion --- */
 
 @media (max-width: 960px) {
-  .d2 .d2-fondos__inner {
+  .d2 .d2-financia__inner {
     grid-template-columns: 1fr;
     gap: 34px;
   }
 
-  .d2 .d2-fondos__lead { max-width: none; }
+  .d2 .d2-financia__lead { max-width: none; }
 }
 
 @media (max-width: 540px) {
-  .d2 .d2-fondos__programas li {
+  .d2 .d2-financia__programas li {
     padding: 9px 16px;
     font-size: 14px;
   }
 
-  .d2 .d2-fondos__cta {
+  .d2 .d2-financia__cta {
     width: 100%;
     justify-content: center;
   }
