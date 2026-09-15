@@ -805,6 +805,23 @@
      No se pierde la vista previa de lo que falta: para eso estan los dos
      contadores --"0 of 10" arriba y "Step 1 of N" en el formulario-- que
      ya dicen cuanto queda sin ocupar una linea por cada cosa pendiente. */
+  /* La contraria de ponerFila: devuelve la fila a su estado vacio.
+
+     Hacia falta porque una fila puesta NO se revertia nunca. refrescarPerfil()
+     llama a ponerFila solo cuando hay dato, asi que si el dato desaparece
+     --al cambiar de "un edificio" a "varios", que borra el campo de
+     sitios-- el valor viejo se quedaba escrito.
+
+     Eso es lo que veia el usuario: "Sites: 1 site" con "Multiple
+     buildings" elegido y el campo vacio. */
+  function vaciarFila(clave) {
+    var f = fila(clave);
+    if (!f) { return; }
+    f.querySelector('.perfil__valor').textContent = '-';
+    f.classList.remove('is-lleno');
+    f.hidden = true;
+  }
+
   function ponerFila(clave, valor) {
     var f = fila(clave);
     if (!f) { return; }
@@ -960,14 +977,18 @@
       $('#prueba').hidden = true;   // el dato propio sustituye a la prueba social
     }
 
+    /* Igual que con los sitios: si el visitante borra el campo, la fila
+       se vacia en vez de conservar el ultimo valor escrito. */
     var area = numero($('#c-area').value);
     if (area) { ponerFila('area', milesTxt(area)); }
+    else { vaciarFila('area'); }
 
     /* El perfil recoge TODO lo que el formulario sabe, no solo cuatro
        campos: sirve de vista rapida completa. ponerFila ya ignora las
        filas que un diseño no tenga. */
     var gastoPerfil = numero($('#c-spend').value);
     if (gastoPerfil) { ponerFila('spend', dinero(gastoPerfil)); }
+    else { vaciarFila('spend'); }
 
     /* El numero de sitios solo si el visitante ha llegado a su pantalla.
 
@@ -977,6 +998,12 @@
     var sitiosPerfil = numero($('#c-sites').value);
     if (sitiosPerfil && (abierta || estado.paso >= PASO_SITIOS)) {
       ponerFila('sites', sitiosPerfil === 1 ? '1 site' : sitiosPerfil + ' sites');
+    } else {
+      /* Sin dato, la fila se vacia en vez de conservar el anterior. El
+         caso que lo destapo: elegir "un edificio" --que escribe un 1 en
+         el campo-- y cambiar despues a "varios", que lo borra. La fila
+         seguia diciendo "1 site". */
+      vaciarFila('sites');
     }
 
     plegarElegibilidad();
