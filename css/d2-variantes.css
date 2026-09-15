@@ -2960,7 +2960,21 @@ span.d2-panel__filtro:hover {
 @media (min-width: 901px) {
   .d2 .calc--pasos .calc__panel {
     grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
-    align-items: start;
+
+    /* stretch y no start (14/9/2026).
+
+       Con `start` la columna derecha medía solo lo que ocupaba su
+       contenido, asi que el panel de perfil quedaba mas bajo que la
+       columna de preguntas y flotaba con un hueco debajo.
+
+       El usuario lo pidio al reves: "la altura de profile desde el inicio
+       igual que la columna del lado izquierdo; puede crecer mas, pero
+       nunca ser mas pequena".
+
+       `stretch` da exactamente eso --las dos columnas igualan a la mas
+       alta-- y el panel puede seguir creciendo cuando se llena de filas,
+       porque entonces es EL quien manda la altura de la fila del grid. */
+    align-items: stretch;
   }
 }
 

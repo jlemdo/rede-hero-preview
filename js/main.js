@@ -1012,11 +1012,34 @@
     }
 
     var totalFilas = 0, listas = 0;
+    var pendiente = null;
+
     Array.prototype.forEach.call(todas, function (f) {
       if (noAplica[f.getAttribute('data-fila')]) { return; }
       totalFilas++;
-      if (f.classList.contains('is-lleno')) { listas++; }
+      if (f.classList.contains('is-lleno')) {
+        listas++;
+      } else if (!pendiente) {
+        pendiente = f;
+      }
     });
+
+    /* LA PROXIMA FILA SE VE, AUNQUE ESTE VACIA (14/9/2026)
+
+       Lo pidio el usuario: "que aparezca el punto uno desde que carga".
+
+       Sin esto el panel arrancaba completamente vacio --un titulo, un
+       contador a cero y nada debajo-- y no se entendia para que servia
+       hasta responder la primera pregunta.
+
+       Con la siguiente a la vista, el panel siempre ensena DONDE va a
+       caer la respuesta que el usuario esta a punto de dar. Es una fila,
+       no diez: la altura sigue creciendo con las respuestas.
+
+       Se busca la primera SIN is-lleno en vez de mapear paso -> fila,
+       porque el orden de las filas ya sigue el de los pasos y una tabla
+       de equivalencias seria una cosa mas que mantener sincronizada. */
+    if (pendiente) { pendiente.hidden = false; }
 
     $('#etiqueta-progreso').textContent = listas + ' of ' + totalFilas;
   }
