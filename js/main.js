@@ -1459,9 +1459,20 @@
 
   /* --- Reiniciar ---------------------------------------------------------- */
 
-  var btnReiniciar = $('#btn-reiniciar');
-  if (btnReiniciar) {
-    btnReiniciar.addEventListener('click', function () {
+  /* La rutina se extrae a una funcion porque ahora la usan DOS botones:
+
+       #btn-reiniciar     el de siempre, dentro de .tras-envio, que solo
+                          aparece despues de mandar el formulario
+       [data-volver-inicio]  el nuevo, en la pantalla de consulta
+
+     El segundo hace falta porque quien responde "no" al filtro de 25.000
+     pies llega a esa pantalla en un clic, saltandose los nueve pasos, y
+     hasta ahora no tenia forma de volver sin recargar la pagina.
+
+     Duplicar el cuerpo habria sido peor: son veinte lineas que tocan
+     nueve elementos, y la siguiente vez que cambie un campo habria que
+     acordarse de tocar los dos sitios. */
+  function volverAlInicio() {
       estado.paso = 1;
       estado.scope = '';
 
@@ -1499,6 +1510,22 @@
 
       if (flip) { flip.classList.remove('girada', 'enviado'); }
       pintarPaso();
+  }
+
+  var btnReiniciar = $('#btn-reiniciar');
+  if (btnReiniciar) {
+    btnReiniciar.addEventListener('click', volverAlInicio);
+  }
+
+  /* El de la pantalla de consulta. Ademas de reiniciar, borra la respuesta
+     del filtro de tamano: sin esto el usuario volveria al paso 1 con el
+     "no" todavia marcado y al pulsar Continue caeria otra vez en la misma
+     pantalla, que es un bucle. */
+  var btnVolver = seccion.querySelector('[data-volver-inicio]');
+  if (btnVolver) {
+    btnVolver.addEventListener('click', function () {
+      estado.tamano = '';
+      volverAlInicio();
     });
   }
 

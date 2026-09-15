@@ -3099,6 +3099,27 @@
           <p class="cierre__rec-texto" id="cc-rec-texto"></p>
           </div>
 
+          <!-- LA SALIDA (14/9/2026)
+
+               Quien responde "no" al filtro de 25.000 pies llega aqui en UN
+               clic, saltandose los nueve pasos. Y se quedaba encerrado: el
+               unico boton de reiniciar vive dentro de .tras-envio, que solo
+               aparece DESPUES de mandar el formulario.
+
+               Asi que quien se equivoca en la primera pregunta --o quiere
+               probar con otro edificio-- no tenia forma de volver sin
+               recargar la pagina.
+
+               Va al final y no arriba: la accion principal aqui sigue siendo
+               hablar con un experto. Esto es la puerta de atras. -->
+          <button class="cierre__volver" type="button" data-volver-inicio>
+            <svg width="15" height="12" viewBox="0 0 18 12" aria-hidden="true">
+              <path d="M6.5 1L1.5 6L6.5 11M2 6h15" fill="none" stroke="currentColor"
+                    stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Start over
+          </button>
+
           </div>
 
           <!-- ================= COLUMNA DERECHA: la tarjeta de resultado ================= -->

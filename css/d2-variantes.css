@@ -15706,3 +15706,73 @@ span.d2-panel__filtro:hover {
     justify-content: center;
   }
 }
+
+
+/* ==========================================================================
+   LA SALIDA DE LA PANTALLA DE CONSULTA (14/9/2026)
+
+   Quien responde "no" al filtro de 25.000 pies salta aqui en UN clic,
+   saltandose los nueve pasos del formulario. Y se quedaba encerrado: el
+   unico boton de reiniciar vive dentro de .tras-envio, que solo aparece
+   despues de mandar el formulario.
+
+   NO HEREDA DE .reiniciar, Y HAY UNA RAZON MEDIDA
+
+   El .reiniciar que ya existe usa var(--c-texto-suave) --#6B6B6B-- que
+   sobre este panel oscuro da 3.27:1: por debajo del 4.5 que pide un texto
+   de 13px. Alli funciona porque .tras-envio se pinta sobre fondo claro.
+
+   Aqui el fondo es #1A1A1A. Medido:
+
+     #6B6B6B  3.27:1   lo que heredaria
+     #BFBFBF  9.46:1   el que entra
+
+   ES LA ACCION SECUNDARIA, Y SE NOTA
+
+   Sin fondo ni borde en reposo: la accion principal de esta pantalla
+   sigue siendo hablar con un experto, y dos botones con el mismo peso
+   competirian. Al apuntar aparece el verde de marca --6.53:1 sobre este
+   fondo-- que confirma que es pulsable sin haber gritado antes.
+   ========================================================================== */
+
+.d2 .cierre__volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  align-self: flex-start;
+  margin-top: 22px;
+  padding: 10px 4px;
+  /* 44px de alto minimo: es el objetivo tactil que pide WCAG 2.5.8, y con
+     solo el texto se quedaba en 34. */
+  min-height: 44px;
+  background: none;
+  border: 0;
+  font-size: 13px;
+  font-weight: var(--fw-bold, 700);
+  letter-spacing: .01em;
+  color: #BFBFBF;
+  cursor: pointer;
+  transition: color .18s ease;
+}
+
+.d2 .cierre__volver svg {
+  /* La flecha se retrasa al apuntar: el gesto acompaña al sentido del
+     boton --volver-- en vez de adelantarse como las de avanzar. */
+  transition: transform .2s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .cierre__volver:hover,
+.d2 .cierre__volver:focus-visible {
+  color: var(--c-verde-marca, #39B54A);
+}
+
+.d2 .cierre__volver:hover svg,
+.d2 .cierre__volver:focus-visible svg {
+  transform: translateX(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d2 .cierre__volver,
+  .d2 .cierre__volver svg { transition: none; }
+  .d2 .cierre__volver:hover svg { transform: none; }
+}
