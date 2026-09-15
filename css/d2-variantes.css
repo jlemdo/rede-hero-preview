@@ -15832,3 +15832,62 @@ span.d2-panel__filtro:hover {
     transform: none;
   }
 }
+
+
+/* ==========================================================================
+   EL PANEL DE PERFIL, REPARTIDO EN ALTURA (14/9/2026)
+
+   El usuario: "que 2.94 aparezca hasta abajo y que Your profile aparezca
+   hasta arriba, y abajo de eso Building size".
+
+   LA CAUSA
+
+   .espera lleva `place-content: center` y `justify-items: center`. Eso
+   agrupa los cuatro bloques --cabecera, filas, adelanto y prueba social--
+   en el centro vertical de la tarjeta, con el hueco repartido arriba y
+   abajo.
+
+   Se penso para el estado vacio de las otras variantes, donde dentro solo
+   hay un icono y una frase y centrarlos es lo correcto. Aqui dentro hay
+   una lista que crece, y centrarla deja el titulo flotando a media altura
+   y la cifra sin llegar al fondo.
+
+   COMO SE REPARTE AHORA
+
+     cabecera "Your profile"   arriba del todo
+     las filas                 justo debajo, creciendo hacia abajo
+     el hueco                  entre las filas y la prueba
+     "$2.94M"                  abajo del todo
+
+   El empuje lo hace `margin-top: auto` sobre .prueba, que ya estaba en
+   style.css y no llegaba a actuar porque `place-content: center` manda
+   sobre la distribucion del grid.
+
+   Con `align-content: start` el grid deja de centrar y el auto vuelve a
+   funcionar. No hace falta tocar .prueba.
+   ========================================================================== */
+
+@media (min-width: 901px) {
+  .d2 .calc--pasos .espera {
+    /* start y no center: el contenido se apoya arriba y el hueco sobrante
+       queda abajo, donde la prueba social lo reclama con su margin-top. */
+    align-content: start;
+    /* stretch y no center: las filas ocupan el ancho completo. Centradas
+       dejaban la lista mas estrecha que su tarjeta. */
+    justify-items: stretch;
+    text-align: left;
+  }
+
+  /* La prueba social baja del todo. margin-top:auto ya estaba; lo que le
+     faltaba era que el grid no la centrara. */
+  .d2 .calc--pasos .espera .prueba {
+    width: 100%;
+    margin-top: auto;
+  }
+
+  /* El adelanto --el benchmark que aparece en el paso 3-- va justo encima
+     de la prueba, no flotando en medio. */
+  .d2 .calc--pasos .espera .adelanto {
+    width: 100%;
+  }
+}
