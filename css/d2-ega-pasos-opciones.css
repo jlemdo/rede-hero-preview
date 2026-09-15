@@ -2993,10 +2993,32 @@
   height: 100%;
 }
 
+/* El nodo, FUERA del SVG.
+
+   Estaba dentro, y ese svg lleva preserveAspectRatio="none" porque la
+   linea tiene que estirarse al alto de la tarjeta. Pero "none" estira
+   TODO el dibujo: 40 de ancho por unos 250 de alto en pantalla, asi que
+   el circulo salia ovalado. En la linea vertical no se notaba; en el
+   circulo si.
+
+   Como <span> propio nunca se deforma, y ademas el borde puede ser
+   discontinuo en la ruta abierta, que dentro del SVG obligaba a un
+   stroke-dasharray calculado sobre un perimetro estirado. */
+.d2 .d2-ega-ruta__traza {
+  position: relative;
+}
+
 .d2 .d2-ega-ruta__nodo {
-  fill: var(--c-superficie-oscura, #1A1A1A);
-  stroke: var(--c-verde-marca, #39B54A);
-  stroke-width: 2;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  margin-left: -5.5px;
+  border-radius: 50%;
+  background: var(--c-superficie-oscura, #1A1A1A);
+  border: 2px solid var(--c-verde-marca, #39B54A);
+  box-sizing: border-box;
 }
 
 /* La ruta DEFINIDA: linea continua de arriba abajo. Programas nombrados,
@@ -3016,7 +3038,8 @@
 }
 
 .d2 .d2-ega-ruta[data-certeza="abierto"] .d2-ega-ruta__nodo {
-  stroke-dasharray: 2 2.5;
+  border-style: dashed;
+  opacity: .72;
 }
 
 /* --- El cuerpo --- */
@@ -3427,9 +3450,12 @@
 .d2 .d2-ega-sen__barra {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 3px;
-  height: 4px;
-  margin-bottom: 10px;
+  gap: 4px;
+  /* 7px y no 4: a 4 la barra era un hilo y su llenado apenas se percibia
+     --el usuario lo describio como "algo muy leve"--. A 7 el gesto se ve
+     sin que la barra pese mas que el titulo. */
+  height: 7px;
+  margin-bottom: 12px;
   /* La pista: los tres tramos apagados. */
   background:
     repeating-linear-gradient(90deg,
