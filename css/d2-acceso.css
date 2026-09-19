@@ -1,0 +1,695 @@
+/* ==========================================================================
+   CLIENT LOGIN — LA PUERTA DE RUN (14/9/2026)
+
+   Una pagina sin formulario: las credenciales las emite Rede y el panel
+   vive fuera de esta web. Su trabajo es decir donde esta la puerta, como
+   se consigue la llave y a quien llamar si no abre.
+
+   LA IDEA
+
+   La corriente recorre el circuito y llega a la tarjeta de acceso. La
+   animacion no decora: dice lo que la pagina hace.
+
+   Es el lenguaje que el proyecto ya tiene. El pulso de Rutas lo dejo
+   escrito: "si el pulso es una senal electrica que recorre el circuito,
+   pasar el raton sobre un paso es ENERGIZAR ese nodo. No encenderlo de
+   golpe: cargarlo."
+
+   LA TECNICA, Y POR QUE ESTA
+
+   1. GUION VIAJERO sobre los trazos. Un dash corto con hueco largo y
+      stroke-dashoffset animado en bucle. pathLength="100" normaliza cada
+      trazo, asi que el dasharray se escribe en porcentaje y no hay que
+      medir nada con getTotalLength() ni recalcular al redimensionar.
+
+   2. EL RESPLANDOR con feGaussianBlur + feColorMatrix. El alfa por 19
+      menos 9 devuelve el borde duro que el desenfoque se come: sin eso
+      es una mancha, no un brillo.
+
+      La region del filtro va ampliada en el marcado. Por defecto es
+      x=-10% y=-10% w=120% h=120% y el resplandor se CORTA ahi.
+
+   3. mix-blend-mode: plus-lighter donde la luz se superpone. Es suma
+      real de canales --el modelo fisico de la luz-- y por eso parece luz
+      y no una capa pegada encima. Soporte 96.36%, Firefox incluido.
+
+   LO QUE NO SE USA, Y POR QUE
+
+   - offset-path para mover particulas: NO es compositable. Se queda en
+     el hilo principal y con varias a la vez se nota.
+   - WebGPU y los tubos de luz con bloom selectivo: Firefox no lo ha
+     implementado. No hay alternativa que degrade bien.
+   - feTurbulence: su coste real es asumible --el bug de Firefox se cerro
+     en 2021-- pero aqui no aporta nada que el guion viajero no de mas
+     barato.
+
+   ACCESIBILIDAD
+
+   Todo el movimiento va dentro de @media (prefers-reduced-motion:
+   no-preference). En reposo el circuito se ve entero y quieto: no
+   desaparece informacion, solo deja de moverse.
+
+   El bucle dura 4.2s, por debajo de los 5 que activan el criterio 2.2.2
+   de WCAG. Y el SVG lleva aria-hidden, aunque eso por si solo NO exime
+   de 2.2.2 -- la duracion es lo que lo resuelve.
+   ========================================================================== */
+
+/* El token que anima la corriente. Sin @property el navegador no sabe que
+   es una longitud y salta del principio al final sin transicion. */
+@property --lg-avance {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+.d2 .d2-acceso {
+  position: relative;
+  overflow: hidden;
+  /* Fondo oscuro: el circuito necesita contraste para leerse, y ademas
+     separa esta pagina del resto del sitio, que es lo correcto para una
+     puerta de acceso. */
+  /* El verde de la seccion de equipo del home (15/9/2026), por peticion
+     del cliente. Antes era #111111.
+
+     El cambio obliga a repintar la animacion: sobre este verde el verde de
+     marca #39B54A cae a 3.51:1 --medido-- y no llega al minimo. La
+     corriente y los nodos pasan a blanco (9.36:1) y el eyebrow al verde
+     claro #B0E1B7 (6.38:1). */
+  background: #1A5121;
+  color: #FFFFFF;
+  padding-block: clamp(64px, 8vw, 116px);
+  /* Que la pagina llene la ventana aunque el contenido sea corto: sin
+     esto el pie sube y queda una franja clara bajo el circuito. */
+  min-height: clamp(560px, 78vh, 900px);
+  display: flex;
+  align-items: center;
+}
+
+/* --- EL CIRCUITO -------------------------------------------------------- */
+
+/* EL PATRON DE CIRCUITO (16/9/2026)
+
+   El mismo de la banda de equipo de About. Ahi va sobre el mismo verde
+   --#1A5121-- asi que los colores se copian tal cual y no hay que
+   recalcular contraste.
+
+   Estatico a proposito: sustituye a la animacion de senal, que queda
+   guardada y oculta en el marcado por si se recupera. */
+.d2 .d2-acceso__patron {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .5;
+  pointer-events: none;
+}
+
+.d2 .d2-acceso__patron path {
+  fill: none;
+  stroke: rgba(176, 225, 183, .28);
+  stroke-width: 1.2px;
+}
+
+.d2 .d2-acceso__patron circle {
+  /* El mismo verde del fondo: los nodos tapan el trazo que cruzan */
+  fill: #1A5121;
+  stroke: rgba(176, 225, 183, .45);
+  stroke-width: 1.6px;
+}
+
+/* hidden no basta por si solo: la regla de abajo da position:absolute, que
+   pesa mas que el display:none que trae el atributo. */
+.d2 .d2-acceso__circuito[hidden] { display: none; }
+
+.d2 .d2-acceso__circuito {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Los rieles: el trazado completo, siempre visible y muy tenue. Son la
+   ruta por la que va a pasar la corriente. */
+.d2 .d2-acceso__riel path {
+  fill: none;
+  /* .14 y no .09: sobre el verde, mas claro que el negro anterior,
+       el trazado al 9% se perdia. */
+    stroke: rgba(255, 255, 255, .06);
+  stroke-width: 1.4;
+}
+
+/* La corriente. En reposo --sin animacion-- se ve el trazo entero al 22%,
+   asi que la pagina nunca queda vacia. */
+.d2 .d2-acceso__senal path {
+  fill: none;
+  /* Blanca, no verde: sobre el fondo verde el verde de marca casi
+       desaparece. Y el blanco lee mejor como "corriente". */
+    stroke: #FFFFFF;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  opacity: .14;
+}
+
+.d2 .d2-acceso__nodo circle {
+  /* Relleno al color del fondo para que el nodo se vea calado, y el
+       aro en blanco como la corriente que lo recorre. */
+    fill: #1A5121;
+  stroke: #FFFFFF;
+  stroke-width: 1.8;
+  opacity: .5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* EL GUION VIAJERO
+
+     dasharray "14 86" sobre pathLength 100: un segmento del 14% de la
+     ruta y un hueco del 86%. Es una senal corta, no una linea a medias.
+
+     El offset va de 100 a 0 --no al reves-- para que la corriente viaje
+     en el sentido en que se dibujo el trazo, que es hacia la tarjeta.
+
+     linear y no una curva: una senal electrica no acelera ni frena. Con
+     ease se lee como un objeto moviendose, que es otra cosa. */
+  .d2 .d2-acceso__senal path {
+    /* .62 y no 1 (16/9/2026): Erick decia que el texto se perdia
+         con la animacion. La corriente a plena opacidad competia con
+         el titular al pasar por detras. A .62 sigue leyendose como
+         una senal viva sin disputar la atencion. */
+      opacity: .42;
+    stroke-dasharray: 14 86;
+    animation: lg-corriente 4.2s linear infinite;
+    /* Cada trazo entra escalonado: el circuito late en vez de parpadear
+       los cuatro a la vez. */
+    animation-delay: calc(var(--i, 0) * -1.05s);
+  }
+
+  /* El nodo se enciende cuando la corriente llega. El retardo lo alinea
+     con el final del recorrido de su trazo. */
+  .d2 .d2-acceso__nodo circle {
+    animation: lg-nodo 4.2s ease-out infinite;
+    animation-delay: calc(var(--i, 0) * -1.05s);
+  }
+}
+
+@keyframes lg-corriente {
+  from { stroke-dashoffset: 100; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes lg-nodo {
+  0%, 62%  { opacity: .15; r: 5; }
+  /* El destello es corto y no cambia de tamano bruscamente: medio pixel
+     de radio basta para que se lea como un encendido. */
+  72%      { opacity: .5;  r: 6; }
+  88%, 100% { opacity: .15; r: 5; }
+}
+
+/* --- LA REJILLA --------------------------------------------------------- */
+
+.d2 .d2-acceso__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--d2-ancho, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter, clamp(20px, 4vw, 40px));
+
+  display: grid;
+  /* Dos columnas: el argumento a la izquierda, la puerta a la derecha.
+     1.05fr / .95fr y no 1fr/1fr: el titular manda el bloque y con columnas
+     iguales caia en cuatro lineas. */
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  grid-template-areas:
+    "copy  puerta"
+    "apoyo puerta";
+  align-items: start;
+  --acceso-gap-fila: clamp(28px, 4vw, 64px);
+  gap: var(--acceso-gap-fila);
+}
+
+.d2 .d2-acceso__copy  { grid-area: copy; }
+/* La tarjeta sube; su contenido NO.
+
+   Para que "Your dashboard" quede a la altura de "Client portal" hay dos
+   caminos: sacar el rotulo del padding --y entonces la tarjeta pierde el
+   aire de arriba, MEDIDO: el rotulo se salia del borde-- o mover la
+   tarjeta entera. Este es el segundo: el padding se queda intacto y la
+   caja conserva su aire.
+
+   Sube el padding menos el medio leading del rotulo, que es la sangria
+   que el texto ya trae de serie. */
+.d2 .d2-acceso__puerta {
+  grid-area: puerta;
+  margin-top: calc(-1 * (var(--acceso-pad, 44px) - 5px));
+}
+/* align-self: start y no end.
+
+   La caja de la derecha ocupa las dos filas y es mas alta que la columna
+   izquierda, asi que sobra espacio en esta fila. Con "end" el bloque se
+   pegaba al fondo y TODO el sobrante se acumulaba encima de la linea:
+   MEDIDO, 106px arriba contra 37 abajo. La linea no separaba dos bloques,
+   colgaba de uno.
+
+   Con "start" el bloque sube y la linea queda a la misma distancia del
+   parrafo de arriba que del rotulo de abajo. El margen de separacion se
+   fija aqui, no lo decide el hueco sobrante. */
+.d2 .d2-acceso__apoyo {
+  grid-area: apoyo;
+  align-self: start;
+
+  /* La linea, a la misma distancia de los dos bloques.
+
+     Encima de ella el hueco lo ponen el gap de la rejilla MAS el margen;
+     debajo, solo el padding. Sumados daban 94 contra 37. MEDIDO.
+
+     Se anula el gap de esta fila y se repone el mismo valor que el
+     padding, asi que los dos lados miden lo mismo y dejan de depender de
+     lo alta que sea la fila. */
+  margin-top: calc(clamp(24px, 3vw, 36px) - var(--acceso-gap-fila, 64px));
+}
+
+/* La fila del copy no debe estirarse.
+
+   La caja de la derecha ocupa las dos filas y es mas alta que las dos de
+   la izquierda juntas. Ese sobrante lo repartia la rejilla en la PRIMERA
+   fila, que crecia y empujaba la linea hacia abajo: MEDIDO, 94px encima
+   contra 37 debajo aun despues de poner align-self: start.
+
+   Con la primera fila en max-content el copy ocupa lo que ocupa, el
+   sobrante cae al final --debajo del bloque de apoyo, donde no separa
+   nada-- y la linea queda a la distancia que fija el margen. */
+.d2 .d2-acceso__inner { grid-template-rows: max-content max-content; }
+
+/* --- LA COLUMNA DE ARGUMENTO -------------------------------------------- */
+
+.d2 .d2-acceso .eyebrow {
+  /* Verde CLARO y no el de marca (15/9/2026): sobre el fondo verde el
+     #39B54A da 3.51:1 y no llega al minimo de 4.5. Este da 6.38. */
+  color: #B0E1B7;
+}
+
+.d2 .d2-acceso__titulo {
+  margin: 14px 0 0;
+  font-size: clamp(32px, 3.6vw, 54px);
+  line-height: 1.06;
+  letter-spacing: -.028em;
+  font-weight: var(--fw-extrabold, 800);
+  color: #FFFFFF;
+  text-wrap: balance;
+}
+
+.d2 .d2-acceso__lead {
+  margin: 20px 0 0;
+
+  /* 56ch y no 52: con 52 la medida daba 505px y la frase necesita 523,
+     asi que "organization." caia sola en un segundo renglon. Faltaban 17
+     px. MEDIDO.
+
+     Sigue dentro del rango comodo de lectura --45 a 75 caracteres-- y la
+     frase entra entera en una linea. */
+  max-width: 56ch;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: #D8D8D8;   /* 6.57:1 sobre el verde, comprobado */
+}
+
+/* --- LA PUERTA ---------------------------------------------------------- */
+
+.d2 .d2-acceso__puerta {
+  position: relative;
+  /* Dos medidas en variables porque otras reglas dependen de ellas: la
+     tarjeta se sube el padding para alinear con la columna izquierda, y
+     el simbolo del rayo se dimensiona con el cuerpo del titular. Con
+     valores sueltos solo cuadraban a un ancho. */
+  --acceso-pad: clamp(28px, 3vw, 44px);
+  --acceso-h2: clamp(24px, 2.2vw, 32px);
+  padding: var(--acceso-pad);
+  background: #FFFFFF;
+  border-radius: 6px;
+  /* El filete verde arriba: es donde la corriente entra a la tarjeta. */
+  border-top: 3px solid var(--c-verde-marca, #39B54A);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .5);
+  color: var(--c-texto, #333333);
+}
+
+/* El halo alrededor de la tarjeta: la energia que ha llegado por el
+   circuito. plus-lighter porque la luz SUMA, no tapa: es el modelo
+   fisico correcto y por eso no parece una capa pegada encima. */
+.d2 .d2-acceso__puerta::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: 8px;
+  background: radial-gradient(120% 80% at 50% 0%,
+    rgba(57, 181, 74, .55), transparent 70%);
+  mix-blend-mode: plus-lighter;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .d2-acceso__puerta::before {
+    animation: lg-halo 4.2s ease-in-out infinite;
+  }
+}
+
+@keyframes lg-halo {
+  0%, 55%  { opacity: .35; }
+  /* El halo sube cuando la corriente llega, en fase con los nodos. */
+  72%      { opacity: 1; }
+  92%, 100% { opacity: .35; }
+}
+
+/* --- EL SIMBOLO DE ENERGIA ---------------------------------------------- */
+
+/* EL TITULAR Y EL SIMBOLO, EN UNA FILA (16/9/2026)
+
+   El rayo a la derecha de "Access information". Va con el TITULAR y no
+   con el rotulo: puesto arriba empujaba la tarjeta entera hacia abajo, y
+   en la fila del rotulo se salia por el borde superior. MEDIDO las dos
+   veces.
+
+   align-items: center lo centra contra el titular, que es el eje que se
+   ve. El titular se queda con su margen; la fila no lo toca. */
+.d2 .d2-acceso__fila-titulo {
+  display: flex;
+  /* flex-end: el simbolo se apoya en la linea base del titular en vez de
+     centrarse contra su caja. */
+  align-items: flex-end;
+
+  /* Pegado al titular, no empujado al borde.
+
+     Con justify-content: space-between el simbolo se iba al extremo
+     derecho de la tarjeta y quedaba suelto, sin relacion visual con el
+     texto. Asi acompana a la ultima letra de "information". */
+  justify-content: flex-start;
+  gap: 14px;
+}
+
+/* Del tamano de la fuente del titular: 1em, que son los 32px del h2.
+
+   Antes iba a 56 --pesaba mas que el texto-- y luego a 34, que no
+   correspondia a nada. A 1em el simbolo mide lo que las letras que
+   acompana y escala con ellas si el titular cambia de cuerpo.
+
+   El centrado en Y lo pone align-items: center de la fila. */
+.d2 .d2-acceso__marca {
+  /* 1em del TITULAR: la fila hereda el cuerpo del contenedor, no el del
+     h2, asi que se toma el mismo valor por la variable. */
+  font-size: var(--acceso-h2);
+  /* 1.18em y no 1: a la par exacta del cuerpo el aro se leia mas pequeno
+     que las mayusculas que acompana --el trazo del circulo deja aire por
+     dentro--. Un 18% mas y los dos pesan igual. */
+  width: 1.18em;
+  height: 1.18em;
+
+  /* Centrado con el TRAZO de las letras, no con su caja de linea.
+
+     align-items: center centra contra la caja de linea, que reserva
+     sitio para las descendentes --la "f" de information no baja, pero la
+     caja cuenta con ello-- y eso deja el simbolo ALTO respecto al texto
+     que se ve.
+
+     Se probo subirlo y fue peor: paso de -5 a -7. Lo que hacia falta era
+     BAJARLO. El desplazamiento es medio hueco de descendente, que es
+     justo lo que la caja reserva de mas por abajo. MEDIDO en pantalla,
+     no calculado. */
+  /* Con align-items: flex-end el simbolo se apoya en el borde inferior de
+     la caja de linea, que cae por debajo de la base del texto: ahi es
+     donde la caja reserva sitio para las descendentes. El translate lo
+     sube hasta que su eje coincide con el del trazo.
+
+     MEDIDO en pantalla, eje del aro contra eje de las mayusculas. */
+  transform: translateY(-0.077em);
+  flex: none;
+  margin: 0;
+  color: var(--c-verde-hover, #026F00);
+}
+
+.d2 .d2-acceso__marca svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.d2 .d2-acceso__aro-base {
+  fill: none;
+  stroke: rgba(2, 111, 0, .16);
+  stroke-width: 3;
+}
+
+/* El aro que se carga. dasharray 100 sobre pathLength 100: una vuelta
+   completa, y el offset dice cuanto lleva dibujado. */
+.d2 .d2-acceso__aro {
+  fill: none;
+  stroke: var(--c-verde-marca, #39B54A);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+  /* Arranca arriba, no a la derecha, que es donde empieza un circulo SVG
+     por defecto. */
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.d2 .d2-acceso__rayo {
+  fill: var(--c-verde-hover, #026F00);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Se dibuja UNA vez al cargar: es un gesto de bienvenida, no un bucle.
+     Un aro girando sin parar seria un indicador de carga, y aqui no hay
+     nada cargando. */
+  .d2 .d2-acceso__aro {
+    animation: lg-aro 1.4s cubic-bezier(.32, .72, 0, 1) .25s both;
+  }
+
+  /* El rayo entra cuando el aro se cierra. */
+  .d2 .d2-acceso__rayo {
+    animation: lg-rayo .5s cubic-bezier(.32, .72, 0, 1) 1.35s both;
+  }
+}
+
+@keyframes lg-aro {
+  from { stroke-dashoffset: 100; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes lg-rayo {
+  from { opacity: 0; transform: scale(.7); transform-origin: center; }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --- EL TEXTO DE LA PUERTA ---------------------------------------------- */
+
+.d2 .d2-acceso__eti {
+  margin: 0;
+  font-size: var(--fs-small, 12px);
+  font-weight: var(--fw-bold, 700);
+  letter-spacing: var(--ls-eyebrow, .08em);
+  text-transform: uppercase;
+  /* Dentro de la tarjeta blanca el verde de marca se queda en 2.66:1.
+     Aqui va el oscuro, que da 6.41. */
+  color: var(--c-verde-hover, #026F00);
+}
+
+/* EL ROTULO DE LA TARJETA (16/9/2026)
+
+   Sube para arrancar a la altura de "Client portal".
+
+   La tarjeta empieza a la misma altura que la columna izquierda, pero su
+   contenido entra el padding, asi que sin esto el rotulo caia por debajo.
+   MEDIDO: 122px cuando el simbolo iba encima, 21 ya sin el.
+
+   EL SIMBOLO DEL RAYO SE RETIRO
+
+   Estaba encima del rotulo y empujaba toda la tarjeta hacia abajo. Se
+   probo ponerlo en fila a la derecha y tampoco: o se salia del borde de
+   la tarjeta o se descolgaba a la altura del titular, compitiendo con el.
+   Decision del cliente: fuera. Con el rotulo solo, la columna arranca
+   limpia.
+
+   Se retira tambien su CSS --el aro, el trazo y las dos animaciones-- que
+   sin el marcado no pintaba nada. */
+.d2 .d2-acceso__eti {
+  /* El hueco al titular, 4px y no 14.
+
+     Es lo que hace que el segundo par --"Access information" con
+     "Utility Subscription"-- cuadre a la vez que el primero. Con 14
+     quedaba a 26px de desnivel. MEDIDO por el trazo de la mayuscula, que
+     es lo que el ojo compara. */
+  margin-bottom: 4px;
+}
+
+.d2 .d2-acceso__puerta-titulo {
+  margin: 10px 0 0;
+  font-size: var(--acceso-h2);
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  font-weight: var(--fw-extrabold, 800);
+  color: var(--c-texto, #333333);
+}
+
+.d2 .d2-acceso__puerta-texto {
+  margin: 14px 0 0;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+.d2 .d2-acceso__cta {
+  width: 100%;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.d2 .d2-acceso__nota {
+  margin: 14px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* --- SOPORTE ------------------------------------------------------------ */
+
+.d2 .d2-acceso__apoyo {
+  padding-top: clamp(24px, 3vw, 36px);
+  border-top: 1px solid rgba(255, 255, 255, .14);
+}
+
+.d2 .d2-acceso__apoyo-eti {
+  margin: 0;
+  font-size: var(--fs-small, 12px);
+  font-weight: var(--fw-bold, 700);
+  letter-spacing: var(--ls-eyebrow, .08em);
+  text-transform: uppercase;
+  color: var(--c-verde-marca, #39B54A);
+}
+
+.d2 .d2-acceso__apoyo-texto {
+  margin: 10px 0 0;
+  max-width: 46ch;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #BFBFBF;
+}
+
+.d2 .d2-acceso__vias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .d2-acceso__vias a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  /* 44px de alto: el objetivo tactil de WCAG 2.5.8. Con solo el texto se
+     queda en 24 y en movil es dificil de acertar. */
+  min-height: 44px;
+  font-size: 14.5px;
+  font-weight: var(--fw-bold, 700);
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: color .18s ease;
+}
+
+.d2 .d2-acceso__vias svg {
+  flex: none;
+  color: var(--c-verde-marca, #39B54A);
+  transition: transform .2s cubic-bezier(.32, .72, 0, 1);
+}
+
+.d2 .d2-acceso__vias a:hover,
+.d2 .d2-acceso__vias a:focus-visible {
+  color: var(--c-verde-marca, #39B54A);
+}
+
+.d2 .d2-acceso__vias a:hover svg {
+  transform: translateX(2px);
+}
+
+/* --- ADAPTACION --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .d2 .d2-acceso__inner {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "copy"
+      "puerta"
+      "apoyo";
+    gap: 32px;
+  }
+
+  .d2 .d2-acceso__apoyo { align-self: auto; }
+
+  /* En una columna no hay con que alinearse: el margen negativo del
+     rotulo lo dejaba pegado al borde de la tarjeta. MEDIDO: 0px de aire
+     contra los 44 del padding. */
+  .d2 .d2-acceso__eti { margin-top: 0; }
+
+  /* El circuito se atenua: en una columna los trazos pasan por detras del
+     texto y compiten con el. */
+  .d2 .d2-acceso__circuito { opacity: .45; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Nada se mueve, pero nada desaparece: el circuito se ve entero y el
+     aro cerrado. */
+  /* Los mismos valores que la version animada (16/9/2026): antes .5 y .6
+     dejaban el circuito MAS presente sin movimiento que con el, y quien
+     pide menos animacion no pide mas contraste de fondo. */
+  .d2 .d2-acceso__senal path { opacity: .18; }
+  .d2 .d2-acceso__nodo circle { opacity: .2; }
+  /* El aro y el rayo, en su estado final: quien pide menos animacion ve
+     el simbolo completo, no a medio dibujar. */
+  .d2 .d2-acceso__aro { stroke-dashoffset: 0; }
+  .d2 .d2-acceso__rayo { opacity: 1; }
+  .d2 .d2-acceso__puerta::before { opacity: .6; }
+}
+
+
+/* --- El velo sobre el circuito (15/9/2026) ------------------------------
+
+   Una capa que oscurece un poco la escena entre la animacion y el
+   contenido. Lo pidio el cliente para que el texto y la caja blanca ganen
+   separacion del fondo.
+
+   POR QUE UN ::after Y NO BAJAR LA OPACIDAD DEL CIRCUITO
+
+   Bajando la opacidad del SVG la corriente se apaga entera y pierde la
+   sensacion de energia, que es lo que sostiene la pagina. El velo, en
+   cambio, hunde el fondo y deja el brillo del trazo intacto: la senal
+   sigue leyendose igual de viva, pero sobre una base mas oscura.
+
+   Es un degradado y no un color plano: mas denso en el centro --donde
+   esta la caja-- y casi transparente en los bordes, para que las esquinas
+   del circuito sigan respirando.
+
+   Va con z-index 1, entre el SVG (sin z-index, al fondo) y el __inner
+   (z-index 2). Y con pointer-events:none, que no hay nada que pulsar. */
+
+.d2 .d2-acceso::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(90% 70% at 50% 50%,
+      rgba(8, 30, 12, .54) 0%,
+      rgba(8, 30, 12, .38) 45%,
+      rgba(8, 30, 12, .10) 100%);
+}
+
+/* El contenido, por encima del velo. */
+.d2 .d2-acceso__inner {
+  position: relative;
+  z-index: 2;
+}

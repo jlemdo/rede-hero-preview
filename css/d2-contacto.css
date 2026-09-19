@@ -1,0 +1,570 @@
+/* ==========================================================================
+   CONTACT (15/9/2026)
+
+   Se montaron dos vias para la animacion y el usuario eligio la primera:
+   el campo termico. La otra --el movimiento solo al interactuar-- queda
+   descrita en el historial por si algun dia se quiere recuperar.
+
+   LA IDEA
+
+   El fondo son las curvas de nivel de un mapa termico. Es el lenguaje de
+   esta industria en el oeste de Canada, y comparte el ADN de la pagina de
+   acceso --hacer visible la energia-- SIN repetir su gesto.
+
+     acceso    una senal que VIAJA por el circuito
+     contacto  un campo que REVELA lo que hay debajo
+
+   Asi las dos se complementan sin parecerse.
+
+   LO QUE DECIDE LA COMPOSICION, Y NO ES EL GUSTO
+
+   - SEIS CAMPOS, los del documento del cliente, sin recortar. La idea de
+     que menos campos convierten mas es folclore: Zuko, sobre 93 millones
+     de sesiones, mide que seguros --54 campos-- convierte al 55.8% y
+     medios --11 campos-- al 36.3%.
+
+   - LAS ETIQUETAS ARRIBA, no flotantes. Una etiqueta que se mete dentro
+     del campo desaparece justo cuando hace falta comprobar lo escrito.
+
+   - VALIDACION AL ENVIAR. Los dos estudios apuntan igual: validar al
+     salir del campo produjo 5.73 errores consecutivos frente a 1.58 al
+     enviar (Bargas-Avila, n=77), y validar mientras se escribe fue lo
+     peor de tres opciones en el estudio que todos citan al reves (n=22).
+
+   - SIN CAPTCHA. Es un fallo de nivel A bajo 1.1.1, y el abandono medido
+     va del 18 al 45%, +120% en tareas reales, y empeora con la edad del
+     usuario, que aqui es justo el perfil. Va honeypot.
+
+   - TRES VIAS DE CONTACTO a la vista: formulario, telefono y correo. En
+     una compra de sector publico, con varios responsables implicados, el
+     que rellena el formulario no siempre es el que llama.
+
+/* LOS VALORES SALEN DEL SISTEMA, NO DEL OJO
+
+   Tipografia por --fs-h1/h3/body-lg/body/small/xs, espaciado por los
+   pasos de --sp, colores por los tokens de la paleta y el contenedor por
+   --d2-ancho y --d2-gutter. Asi esta pagina mide, respira y colorea igual
+   que el home, Energy Gap Analysis y la de acceso.
+
+   Los tres valores en pixeles que quedan son deliberados:
+
+     clamp(32px, 4vw, 52px)   un salto fluido que ningun paso fijo da
+     margin-top: 2px          ajuste optico de una linea sobre otra
+     padding: 7px 13px        el boton de pausa, mas pequeno que un boton
+                              de accion a proposito: no compite con el CTA
+
+   --- La rejilla de la pagina ------------------------------------------- */
+
+.d2 .ct {
+  position: relative;
+  padding-block: clamp(48px, 6vw, 84px);
+  background: var(--c-blanco, #FFFFFF);
+}
+
+.d2 .ct__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--d2-ancho, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter, clamp(20px, 4vw, 40px));
+}
+
+.d2 .ct__cab {
+  /* Apilado y a ancho completo (15/9/2026)
+
+     Antes tenia max-width:44ch --428px medidos en un contenedor de 1280--
+     y eso partia el titular en tres lineas y el lead en otras tres.
+
+     Ahora el titular ocupa una linea y el apoyo va debajo, alargado en
+     dos. Menos renglones que encadenar, que es lo que pedia el cliente.
+
+     Se probo con dos columnas (titular izquierda, apoyo derecha) y se
+     descarto: el apoyo quedaba en una columna estrecha de 330px y subia a
+     tres o cuatro lineas, justo lo contrario del objetivo. */
+  margin-bottom: clamp(32px, 4vw, 52px);
+}
+
+/* El bloque izquierdo ya no reparte nada: se queda por si el marcado lo
+   conserva, sin efecto propio. */
+.d2 .ct__cab-izq { min-width: 0; }
+
+.d2 .ct__cab-izq { min-width: 0; }
+
+.d2 .ct__titulo {
+  margin: var(--sp-3) 0 0;
+  /* EL MISMO TAMANO QUE EL HERO DE CLIENT LOGIN (16/9/2026)
+
+     Las dos paginas abren igual --un rotulo, un titular y una linea de
+     apoyo-- y tenian escalas distintas: Contact llegaba a 64px por el
+     --fs-h1 del sistema y Login a 54. Al verlas seguidas no parecian la
+     misma plantilla.
+
+     Se parametriza copiando el clamp de Login tal cual. El tamano sigue
+     cediendo con el ancho, que es lo que hace que el titular quepa en una
+     linea; solo baja el techo. */
+  font-size: clamp(32px, 3.6vw, 54px);
+  line-height: 1.08;
+  letter-spacing: -.026em;
+  font-weight: var(--fw-extrabold, 800);
+  color: var(--c-texto, #333333);
+  /* Sin balance (15/9/2026): reparte el texto en lineas parejas aunque
+     quepa en una, que es justo lo que aqui no se quiere. El objetivo es
+     una sola linea; si algun dia no cupiera, pretty da mejor corte que
+     balance para un titular corto. */
+  text-wrap: pretty;
+}
+
+.d2 .ct__lead {
+  margin: var(--sp-4) 0 0;
+  /* 17px fijos, los de Login. El --fs-body-lg del sistema sube hasta 20
+     en pantalla ancha y ahi el apoyo pesaba mas que el de Login. */
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--c-texto-cuerpo, #333333);
+  /* 76ch: el lead son 16 palabras y a este ancho caen en DOS renglones
+     largos, que es lo que se pidio. Sin limite se irian a uno solo de
+     1200px --78 caracteres pasados, incomodo de leer-- y con el 44ch de
+     antes, a cuatro. */
+  max-width: 76ch;
+}
+
+/* Dos columnas: el formulario manda, las vias directas acompañan.
+   1.35fr / 1fr y no mitad y mitad: la columna derecha son tres datos
+   cortos y con la mitad del ancho quedaba vacia. */
+.d2 .ct__cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 60px);
+  align-items: start;
+}
+
+/* --- El formulario ----------------------------------------------------- */
+
+/* LA CAJA, EN VERDE (16/9/2026)
+
+   Elegido por el cliente entre gris, negro, gris oscuro y verde. El
+   #1A5121 es el mismo de la banda de equipo de About y del hero de Client
+   Login, asi que no entra un color nuevo al sistema.
+
+   El texto se invierte redefiniendo las variables DENTRO de la caja: todo
+   lo que las usa se adapta, incluido lo que aun no existe. */
+.d2 .ct-form {
+  position: relative;
+  padding: clamp(24px, 3vw, 38px);
+  background: #1A5121;
+  border-radius: var(--radio-sm, 6px);
+
+  --c-texto:        #FFFFFF;
+  --c-texto-cuerpo: #E8E8E8;
+  --c-texto-suave:  #BFBFBF;
+  --c-linea:        rgba(255, 255, 255, .22);
+  color: #FFFFFF;
+}
+
+/* El titulo y las notas llevan color propio y no heredan. */
+.d2 .ct-form__titulo { color: #FFFFFF; }
+.d2 :is(.ct-form__nota, .ct-form__legal) { color: #BFBFBF; }
+
+/* Las etiquetas de campo y la leyenda del grupo de telefonos. */
+.d2 :is(.ct-campo__label, .ct-grupo-tel__leyenda) { color: #FFFFFF; }
+
+/* DENTRO DEL CAMPO EL FONDO SIGUE SIENDO BLANCO
+
+   Los inputs tienen fondo propio, asi que su texto se queda oscuro. Sin
+   esto heredarian el blanco de arriba y seria blanco sobre blanco: el
+   fallo que ya aparecio una vez en las tarjetas de RUN. */
+.d2 .ct-form :is(input, textarea, select) {
+  color: #333333;
+  background: #FFFFFF;
+  border-color: rgba(255, 255, 255, .28);
+}
+
+.d2 .ct-form :is(input, textarea)::placeholder { color: #6B6B6B; }
+
+/* El foco tiene que verse sobre el verde: el de marca da 2.4:1 contra
+   #1A5121 y no llega al 3:1 que pide WCAG 1.4.11 para un indicador. */
+.d2 .ct-form :is(input, textarea):focus-visible {
+  outline: 2px solid #6FD97E;
+  outline-offset: 2px;
+}
+
+/* Los errores: el rojo de siempre se hunde sobre el verde oscuro. */
+.d2 :is(.ct-campo__error, .ct-grupo-tel__error) { color: #FF9B8F; }
+
+.d2 .ct-form__titulo {
+  margin: 0 0 var(--sp-1);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-extrabold, 800);
+  color: var(--c-texto, #333333);
+}
+
+.d2 .ct-form__nota {
+  margin: 0 0 var(--sp-5);
+  font-size: var(--fs-small);
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .ct-form__rejilla {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+}
+
+/* El campo abierto y el boton ocupan la fila entera: son las dos piezas
+   que no se parten. */
+.d2 .ct-campo--ancho { grid-column: 1 / -1; }
+
+/* --------------------------------------------------------------------------
+   EL PAR DE TELEFONOS
+
+   Direct line y Phone comparten fila dentro de un fieldset. Va agrupado y
+   no como dos campos sueltos porque la condicion --uno de los dos-- es del
+   PAR, no de cada uno: con dos campos independientes no hay donde anunciar
+   esa regla ni donde poner el error que les toca a ambos.
+
+   El fieldset se resetea: trae borde, margen y padding propios de
+   navegador que romperian la rejilla.
+   -------------------------------------------------------------------------- */
+.d2 .ct-grupo-tel {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;   /* un fieldset no encoge sin esto y desborda la rejilla */
+}
+
+.d2 .ct-grupo-tel__leyenda {
+  /* Se pinta como una etiqueta mas.
+
+     Sin float: se probo y fue peor. El float saca la leyenda del flujo,
+     pero entonces el hijo siguiente --la pareja de campos-- deja de
+     comportarse como rejilla y los dos telefonos salian apilados en vez
+     de en linea. MEDIDO en pantalla.
+
+     Con display:block y el fieldset sin borde ni padding, la leyenda cae
+     donde debe sin tocar el flujo. */
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: var(--sp-2, 8px);
+  font-size: var(--fs-small, 14px);
+  font-weight: var(--fw-bold, 700);
+  color: var(--c-texto, #333333);
+}
+
+.d2 .ct-grupo-tel__par {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+}
+
+/* El error del grupo, no de un campo: va debajo de los dos. */
+.d2 .ct-grupo-tel__error {
+  margin: var(--sp-2, 8px) 0 0;
+  font-size: var(--fs-small, 14px);
+  color: var(--c-error, #C0392B);
+}
+
+@media (max-width: 640px) {
+  /* En una columna los dos telefonos se apilan, como el resto. */
+  .d2 .ct-grupo-tel__par { grid-template-columns: 1fr; }
+}
+
+/* La etiqueta, con el tamano y el peso de .campo__label de la
+   calculadora: --fs-small y peso medio. Yo habia puesto --fs-xs en
+   negrita, que grita mas de lo que debe una etiqueta.
+
+   El color si cambia: alla es blanco al 75% porque va sobre el panel
+   negro; aqui el gris de marca, que sobre la tarjeta da 11.4:1. */
+.d2 .ct-campo__label {
+  display: block;
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium, 500);
+  color: var(--c-texto, #333333);
+}
+
+.d2 .ct-campo__opcional {
+  font-weight: var(--fw-medium, 500);
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* LOS CAMPOS SIGUEN A LA CALCULADORA, CON UNA CORRECCION
+
+   La calculadora ya tiene dos versiones de campo: .campo --oscura, sobre
+   su panel negro-- y .campo--claro. Esta pagina usa el registro claro, y
+   se alinea con el: mismo fondo, mismo radio, mismo tiempo de
+   transicion, y el verde de marca al enfocar.
+
+   LO QUE NO SE COPIA, Y POR QUE
+
+   El borde. La calculadora usa var(--c-borde) --#E4E4E4-- que sobre este
+   fondo da 1.17:1. WCAG 1.4.11 pide 3:1 para el limite de un control, y
+   un campo de formulario lo es.
+
+   Medido sobre la tarjeta #F5F5F5:
+
+     #E4E4E4  1.17:1   el de la calculadora
+     #B8B8B8  1.82:1   el que puse yo primero
+     #8A8A8A  3.17:1   pasa
+
+   Entra #8A8A8A, que ademas ya se usa en el proyecto: es el gris de la
+   linea "do nothing" del hero y el del borde de las pastillas de
+   financiacion.
+
+   No se toca la calculadora aqui: su borde tiene el mismo problema, pero
+   arreglarlo es otro cambio y en otra pagina. Queda anotado. */
+.d2 .ct-campo input,
+.d2 .ct-campo textarea {
+  width: 100%;
+  /* 44px de alto: el objetivo tactil de WCAG 2.5.8. */
+  min-height: 44px;
+  padding: var(--sp-3) var(--sp-4);
+  font-family: inherit;
+  font-size: var(--fs-body);
+  color: var(--c-texto, #333333);
+  background: var(--c-blanco, #FFFFFF);
+  border: 1px solid #8A8A8A;
+  border-radius: var(--radio-sm, 6px);
+  transition: border-color var(--trans-media, 250ms ease),
+              box-shadow var(--trans-media, 250ms ease);
+}
+
+.d2 .ct-campo textarea {
+  min-height: 112px;
+  resize: vertical;
+}
+
+.d2 .ct-campo input:focus,
+.d2 .ct-campo textarea:focus {
+  outline: none;
+  /* El verde de MARCA al enfocar, igual que .campo--claro:focus-within de
+     la calculadora. Es el mismo gesto en las dos paginas. */
+  border-color: var(--c-verde, #39B54A);
+  /* El anillo va en box-shadow y no en outline: asi sigue el radio del
+     campo en vez de dibujar un rectangulo alrededor. */
+  box-shadow: 0 0 0 3px rgba(57, 181, 74, .22);
+}
+
+.d2 .ct-campo.tiene-error input,
+.d2 .ct-campo.tiene-error textarea {
+  border-color: var(--c-error, #C0392B);
+}
+
+.d2 .ct-campo__error {
+  margin: var(--sp-2) 0 0;
+  font-size: var(--fs-xs);
+  /* #C0392B y no un rojo propio: es el que ya usa el resto del sitio,
+     y el manual de marca solo trae verde y negro, asi que el rojo de
+     error es una decision del proyecto y debe ser UNA.
+
+     Medido sobre el gris del formulario: 4.90:1, por encima del 4.5 que
+     pide un texto de 12px. */
+  color: var(--c-error, #C0392B);
+}
+
+/* El honeypot: invisible para el usuario, visible para un robot. Va
+   fuera de pantalla y no display:none, porque algunos robots saltan lo
+   que esta oculto con display. */
+.d2 .ct-trampa {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.d2 .ct-form__enviar {
+  width: 100%;
+  justify-content: center;
+  margin-top: var(--sp-1);
+}
+
+.d2 .ct-form__legal {
+  margin: var(--sp-3) 0 0;
+  font-size: var(--fs-xs);
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+/* --- La columna directa ------------------------------------------------ */
+
+.d2 .ct-directo__titulo {
+  margin: 0 0 var(--sp-4);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-extrabold, 800);
+  color: var(--c-texto, #333333);
+}
+
+.d2 .ct-via {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-4) 0;
+  border-top: 1px solid var(--c-borde, #E4E4E4);
+  text-decoration: none;
+  color: inherit;
+}
+
+.d2 .ct-via:first-of-type { border-top: 0; }
+
+.d2 .ct-via__icono {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(57, 181, 74, .12);
+  color: var(--c-verde-hover, #026F00);
+}
+
+.d2 .ct-via__eti {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .ct-via__dato {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold, 700);
+  color: var(--c-texto, #333333);
+}
+
+.d2 a.ct-via:hover .ct-via__dato { color: var(--c-verde-hover, #026F00); }
+
+/* La caja de "no sabes por donde empezar": es del copy del cliente y hace
+   de salida para quien no quiere escribir todavia. */
+.d2 .ct-caja {
+  /* Sin fondo propio (16/9/2026)
+
+     Antes era un bloque negro #1A1A1A junto a un formulario gris #F5F5F5:
+     tres superficies distintas --con los datos de contacto sin fondo--
+     compitiendo en la misma fila.
+
+     El formulario es la accion principal de esta pagina y debe ser lo
+     unico que destaque. La caja pasa a nota al margen: sin fondo, con un
+     filete verde que la marca como aparte sin disputarle peso.
+
+     Los textos bajan del blanco a la tinta del sitio; sobre blanco el
+     blanco no se ve. */
+  margin-top: var(--sp-5);
+  padding: var(--sp-4) 0 var(--sp-4) var(--sp-5);
+  border-left: 3px solid var(--c-verde-marca, #39B54A);
+  color: var(--c-texto, #333333);
+}
+
+.d2 .ct-caja__eti {
+  margin: 0 0 var(--sp-2);
+  font-size: var(--fs-small, 12px);
+  font-weight: var(--fw-bold, 700);
+  letter-spacing: var(--ls-eyebrow, .08em);
+  text-transform: uppercase;
+  /* Verde OSCURO y no el de marca: sobre blanco el #39B54A da 2.66:1 y
+     no llega al minimo. Este da 6.41. */
+  color: var(--c-verde-hover, #026F00);
+}
+
+.d2 .ct-caja__titulo {
+  margin: 0 0 var(--sp-2);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-extrabold, 800);
+  color: var(--c-texto, #333333);
+}
+
+.d2 .ct-caja__texto {
+  margin: 0 0 var(--sp-3);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+.d2 .ct-caja__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 44px;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold, 700);
+  color: var(--c-verde-hover, #026F00);
+  text-decoration: none;
+}
+
+/* Al apuntar, subrayado: sobre fondo claro un cambio de color solo es
+   demasiado sutil para un enlace. */
+.d2 .ct-caja__link:hover { text-decoration: underline; }
+
+/* ==========================================================================
+   EL CAMPO TERMICO
+   ========================================================================== */
+
+/* EL TRAZADO DE FONDO (16/9/2026)
+
+   El mismo de la seccion de reviews de la home: mismo recorrido, mismos
+   dos nodos y mismo viewBox. Ahi va sobre fondo blanco, igual que aqui,
+   asi que los colores se copian tal cual.
+
+   Sustituye al campo termico animado, que queda oculto en el marcado por
+   si se recupera.
+
+   z-index 0 y NO -1: en reviews vale el -1 porque esa seccion no pinta
+   fondo, pero .ct si es blanca, y con -1 el trazado quedaba detras de ese
+   blanco --dibujado y tapado--. MEDIDO: el path existia, a 943x1020, y no
+   se veia.
+
+   Con 0 pasa por delante del fondo. El contenido lleva su propio z-index
+   mas alto, asi que sigue por encima. */
+.d2 .ct .ct__lineas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .42;
+  pointer-events: none;
+}
+
+.d2 .ct .ct__lineas path {
+  fill: none;
+  stroke: rgba(57, 181, 74, .20);
+  stroke-width: 1.2px;
+}
+
+.d2 .ct .ct__lineas circle {
+  /* Del color del fondo: el nodo tapa el trazo que cruza */
+  fill: #FFFFFF;
+  stroke: rgba(57, 181, 74, .32);
+  stroke-width: 2px;
+}
+
+/* Oculto no debe ocupar sitio: la regla de abajo da position:absolute,
+   que pesa mas que el display:none del atributo hidden. */
+.d2 .ct .ct__lienzo[hidden] { display: none; }
+
+/* El contenido, por encima del trazado. */
+.d2 .ct .ct__inner { position: relative; z-index: 1; }
+
+.d2 .ct .ct__lienzo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* El boton de pausa. Obligatorio, no opcional: el movimiento arranca
+   solo, dura mas de cinco segundos y convive con el contenido, asi que
+   WCAG 2.2.2 aplica en nivel A. Y la nota 2 del criterio cierra
+   expresamente la salida de "es decoracion". */
+
+/* --- Adaptacion -------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .d2 .ct__cuerpo { grid-template-columns: 1fr; gap: var(--sp-6); }
+  .d2 .ct-form__rejilla { grid-template-columns: 1fr; }
+  /* El fondo de isolineas se atenua: en una columna pasa por detras del
+     formulario y compite con el. */
+  .d2 .ct .ct__lienzo { opacity: .5; }
+}
+
+

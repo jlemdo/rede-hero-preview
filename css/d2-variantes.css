@@ -2047,7 +2047,7 @@ span.d2-panel__filtro:hover {
 .d2-prob-lec__titulo,
 .d2-prob-comp__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -2173,7 +2173,7 @@ span.d2-panel__filtro:hover {
 
 .d2-prob-lec__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -2781,7 +2781,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .calc__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -3111,7 +3111,11 @@ span.d2-panel__filtro:hover {
   gap: 6px;
 }
 
-.d2 .calc .campo + .campo {
+/* :not dentro de la pareja (16/9/2026): este selector separa campos
+   APILADOS, y dentro de .captura__pareja van en fila. Sin la exclusion le
+   daba 16px al segundo y "Role" caia por debajo de "Organization" --el
+   hueco se ve en cuanto los dos comparten linea--. */
+.d2 .calc .campo + .campo:not(.captura__pareja > .campo) {
   margin-top: var(--d2-e3);
 }
 
@@ -4199,7 +4203,7 @@ span.d2-panel__filtro:hover {
 .d2 .d2-rutas-esc__titulo,
 .d2 .d2-rutas-cmp__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -5501,7 +5505,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-cta-bal__titulo {
   margin: 0;
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.03em;
@@ -5589,7 +5593,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-cta-con__titulo {
   margin: 0;
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.03em;
@@ -5665,7 +5669,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-cta-car__titulo {
   margin: 0;
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.03em;
@@ -6056,6 +6060,29 @@ span.d2-panel__filtro:hover {
   color: rgba(255, 255, 255, .62);   /* 6.74:1, no el 4.24:1 de antes */
 }
 
+/* El horario, en las tres variantes del pie (15/9/2026)
+
+   Mismo cuerpo y mismo tono que la direccion de al lado --.62 sobre el
+   verde, que ya estaba medido en 6.74:1-- porque es informacion del mismo
+   rango: ni un dato de contacto pulsable ni letra pequena legal.
+
+   Va en un <p> y no dentro del <address> a proposito: ese elemento es
+   para datos de contacto, y un horario de atencion no lo es. Ademas los
+   navegadores le ponen cursiva, que aqui habria que quitar.
+
+   SIN color propio: el pie es gris #666666, no verde, y mas arriba hay una
+   regla que sube todos los <p> del pie a blanco .92 porque por debajo no
+   se cumple el 4.5:1. Poner aqui el .62 de la direccion la dejaria en
+   3.4:1 --y no se notaria, porque esa regla gana por orden de todos
+   modos--. Se hereda a proposito. */
+
+.d2 .d2-pie-dir__horario {
+  margin: var(--d2-e1) 0 0;
+  font-size: .8125rem;
+  line-height: 1.7;
+}
+
+
 /* --- Franja inferior --- */
 
 .d2 .d2-pie-dir__base { border-top: 1px solid rgba(255, 255, 255, .16); }
@@ -6195,7 +6222,7 @@ span.d2-panel__filtro:hover {
 }
 
 /* El correo puede ser largo: se parte antes que desbordar la ficha. A
-   390px "matthew@getrede.ca" cabe, pero si Erick cambia el dato por uno
+   390px "info@getrede.ca" cabe, pero si Erick cambia el dato por uno
    mas largo esto evita el scroll horizontal. */
 .d2 .d2-pie-desp__vias a span {
   min-width: 0;
@@ -6219,6 +6246,13 @@ span.d2-panel__filtro:hover {
   line-height: 1.7;
   color: rgba(255, 255, 255, .62);
 }
+
+.d2 .d2-pie-desp__horario {
+  margin: var(--d2-e1) 0 0;
+  font-size: .8125rem;
+  line-height: 1.7;
+}
+
 
 /* --- El mapa del sitio, comprimido ------------------------------------
    Dos grupos en dos columnas; dentro de cada uno, los enlaces fluyen en
@@ -6411,6 +6445,13 @@ span.d2-panel__filtro:hover {
   line-height: 1.6;
   color: rgba(255, 255, 255, .62);
 }
+
+.d2 .d2-pie-cierre__horario {
+  margin: 0;
+  font-size: .8125rem;
+  line-height: 1.6;
+}
+
 
 /* --- Franja 3: todos los enlaces en fila envolvente --------------------
    El separador es un punto generado por CSS, sin texto: no llega al arbol
@@ -6716,7 +6757,7 @@ span.d2-panel__filtro:hover {
 .d2 .d2-equipo-dosier__titulo,
 .d2 .d2-equipo-firma__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -7372,7 +7413,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-res-tres__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -7821,7 +7862,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-res-ed__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -8345,7 +8386,7 @@ span.d2-panel__filtro:hover {
    El peso, a ese tamano, se lee como cambio de fuente. */
 .d2-prob-mapa__titulo {
   margin: 0 0 22px;
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   line-height: 1.05;
   letter-spacing: -.03em;
   font-weight: 700;
@@ -8687,9 +8728,18 @@ span.d2-panel__filtro:hover {
    asi que el boton sigue siendo el mismo a la vista.
    -------------------------------------------------------------------------- */
 
+/* El borde oscuro se retira (16/9/2026)
+
+   Existia porque el boton iba en verde de marca con texto gris y necesitaba
+   despegarse del fondo blanco. Ahora el reposo YA es el verde de marca y el
+   borde del mismo color lo define: un filete oscuro encima solo ensuciaria
+   el color que Erick quiere ver.
+
+   El contorno lo da ahora border-color, que acompana al fondo en los dos
+   estados. */
 .d2 .d2-btn--solido,
 .d2 .btn--primary {
-  border: 2px solid #026F00;
+  border: 2px solid transparent;
 }
 
 /* Sobre fondo oscuro el problema no existe --el verde da 4.74:1 contra el
@@ -8742,8 +8792,27 @@ span.d2-panel__filtro:hover {
    3:1, pero 2.66 tampoco llega.
    -------------------------------------------------------------------------- */
 
-.d2 :is(.d2-hero__eyebrow, .d2-eyebrow, .eyebrow, .acento) {
+.d2 :is(.d2-hero__eyebrow, .d2-eyebrow, .eyebrow) {
   color: #026F00;
+}
+
+/* El acento del titular, en verde de marca (16/9/2026)
+
+   Se separa de los eyebrow a peticion del cliente. La distincion es de
+   TAMANO, no de capricho:
+
+     eyebrow    14px  -> el color tiene que LEERSE, va el oscuro
+     acento     60px  -> el color DECORA, aguanta el verde vivo
+
+   A 60px la diferencia entre 2.66:1 y 3:1 es imperceptible --la masa de
+   letra compensa de sobra-- y es el sitio donde el verde de la marca luce
+   sin estorbar. En un texto de 14px el mismo color se vuelve un gris
+   verdoso ilegible.
+
+   La regla exige el tamano minimo para que nadie lo aplique por error a un
+   texto pequeno. */
+.d2 .acento {
+  color: var(--c-verde-marca, #39B54A);
 }
 
 /* --------------------------------------------------------------------------
@@ -9965,7 +10034,7 @@ span.d2-panel__filtro:hover {
   /* El titular del sistema. Antes media hasta 52px con peso 400: era mas
      grande que cualquier otro titulo de seccion --todos van a 36px-- y
      el peso normal lo dejaba fuera del resto de la web, que usa 800. */
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.03em;
@@ -9974,7 +10043,16 @@ span.d2-panel__filtro:hover {
   text-wrap: balance;
 }
 
-.d2 .d2-faq-dato__titulo span { color: var(--c-verde-hover, #026F00); }
+/* Verde vivo, igual que el resto de destacados en titular: a 49px es
+   texto grande y el minimo baja a 3:1.
+
+   UN PUNTO MAS OSCURO QUE LOS DEMAS, Y POR QUE
+
+   Esta seccion NO va sobre blanco: el fondo es #F3F3F3, y ese gris se
+   come contraste. El #33A343 que usan los otros destacados da 3,25:1
+   sobre blanco pero solo 2,93:1 aqui, y se queda corto. El #2E9A3C da
+   3,26:1 sobre el gris. A simple vista es el mismo verde. */
+.d2 .d2-faq-dato__titulo span { color: #2E9A3C; }
 
 .d2 .d2-faq-dato__cuerpo {
   display: grid;
@@ -10064,6 +10142,28 @@ span.d2-panel__filtro:hover {
 .d2 .d2-faq-dato__r p:last-child { margin-bottom: 0; }
 
 /* --- La ficha --- */
+
+/* LA NOTA DE MUESTRA, SOBRE LA TARJETA (16/9/2026)
+
+   Texto de relleno --lorem ipsum-- puesto a peticion del cliente para ver
+   el tamano y el sitio antes de escribir el aviso de verdad.
+
+   13px: el mismo cuerpo que usan las notas al margen del sitio. Por
+   debajo de 12 el texto deja de leerse comodo y esto no es letra
+   pequena de contrato, es una aclaracion que conviene leer.
+
+   En gris suave, que es lo que la distingue del contenido: acompaña a la
+   tarjeta sin competir con el dato. */
+.d2 .d2-faq-dato__muestra {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--c-texto-suave, #6B6B6B);
+  /* Centrada sobre la tarjeta: alineada a la izquierda arrancaba en el
+     borde del aside, que es mas ancho que la caja, y la nota quedaba
+     descolgada a su izquierda en vez de sobre ella. */
+  text-align: center;
+}
 
 .d2 .d2-faq-dato__ficha {
   position: sticky;
@@ -10174,7 +10274,7 @@ span.d2-panel__filtro:hover {
   /* El titular del sistema. Antes media hasta 46px con peso 400: era mas
      grande que cualquier otro titulo de seccion --todos van a 36px-- y
      el peso normal lo dejaba fuera del resto de la web, que usa 800. */
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.03em;
@@ -10320,7 +10420,7 @@ span.d2-panel__filtro:hover {
   /* El titular del sistema. Antes media hasta 44px con peso 400: era mas
      grande que cualquier otro titulo de seccion --todos van a 36px-- y
      el peso normal lo dejaba fuera del resto de la web, que usa 800. */
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.02em;
@@ -10576,7 +10676,10 @@ span.d2-panel__filtro:hover {
 
      De paso deja de ser el titular mas grande de la web: el resto de
      secciones usa 49px a 1440. */
-  font-size: clamp(32px, 3.5vw, 50px);
+  /* Pasa a la escala comun. El motivo original --que a 58 se partia en tres
+     lineas-- se mantiene: comprobado a 48,96 pide 548px de 655, asi que
+     sigue entrando en dos lineas con holgura. */
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: 700;
   line-height: 1.04;
   letter-spacing: -.03em;
@@ -11280,7 +11383,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-cta-ficha__titulo {
   margin: 0 0 18px;
-  font-size: clamp(30px, 3.2vw, 46px);
+  font-size: var(--fs-seccion, clamp(30px, 3.2vw, 46px));
   font-weight: 700;
   line-height: 1.06;
   letter-spacing: -.03em;
@@ -11457,7 +11560,7 @@ span.d2-panel__filtro:hover {
 .d2 .d2-cta-ruta__titulo {
   margin: 0;
   max-width: 20ch;
-  font-size: clamp(30px, 3.2vw, 46px);
+  font-size: var(--fs-seccion, clamp(30px, 3.2vw, 46px));
   font-weight: 700;
   line-height: 1.06;
   letter-spacing: -.03em;
@@ -11948,7 +12051,23 @@ span.d2-panel__filtro:hover {
 /* --- La cabecera, centrada --- */
 
 .d2 .d2-equipo-banda__cabecera {
-  max-width: 66ch;
+  /* 88ch y no 66 (16/9/2026)
+
+     Medido: el lead son 31 palabras y a 66ch caian en TRES lineas dentro
+     de 642px, con 79 caracteres por linea. El bloque se veia comprimido en
+     el centro mientras sobraba sitio a los lados.
+
+     Barrido de 78 a 88: a 86ch siguen siendo TRES lineas y a 88 pasan a
+     dos. No hay punto intermedio, asi que 88 es el valor.
+
+     Quedan 119 caracteres por linea, por encima del rango comodo de
+     lectura --45 a 90--. Se acepta a proposito: son dos renglones de una
+     entradilla centrada, no un parrafo largo, y el usuario pidio
+     expresamente que ocupara dos. En un bloque de texto corrido este
+     ancho no seria aceptable.
+
+     El titular de arriba, que es corto, no se ve afectado. */
+  max-width: 88ch;
   /* Antes hasta 72px. La cabecera y los retratos son el mismo bloque, no
      dos secciones distintas: no necesitan tanta separacion. */
   margin: 0 auto clamp(34px, 3.6vw, 50px);
@@ -11971,7 +12090,7 @@ span.d2-panel__filtro:hover {
      a 36px-- y el unico en peso normal cuando el sistema usa 800.
 
      Era ademas parte de la altura que Erick veia de mas. */
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.15;
   letter-spacing: -.03em;
@@ -12093,10 +12212,25 @@ span.d2-panel__filtro:hover {
      nombre era mas ancho que su columna.
 
      Por debajo de 1050px vuelve a dos lineas --la columna baja de 230px--
-     hasta los 900, donde la rejilla pasa a dos columnas y sobra sitio. */
+     hasta los 900, donde la rejilla pasa a dos columnas y sobra sitio.
+
+     DOS LINEAS RESERVADAS (17/9/2026)
+
+     Al devolver a Matthew la credencial LEED AP que pedia el documento, su
+     nombre paso a ser el mas largo y se parte en dos lineas. Con altura
+     libre, su cargo bajaba y los cuatro dejaban de estar a la misma altura.
+
+     min-height de dos lineas en TODOS: el que ocupa una deja el hueco, el
+     que ocupa dos lo llena, y los cuatro cargos arrancan en la misma linea
+     de base. Es la misma regla de alineacion que el resto del sitio: las
+     columnas empiezan a la misma altura. */
   font-size: clamp(13px, 1.15vw, 15px);
   font-weight: 700;
   line-height: 1.3;
+  min-height: calc(2 * 1.3em);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
   color: #FFFFFF;
 }
 
@@ -12222,7 +12356,9 @@ span.d2-panel__filtro:hover {
 .d2 .calc__intro .calc__titulo {
   max-width: 720px;
   margin: 0 auto 20px;
-  font-size: clamp(32px, 3.6vw, 50px);
+  /* A la escala comun: este clamp propio dejaba el titulo de la calculadora
+     en 50px cuando los demas de seccion estan en 48,96. */
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   /* 700 como el resto: con 400 se leia como otra fuente */
   font-weight: 700;
   line-height: 1.06;
@@ -12308,9 +12444,40 @@ span.d2-panel__filtro:hover {
    simetrica, entrada y salida iguales.
    ========================================================================== */
 
+/* INVERTIDO (16/9/2026), a peticion de Erick
+
+   El boton en reposo pasa al VERDE DE MARCA y el hover al oscuro. Antes era
+   al reves y Erick lo señalo: el color que mas se ve --el de reposo-- no era
+   el del logo, y el boton no cuadraba con la marca.
+
+   Su argumento gana al de la version anterior. Aquel buscaba que el boton se
+   "encendiera" al apuntarlo; pero un boton se ve mil veces en reposo y unas
+   pocas con el raton encima, asi que el estado que representa a la marca es
+   el primero.
+
+   EL TEXTO VA EN BLANCO POR DECISION DEL CLIENTE
+
+   Se le planteo el problema con las medidas delante y eligio el blanco
+   sobre el verde de marca exacto. Queda constancia de lo que eso implica:
+
+     reposo  #FFFFFF sobre #39B54A ....... 2.66:1   NO cumple AA (min 4.5)
+     hover   #FFFFFF sobre #026F00 ....... 6.41:1   cumple
+
+   A 2.66:1 el texto del boton se lee mal con brillo bajo, a la luz del dia
+   o con visión reducida. Se ofrecieron dos alternativas que si cumplian
+   --gris #333333 sobre el mismo verde (4.74), o blanco sobre un verde un
+   punto mas oscuro #268230 (4.86)-- y se descartaron para conservar el
+   verde del logo exacto con letras blancas.
+
+   SI ALGUN DIA HAY QUE CORREGIRLO, esto es lo que hay que cambiar: o el
+   color del texto, o el del fondo. Las dos opciones estan medidas arriba.
+
+   Las transiciones mantienen la gramatica del resto: 420ms, curva
+   simetrica. */
+
 .d2 :is(.d2-btn--solido, .btn--primary, .d2-btn--principal) {
-  background: var(--c-verde-hover, #026F00);
-  border-color: var(--c-verde-hover, #026F00);
+  background: var(--c-verde-marca, #39B54A);
+  border-color: var(--c-verde-marca, #39B54A);
   color: #FFFFFF;
   transition: background-color .42s cubic-bezier(.4, 0, .2, 1),
               border-color .42s cubic-bezier(.4, 0, .2, 1),
@@ -12319,22 +12486,22 @@ span.d2-panel__filtro:hover {
 
 .d2 :is(.d2-btn--solido, .btn--primary, .d2-btn--principal):hover,
 .d2 :is(.d2-btn--solido, .btn--primary, .d2-btn--principal):focus-visible {
-  background: var(--c-verde-marca, #39B54A);
-  border-color: var(--c-verde-marca, #39B54A);
-  color: #333333;
+  background: var(--c-verde-hover, #026F00);
+  border-color: var(--c-verde-hover, #026F00);
+  color: #FFFFFF;
 }
 
 /* Sobre seccion oscura vale lo mismo: el verde oscuro se distingue del
    fondo negro --3.29:1 contra #333333-- y el texto blanco se lee igual. */
 .d2 [data-comp-tono="oscuro"] :is(.d2-btn--solido, .btn--primary):not(:hover):not(:focus-visible) {
-  background: var(--c-verde-hover, #026F00);
+  background: var(--c-verde-marca, #39B54A);
   color: #FFFFFF;
 }
 
 .d2 [data-comp-tono="oscuro"] :is(.d2-btn--solido, .btn--primary):hover,
 .d2 [data-comp-tono="oscuro"] :is(.d2-btn--solido, .btn--primary):focus-visible {
-  background: var(--c-verde-marca, #39B54A);
-  color: #333333;
+  background: var(--c-verde-hover, #026F00);
+  color: #FFFFFF;
 }
 
 /* El boton del CTA carrusel llevaba su propia regla de color. Se alinea
@@ -12630,8 +12797,17 @@ span.d2-panel__filtro:hover {
    minimo de 4.5-- asi que ese fondo usa #CFDCD1.
    ========================================================================== */
 
+/* EL NEGRO, FIJADO EN EL CSS (16/9/2026)
+
+   El fondo lo escribia el JS del selector en --logos-fondo. Al retirar
+   ese control la variable se quedo sin valor y la seccion cayo al blanco
+   de reserva. MEDIDO: salia blanca.
+
+   Ahora el negro es el valor por defecto de la variable, asi que no
+   depende de ningun guion. El selector, si se recupera, seguira
+   pisandolo igual. */
 .d2 .d2-logos--dos {
-  background: var(--logos-fondo, #FFFFFF);
+  background: var(--logos-fondo, #1A1A1A);
   transition: background-color .42s cubic-bezier(.4, 0, .2, 1);
 }
 
@@ -13499,7 +13675,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-botones__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -13826,6 +14002,11 @@ span.d2-panel__filtro:hover {
   position: relative;
   overflow: hidden;
   padding-block: clamp(48px, 5.4vw, 76px);
+  /* El lateral va aqui, en la seccion, y no en el inner: es el mismo
+     reparto que usa .d2-res-cen (linea 9506), cuyo eje sigue esta
+     seccion. Sin el, en movil el texto llega pegado al borde, porque
+     ahi el max-width de 1040px ya no recorta nada. */
+  padding-inline: var(--pad-lateral, 28px);
   background: #1A5121;
 
   /* Los tokens se redefinen aqui, igual que en la firma: las reglas de
@@ -13861,9 +14042,18 @@ span.d2-panel__filtro:hover {
 .d2 .d2-equipo-voz__inner {
   position: relative;
   z-index: 1;
-  max-width: var(--d2-ancho);
+  /* El eje de Reviews, no el contenedor general (16/9/2026)
+
+     Erick veia la seccion cargada a la izquierda. Medido, no estaba
+     descuadrada: arrancaba en 40px como el hero. Pero .d2-res-cen --su
+     vecina directa hacia arriba-- no usa el gutter: centra con un
+     max-width mas estrecho. Al pasar de una a otra el texto saltaba de
+     113px a 40px, y ese salto es lo que se lee como desalineado.
+
+     Los dos valores son los de .d2-res-cen__inner (linea 9556) a
+     proposito: si un dia se reajusta aquel, este debe seguirlo. */
+  max-width: 1040px;
   margin-inline: auto;
-  padding-inline: var(--d2-gutter);
 }
 
 /* --- La cabecera --- */
@@ -13914,7 +14104,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-equipo-voz__titulo {
   margin: var(--d2-e2) 0 0;
-  font-size: clamp(34px, 3.4vw, 52px);
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
   font-weight: var(--fw-extrabold);
   line-height: 1.18;
   letter-spacing: -.02em;
@@ -14823,12 +15013,60 @@ span.d2-panel__filtro:hover {
   object-position: 50% 10%;
 }
 
-/* Enrique no necesita ajuste: su foto es cuadrada, asi que `cover` no
-   recorta nada por arriba y el object-position no cambia lo que se ve. */
+/* Enrique: foto nueva del 15/9/2026, ya centrada en origen.
+
+   Venia con el circulo y un borde gris quemados en el pixel sobre fondo
+   BLANCO, no transparente. Puesta tal cual se veian las esquinas blancas
+   dentro del circulo del sitio y un anillo doble, asi que se recorto a
+   mascara circular con alfa antes de entrar.
+
+   El 28% anterior compensaba el encuadre de la foto vieja. Esta trae la
+   cabeza centrada, y con ese valor se veia mas cerca que sus tres
+   companeros; al 50% la escala coincide. */
 .d2 [src*="equipo/enrique"] {
   object-fit: cover;
-  object-position: 50% 28%;
+  object-position: 50% 50%;
 }
+
+/* --- Los retratos de la banda: ajustar por ALTURA, no por anchura ---
+
+   En la banda de About los hombros salian cortados y la coronilla rozaba
+   el borde. La causa no era el object-position sino la caja:
+
+   El <img> llevaba width:100% y las fotos son verticales --300x420, o
+   sea 0.71--, asi que en un circulo de 230px la imagen se pintaba a
+   230x322. Sobraban 92px de alto que el circulo tiraba, y como ademas el
+   object-position estaba en 6-10% ese descarte se iba casi entero por
+   abajo: por eso se comia los hombros.
+
+   Medido en los archivos: en Matthew y Marco la coronilla esta en la
+   fila 0 --vienen recortadas al ras-- y los hombros arrancan al 22-24%.
+   Son fotos de busto corto, no hay aire que recuperar moviendo el
+   encuadre. Habia que dejar de ampliarlas.
+
+   Con height:100% y width:auto la foto se ajusta por el lado corto: entra
+   completa en vertical y el recorte pasa a los lados, que es donde sobra
+   fondo liso. El min-width evita que quede franja sin cubrir si algun dia
+   entra una foto mas estrecha.
+
+   Solo aqui, dentro de .d2-equipo-banda: los selectores por [src] de mas
+   arriba son globales y los comparten las otras variantes de equipo, que
+   estan bien como estan. */
+
+.d2 .d2-equipo-banda .d2-equipo-retrato > img {
+  height: 100%;
+  width: auto;
+  min-width: 100%;
+  object-fit: cover;
+}
+
+/* El aire sobre la cabeza, uno por foto. Erica es la unica que trae
+   margen propio --su coronilla esta al 6% del archivo, no al 0-- y por
+   eso baja mas que los otros dos. */
+.d2 .d2-equipo-banda [src*="equipo/matthew.jpg"] { object-position: 50% 12%; }
+.d2 .d2-equipo-banda [src*="equipo/marco.jpg"]   { object-position: 50% 14%; }
+.d2 .d2-equipo-banda [src*="equipo/erica.jpg"]   { object-position: 50% 20%; }
+
 
 /* En la avioneta, mirando a camara desde la derecha del encuadre. */
 .d2 [src*="matthew-hover"] {
@@ -15563,7 +15801,7 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-financia__titulo {
   margin: 12px 0 0;
-  font-size: clamp(32px, 3.2vw, 50px);
+  font-size: var(--fs-seccion, clamp(32px, 3.2vw, 50px));
   line-height: 1.08;
   letter-spacing: -.025em;
   font-weight: var(--fw-extrabold, 800);
@@ -15666,6 +15904,22 @@ span.d2-panel__filtro:hover {
 
 .d2 .d2-financia__cta {
   margin-top: 22px;
+}
+
+/* EL AVISO DE DISPONIBILIDAD (16/9/2026)
+
+   Lo pide el documento del cliente. Va debajo del boton, que es donde
+   acaba la promesa: primero se dice que puede haber financiacion, luego
+   como comprobarlo, y al final de que depende.
+
+   13px y en gris suave, el mismo tratamiento que las demas notas al
+   margen del sitio. Se lee, pero no compite con el aval de BC Hydro que
+   va encima --ese si es un argumento, y lleva su fondo verde--. */
+.d2 .d2-financia__aviso {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--c-texto-suave, #6B6B6B);
 }
 
 .d2 .d2-financia__nota {
@@ -15890,4 +16144,230 @@ span.d2-panel__filtro:hover {
   .d2 .calc--pasos .espera .adelanto {
     width: 100%;
   }
+}
+
+
+/* --- El formulario de la calculadora, mas compacto (16/9/2026) ----------
+
+   Tres cambios para bajar su altura sin perder datos utiles:
+
+   1. "Direct line" y "Mobile phone" eran dos campos para el MISMO dato
+      --un telefono al que llamar-- y se fusionaron en uno. Pedir dos
+      numeros a alguien que solo quiere un analisis es pedir de mas.
+
+   2. "Organization" y "Role" comparten fila. Son dos campos cortos y
+      apilados alargaban el formulario sin ganar legibilidad.
+
+   3. El resto se queda apilado: nombre, correo y telefono son de longitud
+      variable y en dos columnas se cortarian en pantallas medianas.
+
+   Por debajo de 520px la pareja se apila, que ahi no caben dos campos con
+   sus etiquetas. */
+
+.d2 .captura__pareja {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  /* Las dos etiquetas, a la misma altura. Sin esto los campos se alinean
+     por su centro --el reparto por defecto de la rejilla-- y como el de la
+     derecha puede llevar un aviso de error mas alto, "Role" caia 16px por
+     debajo de "Organization". Medido. */
+  align-items: start;
+}
+
+/* SI UNO DE LOS DOS SE OCULTA, EL OTRO OCUPA LA FILA
+
+   El guion esconde campos segun el camino. En la rama de quien responde
+   "no" al filtro de tamano no se pide Role, asi que su pareja se quedaba
+   con Organization a media anchura y un hueco al lado. MEDIDO en la
+   captura del cliente.
+
+   No vale con esconder la columna: la rejilla reserva el sitio igual. Lo
+   que hace falta es pasar la fila a UNA columna, y :has() lo detecta sin
+   que el JS tenga que avisar. */
+.d2 .captura__pareja:has(> .campo[hidden]) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* El campo oculto, fuera de la rejilla del todo.
+
+   hidden lo esconde pero sigue siendo un item de la rejilla: con
+   grid-template-columns a una sola columna, el oculto ocupaba la PRIMERA
+   fila y el visible caia a la segunda, dejando un hueco arriba. */
+.d2 .captura__pareja > .campo[hidden] { display: none; }
+
+/* Los campos de dentro pierden sus margenes: los pone la rejilla.
+
+   El de arriba importa: una regla de hermanos adyacentes --campo + campo--
+   le daba 16px al segundo, y dentro de la pareja eso hundia "Role" por
+   debajo de "Organization". Medido en el navegador. */
+.d2 .captura__pareja > .campo {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@media (max-width: 520px) {
+  .d2 .captura__pareja { grid-template-columns: minmax(0, 1fr); }
+}
+
+
+/* --- Los botones siguen al contenido, no al borde (16/9/2026) -----------
+
+   El panel de la calculadora mide lo que mide su columna DERECHA --el
+   resumen, 636px-- y la izquierda se estira para igualarla. En los pasos
+   con un solo campo eso dejaba a "Back" y "Next" pegados al fondo con un
+   hueco vacio de varios centimetros encima.
+
+   Ahora los botones van justo detras del ultimo campo y el sobrante queda
+   DEBAJO, donde se lee como margen y no como un vacio.
+
+   POR QUE NO SE ENCOGE EL PANEL
+
+   Se penso en que la caja se ajustara al contenido de cada paso, pero eso
+   la haria saltar de 636 a 400 y vuelta al avanzar, y la pagina se
+   desplazaria bajo el cursor. La altura constante es lo que hace que
+   pasar de paso se sienta estable.
+
+   margin-bottom:auto en el ultimo elemento flexible empuja el sobrante
+   hacia abajo. No se usa justify-content porque repartiria el hueco entre
+   TODOS los elementos, separando la cabecera de los campos. */
+
+.d2 .calc--pasos .pasos__nav {
+  margin-bottom: auto;
+}
+
+/* La nota legal se queda pegada a los botones, no al fondo. */
+.d2 .calc--pasos .pasos__nav + .calc__nota {
+  margin-bottom: auto;
+}
+
+
+/* --- La FAQ con la grafica del hero al lado (16/9/2026) -----------------
+
+   Clon de la FAQ con el mapa sustituido por la grafica acumulada, para
+   comparar cual acompana mejor a las preguntas. Es una PRUEBA: si no se
+   queda, se borra la seccion y este bloque, y no deja rastro.
+
+   La grafica viene del hero, donde vive en una caja oscura y ancha. Aqui
+   cae en un panel claro y estrecho, asi que necesita su propio trato:
+   mas aire alrededor y las etiquetas un punto mas grandes, que a 411px
+   de ancho las del hero se quedan en 6px. */
+
+.d2 .d2-faq-dato--grafica .d2-faq-dato__ficha-caja {
+  padding: clamp(16px, 2vw, 24px);
+}
+
+.d2 .d2-faq-dato__grafica {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* El viewBox del hero es 560x300 y aqui se pinta a 411: todo encoge un
+     27%. Se compensa en las etiquetas, que son lo unico que no aguanta. */
+  overflow: visible;
+}
+
+.d2 .d2-faq-dato--grafica :is(.hero-gr__anos, .hero-gr__escala) text {
+  font-size: 13px;
+}
+
+/* En el hero la grafica va sobre oscuro y las barras son verde translucido.
+   Sobre el panel claro de la FAQ eso se pierde: se sube la opacidad. */
+.d2 .d2-faq-dato--grafica .hero-gr__barras rect {
+  fill: rgba(57, 181, 74, .75);
+}
+
+.d2 .d2-faq-dato--grafica .hero-gr__rejilla line {
+  stroke: var(--c-borde, #E4E4E4);
+}
+
+.d2 .d2-faq-dato--grafica :is(.hero-gr__anos, .hero-gr__escala) text {
+  fill: var(--c-texto-suave, #6B6B6B);
+}
+
+.d2 .d2-faq-dato--grafica .d2-faq-dato__ficha-nota {
+  margin-top: 12px;
+}
+
+/* ==========================================================================
+   FUERA EL VERDE PALIDO #E8F5E8 (17/9/2026)
+
+   La home no lo usa en ninguna parte --comprobado recorriendo el DOM
+   pintado-- y Energy Gap Analysis solo lo arrastraba en las etiquetas de
+   "Other services". Es un color que venia de la plantilla antigua.
+
+   COMO LO RESUELVE LA HOME
+
+   Su equivalente --.d2-rutas-sec__eyebrow-- no lleva fondo: es texto en
+   color, a secas. Se sigue ese patron, que ademas quita un problema de
+   contraste: .ruta__tag ponia #39B54A sobre #E8F5E8, que da 2,2:1.
+
+   Donde el elemento es un CIRCULO numerado --.ciclo__n, .requisito__n-- si
+   hace falta fondo, porque la forma es parte del diseno. Ahi va el gris del
+   sistema, que es lo que usan los circulos equivalentes del resto del sitio.
+
+   POR QUE ESTE BLOQUE VIVE AQUI Y NO EN v1.css
+
+   Se escribio primero en v1.css y Energy Gap Analysis se quedaba con el
+   verde palido en sus etiquetas: esa pagina NO carga v1.css. Tampoco la
+   home. d2-variantes.css la cargan las ocho, asi que es donde tienen que ir
+   las reglas que valen para todo el sitio.
+   ========================================================================== */
+
+/* Las etiquetas de "Other services": sin fondo, como en la home. */
+.d2 .ruta__tag {
+  background: transparent;
+  padding-inline: 0;
+  color: var(--c-verde-hover, #026F00);
+}
+
+/* Sobre seccion oscura, el verde claro de marca. */
+.d2 [data-comp-tono="oscuro"] .ruta__tag,
+.d2.run-page .funciones .ruta__tag,
+.d2.rc-page .prueba-sec .ruta__tag,
+.d2.em-page .prueba-sec .ruta__tag {
+  color: #6FD97E;
+}
+
+/* Los circulos numerados: gris del sistema en vez del verde palido. El
+   numero en verde oscuro da 6,41:1 sobre ese gris. */
+.d2 .ciclo__n,
+.d2 .requisito__n {
+  background: var(--c-fondo-alt, #F5F5F5);
+  color: var(--c-verde-hover, #026F00);
+}
+
+/* La nota de requisitos y el aparte de Energy Management: el gris de
+   superficie que usa el resto del sitio para cajas de apoyo. */
+.d2 .requisitos__nota,
+.d2 .run-callout {
+  background: var(--c-fondo-alt, #F5F5F5);
+  border-color: var(--c-borde, #E4E4E4);
+}
+
+
+/* ==========================================================================
+   LOS BOTONES DE LA PLANTILLA ANTIGUA, CON EL RADIO DEL SISTEMA (17/9/2026)
+
+   .btn viene de style.css con border-radius: var(--radio-sm) --6px-- y se
+   ve cuadrado al lado de los CTA, que son pildora. Medido: los .d2-btn del
+   hero, del cierre, del formulario de Contact y de la home dan todos 999px.
+
+   Pasan a pildora los dos sitios que el cliente señalo:
+
+     RUN ............... .nivel__cta   ("Choose your level")
+     Energy Management . .dos-col__cta ("The partnership")
+
+   NO SE TOCA .btn EN GENERAL
+
+   La clase la usan tambien los mandos de la calculadora --.calc__btn, los
+   "Back"/"Next" de los pasos-- y ahi el radio pequeno es el correcto: son
+   controles de formulario, no llamadas a la accion. Cambiar .btn de raiz
+   los redondearia todos.
+
+   Por eso se nombran las dos clases concretas y no la generica.
+   ========================================================================== */
+
+.d2 .nivel__cta,
+.d2 .dos-col__cta {
+  border-radius: var(--radio-pill, 999px);
 }

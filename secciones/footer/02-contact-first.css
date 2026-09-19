@@ -219,7 +219,7 @@
 }
 
 /* El correo puede ser largo: se parte antes que desbordar la ficha. A
-   390px "matthew@getrede.ca" cabe, pero si Erick cambia el dato por uno
+   390px "info@getrede.ca" cabe, pero si Erick cambia el dato por uno
    mas largo esto evita el scroll horizontal. */
 .d2 .d2-pie-desp__vias a span {
   min-width: 0;

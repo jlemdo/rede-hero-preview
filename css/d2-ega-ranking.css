@@ -1,0 +1,490 @@
+/* ==========================================================================
+   ENERGY GAP ANALYSIS — EL RANKING (15/9/2026)
+
+   Va entre el hero y la calculadora: primero se ensena QUE se recibe y
+   despues se ofrece calcularlo.
+
+   EL FONDO ES EL VERDE DE LA CASA
+
+   #1A5121, el mismo de la banda del equipo. No es un color nuevo: el
+   comentario del sistema lo describe como "verde de marca al 45% sobre
+   negro", y ya vive en una seccion entera del sitio.
+
+   Contrastes medidos sobre el:
+
+     titular y nombres  #FFFFFF ... 9.36:1
+     el parrafo         #D1D1D1 ... 6.13:1
+     eyebrow y numeros  #B0E1B7 ... 6.38:1
+     la barra llena     #6BE873 ... 5.98:1
+
+   LA ANIMACION: LAS BARRAS CRECEN
+
+   Es lo que el usuario pidio, y ademas es lo unico que tiene sentido
+   animar aqui: la barra ES el dato, asi que verla crecer es ver la
+   medida formarse.
+
+   Solo transform, que es lo que el compositor puede animar sin
+   recalcular la pagina. Animar `width` obligaria a un reflow por
+   fotograma y por barra.
+
+   El truco: la barra se dibuja al ancho final y se escala en X desde
+   cero con transform-origin a la izquierda. Asi el navegador nunca
+   recalcula nada.
+   ========================================================================== */
+
+.d2 .ega-rank {
+  position: relative;
+  /* overflow hidden recorta el circuito en los bordes, que es lo que
+     hace que las lineas entren y salgan de la seccion en vez de
+     terminar dentro. */
+  overflow: hidden;
+  padding-block: clamp(var(--sp-7), 7vw, var(--sp-9));
+  background: #1A5121;
+  color: #FFFFFF;
+}
+
+.d2 .ega-rank__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--d2-ancho, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter, clamp(20px, 4vw, 40px));
+  display: grid;
+  /* El texto a la izquierda y el panel a la derecha. .92fr/1fr: el panel
+     lleva seis filas con barra y necesita el ancho. */
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1fr);
+  /* Las dos columnas, a la misma altura (16/9/2026)
+
+     Medido antes: el texto daba 354px y el panel 745 --391 de diferencia--
+     y con align-items:center el texto flotaba a media altura del panel.
+     La seccion se veia descuadrada.
+
+     align-items:stretch las estira a la altura de la mas alta, y el
+     contenido de cada una se reparte dentro. Asi los dos bloques empiezan
+     y acaban en la misma linea, que es lo que se pidio. */
+  align-items: stretch;
+  gap: clamp(var(--sp-6), 5vw, var(--sp-8));
+}
+
+/* --- El fondo: las diagonales --------------------------------------------
+
+   Rectas largas con un quiebro en angulo, sin nodos, que entran por los
+   bordes y se cortan ahi. Es lo que tiene la referencia.
+
+   Mi primer intento fue el circuito de la banda del equipo --codos
+   redondeados y nodos circulares-- y no es el mismo gesto.
+
+   Muy tenues: en la referencia apenas se separan del fondo, y esa
+   discrecion es parte del efecto. Aqui compiten con un panel de seis
+   filas, asi que con mas presencia estorbarian la lectura. */
+
+.d2 .ega-rank__lineas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.d2 .ega-rank__lineas path {
+  fill: none;
+  stroke: rgba(176, 225, 183, .16);
+  stroke-width: 1.2;
+  /* Sin linejoin round: el quiebro de la referencia es un angulo vivo,
+     no una curva. */
+  stroke-linejoin: miter;
+}
+
+/* --- La columna de texto ------------------------------------------------ */
+
+.d2 .ega-rank .eyebrow { color: #B0E1B7; }
+
+.d2 .ega-rank__titulo {
+  margin: var(--sp-3) 0 0;
+  /* Los valores de los demas titulares de esta pagina (16/9/2026)
+
+     Llevaba --fs-h1, el tamano de HERO: 64px. El resto de secciones de
+     Energy Gap Analysis usan clamp(34px, 3.4vw, 52px), y por eso esta se
+     leia como un segundo hero en mitad del recorrido.
+
+     No se usa --fs-h2 porque en esta pagina da 40px y las demas secciones
+     no lo usan: llevan su propio clamp.
+
+     El techo queda en 50 y no en los 52 de las demas, a peticion del
+     usuario: este titular tiene once palabras --mas que ninguno de los
+     otros-- y a 52 pesaba de mas frente al panel de la derecha. */
+  font-size: clamp(34px, 3.4vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  font-weight: var(--fw-extrabold, 800);
+  color: #FFFFFF;
+  text-wrap: balance;
+}
+
+.d2 .ega-rank__lead {
+  margin: var(--sp-5) 0 0;
+  max-width: 42ch;
+  font-size: var(--fs-body-lg);
+  line-height: 1.65;
+  color: #D1D1D1;
+}
+
+/* --- El panel ------------------------------------------------------------ */
+
+.d2 .ega-rank__eti {
+  margin: 0;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold, 700);
+  letter-spacing: var(--ls-eyebrow, .08em);
+  text-transform: uppercase;
+  color: #B0E1B7;
+}
+
+.d2 .ega-rank__sub {
+  margin: var(--sp-2) 0 var(--sp-5);
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: #D1D1D1;
+}
+
+.d2 .ega-rank__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cada fila: numero, icono, nombre y barra. La barra se lleva el resto
+   del ancho con 1fr. */
+.d2 .ega-rank__fila {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 12rem) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(var(--sp-3), 1.6vw, var(--sp-4));
+  padding-block: var(--sp-4);
+  border-top: 1px solid rgba(176, 225, 183, .22);
+}
+
+.d2 .ega-rank__fila:first-child { border-top: 0; padding-top: 0; }
+
+.d2 .ega-rank__n {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-extrabold, 800);
+  line-height: 1;
+  /* tabular-nums: sin esto el 01 y el 06 miden distinto y la columna
+     baila. */
+  font-variant-numeric: tabular-nums;
+  /* Los tres primeros en blanco, los otros tres mas apagados: la
+     jerarquia del ranking se lee antes que las barras.
+
+     Pero .55 daba 3.08:1, por debajo del 4.5 que necesita un numero de
+     este tamano. Medido sobre #1A5121:
+
+       .55 -> 3.08:1   lo que habia
+       .72 -> 4.13:1   aun no
+       .78 -> 4.56:1   pasa
+
+     Va .78: sigue leyendose como secundario y ya es legible. */
+  color: rgba(176, 225, 183, .78);
+}
+
+.d2 .ega-rank__fila.es-alto .ega-rank__n { color: #FFFFFF; }
+
+/* 58px. Empezaron en 38 --una mancha-- pasaron a 46 y siguen sin
+   leerse: estos dibujos llevan ventanas, costillas y zocalos, y cada
+   linea necesita separarse de la siguiente.
+
+   Con viewBox de 32 en vez de 24, el detalle cabe sin que los trazos se
+   toquen. */
+.d2 .ega-rank__icono {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  padding-left: var(--sp-4);
+  border-left: 1px solid rgba(176, 225, 183, .28);
+  color: rgba(255, 255, 255, .8);
+}
+
+.d2 .ega-rank__icono svg {
+  width: 100%;
+  height: 100%;
+  /* El trazo lo fija el marcado en .95 sobre un viewBox de 32, que a
+     58px de caja da algo menos de 1.8px reales: fino, como en la
+     referencia, pero sin desaparecer. */
+}
+
+.d2 .ega-rank__fila.es-alto .ega-rank__icono { color: #FFFFFF; }
+
+.d2 .ega-rank__nombre {
+  font-size: var(--fs-small);
+  line-height: 1.3;
+  color: rgba(255, 255, 255, .88);
+}
+
+.d2 .ega-rank__fila.es-alto .ega-rank__nombre { color: #FFFFFF; }
+
+/* La barra. La pista va mas clara que el fondo para que se vea donde
+   acaba: sobre #1A5121 un verde mas oscuro se perderia. */
+.d2 .ega-rank__barra {
+  position: relative;
+  display: block;
+  height: 12px;
+  border-radius: 2px;
+  background: rgba(176, 225, 183, .18);
+  overflow: hidden;
+}
+
+/* El relleno se dibuja al ANCHO FINAL y se escala desde cero. Animar
+   `width` seria un reflow por fotograma y por barra; con transform el
+   trabajo se queda en el compositor. */
+.d2 .ega-rank__lleno {
+  display: block;
+  width: var(--pct, 50%);
+  height: 100%;
+  border-radius: 2px;
+  background: rgba(209, 209, 209, .75);
+  transform-origin: left center;
+}
+
+/* Las tres primeras, en el verde claro: son las que hay que mirar. */
+.d2 .ega-rank__fila.es-alto .ega-rank__lleno { background: #6BE873; }
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* LA SECCION ENTRA POR PARTES
+
+     Antes solo se animaban las barras y el resto aparecia de golpe. Ahora
+     el bloque se arma en orden: primero el texto de la izquierda, luego la
+     cabecera del panel, y por ultimo las filas una a una.
+
+     Todo con transform y opacity, que son las dos que el compositor anima
+     sin recalcular la pagina. */
+
+  .d2 .ega-rank__copy > * ,
+  .d2 .ega-rank__eti,
+  .d2 .ega-rank__sub,
+  .d2 .ega-rank__pie,
+  .d2 .ega-rank__aviso {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .d2 .ega-rank.es-visible .ega-rank__copy > * {
+    animation: ega-rank-sube .7s cubic-bezier(.22, .68, 0, 1) both;
+    animation-delay: calc(var(--n, 0) * 90ms);
+  }
+  .d2 .ega-rank.es-visible .ega-rank__copy > :nth-child(1) { --n: 0; }
+  .d2 .ega-rank.es-visible .ega-rank__copy > :nth-child(2) { --n: 1; }
+  .d2 .ega-rank.es-visible .ega-rank__copy > :nth-child(3) { --n: 2; }
+
+  .d2 .ega-rank.es-visible .ega-rank__eti {
+    animation: ega-rank-sube .7s cubic-bezier(.22, .68, 0, 1) .1s both;
+  }
+  .d2 .ega-rank.es-visible .ega-rank__sub {
+    animation: ega-rank-sube .7s cubic-bezier(.22, .68, 0, 1) .18s both;
+  }
+
+  /* El pie y el aviso, al final: cuando las seis barras ya han crecido. */
+  .d2 .ega-rank.es-visible .ega-rank__pie {
+    animation: ega-rank-sube .7s cubic-bezier(.22, .68, 0, 1) 1.05s both;
+  }
+  .d2 .ega-rank.es-visible .ega-rank__aviso {
+    animation: ega-rank-sube .6s ease-out 1.25s both;
+  }
+
+  /* --- Las filas --- */
+
+  .d2 .ega-rank .ega-rank__fila > :not(.ega-rank__barra) {
+    opacity: 0;
+    /* 10px y no 16: la fila es baja y un recorrido largo la hace saltar. */
+    transform: translateY(10px);
+  }
+
+  .d2 .ega-rank.es-visible .ega-rank__fila > :not(.ega-rank__barra) {
+    animation: ega-rank-sube .55s cubic-bezier(.22, .68, 0, 1) both;
+    animation-delay: calc(.26s + var(--i, 0) * 110ms);
+  }
+
+  /* La pista de la barra tambien entra: sin esto aparece de golpe y se
+     ve el hueco antes de que la barra empiece a crecer. */
+  .d2 .ega-rank .ega-rank__barra {
+    opacity: 0;
+    transform: scaleX(.94);
+    transform-origin: left center;
+  }
+
+  .d2 .ega-rank.es-visible .ega-rank__barra {
+    animation: ega-rank-pista .5s cubic-bezier(.22, .68, 0, 1) both;
+    animation-delay: calc(.26s + var(--i, 0) * 110ms);
+  }
+
+  /* Y el relleno crece DESPUES de que su pista este puesta. */
+  .d2 .ega-rank .ega-rank__lleno { transform: scaleX(0); }
+
+  .d2 .ega-rank.es-visible .ega-rank__lleno {
+    /* 1.1s y una curva mas larga: el usuario pidio que fuese mas suave.
+       La curva (.22,.68,0,1) arranca decidida y frena muy despacio al
+       final, que es como se asienta una medida. */
+    animation: ega-rank-crece 1.1s cubic-bezier(.22, .68, 0, 1) both;
+    animation-delay: calc(.42s + var(--i, 0) * 110ms);
+  }
+}
+
+@keyframes ega-rank-crece { to { transform: scaleX(1); } }
+@keyframes ega-rank-sube  { to { opacity: 1; transform: none; } }
+@keyframes ega-rank-pista { to { opacity: 1; transform: none; } }
+
+/* --- El pie del panel ---------------------------------------------------- */
+
+.d2 .ega-rank__pie {
+  /* Cruza las DOS columnas (16/9/2026)
+
+     Antes vivia dentro del panel derecho y por eso quedaba cargado a ese
+     lado. Ahora es hermano de las dos columnas y grid-column:1/-1 lo hace
+     ocupar el ancho completo: cierra la seccion en vez de pertenecer a
+     una mitad.
+
+     El filete de arriba lo separa de las columnas, que es lo que hace que
+     se lea como cierre y no como una tercera pieza suelta. */
+  grid-column: 1 / -1;
+  /* Sin margen propio: el gap de la rejilla ya separa el pie de las
+     columnas. Con el margen encima se sumaban los dos y quedaban casi 90px
+     de aire, que es lo que hacia que la seccion se viera desarmada. */
+  margin-top: 0;
+  padding-top: var(--sp-4);
+  border-top: 1px solid rgba(176, 225, 183, .22);
+  text-align: center;
+}
+
+.d2 .ega-rank__pie-eti {
+  margin: 0 0 var(--sp-2);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold, 700);
+  letter-spacing: var(--ls-eyebrow, .08em);
+  text-transform: uppercase;
+  color: #B0E1B7;
+}
+
+.d2 .ega-rank__pie-txt {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  color: #FFFFFF;
+}
+
+/* El aviso de que la muestra es ilustrativa. Va pequeno pero VA: al lado
+   de nombres de edificio reales, una barra sin aviso se lee como un dato
+   medido. Es la misma linea que se siguio con el mapa de barrios. */
+.d2 .ega-rank__aviso {
+  margin: var(--sp-4) 0 0;
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  text-align: center;
+  color: rgba(209, 209, 209, .72);
+}
+
+/* --- Adaptacion ---------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+  .d2 .ega-rank__inner { grid-template-columns: 1fr; gap: var(--sp-6); }
+}
+
+@media (max-width: 620px) {
+  /* El icono se va: con el ancho justo, la barra necesita el sitio. */
+  .d2 .ega-rank__icono { display: none; }
+  .d2 .ega-rank__fila {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "n nombre"
+      "barra barra";
+    gap: var(--sp-2) var(--sp-3);
+  }
+  .d2 .ega-rank__n      { grid-area: n; }
+  .d2 .ega-rank__nombre { grid-area: nombre; }
+  .d2 .ega-rank__barra  { grid-area: barra; }
+}
+
+
+/* La columna de texto: arriba, no centrada -------------------------------
+
+   Primero se centro su contenido (justify-content:center) y quedaba peor:
+   el texto arrancaba 72px por debajo del panel y dejaba 160px de hueco
+   entre su ultima linea y el pie. Medido, no supuesto.
+
+   Las dos columnas deben EMPEZAR en la misma linea, que es lo que se lee
+   como orden. Que acaben a distinta altura no se nota --el pie las cierra
+   a las dos-- pero un arranque desigual si.
+
+   flex-start y no el valor por defecto: la columna sigue estirada por el
+   stretch de la rejilla, asi que sin esto el contenido se repartiria. */
+.d2 .ega-rank__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+
+/* ==========================================================================
+   LA ILUSTRACION DEL HERO, MAS PEQUENA (16/9/2026)
+
+   Mismo tratamiento que se le dio al hero de About: un rango acotado en
+   vez de dejar el tamano a merced de la ventana.
+
+     suelo   460px   por debajo la escena no se distingue
+     ideal   46vw    la proporcion que el cliente aprobo en About
+     techo   900px   por encima empieza a dominar la pagina
+
+   El margin-right negativo del hero compartido se anula: con un ancho
+   propio la imagen ya no necesita sangrar hasta el borde, y sangrando se
+   comia el aire que debe quedar a su derecha.
+
+   Va en esta hoja porque es la ultima que carga la pagina, asi que gana
+   sin necesidad de !important.
+   ========================================================================== */
+
+.d2 .d2-ega-hero .d2-ega-hero__arte {
+  margin-right: 0;
+}
+
+.d2 .d2-ega-hero .d2-ega-hero__arte img {
+  /* Solo el tamano. Ni margenes ni rejilla: el hero compartido ya
+     coloca la ilustracion donde toca, en escritorio y en movil.
+
+     Se probo anadiendo margin-left:auto y una consulta a 1280 que
+     estrechaba la columna de texto --lo que se hizo en About-- y ahi
+     rompia: a anchos medios el texto y la imagen se cambiaban de lado.
+     About lo necesita porque su hero se compone distinto; este no. */
+  width: clamp(460px, 46vw, 900px);
+  max-width: 100%;
+  height: auto;
+}
+
+
+
+@media (max-width: 900px) {
+  /* Apilada ocupa el ancho completo: ahi el limite lo pone la pantalla. */
+  .d2 .d2-ega-hero .d2-ega-hero__arte img { width: 100%; }
+
+}
+
+/* ==========================================================================
+   LA ILUSTRACION, DEBAJO DEL TEXTO (16/9/2026, corregido el 18/9/2026)
+
+   Como en RUN, Energy Management, Recommissioning y About: el hero abre con
+   el titular y los botones, y la escena es el cierre.
+
+   Gap era la unica que la subia --la regla general le da order:-1-- y eso
+   dejaba al visitante viendo un dibujo antes de saber de que va la pagina.
+
+   EL LIMITE TIENE QUE SER 1000, NO 900. Esta correccion vivia en el bloque
+   de 900px, pero quien sube la imagen es el de 1000px --d2-ega.css, donde
+   el hero pasa a una columna--. Entre 901 y 1000 no habia nadie que la
+   bajara, asi que en esa franja la imagen seguia saliendo arriba. Medido:
+   a 1000, 982 y 960 la imagen iba primero; a 900 y por debajo, no.
+
+   Los dos limites tienen que ser el mismo numero: la imagen se baja en
+   cuanto deja de haber dos columnas.
+   ========================================================================== */
+@media (max-width: 1000px) {
+  .d2 .d2-ega-hero .d2-ega-hero__arte { order: 0; }
+}

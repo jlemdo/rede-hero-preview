@@ -1,0 +1,799 @@
+/* ==========================================================================
+   ABOUT (15/9/2026)
+
+   LA IDEA: EL TIEMPO
+
+   Las dos paginas hermanas ya tienen su gesto y este no puede repetirlos:
+
+     acceso    una senal que VIAJA por el circuito
+     contacto  un campo que REVELA lo que hay debajo
+     about     una linea que SE ACUMULA -- 2008 a hoy
+
+   Aqui el movimiento no transmite ni revela: crece. Los anillos de la
+   seccion de origen se dibujan uno por ano al entrar en pantalla, como
+   los anillos de un tronco. Es la misma familia --energia, ingenieria,
+   precision-- diciendo permanencia en vez de transmision.
+
+   LO QUE MANDA LA COMPOSICION, Y NO ES EL GUSTO
+
+   - FRONT-LOAD. NN/g 2018, sobre 120 participantes y mas de 130.000
+     fijaciones: el 57% del tiempo de lectura se va ARRIBA DEL PLIEGUE y
+     el 74% en las dos primeras pantallas. Lo que importa va primero.
+
+   - BIOS CORTAS. Nielsen: se lee el 20-28% de las palabras, y solo se
+     llega al 50% en paginas de 111 palabras o menos. Ese es el techo.
+
+   - LAS PERSONAS, PRONTO. Es la convencion observada en las firmas
+     canadienses reales --KWL, Urban Systems, TRUE, Pinnacle-- y cuanto
+     mas pequena la firma, mas arriba va el equipo.
+
+   - TARJETAS IGUALES para los cuatro. La profundidad de Matthew vive en
+     "Who we are", no en una tarjeta seis veces mas larga que las otras
+     tres. Ninguna de las firmas auditadas esconde esa asimetria tras un
+     acordeon: o uniforme corto, o jerarquia visible.
+
+   - LAS FOTOS, MIRANDO A CAMARA. El dato de la "mirada desviada" que
+     circula por los blogs se rastreo hasta su origen: un post de 2009
+     con n=106 descrito como "gente a la que le he ensenado el eye
+     tracker". Sin control, sin estadistica, nunca replicado. El unico
+     test aplicado encontro que mirar hacia otro lado rendia PEOR.
+
+   - EL CTA, UNA PREGUNTA CORTA que siga del contenido. Las dos mejores
+     de la muestra lo hacen asi. La peor termina en una descarga con
+     formulario.
+   ========================================================================== */
+
+/* --- Who we are: el origen ---------------------------------------------- */
+
+.d2 .ab-origen {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(var(--sp-7), 7vw, var(--sp-9));
+  background: var(--c-blanco, #FFFFFF);
+}
+
+.d2 .ab-origen__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--d2-ancho, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter, clamp(20px, 4vw, 40px));
+  display: grid;
+  /* El texto manda y los anillos acompanan: 1.25fr / 1fr. Con columnas
+     iguales el parrafo caia en lineas demasiado cortas. */
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(var(--sp-6), 5vw, var(--sp-8));
+  align-items: center;
+}
+
+.d2 .ab-origen__titulo {
+  margin: var(--sp-3) 0 0;
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
+  line-height: 1.12;
+  letter-spacing: -.022em;
+  font-weight: var(--fw-extrabold, 800);
+  color: var(--c-texto, #333333);
+  text-wrap: balance;
+}
+
+/* :not(.eyebrow) (16/9/2026)
+
+   Este selector alcanzaba TODOS los <p> del bloque, y el eyebrow es uno
+   de ellos: le imponia la tinta del cuerpo y se comia el verde que le da
+   la regla general del sistema. Por eso "Who we are" salia gris mientras
+   los otros eyebrow de la pagina estaban en verde.
+
+   Es el mismo fallo que ya aparecio con `.bloque span`: un selector por
+   etiqueta alcanza mas de lo que su nombre sugiere. */
+.d2 .ab-origen__texto p:not(.eyebrow) {
+  margin: var(--sp-4) 0 0;
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+/* --- EL MAPA DE COMUNIDADES ---------------------------------------------
+
+   Replica del mapa "Our Communities" del cliente. La silueta y los 59
+   emplazamientos salen de medir su imagen, no de colocarlos a ojo.
+
+   POR QUE LATEN Y NO SE ENCIENDEN AL PASAR EL RATON
+
+   Se pidio expresamente sin recuadros ni tarjetas. Un mapa quieto se lee
+   como un adorno; uno que respira dice "esto sigue vivo" sin pedir nada
+   al visitante. Ademas el hover no existe en tactil, asi que la mitad de
+   las visitas no veria ningun movimiento.
+
+   EL PULSO VA ESCALONADO, NO A COMPAS
+
+   Dos cosas lo desincronizan: el retardo por indice --de oeste a este,
+   el orden en que Rede crecio-- y un factor propio de duracion en cada
+   punto (--f). Sin el segundo, cincuenta y nueve circulos laten como un
+   estrobo; con el, el conjunto respira.
+
+   SE ANIMA opacity Y transform, NADA MAS
+
+   Las dos propiedades que el navegador resuelve en el compositor. Animar
+   r o fill obligaria a repintar el SVG entero en cada fotograma, y aqui
+   hay 59 elementos a la vez. */
+
+.d2 .ab-mapa {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* El halo del pulso se sale del viewBox, que va justo a la silueta. */
+  overflow: visible;
+}
+
+.d2 .ab-mapa__tierra {
+  fill: var(--c-superficie-alt, #EDEDED);
+}
+
+.d2 .ab-mapa__sitio {
+  fill: var(--c-verde-marca, #39B54A);
+  /* El origen en el centro de cada circulo: por defecto seria la esquina
+     del SVG y el latido se convertiria en un desplazamiento. */
+  transform-box: fill-box;
+  transform-origin: center;
+  /* En reposo se ven todos. Si el guion no corre o el usuario pidio menos
+     movimiento, el mapa sigue completo en vez de quedarse vacio. */
+  opacity: .88;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* 1) La entrada: los puntos aparecen de oeste a este. */
+  .d2 .ab-origen .ab-mapa__sitio {
+    opacity: 0;
+    transform: scale(.4);
+  }
+
+  .d2 .ab-origen.es-visible .ab-mapa__sitio {
+    animation:
+      ab-sitio-entra .5s cubic-bezier(.22, 1, .36, 1) both,
+      /* 2) Y despues el latido, UNA sola vez. Arranca cuando ya han
+            entrado todos: 59 x 18ms + el medio segundo de la entrada.
+
+            Sin bucle por decision del cliente (16/9/2026). Un latido
+            continuo compite con el texto de al lado y no hay nada que
+            siga cambiando: el gesto dice "aqui estamos" y se acaba. */
+      ab-sitio-late calc(2.6s * var(--f, 1)) ease-in-out
+        calc(1.6s + var(--i, 0) * 18ms) 1;
+    animation-delay: calc(var(--i, 0) * 18ms), calc(1.6s + var(--i, 0) * 18ms);
+  }
+}
+
+@keyframes ab-sitio-entra {
+  to { opacity: .88; transform: scale(1); }
+}
+
+@keyframes ab-sitio-late {
+  0%, 100% { opacity: .88; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.18); }
+}
+
+
+/* --- More than engineers ------------------------------------------------ */
+
+.d2 .ab-mas {
+  padding-block: clamp(var(--sp-6), 6vw, var(--sp-8));
+  background: var(--c-superficie-oscura, #1A1A1A);
+  color: #FFFFFF;
+  /* para la reticula de debajo */
+  position: relative;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   LA RETICULA DEL FONDO (17/9/2026)
+
+   La misma que la cabecera negra de la calculadora --d2-variantes.css, la
+   regla .d2 .calc::before--: dos degradados cruzados que dejan una linea de
+   1px cada 130px. Verde de marca al 6%, que sobre el negro se intuye sin
+   competir con el texto.
+
+   Aqui NO lleva mascara. En la calculadora la banda negra ocupa solo los
+   primeros 480px y la reticula tiene que cortarse ahi; esta seccion es
+   oscura entera, asi que cubre todo el bloque.
+
+   Decorativa: va en un ::before y con pointer-events none, asi que no entra
+   en el arbol de accesibilidad ni intercepta el raton.
+   -------------------------------------------------------------------------- */
+.d2 .ab-mas::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(126, 225, 142, .06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(126, 225, 142, .06) 1px, transparent 1px);
+  background-size: 130px 130px;
+}
+
+.d2 .ab-mas__inner {
+  /* por encima de la reticula, igual que .calc__inner */
+  position: relative;
+  z-index: 1;
+  max-width: var(--d2-ancho, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter, clamp(20px, 4vw, 40px));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(var(--sp-5), 4vw, var(--sp-7));
+  align-items: start;
+}
+
+.d2 .ab-mas .eyebrow { color: var(--c-verde-marca, #39B54A); }
+
+.d2 .ab-mas__titulo {
+  margin: var(--sp-3) 0 0;
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
+  line-height: 1.1;
+  letter-spacing: -.022em;
+  font-weight: var(--fw-extrabold, 800);
+  color: #FFFFFF;
+  text-wrap: balance;
+}
+
+.d2 .ab-mas__texto p {
+  margin: 0 0 var(--sp-4);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  /* Blanco al 84%: 14.9:1 sobre el fondo. */
+  color: rgba(255, 255, 255, .84);
+}
+
+.d2 .ab-mas__texto p:last-child { margin-bottom: 0; }
+
+/* Los cuatro oficios. No es decoracion: el copy dice "somos ingenieros,
+   pero no solo eso", y la lista lo ensena en vez de repetirlo. */
+.d2 .ab-oficios {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-3);
+  margin: var(--sp-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.d2 .ab-oficios li {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4);
+  background: rgba(255, 255, 255, .06);
+  border-radius: var(--radio-sm, 6px);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-bold, 700);
+  color: #FFFFFF;
+}
+
+.d2 .ab-oficios svg {
+  flex: none;
+  color: var(--c-verde-marca, #39B54A);
+}
+
+/* --- Why Rede: la lista de principios ------------------------------------
+
+   Tres filas anchas, no tres cajas en rejilla. El contenido son
+   AFIRMACIONES y no productos: una tarjeta dice "elige uno", una lista
+   dice "esto es lo que sostenemos".
+
+   Y el texto respira. En tres columnas cada explicacion caia en seis
+   lineas estrechas; aqui van en dos o tres anchas. */
+
+.d2 .ab-principios {
+  padding-block: clamp(var(--sp-6), 6vw, var(--sp-8));
+  background: var(--c-fondo-alt, #F5F5F5);
+}
+
+.d2 .ab-principios__inner {
+  max-width: var(--d2-ancho, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--d2-gutter, clamp(20px, 4vw, 40px));
+}
+
+.d2 .ab-principios__cab {
+  /* El ancho, en px y no en ch (16/9/2026)
+
+     Estaba en 34ch y el titular caia en tres lineas. Subirlo a 44ch
+     tampoco basto: la unidad ch mide el ancho del caracter "0", que en
+     una extrabold de 50px no se parece al ancho real de las letras.
+     MEDIDO en pantalla las dos veces.
+
+     Con un valor en px el limite es el que se ve. 760 deja "Three things
+     we don't compromise on." en una linea y sigue siendo comodo para el
+     eyebrow que va encima.
+
+     min() para que en pantallas estrechas ceda antes que desbordar. */
+  max-width: min(760px, 100%);
+  margin-bottom: clamp(var(--sp-5), 4vw, var(--sp-6));
+}
+
+.d2 .ab-principios__titulo {
+  margin: var(--sp-3) 0 0;
+  font-size: var(--fs-seccion, clamp(34px, 3.4vw, 52px));
+  line-height: 1.12;
+  letter-spacing: -.022em;
+  font-weight: var(--fw-extrabold, 800);
+  color: var(--c-texto, #333333);
+
+  /* pretty y no balance (16/9/2026)
+
+     balance reparte el texto en lineas parejas AUNQUE quepa en una, que
+     es justo lo que aqui no se quiere: "Three things we don't compromise
+     on." entra en un renglon y balance lo partia en dos.
+
+     pretty deja la linea entera y solo evita que la ultima quede con una
+     palabra suelta si algun dia el titular crece. Mismo cambio que ya se
+     hizo en el titular de Contact. */
+  text-wrap: pretty;
+}
+
+.d2 .ab-principios__lista {
+  margin: 0;
+  padding: 0;
+}
+
+/* Cada principio: la afirmacion a la izquierda, la explicacion a la
+   derecha. .82fr/1fr y no mitad y mitad: el titulo son cuatro palabras y
+   la explicacion tres lineas. */
+.d2 .ab-principio {
+  display: grid;
+  /* Tres columnas desde el 16/9/2026: el icono, el que y el por que.
+
+     El icono en columna propia y de ancho fijo --no dentro del titulo--
+     para que los tres queden alineados en vertical aunque sus titulos
+     tengan una o dos lineas. */
+  grid-template-columns: 80px minmax(0, .82fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(var(--sp-4), 3vw, var(--sp-6));
+  padding-block: clamp(var(--sp-5), 2.6vw, var(--sp-6));
+  border-top: 1px solid var(--c-borde, #E4E4E4);
+}
+
+/* EL ICONO
+
+   Trazo, no relleno: es el lenguaje que ya usan los iconos del sitio
+   --el mapa, los del footer, los de la calculadora--.
+
+   Hereda el color del texto con currentColor, asi que si la seccion
+   cambia de tono el icono va detras sin tocar nada. */
+.d2 .ab-principio__icono {
+  /* 64px desde el 16/9/2026: a 48 quedaban pequenos al lado de un titulo
+     de 32, y el detalle del trazo --los nodos de la linea, los dedos del
+     apreton-- no se distinguia. */
+  width: 64px;
+  height: 64px;
+  color: var(--c-texto, #333333);
+}
+
+.d2 .ab-principio__icono svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+}
+
+/* El trazo, fijo en pantalla y no escalado.
+
+   El stroke-width del SVG va en unidades del viewBox --2 sobre 48-- asi
+   que al dibujar el icono a 64 el trazo crece con el. Queda mas pesado de
+   lo que pedia la referencia.
+
+   vector-effect desactiva ese escalado: el grosor se mide en pixeles de
+   pantalla, asi que los tres iconos pesan lo mismo a cualquier tamano.
+
+   Va en los hijos y no en el <svg>: es una propiedad de cada forma, no
+   del lienzo. */
+.d2 .ab-principio__icono svg :is(path, rect, circle, ellipse, line, polyline) {
+  vector-effect: non-scaling-stroke;
+  stroke-width: 2px;
+}
+
+/* El titulo, centrado con el icono.
+
+   El icono mide 48 y la primera linea del titulo unos 29, asi que sin
+   esto el titulo arrancaba pegado al borde de arriba y no se leian como
+   una pareja. Un pelo de margen los alinea opticamente. */
+.d2 .ab-principio__que { padding-top: 6px; }
+
+/* El filete verde solo en el primero: marca donde empieza la lista sin
+   repetir el gesto tres veces. */
+.d2 .ab-principio:first-child {
+  border-top: 2px solid var(--c-verde-marca, #39B54A);
+}
+
+.d2 .ab-principio__que {
+  margin: 0;
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+  letter-spacing: -.012em;
+  font-weight: var(--fw-extrabold, 800);
+  color: var(--c-texto, #333333);
+  text-wrap: balance;
+}
+
+.d2 .ab-principio__por {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--c-texto-cuerpo, #333333);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .ab-principios .ab-principio {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .d2 .ab-principios.es-visible .ab-principio {
+    animation: ab-caja .5s cubic-bezier(.32, .72, 0, 1) both;
+    animation-delay: calc(var(--i, 0) * 110ms);
+  }
+}
+
+@keyframes ab-caja {
+  to { opacity: 1; transform: none; }
+}
+
+/* --- Los datos del hero ---------------------------------------------------
+
+   El hero se veia vacio con solo titular y una linea. Los tres datos
+   salen del copy oficial --2008 del titular, 150+ organizaciones y
+   Western Canada de la bio de Matthew-- y ademas son lo que las firmas
+   canadienses de referencia ponen en su primer parrafo. */
+
+.d2 .ab-hero__datos {
+  display: flex;
+  flex-wrap: wrap;
+  /* Los tres datos, en UNA linea (15/9/2026)
+
+     Con el gap anterior --48px en escritorio-- no cabian por diez pixeles:
+     150 + 164 + 210 de contenido son 524, mas dos huecos de 48 son 620, y
+     la columna da 610. "Where" caia solo a una segunda linea y el bloque
+     se leia como dos grupos en vez de como una fila de tres.
+
+     Con 32px de techo suman 588 y entran con margen. El clamp sigue
+     cediendo en pantallas estrechas, donde envolver SI es lo correcto. */
+  gap: clamp(var(--sp-4), 2.6vw, var(--sp-6));
+  margin: clamp(var(--sp-5), 3vw, var(--sp-6)) 0 0;
+}
+
+
+.d2 .ab-hero__datos dt {
+  margin: 0 0 var(--sp-1);
+
+  /* Cede con la ventana, como el valor.
+
+     Por debajo de 1100px es la ETIQUETA la que manda el ancho, no el
+     valor: "ORGANISATIONS SERVED" a 12px pide 149px por si sola, y bajar
+     solo el valor deja de servir. Calculado. Asi que ceden las dos. */
+  /* El suelo en 9px: a 10 la etiqueta mas larga --"ORGANISATIONS
+     SERVED"-- se partia en dos lineas a 1024 de ventana. MEDIDO en
+     pantalla. Y el letter-spacing cede tambien, que a este cuerpo suma
+     mas de lo que aporta. */
+  font-size: clamp(9px, .64vw, 12px);
+  font-weight: var(--fw-bold, 700);
+  letter-spacing: clamp(.02em, .04vw, .07em);
+  text-transform: uppercase;
+  color: var(--c-texto-suave, #6B6B6B);
+  /* Que no se parta: si no cabe, cede el tamano, no el renglon. */
+  white-space: nowrap;
+}
+
+.d2 .ab-hero__datos dd {
+  margin: 0;
+
+  /* 13.5px de techo, y cede con la ventana (16/9/2026)
+
+     A 24px los valores largos --"Multi-site portfolios" y "Embedded
+     partnerships"-- caian en dos renglones. A 13.5 los tres entran en una
+     linea: la fila pide 518px y la columna da 563 a 1880 de ventana.
+     Calculado.
+
+     El clamp lo ata al ancho para que siga cabiendo en pantallas
+     menores. El suelo de 11 es donde el texto deja de leerse comodo;
+     por debajo de 900 el hero se apila y esto ya no aplica. */
+  /* El suelo baja a 10px: al estrechar la columna de texto --el hero
+     compartido la pasa a 40vw-- "Embedded partnerships" volvia a
+     partirse a 1024. MEDIDO en pantalla. */
+  font-size: clamp(10px, .72vw, 13.5px);
+  line-height: 1.15;
+  font-weight: var(--fw-extrabold, 800);
+  color: var(--c-texto, #333333);
+  font-variant-numeric: tabular-nums;
+
+  /* Cada valor se queda en su columna: sin esto "Multi-site" y
+     "portfolios" podrian repartirse raro al estrechar la ventana. */
+  text-wrap: balance;
+}
+
+/* Las tres columnas, del mismo ancho.
+
+   Con flex a secas cada una mide lo que su contenido, y "150+" quedaba
+   estrecha al lado de dos frases: los tres datos son del mismo rango y
+   deben leerse como una fila pareja. */
+.d2 .ab-hero__datos > div {
+  /* flex-basis: auto y sin min-width:0.
+
+     Con "1 1 0" y min-width:0 la columna podia encogerse por debajo de su
+     contenido, y el white-space:nowrap del valor no lo impedia: nowrap
+     evita que el TEXTO se parta, pero si la caja es mas estrecha el texto
+     se sale o se parte igual. MEDIDO: "Embedded partnerships" seguia en
+     dos renglones.
+
+     Asi cada columna mide al menos lo que su contenido y la fila reparte
+     lo que sobra. */
+  flex: 0 1 auto;
+}
+
+
+/* --- Adaptacion ---------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .d2 .ab-origen__inner,
+  .d2 .ab-mas__inner { grid-template-columns: 1fr; gap: var(--sp-6); }
+  /* EN MOVIL: el icono a la izquierda y el titulo a su lado, con el
+     texto debajo ocupando las dos columnas (16/9/2026).
+
+     Apilar los tres en una columna --icono, titulo, texto-- dejaba el
+     icono solo en su renglon y el bloque se leia como tres cosas
+     sueltas. Asi el icono y el titulo forman la cabecera de cada
+     principio, que es lo que pidio el cliente. */
+  .d2 .ab-principio {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: var(--sp-3) var(--sp-4);
+  }
+
+  .d2 .ab-principio__icono { width: 56px; height: 56px; }
+
+  /* El texto salta a la segunda fila y ocupa las dos columnas: sangrado
+     bajo el titulo, no bajo el icono, que es como se ve en la
+     referencia. */
+  .d2 .ab-principio__por { grid-column: 2; }
+
+  .d2 .ab-principio__que { padding-top: 4px; }
+
+  /* LOS DATOS DEL HERO, EN COLUMNA
+
+     A 390px tres columnas dan 100px cada una y "Embedded partnerships"
+     se partia en dos renglones. MEDIDO en pantalla.
+
+     Apilados, cada dato recupera el ancho entero y cabe en una linea,
+     que es lo que se pidio. El tamano vuelve al techo: aqui no hay tres
+     compitiendo por el sitio. */
+  .d2 .ab-hero__datos {
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+
+  .d2 .ab-hero__datos dt { font-size: 12px; }
+  .d2 .ab-hero__datos dd { font-size: 15px; }
+  /* Los anillos, primero: en una columna la ilustracion arriba anuncia
+     de que va la seccion antes de leer el texto. */
+  .d2 .ab-origen__arte { order: -1; }
+}
+
+@media (max-width: 560px) {
+  .d2 .ab-oficios { grid-template-columns: 1fr; }
+}
+
+
+/* --- EL CIERRE DEL HERO: UNA LINEA QUE SE ALIMENTA ----------------------
+
+   Sustituye al borde gris de 1px que separaba el hero de la seccion de
+   abajo. Ese borde vive en .d2-ega-hero y lo comparten EGA, RUN y las
+   demas, asi que aqui se ANULA solo para About y se pinta otro encima.
+
+   POR QUE LA LINEA VA DENTRO Y NO EN bottom:-1px
+
+   El primer intento la puso en bottom:-1px, fuera de la caja, para tapar
+   el borde heredado. No se veia: .d2-ega-hero lleva overflow:hidden --lo
+   necesita, porque la ilustracion sangra a la derecha y mide un 112% de
+   su hueco-- y ese recorte se come cualquier pseudoelemento que asome.
+
+   La salida no es pelearse con el overflow sino quitar el borde con
+   border-bottom:0 y dibujar la linea en bottom:0, ya dentro. Mismo sitio
+   en pantalla, y nada que recortar.
+
+   QUE HACE
+
+   Un filamento que se enciende de izquierda a derecha al entrar la
+   seccion y deja, en reposo, un degradado que se apaga hacia los
+   extremos: la corriente entra por un lado y recorre el tramo. No
+   parpadea ni se repite --seria ruido justo donde el ojo baja al texto--.
+
+   COMO SE PINTA
+
+   scaleX sobre un elemento de 1px de alto: la animacion vive en el
+   compositor y no provoca reflujo. Animar width recalcularia la maqueta
+   en cada fotograma.
+
+   El degradado usa transparent en los extremos y no blanco: sobre un
+   fondo que no fuera blanco, el blanco se veria como dos tapones. */
+
+/* LA ILUSTRACION DEL HERO: UN RANGO, NO UN PORCENTAJE (16/9/2026)
+
+   La referencia del cliente marca la proporcion: la imagen ocupa el 46%
+   del ancho de la ventana y deja un 2% de aire a la derecha. MEDIDO sobre
+   su captura.
+
+   POR QUE UN clamp Y NO UN PORCENTAJE
+
+   Se probo atando la columna de texto a vw y el tamano quedaba a merced
+   de la ventana: enorme en pantalla ancha, diminuto a 1024. El cliente
+   lo dijo claro --"ese tamano debe quedar adoc en todas, e irse haciendo
+   chico sin romper la estructura y sin hacerlo tan pequeño"--.
+
+   Un clamp hace justo eso: crece con la ventana entre dos limites y no
+   se sale de ellos.
+
+     suelo   460px   por debajo la escena no se distingue
+     ideal   46vw    la proporcion de la referencia
+     techo   900px   por encima empieza a dominar la pagina
+
+   El margin-right negativo del hero compartido se anula: con un ancho
+   propio la imagen ya no necesita sangrar al borde, y sangrando se comia
+   el aire que la referencia deja a la derecha. */
+/* Por debajo de 1280 la columna de texto tiene que ceder.
+
+   Con 610px fijos, a 1024 solo quedan 354px para la ilustracion --1024
+   menos 56 de padding, 610 de texto y 32 de gap-- y ningun suelo la
+   salva: el sitio no existe. Calculado.
+
+   Solo aqui, no en el hero compartido: por encima de 1280 la columna se
+   queda en sus 610, que es lo que las otras paginas necesitan. */
+@media (max-width: 1280px) {
+  .d2 .ab-hero .d2-ega-hero__inner {
+    grid-template-columns: minmax(0, clamp(400px, 42vw, 610px)) minmax(0, 1fr);
+  }
+}
+
+.d2 .ab-hero .d2-ega-hero__arte {
+  margin-right: 0;
+}
+
+/* El ancho va en el <picture> y no en el <img>.
+
+   El picture es un envoltorio inline que ocupa todo el contenedor, asi
+   que dimensionar solo la imagen no servia: el img al 46vw seguia dentro
+   de un picture al 100% y la regla del hero compartido --width:100%--
+   ganaba por orden. MEDIDO: salia al 70% en los tres anchos.
+
+   Dandole el ancho al picture, la imagen lo hereda con su width:100%
+   original y no hay que pelear con esa regla. */
+.d2 .ab-hero .d2-ega-hero__arte picture {
+  display: block;
+  width: clamp(460px, 46vw, 900px);
+  max-width: 100%;
+  margin-left: auto;
+}
+
+@media (max-width: 900px) {
+  /* Apilada ocupa el ancho completo: ahi el limite lo pone la pantalla y
+     encogerla solo la haria mas dificil de ver. */
+  .d2 .ab-hero .d2-ega-hero__arte img { width: 100%; }
+}
+
+.d2 .ab-hero {
+  position: relative;
+  /* Fuera el borde heredado: lo sustituye el ::after de aqui abajo. */
+  border-bottom: 0;
+}
+
+.d2 .ab-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* Dentro de la caja, que el overflow:hidden del hero recorta lo que
+     sobresalga. */
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--c-borde, #E4E4E4) 10%,
+    var(--c-verde-marca, #39B54A) 34%,
+    var(--c-verde-hover, #026F00) 50%,
+    var(--c-verde-marca, #39B54A) 66%,
+    var(--c-borde, #E4E4E4) 90%,
+    transparent 100%
+  );
+  /* SIN opacity, y el verde oscuro en el centro (15/9/2026)
+
+     La primera version iba a .55 "para que no compitiera con el titular".
+     Medido: el verde acababa en rgb(146,214,155) y daba 1.71:1 contra el
+     blanco. A ese contraste la linea no se distingue del borde gris que
+     sustituye --el usuario la vio igual que antes--.
+
+     Ahora el color va entero. El centro usa el verde oscuro de marca, que
+     da 5.6:1, y los flancos el verde claro: asi el punto de entrada se
+     lee de verdad y el degradado sigue muriendo en gris.
+
+     El tramo verde tambien es mas ancho --del 34 al 66 en vez del 46 al
+     54--, porque en una pantalla de 1900px un 8% eran 150px perdidos en
+     medio de la linea. Un tercio del ancho se lee a cualquier tamano. */
+  transform-origin: left center;
+  /* Por encima de la ilustracion, que llega hasta el borde inferior. */
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .d2 .ab-hero::after { transform: scaleX(0); }
+
+  .d2 .ab-hero.es-visible::after {
+    animation: ab-linea 1.1s cubic-bezier(.22, .61, .36, 1) .25s both;
+  }
+}
+
+@keyframes ab-linea {
+  to { transform: scaleX(1); }
+}
+
+
+/* --- "Who we are" en espejo: mapa a la izquierda (16/9/2026) ------------
+
+   Clon de la seccion de arriba con las columnas cambiadas. Es una prueba
+   visual para comparar las dos orientaciones.
+
+   EL ORDEN SE INVIERTE CON order, NO REORDENANDO EL MARCADO
+
+   En el HTML el texto sigue yendo primero en las dos secciones. Asi, al
+   apilarse en movil, se lee el texto antes que el mapa en ambas, y el
+   recorrido con teclado o lector de pantalla es el mismo. Con el marcado
+   invertido, en movil esta seccion abriria con un mapa sin contexto.
+
+   Las proporciones tambien se dan la vuelta: la columna ancha sigue
+   siendo la del TEXTO --1.25fr-- que ahora es la segunda. */
+
+.d2 .ab-origen--espejo .ab-origen__inner {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+}
+
+.d2 .ab-origen--espejo .ab-origen__texto { order: 2; }
+.d2 .ab-origen--espejo .ab-origen__arte  { order: 1; }
+
+@media (max-width: 900px) {
+  /* Apilado: el mapa arriba, igual que en la seccion original.
+
+     Alli la regla .ab-origen__arte{order:-1} lo sube a proposito --"la
+     ilustracion anuncia de que va la seccion antes de leer el texto"--
+     y mi order:1 la estaba anulando en el clon. Las dos secciones deben
+     comportarse igual en movil; la diferencia entre ellas es solo el
+     lado en escritorio. */
+  .d2 .ab-origen--espejo .ab-origen__texto { order: 0; }
+  .d2 .ab-origen--espejo .ab-origen__arte  { order: -1; }
+
+  /* Y a UNA columna, como la original.
+
+     Mi .ab-origen--espejo .ab-origen__inner de mas arriba pisaba la regla
+     que apila --tiene una clase mas, asi que mas peso-- y el clon seguia
+     en dos columnas de 134 y 168px en movil. Medido, no supuesto: la
+     original daba 335px de columna unica y el clon dos columnas. */
+  .d2 .ab-origen--espejo .ab-origen__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* EL CTA DE CIERRE, CON UN SOLO BOTON (16/9/2026)
+
+   Se retiro "Book a call" y quedo solo "Get in touch". La rejilla de
+   .d2-cta-bal__acciones esta en dos columnas fijas --repeat(2, 1fr)-- asi
+   que el boton unico se quedaba en la mitad izquierda con un hueco a su
+   derecha.
+
+   Con auto-fit las columnas se ajustan a los elementos que haya: un
+   boton ocupa su ancho natural y, si algun dia vuelven a ser dos, se
+   reparten solos sin tocar nada.
+
+   El max-width baja a 260: los 520 eran para dos botones y uno solo
+   estirado a ese ancho se lee como una barra, no como un boton. */
+/* :has() y no una clase: la regla se aplica sola cuando la lista tiene
+   un unico elemento, aqui y en cualquier otra pagina que quede con un
+   solo boton. Soportado en todos los navegadores desde 2023. */
+.d2 .d2-cta-bal__acciones:has(> :only-child) {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 260px;
+}

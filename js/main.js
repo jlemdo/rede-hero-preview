@@ -247,7 +247,6 @@
   }
 
   var PASO_TIPO = pasoDe('#c-type');
-  var PASO_SITIOS = pasoDe('#c-sites');
 
   /* Donde acaba la precalificacion y empieza el perfil del edificio.
      Se lee del marcado, igual que los dos de arriba: si los pasos se
@@ -814,6 +813,14 @@
 
      Eso es lo que veia el usuario: "Sites: 1 site" con "Multiple
      buildings" elegido y el campo vacio. */
+  /* Como vaciarFila pero ademas saca la fila del panel: para datos que
+     ya no se piden y por tanto nunca van a rellenarse. */
+  function ocultarFila(clave) {
+    var f = fila(clave);
+    if (!f) { return; }
+    f.hidden = true;
+  }
+
   function vaciarFila(clave) {
     var f = fila(clave);
     if (!f) { return; }
@@ -995,16 +1002,18 @@
        Con "One building" el guion escribe un 1 en el campo --la respuesta
        es evidente y el campo se oculta-- pero eso no es un dato que haya
        dado nadie: el perfil mostraba "Sites: 1 site" desde el paso 5. */
-    var sitiosPerfil = numero($('#c-sites').value);
-    if (sitiosPerfil && (abierta || estado.paso >= PASO_SITIOS)) {
-      ponerFila('sites', sitiosPerfil === 1 ? '1 site' : sitiosPerfil + ' sites');
-    } else {
-      /* Sin dato, la fila se vacia en vez de conservar el anterior. El
-         caso que lo destapo: elegir "un edificio" --que escribe un 1 en
-         el campo-- y cambiar despues a "varios", que lo borra. La fila
-         seguia diciendo "1 site". */
-      vaciarFila('sites');
-    }
+    /* El campo se retiro el 16/9/2026 --el alcance, "un edificio" o
+       "varios", ya da esta informacion-- asi que puede no existir. */
+    /* La fila "Sites" se retira del panel (16/9/2026)
+    
+       Su campo se quito: el alcance --"un edificio" o "varios"-- ya da
+       esa informacion. Sin campo que leer, la fila se quedaba con un
+       guion permanente, que en un panel que se va rellenando se lee
+       como un dato que falta y no como uno que no aplica.
+    
+       El valor SIGUE viajando a HubSpot: lo calcula calcular() a partir
+       del alcance. Lo que desaparece es la fila, no el dato. */
+    ocultarFila('sites');
 
     plegarElegibilidad();
 
@@ -1443,7 +1452,11 @@
 
     var area   = numero($('#c-area').value);
     var gasto  = numero($('#c-spend').value);
-    var sitios = numero($('#c-sites').value) || (estado.scope === 'single' ? 1 : 2);
+    /* Sin el campo --retirado el 16/9/2026-- el numero sale del alcance:
+       un edificio es 1, varios es 2. Es lo unico que el calculo
+       necesita: solo distingue entre "una sola" y "cartera". */
+    var cs = $('#c-sites');
+    var sitios = (cs ? numero(cs.value) : 0) || (estado.scope === 'single' ? 1 : 2);
 
     // Si no indica gasto, se estima con el coste por pie cuadrado del benchmark
     var gastoFinal = gasto || (area ? area * b.costPerFt2 : 0);
@@ -1698,7 +1711,10 @@
   var CAMINOS = {
     cualificado: {
       boton: 'Send me the deeper look',
-      pide: ['h-name', 'h-org', 'h-role', 'h-direct', 'h-email', 'h-phone'],
+      /* h-direct se retiro el 16/9/2026: "Direct line" y "Mobile phone"
+         eran dos campos para el mismo dato --un telefono al que llamar--
+         y se fusionaron en h-phone. */
+      pide: ['h-name', 'h-org', 'h-role', 'h-email', 'h-phone'],
       legal: 'Only used to prepare your analysis.'
     },
     municipal: {
@@ -1706,9 +1722,19 @@
       pide: ['h-name', 'h-email'],
       legal: 'Only used to arrange the call.'
     },
+    /* La rama corta: quien responde "no" al filtro de 25.000 pies.
+
+       SIN PROVINCIA NI CIUDAD. Esos dos campos estaban aqui para situar al
+       visitante frente a los programas de utility, que son provinciales.
+       Pero este recorrido no llega a mirar ningun programa: termina en una
+       conversacion con el equipo.
+
+       Pedir la ubicacion para una llamada es pedir un dato que no se va a
+       usar, y en un formulario cada campo de mas cuesta. Se quedan los
+       cuatro que hacen falta para devolver la llamada. */
     descartado: {
       boton: 'Have a team member reach out',
-      pide: ['h-name', 'h-email', 'h-phone', 'h-org', 'h-prov', 'h-city'],
+      pide: ['h-name', 'h-email', 'h-phone', 'h-org'],
       legal: 'Only used to get in touch.'
     }
   };
@@ -1745,7 +1771,17 @@
          bloquea el envio sin que se pueda ver por que. El navegador ni
          siquiera puede enfocarlo para senalarlo. */
       if (visible) {
-        campo.setAttribute('required', '');
+        /* Organization no es obligatorio (16/9/2026, peticion del
+           cliente). El resto de campos visibles si.
+
+           Se decide aqui y no en el marcado porque este bucle pone
+           required a todo lo que se ve: un atributo puesto en el HTML se
+           perderia en el primer cambio de camino. */
+        if (/(^|-)h-org$/.test(campo.id)) {
+          campo.removeAttribute('required');
+        } else {
+          campo.setAttribute('required', '');
+        }
         campo.removeAttribute('tabindex');
       } else {
         campo.removeAttribute('required');
